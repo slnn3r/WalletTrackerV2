@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "942197312071",
+    "firebase_url": "https://wallettrackerv2.firebaseio.com",
+    "project_id": "wallettrackerv2",
+    "storage_bucket": "wallettrackerv2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:942197312071:android:d058e099b006aa79",
+        "android_client_info": {
+          "package_name": "com.example.slnn3r.wallettrackerv2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "942197312071-8qau1u9kuijrimla3vh5425vj1lg4u96.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.slnn3r.wallettrackerv2",
+            "certificate_hash": "928a825791f7e4d7312fc7f2ac1e92da5e53c6a7"
+          }
+        },
+        {
+          "client_id": "942197312071-ufvdrsq664ovqhhb3tr4mr9uqord5u3m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxQWrWHm9T8E_IcbxXxNA9YjjZMSFPbmE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "942197312071-ufvdrsq664ovqhhb3tr4mr9uqord5u3m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

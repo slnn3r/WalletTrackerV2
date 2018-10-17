@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/navDrawer_section_1"
+            android:title="@string/navSection1_title">
+            <menu>
+                <item
+                    android:id="@+id/nav_account"
+                    android:icon="@drawable/ic_menu_camera"
+                    android:title="@string/navSection1_item1" />
+                <item
+                    android:id="@+id/nav_category"
+                    android:icon="@drawable/ic_menu_gallery"
+                    android:title="@string/navSection1_item2" />
+                <item
+                    android:id="@+id/nav_history"
+                    android:icon="@drawable/ic_menu_manage"
+                    android:title="@string/navSection1_item3" />
+            </menu>
+        </item>
+    </group>
+
+    <item
+        android:id="@+id/navDrawer_section_2"
+        android:title="@string/navSection2_title">
+        <menu>
+            <item
+                android:id="@+id/nav_backup"
+                android:icon="@drawable/ic_menu_slideshow"
+                android:title="@string/navSection2_item1" />
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/navDrawer_section_3"
+        android:title="@string/navSection3_title">
+        <menu>
+            <item
+                android:id="@+id/nav_sign_out"
+                android:icon="@android:drawable/ic_menu_set_as"
+                android:title="@string/navSection3_item1" />
+        </menu>
+    </item>
+</menu>

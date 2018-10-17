@@ -7,32 +7,32 @@
     tools:context=".ui.login.loginview.LoginActivity">
 
     <ImageView
-        android:id="@+id/loginImageView"
+        android:id="@+id/iv_login_logo"
 
         android:layout_width="0dp"
         android:layout_height="0dp"
 
         android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="@+id/SignInButton"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_google_sign_in"
 
-        app:layout_constraintBottom_toTopOf="@+id/SignInButton"
-        app:layout_constraintEnd_toEndOf="@+id/SignInButton"
+        app:layout_constraintBottom_toTopOf="@+id/btn_google_sign_in"
+        app:layout_constraintEnd_toEndOf="@+id/btn_google_sign_in"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/SignInButton"
+        app:layout_constraintStart_toStartOf="@+id/btn_google_sign_in"
         app:layout_constraintTop_toTopOf="parent"
 
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/splash_screen_image" />
 
     <com.google.android.gms.common.SignInButton
-        android:id="@+id/SignInButton"
+        android:id="@+id/btn_google_sign_in"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginImageView"
+        app:layout_constraintTop_toBottomOf="@+id/iv_login_logo"
         app:layout_constraintVertical_bias="1.0" />
 
 </android.support.constraint.ConstraintLayout>

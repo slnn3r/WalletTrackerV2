@@ -27,10 +27,7 @@ allprojects {
         google()
         jcenter()
 
-        // Crashlytics
-        maven {
-            url 'https://maven.google.com/'
-        }
+        maven { url 'https://maven.google.com/' } // Crashlytics
     }
 }
 

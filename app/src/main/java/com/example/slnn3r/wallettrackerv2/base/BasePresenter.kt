@@ -1,5 +1,10 @@
 package com.example.slnn3r.wallettrackerv2.base
 
+import android.content.Context
+import com.example.slnn3r.wallettrackerv2.constant.Constant
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import java.lang.ref.WeakReference
 
 open class BasePresenter<V : BaseView> {
@@ -16,5 +21,15 @@ open class BasePresenter<V : BaseView> {
 
     fun getView(): V? {
         return this.view.get()
+    }
+
+    fun getGoogleSignInClient(mContext: Context): GoogleSignInClient {
+        val gso =
+                GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestIdToken(Constant.GoogleLoginApi.REQUEST_ID_TOKEN)
+                        .requestEmail()
+                        .build()
+
+        return GoogleSignIn.getClient(mContext, gso)
     }
 }

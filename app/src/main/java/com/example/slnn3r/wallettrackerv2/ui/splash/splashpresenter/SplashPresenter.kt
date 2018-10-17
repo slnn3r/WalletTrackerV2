@@ -11,7 +11,7 @@ import io.fabric.sdk.android.Fabric
 class SplashPresenter : SplashPresenterInterface.SplashPresenter,
         BasePresenter<SplashViewInterface.SplashView>() {
 
-    private val mModel: SplashModelInterface.FirebaseAccess = SplashFirebase()
+    private val mFirebaseModel: SplashModelInterface.FirebaseAccess = SplashFirebase()
 
     override fun launchCrashlytics(mContext: Context) {
 
@@ -30,7 +30,7 @@ class SplashPresenter : SplashPresenterInterface.SplashPresenter,
     override fun loadSession() {
 
         try {
-            val sessionUserName = mModel.checkFirebaseSession()
+            val sessionUserName = mFirebaseModel.checkFirebaseSession()
 
             if (sessionUserName.isEmpty()) {
                 getView()!!.navigateToLogin()

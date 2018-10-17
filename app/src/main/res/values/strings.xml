@@ -1,11 +1,35 @@
 <resources>
     <string name="app_name">Wallet Tracker</string>
 
-    <!-- Custom Alert Dialog-->
+    <string name="title_activity_menu">MenuActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- activity_menu_drawer -->
+    <string name="navSection1_title">Wallet Management</string>
+    <string name="navSection1_item1">Wallet Account</string>
+    <string name="navSection1_item2">Transaction Category</string>
+    <string name="navSection1_item3">Transaction History</string>
+    <string name="navSection2_title">Wallet Backup</string>
+    <string name="navSection2_item1">Backup Data</string>
+    <string name="navSection3_title">Account</string>
+    <string name="navSection3_item1">Sign Out</string>
+
+    <!-- CustomAlertDialog-->
     <string name="confirmation_dialog_positive">Confirm</string>
     <string name="confirmation_dialog_negative">Cancel</string>
-    <string name="error_message_dialog_title">An Error Occurred</string>
-    <string name="error_message_dialog_message">%s\n\nPlease Contact Us.</string>
+    <string name="error_message_dialog_title">Something Went Wrong</string>
+    <string name="error_message_dialog_message">%s\n\nIf Issue Still Remain Unsolved, Please Contact Us.</string>
     <string name="error_message_dialog_positive">OK</string>
+
+    <string name="welcome_message">Welcome, %s</string> <!-- SplashActivity -->
+
+    <!-- LoginActivity-->
+    <string name="sign_in_loading">Signing with Google Account…</string>
+    <string name="sign_in_success_message">Sign In as %s</string>
 
 </resources>

@@ -5,6 +5,11 @@ class Constant {
     object LoggingTag {
         const val SPLASH_LOGGING = "SPLASH SCREEN ERROR"
         const val LOGIN_LOGGING = "LOGIN SCREEN ERROR"
+        const val MENU_LOGGING = "MENU SCREEN ERROR"
+        const val DASHBOARD_LOGGING = "DASHBOARD SCREEN ERROR"
+        const val ACCOUNT_LOGGING = "ACCOUNT SCREEN ERROR"
+        const val CATEGORY_LOGGING = "CATEGORY SCREEN ERROR"
+        const val TRANSACTION_LOGGING = "TRANSACTION SCREEN ERROR"
     }
 
     object GoogleLoginApi {

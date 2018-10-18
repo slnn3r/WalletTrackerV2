@@ -4,7 +4,7 @@
     <item android:drawable="@color/colorPrimaryLight"/>
 
     <!-- Set the Background Image-->
-    <item android:gravity="center" android:width="500dp" android:height="700dp">
+    <item android:gravity="center" android:width="0dp" android:height="0dp">
         <bitmap
             android:gravity="fill_horizontal|fill_vertical"
             android:src="@drawable/splash_screen_image"/>

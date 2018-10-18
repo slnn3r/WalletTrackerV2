@@ -6,6 +6,6 @@ import android.content.Intent
 interface LoginPresenterInterface {
 
     interface LoginPresenter {
-        fun executeGoogleLogin(mContext: Context, requestCode: Int, resultCode: Int, data: Intent)
+        fun executeGoogleSignIn(mContext: Context, requestCode: Int, resultCode: Int, data: Intent)
     }
 }

@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity(), LoginViewInterface.LoginView {
 
-    private var mPresenter: LoginPresenter = LoginPresenter()
+    private val mLoginPresenter: LoginPresenter = LoginPresenter()
     private val mCustomAlertDialog: CustomAlertDialog = CustomAlertDialog()
     private lateinit var mGoogleSignInClient: GoogleSignInClient
 
@@ -35,24 +35,19 @@ class LoginActivity : AppCompatActivity(), LoginViewInterface.LoginView {
 
     override fun onStart() {
         super.onStart()
-        mPresenter.bindView(this)
-
-        mGoogleSignInClient = mPresenter.getGoogleSignInClient(this)
+        mLoginPresenter.bindView(this)
+        mGoogleSignInClient = mLoginPresenter.getGoogleSignInClient(this)
     }
 
     override fun onStop() {
         super.onStop()
-        mPresenter.unbindView() // Unbind the view when it stopped
+        mLoginPresenter.unbindView() // Unbind the view when it stopped
     }
 
     override fun onError(message: String) {
-
-        if (progressDialog.isShowing) {
-            progressDialog.dismiss()
-        }
-
         Log.e(Constant.LoggingTag.LOGIN_LOGGING, message)
         mCustomAlertDialog.errorMessageDialog(this, message).show()
+        return
     }
 
     override fun showSignInLoading() {
@@ -77,12 +72,11 @@ class LoginActivity : AppCompatActivity(), LoginViewInterface.LoginView {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        mPresenter.executeGoogleLogin(this, requestCode, resultCode, data!!)
+        mLoginPresenter.executeGoogleSignIn(this, requestCode, resultCode, data!!)
     }
 
     private fun launchGoogleLoginDialog() {
         val signInIntent = mGoogleSignInClient.signInIntent
         startActivityForResult(signInIntent, Constant.GoogleLoginApi.REQUEST_CODE)
     }
-
 }

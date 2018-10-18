@@ -15,8 +15,8 @@ import com.google.firebase.auth.GoogleAuthProvider
 class LoginPresenter : LoginPresenterInterface.LoginPresenter,
         BasePresenter<LoginViewInterface.LoginView>() {
 
-    override fun executeGoogleLogin(mContext: Context, requestCode: Int,
-                                    resultCode: Int, data: Intent) {
+    override fun executeGoogleSignIn(mContext: Context, requestCode: Int,
+                                     resultCode: Int, data: Intent) {
 
         if (resultCode != 0) { // Close the Google Sign In Dialog Manually or Unexpectedly will NOT return 0
             if (requestCode == 1) {
@@ -35,6 +35,7 @@ class LoginPresenter : LoginPresenterInterface.LoginPresenter,
         try {
             account = completedTask.getResult(ApiException::class.java)
         } catch (e: ApiException) {
+            getView()!!.dismissSignInLoading()
             getView()!!.onError(e.message.toString())
         }
 
@@ -55,10 +56,12 @@ class LoginPresenter : LoginPresenterInterface.LoginPresenter,
 
                     if (task.isSuccessful) {
                         val userFirebase = mAuth.currentUser!!
+                        getView()!!.dismissSignInLoading()
                         getView()!!.signInSuccess(userFirebase)
                     }
                 }
                 .addOnFailureListener {
+                    getView()!!.dismissSignInLoading()
                     getView()!!.onError(it.message.toString())
                 }
     }

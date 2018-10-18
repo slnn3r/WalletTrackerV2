@@ -26,7 +26,7 @@ open class BasePresenter<V : BaseView> {
     }
 
     fun getGoogleSignInClient(mContext: Context): GoogleSignInClient {
-        val gso =
+        val gso = // Never return null
                 GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                         .requestIdToken(Constant.GoogleLoginApi.REQUEST_ID_TOKEN)
                         .requestEmail()

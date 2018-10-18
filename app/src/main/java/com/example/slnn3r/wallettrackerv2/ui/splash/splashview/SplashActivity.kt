@@ -14,7 +14,7 @@ import com.example.slnn3r.wallettrackerv2.util.CustomAlertDialog
 
 class SplashActivity : AppCompatActivity(), SplashViewInterface.SplashView {
 
-    private var mPresenter: SplashPresenter = SplashPresenter()
+    private val mSplashPresenter: SplashPresenter = SplashPresenter()
     private val mCustomAlertDialog: CustomAlertDialog = CustomAlertDialog()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,14 +24,14 @@ class SplashActivity : AppCompatActivity(), SplashViewInterface.SplashView {
 
     override fun onStart() {
         super.onStart()
-        mPresenter.bindView(this)
-        mPresenter.launchCrashlytics(this)
-        mPresenter.loadSession()
+        mSplashPresenter.bindView(this)
+        mSplashPresenter.launchCrashlytics(this)
+        mSplashPresenter.loadSession()
     }
 
     override fun onStop() {
         super.onStop()
-        mPresenter.unbindView() // Unbind the view when it stopped
+        mSplashPresenter.unbindView() // Unbind the view when it stopped
     }
 
     override fun navigateToLogin() {
@@ -52,5 +52,6 @@ class SplashActivity : AppCompatActivity(), SplashViewInterface.SplashView {
     override fun onError(message: String) {
         Log.e(Constant.LoggingTag.SPLASH_LOGGING, message)
         mCustomAlertDialog.errorMessageDialog(this, message).show()
+        return
     }
 }

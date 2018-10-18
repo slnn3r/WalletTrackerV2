@@ -10,7 +10,6 @@ class SplashPresenter : SplashPresenterInterface.SplashPresenter,
         BasePresenter<SplashViewInterface.SplashView>() {
 
     override fun launchCrashlytics(mContext: Context) {
-
         try {
             val fabric = Fabric.Builder(mContext)
                     .kits(Crashlytics())
@@ -24,7 +23,6 @@ class SplashPresenter : SplashPresenterInterface.SplashPresenter,
     }
 
     override fun loadSession() {
-
         try {
             val signedInUser = getSignedInUser()
 

@@ -38,4 +38,5 @@ open class BasePresenter<V : BaseView> {
     fun getSignedInUser(): FirebaseUser? {
         return baseModel.getSignedInUserFirebase()
     }
+
 }

@@ -15,7 +15,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_login.*
 
-
 class LoginActivity : AppCompatActivity(), LoginViewInterface.LoginView {
 
     private val mLoginPresenter: LoginPresenter = LoginPresenter()

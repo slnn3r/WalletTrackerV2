@@ -6,10 +6,8 @@ import com.google.firebase.auth.FirebaseUser
 interface LoginViewInterface {
 
     interface LoginView : BaseView {
-
         fun showSignInLoading()
         fun dismissSignInLoading()
         fun signInSuccess(userFirebase: FirebaseUser)
-        fun saveAccToSharePrefSuccess(displayName: String)
     }
 }

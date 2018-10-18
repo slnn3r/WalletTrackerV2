@@ -3,24 +3,17 @@ package com.example.slnn3r.wallettrackerv2.ui.login.loginpresenter
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
 import com.example.slnn3r.wallettrackerv2.base.BasePresenter
-import com.example.slnn3r.wallettrackerv2.ui.login.loginmodel.LoginModelInterface
-import com.example.slnn3r.wallettrackerv2.ui.login.loginmodel.LoginSharePreference
 import com.example.slnn3r.wallettrackerv2.ui.login.loginview.LoginViewInterface
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.gson.Gson
 
 class LoginPresenter : LoginPresenterInterface.LoginPresenter,
         BasePresenter<LoginViewInterface.LoginView>() {
-
-    private val mSharePreferenceModel: LoginModelInterface.SharePreferenceAccess = LoginSharePreference()
 
     override fun executeGoogleLogin(mContext: Context, requestCode: Int,
                                     resultCode: Int, data: Intent) {
@@ -68,16 +61,5 @@ class LoginPresenter : LoginPresenterInterface.LoginPresenter,
                 .addOnFailureListener {
                     getView()!!.onError(it.message.toString())
                 }
-    }
-
-    override fun saveAccToSharePref(mContext: Context, userFirebase: FirebaseUser) {
-
-        val gson = Gson()
-        val userProfile = UserProfile(userFirebase.uid, userFirebase.displayName.toString(), userFirebase.email.toString(), userFirebase.photoUrl.toString())
-        val jsonUserProfile = gson.toJson(userProfile)
-
-        mSharePreferenceModel.saveAccToSharePrefExecute(mContext, jsonUserProfile)
-
-        getView()!!.saveAccToSharePrefSuccess(userFirebase.displayName!!)
     }
 }

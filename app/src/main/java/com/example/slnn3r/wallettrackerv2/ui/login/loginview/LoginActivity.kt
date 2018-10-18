@@ -65,11 +65,9 @@ class LoginActivity : AppCompatActivity(), LoginViewInterface.LoginView {
     }
 
     override fun signInSuccess(userFirebase: FirebaseUser) {
-        mPresenter.saveAccToSharePref(this, userFirebase)
-    }
 
-    override fun saveAccToSharePrefSuccess(displayName: String) {
-        Toast.makeText(this, getString(R.string.sign_in_success_message, displayName)
+        Toast.makeText(this,
+                getString(R.string.sign_in_success_message, userFirebase.displayName)
                 , Toast.LENGTH_SHORT).show()
 
         val intent = Intent(applicationContext, MenuActivity::class.java)

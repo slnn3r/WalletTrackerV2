@@ -5,11 +5,13 @@ import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.auth.FirebaseUser
 import java.lang.ref.WeakReference
 
 open class BasePresenter<V : BaseView> {
 
     lateinit var view: WeakReference<V>
+    private val baseModel: BaseModel = BaseModel()
 
     fun bindView(view: V) {
         this.view = WeakReference(view)
@@ -31,5 +33,9 @@ open class BasePresenter<V : BaseView> {
                         .build()
 
         return GoogleSignIn.getClient(mContext, gso)
+    }
+
+    fun getSignedInUser(): FirebaseUser? {
+        return baseModel.getSignedInUserFirebase()
     }
 }

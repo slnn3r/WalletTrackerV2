@@ -3,15 +3,11 @@ package com.example.slnn3r.wallettrackerv2.ui.splash.splashpresenter
 import android.content.Context
 import com.crashlytics.android.Crashlytics
 import com.example.slnn3r.wallettrackerv2.base.BasePresenter
-import com.example.slnn3r.wallettrackerv2.ui.splash.splashmodel.SplashFirebase
-import com.example.slnn3r.wallettrackerv2.ui.splash.splashmodel.SplashModelInterface
 import com.example.slnn3r.wallettrackerv2.ui.splash.splashview.SplashViewInterface
 import io.fabric.sdk.android.Fabric
 
 class SplashPresenter : SplashPresenterInterface.SplashPresenter,
         BasePresenter<SplashViewInterface.SplashView>() {
-
-    private val mFirebaseModel: SplashModelInterface.FirebaseAccess = SplashFirebase()
 
     override fun launchCrashlytics(mContext: Context) {
 
@@ -30,12 +26,12 @@ class SplashPresenter : SplashPresenterInterface.SplashPresenter,
     override fun loadSession() {
 
         try {
-            val sessionUserName = mFirebaseModel.checkFirebaseSession()
+            val signedInUser = getSignedInUser()
 
-            if (sessionUserName.isEmpty()) {
+            if (signedInUser == null) {
                 getView()!!.navigateToLogin()
             } else {
-                getView()!!.navigateToDashboard(sessionUserName)
+                getView()!!.navigateToDashboard(signedInUser.displayName!!)
             }
 
         } catch (error: Exception) {

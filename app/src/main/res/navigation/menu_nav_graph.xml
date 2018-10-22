@@ -9,5 +9,72 @@
         android:id="@+id/dashboardFragment"
         android:name="com.example.slnn3r.wallettrackerv2.ui.dashboard.dashboardview.DashboardFragment"
         android:label="fragment_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_dashboardFragment_to_detailsTransactionFragment"
+            app:destination="@id/detailsTransactionFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_createTransactionFragment"
+            app:destination="@id/createTransactionFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_viewCategoryFragment"
+            app:destination="@id/viewCategoryFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_viewAccountFragment"
+            app:destination="@id/viewAccountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsTransactionFragment"
+        android:name="com.example.slnn3r.wallettrackerv2.ui.transaction.transactionview.DetailsTransactionFragment"
+        android:label="fragment_details_transaction"
+        tools:layout="@layout/fragment_details_transaction" />
+    <fragment
+        android:id="@+id/createTransactionFragment"
+        android:name="com.example.slnn3r.wallettrackerv2.ui.transaction.transactionview.CreateTransactionFragment"
+        android:label="fragment_create_transaction"
+        tools:layout="@layout/fragment_create_transaction" />
+    <fragment
+        android:id="@+id/viewCategoryFragment"
+        android:name="com.example.slnn3r.wallettrackerv2.ui.category.categoryview.ViewCategoryFragment"
+        android:label="fragment_view_category"
+        tools:layout="@layout/fragment_view_category" >
+        <action
+            android:id="@+id/action_viewCategoryFragment_to_detailsCategoryFragment"
+            app:destination="@id/detailsCategoryFragment" />
+        <action
+            android:id="@+id/action_viewCategoryFragment_to_createCategoryFragment"
+            app:destination="@id/createCategoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsCategoryFragment"
+        android:name="com.example.slnn3r.wallettrackerv2.ui.category.categoryview.DetailsCategoryFragment"
+        android:label="fragment_details_category"
+        tools:layout="@layout/fragment_details_category" />
+    <fragment
+        android:id="@+id/createCategoryFragment"
+        android:name="com.example.slnn3r.wallettrackerv2.ui.category.categoryview.CreateCategoryFragment"
+        android:label="fragment_create_category"
+        tools:layout="@layout/fragment_create_category" />
+    <fragment
+        android:id="@+id/viewAccountFragment"
+        android:name="com.example.slnn3r.wallettrackerv2.ui.account.accountview.ViewAccountFragment"
+        android:label="fragment_view_account"
+        tools:layout="@layout/fragment_view_account" >
+        <action
+            android:id="@+id/action_viewAccountFragment_to_detailsAccountFragment"
+            app:destination="@id/detailsAccountFragment" />
+        <action
+            android:id="@+id/action_viewAccountFragment_to_createAccountFragment"
+            app:destination="@id/createAccountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createAccountFragment"
+        android:name="com.example.slnn3r.wallettrackerv2.ui.account.accountview.CreateAccountFragment"
+        android:label="fragment_create_account"
+        tools:layout="@layout/fragment_create_account" />
+    <fragment
+        android:id="@+id/detailsAccountFragment"
+        android:name="com.example.slnn3r.wallettrackerv2.ui.account.accountview.DetailsAccountFragment"
+        android:label="fragment_details_account"
+        tools:layout="@layout/fragment_details_account" />
 </navigation>

@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 class LoginActivity : AppCompatActivity(), LoginViewInterface.LoginView {
 
     private val mLoginPresenter: LoginPresenter = LoginPresenter()
-    private val mCustomAlertDialog: CustomAlertDialog = CustomAlertDialog()
+    private val mCustomErrorDialog: CustomAlertDialog = CustomAlertDialog()
     private lateinit var mGoogleSignInClient: GoogleSignInClient
 
     private lateinit var progressDialog: ProgressDialog
@@ -45,16 +45,15 @@ class LoginActivity : AppCompatActivity(), LoginViewInterface.LoginView {
 
     override fun onError(message: String) {
         Log.e(Constant.LoggingTag.LOGIN_LOGGING, message)
-        mCustomAlertDialog.errorMessageDialog(this, message).show()
+        mCustomErrorDialog.errorMessageDialog(this, message).show()
         return
     }
 
-    override fun showSignInLoading() {
+    override fun showLoadingDialog() {
         progressDialog = ProgressDialog.show(this, null
-                , getString(R.string.sign_in_loading))
-    }
+                , getString(R.string.sign_in_loading))    }
 
-    override fun dismissSignInLoading() {
+    override fun dismissLoadingDialog() {
         progressDialog.dismiss()
     }
 

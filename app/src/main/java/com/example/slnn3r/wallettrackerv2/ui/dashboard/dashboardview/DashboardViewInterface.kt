@@ -4,7 +4,7 @@ import com.example.slnn3r.wallettrackerv2.base.BaseView
 
 interface DashboardViewInterface {
 
-    interface DashboardView : BaseView{
+    interface DashboardView : BaseView.Universal{
 
     }
 }

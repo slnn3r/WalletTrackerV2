@@ -21,6 +21,22 @@
                     android:id="@+id/nav_history"
                     android:icon="@drawable/ic_history"
                     android:title="@string/navSection1_item3" />
+                <item
+                    android:id="@+id/nav_report"
+                    android:icon="@drawable/ic_report"
+                    android:title="@string/navSection1_item4" />
+
+                <item
+                    android:id="@+id/nav_sub_line_graph"
+                    android:title="@string/navSection1_item4_sub1"
+                    android:visible="false"
+                    android:background="@color/colorPrimary" />
+                <item
+                    android:id="@+id/nav_sub_bar_graph"
+                    android:title="@string/navSection1_item4_sub2"
+                    android:background="@color/colorPrimary"
+                    android:visible="false" />
+
             </menu>
         </item>
     </group>
@@ -46,4 +62,5 @@
                 android:title="@string/navSection3_item1" />
         </menu>
     </item>
+
 </menu>

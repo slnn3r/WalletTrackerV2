@@ -4,7 +4,7 @@ import com.example.slnn3r.wallettrackerv2.base.BaseView
 
 interface SplashViewInterface {
 
-    interface SplashView : BaseView {
+    interface SplashView : BaseView.Universal {
         fun navigateToLogin()
         fun navigateToDashboard(userName: String)
     }

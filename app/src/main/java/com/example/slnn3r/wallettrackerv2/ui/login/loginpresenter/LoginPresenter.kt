@@ -20,7 +20,7 @@ class LoginPresenter : LoginPresenterInterface.LoginPresenter,
 
         if (resultCode != 0) { // Close the Google Sign In Dialog Manually or Unexpectedly will NOT return 0
             if (requestCode == 1) {
-                getView()!!.showSignInLoading()
+                getView()!!.showLoadingDialog()
                 val task = GoogleSignIn.getSignedInAccountFromIntent(data)
                 val accountGoogle = handleSignInResult(task)
                 firebaseAuthentication(mContext, accountGoogle)
@@ -35,7 +35,7 @@ class LoginPresenter : LoginPresenterInterface.LoginPresenter,
         try {
             account = completedTask.getResult(ApiException::class.java)
         } catch (e: ApiException) {
-            getView()!!.dismissSignInLoading()
+            getView()!!.dismissLoadingDialog()
             getView()!!.onError(e.message.toString())
         }
 
@@ -56,12 +56,12 @@ class LoginPresenter : LoginPresenterInterface.LoginPresenter,
 
                     if (task.isSuccessful) {
                         val userFirebase = mAuth.currentUser!!
-                        getView()!!.dismissSignInLoading()
+                        getView()!!.dismissLoadingDialog()
                         getView()!!.signInSuccess(userFirebase)
                     }
                 }
                 .addOnFailureListener {
-                    getView()!!.dismissSignInLoading()
+                    getView()!!.dismissLoadingDialog()
                     getView()!!.onError(it.message.toString())
                 }
     }

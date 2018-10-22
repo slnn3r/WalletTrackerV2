@@ -11,7 +11,36 @@ class MenuPresenter : MenuPresenterInterface.MenuPresenter,
         BasePresenter<MenuViewInterface.MenuView>() {
 
     override fun navigationDrawerSelection(item: MenuItem) {
+
         when (item.itemId) {
+            R.id.nav_account -> {
+                getView()!!.closeDrawer()
+            }
+
+            R.id.nav_category -> {
+                getView()!!.closeDrawer()
+            }
+
+            R.id.nav_history -> {
+                getView()!!.closeDrawer()
+            }
+
+            R.id.nav_report -> {
+                getView()!!.displayDrawerDropDown()
+            }
+
+            R.id.nav_sub_line_graph -> {
+                getView()!!.closeDrawer()
+            }
+
+            R.id.nav_sub_bar_graph -> {
+                getView()!!.closeDrawer()
+            }
+
+            R.id.nav_backup -> {
+                getView()!!.closeDrawer()
+            }
+
             R.id.nav_sign_out -> {
                 getView()!!.proceedToSignOut()
             }

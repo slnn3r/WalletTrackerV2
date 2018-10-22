@@ -15,7 +15,7 @@ import com.example.slnn3r.wallettrackerv2.util.CustomAlertDialog
 class SplashActivity : AppCompatActivity(), SplashViewInterface.SplashView {
 
     private val mSplashPresenter: SplashPresenter = SplashPresenter()
-    private val mCustomAlertDialog: CustomAlertDialog = CustomAlertDialog()
+    private val mCustomErrorDialog: CustomAlertDialog = CustomAlertDialog()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +51,7 @@ class SplashActivity : AppCompatActivity(), SplashViewInterface.SplashView {
 
     override fun onError(message: String) {
         Log.e(Constant.LoggingTag.SPLASH_LOGGING, message)
-        mCustomAlertDialog.errorMessageDialog(this, message).show()
+        mCustomErrorDialog.errorMessageDialog(this, message).show()
         return
     }
 }

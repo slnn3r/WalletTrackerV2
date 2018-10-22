@@ -2,6 +2,9 @@ package com.example.slnn3r.wallettrackerv2.ui.menu.menuview
 
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
@@ -27,7 +30,11 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         MenuViewInterface.MenuView {
 
     private val mMenuPresenter: MenuPresenter = MenuPresenter()
-    private val mCustomAlertDialog: CustomAlertDialog = CustomAlertDialog()
+    private val mCustomConfirmationDialog: CustomAlertDialog = CustomAlertDialog()
+    private val mCustomErrorDialog: CustomAlertDialog = CustomAlertDialog()
+
+    private lateinit var navigationView:NavigationView
+
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var userData: FirebaseUser
 
@@ -52,6 +59,8 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mGoogleSignInClient = mMenuPresenter.getGoogleSignInClient(this)
         userData = mMenuPresenter.getSignedInUser()!!
 
+        navigationView = findViewById<View>(R.id.nav_view) as NavigationView
+
         displayUserDataToNavDrawer()
     }
 
@@ -71,7 +80,6 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         mMenuPresenter.navigationDrawerSelection(item)
-        drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
 
@@ -83,12 +91,11 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onError(message: String) {
         Log.e(Constant.LoggingTag.MENU_LOGGING, message)
-        mCustomAlertDialog.errorMessageDialog(this, message).show()
+        mCustomErrorDialog.errorMessageDialog(this, message).show()
         return
     }
 
     private fun displayUserDataToNavDrawer() {
-        val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
         val headerView = navigationView.getHeaderView(0)
 
         val navHeaderUserName
@@ -104,12 +111,26 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun proceedToSignOut() {
-        mCustomAlertDialog.confirmationDialog(this,
+        mCustomConfirmationDialog.confirmationDialog(this,
                 getString(R.string.sign_out_dialog_title),
                 getString(R.string.sign_out_dialog_message),
                 resources.getDrawable(android.R.drawable.ic_dialog_alert),
-                DialogInterface.OnClickListener { dialogBox, which ->
+                DialogInterface.OnClickListener { _, _ ->
                     mMenuPresenter.executeGoogleSignOut(mGoogleSignInClient)
                 }).show()
+    }
+
+    override fun displayDrawerDropDown() {
+
+        val menu = navigationView.menu
+
+        val b = !menu.findItem(R.id.nav_sub_line_graph).isVisible
+        //setting submenus visible state
+        menu.findItem(R.id.nav_sub_line_graph).isVisible = b
+        menu.findItem(R.id.nav_sub_bar_graph).isVisible = b
+    }
+
+    override fun closeDrawer() {
+        drawer_layout.closeDrawer(GravityCompat.START)
     }
 }

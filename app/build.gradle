@@ -50,6 +50,7 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.8.5' // GSON
     implementation 'com.squareup.picasso:picasso:2.71828' // Picasso
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3' // MPAndroidChart
 
     // Android Navigation Library
     def nav_version = "1.0.0-alpha06"

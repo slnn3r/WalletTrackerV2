@@ -11,6 +11,9 @@
     <string name="navSection1_item1">Wallet Account</string>
     <string name="navSection1_item2">Transaction Category</string>
     <string name="navSection1_item3">Transaction History</string>
+    <string name="navSection1_item4">Transaction Report</string>
+    <string name="navSection1_item4_sub1">\u2022 Cash Flow</string>
+    <string name="navSection1_item4_sub2">\u2022 Category Expense</string>
     <string name="navSection2_title">Wallet Backup</string>
     <string name="navSection2_item1">Backup Data</string>
     <string name="navSection3_title">Account</string>
@@ -35,5 +38,8 @@
 
     <!-- MenuActivity -->
     <string name="title_activity_menu">MenuActivity</string>
+
+    <!-- SOON TO BE REMOVED -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

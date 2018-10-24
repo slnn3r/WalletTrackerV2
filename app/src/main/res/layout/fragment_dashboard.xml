@@ -10,9 +10,9 @@
         android:id="@+id/spinner"
         android:layout_width="0dp"
         android:layout_height="24dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="14dp"
         android:layout_marginEnd="32dp"
-        android:background="@drawable/custom_spinner_background"
+        android:background="@drawable/custom_default_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,9 +22,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:text="Selected Account : "
+        android:text="Selected Account"
         app:layout_constraintEnd_toStartOf="@+id/spinner"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -41,6 +41,7 @@
         app:layout_constraintVertical_chainStyle="spread_inside" />
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="368dp"
         android:layout_height="253dp"
         android:layout_marginStart="8dp"
@@ -56,11 +57,13 @@
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:clickable="true"
-        android:src="@drawable/ic_fab"
-        app:backgroundTint="@color/colorPrimary"
+        android:src="@drawable/ic_transaction"
+        app:backgroundTint="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:useCompatPadding="true" />
+        app:useCompatPadding="false" />
 
 </android.support.constraint.ConstraintLayout>

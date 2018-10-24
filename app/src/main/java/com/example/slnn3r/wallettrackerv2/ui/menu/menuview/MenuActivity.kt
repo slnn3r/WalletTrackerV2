@@ -2,9 +2,6 @@ package com.example.slnn3r.wallettrackerv2.ui.menu.menuview
 
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.res.ColorStateList
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
@@ -15,6 +12,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.Navigation
 import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.example.slnn3r.wallettrackerv2.ui.login.loginview.LoginActivity
@@ -132,5 +130,21 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun closeDrawer() {
         drawer_layout.closeDrawer(GravityCompat.START)
+    }
+
+    override fun proceedToAccountScreen() {
+        Navigation.findNavController(this, R.id.navMenu).navigate(R.id.action_dashboardFragment_to_viewAccountFragment)
+    }
+
+    override fun proceedToCategoryScreen() {
+        Navigation.findNavController(this, R.id.navMenu).navigate(R.id.action_dashboardFragment_to_viewCategoryFragment)
+    }
+
+    override fun proceedToHistoryScreen() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun proceedToReportScreen() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

@@ -12,28 +12,28 @@
                 <item
                     android:id="@+id/nav_account"
                     android:icon="@drawable/ic_account"
-                    android:title="@string/navSection1_item1" />
+                    android:title="@string/navSection1_item1_title" />
                 <item
                     android:id="@+id/nav_category"
                     android:icon="@drawable/ic_category"
-                    android:title="@string/navSection1_item2" />
+                    android:title="@string/navSection1_item2_title" />
                 <item
                     android:id="@+id/nav_history"
                     android:icon="@drawable/ic_history"
-                    android:title="@string/navSection1_item3" />
+                    android:title="@string/navSection1_item3_title" />
                 <item
                     android:id="@+id/nav_report"
                     android:icon="@drawable/ic_report"
-                    android:title="@string/navSection1_item4" />
+                    android:title="@string/navSection1_item4_title" />
 
                 <item
                     android:id="@+id/nav_sub_line_graph"
-                    android:title="@string/navSection1_item4_sub1"
+                    android:title="@string/navSection1_item4_sub1_title"
                     android:visible="false"
                     android:background="@color/colorPrimary" />
                 <item
                     android:id="@+id/nav_sub_bar_graph"
-                    android:title="@string/navSection1_item4_sub2"
+                    android:title="@string/navSection1_item4_sub2_title"
                     android:background="@color/colorPrimary"
                     android:visible="false" />
 
@@ -48,7 +48,7 @@
             <item
                 android:id="@+id/nav_backup"
                 android:icon="@drawable/ic_backup"
-                android:title="@string/navSection2_item1" />
+                android:title="@string/navSection2_item1_title" />
         </menu>
     </item>
 
@@ -59,7 +59,7 @@
             <item
                 android:id="@+id/nav_sign_out"
                 android:icon="@android:drawable/ic_menu_set_as"
-                android:title="@string/navSection3_item1" />
+                android:title="@string/navSection3_item1_title" />
         </menu>
     </item>
 

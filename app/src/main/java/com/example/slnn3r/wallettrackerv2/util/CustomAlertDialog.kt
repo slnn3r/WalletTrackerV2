@@ -16,9 +16,9 @@ class CustomAlertDialog {
         confirmationDialog.setTitle(title)
                 .setIcon(icon)
                 .setMessage(message)
-                .setPositiveButton(mContext.getString(R.string.confirmation_dialog_positive)
+                .setPositiveButton(mContext.getString(R.string.confirmation_dialog_positive_title)
                         , dialogOnClickListener)
-                .setNegativeButton(mContext.getString(R.string.confirmation_dialog_negative)) { dialogBox, _ ->
+                .setNegativeButton(mContext.getString(R.string.confirmation_dialog_negative_title)) { dialogBox, _ ->
                     dialogBox.dismiss()
                 }
         return confirmationDialog.create()
@@ -31,7 +31,7 @@ class CustomAlertDialog {
                 //.setIcon()
                 .setCancelable(false)
                 .setMessage(mContext.getString(R.string.error_message_dialog_message, message))
-                .setPositiveButton(mContext.getString(R.string.error_message_dialog_positive)) { dialogBox, _ ->
+                .setPositiveButton(mContext.getString(R.string.error_message_dialog_positive_title)) { dialogBox, _ ->
                     dialogBox.dismiss()
                 }
         return errorMessageDialog.create()

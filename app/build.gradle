@@ -51,9 +51,12 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5' // GSON
     implementation 'com.squareup.picasso:picasso:2.71828' // Picasso
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3' // MPAndroidChart
+    implementation 'io.github.yavski:fab-speed-dial:1.0.6' // Floating Button
+    implementation 'com.kyleduo.switchbutton:library:2.0.0' // Switch Button
 
     // Android Navigation Library
     def nav_version = "1.0.0-alpha06"
     implementation "android.arch.navigation:navigation-fragment-ktx:$nav_version"
     implementation "android.arch.navigation:navigation-ui-ktx:$nav_version"
+    implementation 'android.arch.navigation:navigation-fragment:1.0.0-alpha06'
 }

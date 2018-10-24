@@ -15,10 +15,12 @@ class MenuPresenter : MenuPresenterInterface.MenuPresenter,
         when (item.itemId) {
             R.id.nav_account -> {
                 getView()!!.closeDrawer()
+                getView()!!.proceedToAccountScreen()
             }
 
             R.id.nav_category -> {
                 getView()!!.closeDrawer()
+                getView()!!.proceedToCategoryScreen()
             }
 
             R.id.nav_history -> {

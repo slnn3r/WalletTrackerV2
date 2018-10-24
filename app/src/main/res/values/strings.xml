@@ -6,25 +6,29 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_desc">Navigation header</string>
 
+    <!-- details_screen_floating_button -->
+    <string name="fb_action_edit_title">Edit</string>
+    <string name="fb_action_delete_title">Delete</string>
+
     <!-- activity_menu_drawer -->
     <string name="navSection1_title">Wallet Management</string>
-    <string name="navSection1_item1">Wallet Account</string>
-    <string name="navSection1_item2">Transaction Category</string>
-    <string name="navSection1_item3">Transaction History</string>
-    <string name="navSection1_item4">Transaction Report</string>
-    <string name="navSection1_item4_sub1">\u2022 Cash Flow</string>
-    <string name="navSection1_item4_sub2">\u2022 Category Expense</string>
+    <string name="navSection1_item1_title">Wallet Account</string>
+    <string name="navSection1_item2_title">Transaction Category</string>
+    <string name="navSection1_item3_title">Transaction History</string>
+    <string name="navSection1_item4_title">Transaction Report</string>
+    <string name="navSection1_item4_sub1_title">\u2022 Cash Flow</string>
+    <string name="navSection1_item4_sub2_title">\u2022 Category Expense</string>
     <string name="navSection2_title">Wallet Backup</string>
-    <string name="navSection2_item1">Backup Data</string>
+    <string name="navSection2_item1_title">Backup Data</string>
     <string name="navSection3_title">Account</string>
-    <string name="navSection3_item1">Sign Out</string>
+    <string name="navSection3_item1_title">Sign Out</string>
 
     <!-- CustomAlertDialog-->
-    <string name="confirmation_dialog_positive">Confirm</string>
-    <string name="confirmation_dialog_negative">Cancel</string>
+    <string name="confirmation_dialog_positive_title">Confirm</string>
+    <string name="confirmation_dialog_negative_title">Cancel</string>
     <string name="error_message_dialog_title">Something Went Wrong</string>
     <string name="error_message_dialog_message">%s\n\nIf Issue Still Remain Unsolved, Please Contact Us.</string>
-    <string name="error_message_dialog_positive">OK</string>
+    <string name="error_message_dialog_positive_title">OK</string>
     <string name="sign_out_dialog_title">Sign Out Account</string>
     <string name="sign_out_dialog_message">Please Make Sure to Backup Data Before Sign Out. All Pending Backup Process will Remove.</string>
 
@@ -33,7 +37,7 @@
 
     <!-- LoginActivity-->
     <string name="iv_login_desc">Image View Login Logo</string>
-    <string name="sign_in_loading">Signing with Google Account…</string>
+    <string name="sign_in_loading_message">Signing with Google Account…</string>
     <string name="sign_in_success_message">Sign In as %s</string>
 
     <!-- MenuActivity -->

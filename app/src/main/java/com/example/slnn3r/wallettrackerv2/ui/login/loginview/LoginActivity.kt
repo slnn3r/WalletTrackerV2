@@ -51,7 +51,7 @@ class LoginActivity : AppCompatActivity(), LoginViewInterface.LoginView {
 
     override fun showLoadingDialog() {
         progressDialog = ProgressDialog.show(this, null
-                , getString(R.string.sign_in_loading))    }
+                , getString(R.string.sign_in_loading_message))    }
 
     override fun dismissLoadingDialog() {
         progressDialog.dismiss()

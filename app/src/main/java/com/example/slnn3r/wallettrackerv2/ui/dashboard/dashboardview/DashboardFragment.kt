@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import com.example.slnn3r.wallettrackerv2.R
+import com.example.slnn3r.wallettrackerv2.ui.menu.menuview.MenuActivity
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 
 class DashboardFragment : Fragment(), DashboardViewInterface.DashboardView {
@@ -23,6 +24,8 @@ class DashboardFragment : Fragment(), DashboardViewInterface.DashboardView {
         super.onViewCreated(view, savedInstanceState)
 
         floatingActionButton.setOnClickListener{
+
+            (activity as MenuActivity).setupNavigationMode()
 
             if (doubleBackToExitPressedOnce) {
                 val navController = view.findNavController()

@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="24dp"
-        android:text="Transaction Type"
+        android:text="@string/transaction_type_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,8 +39,9 @@
         android:layout_marginEnd="8dp"
         android:background="@drawable/custom_default_background"
         android:paddingLeft="4dp"
+        android:paddingRight="4dp"
         android:paddingTop="2dp"
-        android:text="Expense"
+        android:text="@string/expense_title"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/switch2"
         app:layout_constraintStart_toEndOf="@+id/textView7"
@@ -64,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:completionThreshold="1"
-            android:hint="Category Name"
+            android:hint="@string/category_name_title"
             android:imeOptions="actionDone"
             android:singleLine="true"
             android:theme="@style/EditTextTheme" />

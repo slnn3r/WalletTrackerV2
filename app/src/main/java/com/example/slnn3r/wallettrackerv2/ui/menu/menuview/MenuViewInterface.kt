@@ -8,14 +8,24 @@ interface MenuViewInterface {
 
         fun proceedToAccountScreen()
         fun proceedToCategoryScreen()
+
         fun proceedToHistoryScreen()
-        fun proceedToReportScreen()
+        fun proceedToHistorySpecific()
+        fun proceedToHistoryRange()
+
+        fun proceedToLineReportScreen()
+        fun proceedToBarReportScreen()
 
         fun proceedToSignOut()
-
         fun signOutSuccess()
 
+        fun displayDoubleTabExitMessage()
+        fun superOnPressBack()
+
+        fun setupNavigationFlow()
+
         fun displayDrawerDropDown()
+        fun openDrawer()
         fun closeDrawer()
     }
 }

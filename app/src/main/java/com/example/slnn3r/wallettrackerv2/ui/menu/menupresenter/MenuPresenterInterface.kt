@@ -8,5 +8,9 @@ interface MenuPresenterInterface {
     interface MenuPresenter{
         fun executeGoogleSignOut(mGoogleSignInClient: GoogleSignInClient)
         fun navigationDrawerSelection(item: MenuItem)
+
+        fun checkNavigationStatus(isNavigated: String, selectedHistoryScreen: String,
+                                  isBackButton: Boolean, currentScreen: Int?,
+                                  doubleBackToExitPressedOnce: Boolean)
     }
 }

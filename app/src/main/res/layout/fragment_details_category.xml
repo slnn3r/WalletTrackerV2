@@ -10,7 +10,7 @@
         android:id="@+id/switch2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="16dp"
         android:checked="true"
         app:kswBackColor="@color/colorLightRed"
@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="18dp"
         android:text="@string/transaction_type_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,12 +35,12 @@
         android:layout_width="0dp"
         android:layout_height="24dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/custom_default_background"
         android:paddingLeft="4dp"
-        android:paddingRight="4dp"
         android:paddingTop="2dp"
+        android:paddingRight="4dp"
         android:text="@string/expense_title"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/switch2"
@@ -51,24 +51,29 @@
         android:id="@+id/layout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
+        android:background="@drawable/custom_default_background"
         android:theme="@style/EditTextTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Texttype">
 
-        <AutoCompleteTextView
+        <EditText
             android:id="@+id/editText2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@null"
             android:completionThreshold="1"
             android:hint="@string/category_name_title"
             android:imeOptions="actionDone"
+            android:padding="@dimen/keyline_1_minus_8dp"
             android:singleLine="true"
-            android:theme="@style/EditTextTheme" />
+            android:theme="@style/EditTextTheme"
+            android:inputType="text"
+            tools:ignore="Autofill" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -84,7 +89,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:miniFabTitleTextColorList="@array/fab_menu_item_colors"
         app:miniFabBackgroundTintList="@array/fab_menu_item_colors"
-        app:miniFabDrawableTint="@color/colorPrimaryDark"
-        app:miniFabTitleBackgroundTint="@color/colorPrimaryDark" />
+        app:miniFabDrawableTint="@color/colorPrimaryLight"
+        app:miniFabTitleBackgroundTint="@color/colorPrimaryLight" />
 
 </android.support.constraint.ConstraintLayout>

@@ -5,7 +5,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 
 interface MenuPresenterInterface {
 
-    interface MenuPresenter{
+    interface MenuViewPresenter{
         fun executeGoogleSignOut(mGoogleSignInClient: GoogleSignInClient)
         fun navigationDrawerSelection(item: MenuItem)
 

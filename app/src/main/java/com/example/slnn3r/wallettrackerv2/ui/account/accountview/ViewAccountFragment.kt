@@ -1,39 +1,71 @@
 package com.example.slnn3r.wallettrackerv2.ui.account.accountview
 
+import android.app.Activity
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import com.example.slnn3r.wallettrackerv2.R
+import com.example.slnn3r.wallettrackerv2.constant.string.Constant
+import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
+import com.example.slnn3r.wallettrackerv2.ui.account.accountadapter.AccountListAdapter
+import com.example.slnn3r.wallettrackerv2.ui.account.accountpresenter.ViewAccountPresenter
+import com.example.slnn3r.wallettrackerv2.util.CustomAlertDialog
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.fragment_view_account.*
 
-class ViewAccountFragment : Fragment() {
+class ViewAccountFragment : Fragment(), AccountViewInterface.ViewAccountView {
 
-    private var doubleBackToExitPressedOnce = false
+    private val mViewAccountViewPresenter: ViewAccountPresenter = ViewAccountPresenter()
+    private val mCustomErrorDialog: CustomAlertDialog = CustomAlertDialog()
+
+    private lateinit var userData: FirebaseUser
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
+        (activity as? AppCompatActivity)?.supportActionBar?.title =
+                getString(R.string.ab_viewAcc_title)
         return inflater.inflate(R.layout.fragment_view_account, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        floatingActionButton2.setOnClickListener{
-
-            if (doubleBackToExitPressedOnce) {
-                val navController = view.findNavController()
-                navController.navigate(R.id.action_viewAccountFragment_to_detailsAccountFragment)
-                this.doubleBackToExitPressedOnce = false
-
-            }else{
-                val navController = view.findNavController()
-                navController.navigate(R.id.action_viewAccountFragment_to_createAccountFragment)
-                this.doubleBackToExitPressedOnce = true
-            }
+        fb_viewAcc_createAcc.setOnClickListener {
+            val navController = view.findNavController()
+            navController.navigate(R.id.action_viewAccountFragment_to_createAccountFragment)
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mViewAccountViewPresenter.bindView(this)
+        userData = mViewAccountViewPresenter.getSignedInUser()!!
+
+        mViewAccountViewPresenter.getAllAccountData(context!!, userData.uid)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mViewAccountViewPresenter.unbindView()
+    }
+
+    override fun populateAccountRecycleView(accountList: ArrayList<Account>) {
+        val accListRecyclerView =
+                (context as Activity).findViewById(R.id.rv_viewAcc_accList) as RecyclerView
+        accListRecyclerView.layoutManager = LinearLayoutManager(context)
+        accListRecyclerView.adapter = AccountListAdapter(accountList)
+    }
+
+    override fun onError(message: String) {
+        Log.e(Constant.LoggingTag.VIEW_ACCOUNT_LOGGING, message)
+        mCustomErrorDialog.errorMessageDialog(context!!, message).show()
+        return
     }
 }

@@ -4,13 +4,11 @@
         android:id="@+id/fb_action_edit"
         android:icon="@drawable/ic_edit"
         android:title="@string/fb_action_edit_title"
-        android:orderInCategory="1"
         />
     <item
         android:id="@+id/fb_action_delete"
         android:icon="@drawable/ic_delete"
         android:title="@string/fb_action_delete_title"
-        android:orderInCategory="0"
         />
 
 </menu>

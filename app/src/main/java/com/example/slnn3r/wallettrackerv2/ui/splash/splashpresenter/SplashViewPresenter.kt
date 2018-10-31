@@ -6,7 +6,7 @@ import com.example.slnn3r.wallettrackerv2.base.BasePresenter
 import com.example.slnn3r.wallettrackerv2.ui.splash.splashview.SplashViewInterface
 import io.fabric.sdk.android.Fabric
 
-class SplashPresenter : SplashPresenterInterface.SplashPresenter,
+class SplashViewPresenter : SplashPresenterInterface.SplashViewPresenter,
         BasePresenter<SplashViewInterface.SplashView>() {
 
     override fun launchCrashlytics(mContext: Context) {

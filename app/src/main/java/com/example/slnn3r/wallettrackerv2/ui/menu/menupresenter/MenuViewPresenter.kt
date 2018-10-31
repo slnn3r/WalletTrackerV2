@@ -7,12 +7,13 @@ import com.example.slnn3r.wallettrackerv2.ui.menu.menuview.MenuViewInterface
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
 
-class MenuPresenter : MenuPresenterInterface.MenuPresenter,
+class MenuViewPresenter : MenuPresenterInterface.MenuViewPresenter,
         BasePresenter<MenuViewInterface.MenuView>() {
 
     override fun navigationDrawerSelection(item: MenuItem) {
 
         when (item.itemId) {
+
             R.id.nav_account -> {
                 getView()!!.closeDrawer()
                 getView()!!.proceedToAccountScreen()
@@ -97,8 +98,9 @@ class MenuPresenter : MenuPresenterInterface.MenuPresenter,
                 if(currentScreen==R.id.dashboardFragment){
                     if (doubleBackToExitPressedOnce) {
                         getView()!!.superOnPressBack()
+                    }else{
+                        getView()!!.displayDoubleTabExitMessage()
                     }
-                    getView()!!.displayDoubleTabExitMessage()
                 }else{
                     getView()!!.superOnPressBack()
                 }

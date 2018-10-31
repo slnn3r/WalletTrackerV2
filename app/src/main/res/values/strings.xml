@@ -6,9 +6,14 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_desc">Navigation header</string>
 
-    <!-- details_screen_floating_button -->
+    <!-- fb_edit_delete_menu -->
     <string name="fb_action_edit_title">Edit</string>
     <string name="fb_action_delete_title">Delete</string>
+
+    <!-- fb_history_filter_menu -->
+    <string name="fb_action_specific_title">Specific Date</string>
+    <string name="fb_action_range_title">Range Date</string>
+
 
     <!-- activity_menu_drawer -->
     <string name="navSection1_title">Wallet Management</string>
@@ -32,7 +37,6 @@
     <string name="sign_out_dialog_title">Sign Out Account</string>
     <string name="sign_out_dialog_message">Please Make Sure to Backup Data Before Sign Out. All Pending Backup Process will Remove.</string>
 
-
     <string name="welcome_message">Welcome, %s</string> <!-- SplashActivity -->
 
     <!-- LoginActivity-->
@@ -42,6 +46,25 @@
 
     <!-- MenuActivity -->
     <string name="title_activity_menu">MenuActivity</string>
+
+    <!-- CreateAccountFragment -->
+    <string name="ab_createAcc_title">Create Wallet Account</string>
+    <string name="createAcc_created_message">Account Created Successfully</string>
+    <string name="cd_createAcc_createSubmit_title">Create Account</string>
+    <string name="cd_createAcc_createSubmit_desc">Are you confirm to Create this New Account?</string>
+
+    <!-- DetailsAccountFragment -->
+    <string name="ab_detailsAcc_title">Wallet Account Details</string>
+    <string name="detailsAcc_edited_message">Account Details Edited</string>
+    <string name="cd_detailsAcc_editSubmit_title">Edit Account Details</string>
+    <string name="cd_detailsAcc_editSubmit_desc">Are you confirm to Edit this Account Details?</string>
+    <string name="detailsAcc_deleted_message">Account Deleted</string>
+    <string name="cd_detailsAcc_deleteSubmit_title">Delete Account</string>
+    <string name="cd_detailsAcc_deleteSubmit_desc">Are you confirm to Delete this Account?</string>
+
+    <!-- ViewAccountFragment -->
+    <string name="ab_viewAcc_title">Wallet Account List</string>
+
 
     <!-- SOON TO BE REMOVED -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -59,7 +82,41 @@
     <string name="time_title">Time</string>
     <string name="selected_category_title">Selected Category</string>
     <string name="selected_account_title">Selected Account</string>
+    <string name="non_deletable_title">(Non-Deletable)</string>
 
+    <!-- Share Error Message -->
+    <string name="accName_empty">Please Enter Account Name</string>
+    <string name="accInitialBal_empty">Please Enter Initial Balance</string>
 
+    <!-- calculator_custom_dialog -->
+    <string name="btnPlus">+</string>
+    <string name="btnMinus">-</string>
+    <string name="btnMultiply">*</string>
+    <string name="btnDivide">/</string>
+    <string name="btn0">0</string>
+    <string name="btn1">1</string>
+    <string name="btn2">2</string>
+    <string name="btn3">3</string>
+    <string name="btn4">4</string>
+    <string name="btn5">5</string>
+    <string name="btn6">6</string>
+    <string name="btn7">7</string>
+    <string name="btn8">8</string>
+    <string name="btn9">9</string>
+    <string name="btnDot">.</string>
+    <string name="btnEqual">=</string>
+    <string name="btnDelete">Del</string>
+    <string name="btnClear">Clear</string>
+    <string name="calCustomDialogLabel">Transaction Amount</string>
+
+    <!-- Calculator Dialog Fragment -->
+    <string name="additionStatus">+</string>
+    <string name="subtractionStatus">-</string>
+    <string name="multiplicationStatus">*</string>
+    <string name="divisionStatus">/</string>
+    <string name="decimalFormat">#.##</string>
+    <string name="NotANumber">NaN</string>
+    <string name="maxCalAmount">999999999.99</string>
+    <string name="minCalAmount">-999999999.99</string>
 
 </resources>

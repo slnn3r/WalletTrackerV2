@@ -8,9 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
-import android.widget.TextView
 import androidx.navigation.findNavController
-
 import com.example.slnn3r.wallettrackerv2.R
 import kotlinx.android.synthetic.main.fragment_view_category.*
 
@@ -46,14 +44,12 @@ class ViewCategoryFragment : Fragment() {
         switch1.setOnCheckedChangeListener{ _: CompoundButton, _: Boolean ->
 
             if(switch1.isChecked){
-                editTexttype.setText("Expense", TextView.BufferType.EDITABLE)
+                editTexttype.text = "Expense"
                 switch1.backColor = ColorStateList.valueOf(resources.getColor(R.color.colorLightRed))
-                editTexttype.setBackgroundResource(R.drawable.custom_lightred_background)
 
             }else{
-                editTexttype.setText("Income", TextView.BufferType.EDITABLE)
+                editTexttype.text = "Income"
                 switch1.backColor = ColorStateList.valueOf(resources.getColor(R.color.colorLightGreen))
-                editTexttype.setBackgroundResource(R.drawable.custom_lightgreen_background)
             }
         }
 

@@ -20,9 +20,9 @@ import android.widget.Toast
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import com.example.slnn3r.wallettrackerv2.R
-import com.example.slnn3r.wallettrackerv2.constant.Constant
+import com.example.slnn3r.wallettrackerv2.constant.string.Constant
 import com.example.slnn3r.wallettrackerv2.ui.login.loginview.LoginActivity
-import com.example.slnn3r.wallettrackerv2.ui.menu.menupresenter.MenuPresenter
+import com.example.slnn3r.wallettrackerv2.ui.menu.menupresenter.MenuViewPresenter
 import com.example.slnn3r.wallettrackerv2.util.CustomAlertDialog
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseUser
@@ -33,7 +33,7 @@ import kotlinx.android.synthetic.main.app_bar_menu.*
 class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
         MenuViewInterface.MenuView {
 
-    private val mMenuPresenter: MenuPresenter = MenuPresenter()
+    private val mMenuPresenter: MenuViewPresenter = MenuViewPresenter()
     private val mCustomConfirmationDialog: CustomAlertDialog = CustomAlertDialog()
     private val mCustomErrorDialog: CustomAlertDialog = CustomAlertDialog()
 
@@ -216,19 +216,27 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun proceedToAccountScreen() {
-        setupNavigationMode()
-        Navigation.findNavController(this, R.id.navMenu)
-                .navigate(R.id.action_dashboardFragment_to_viewAccountFragment)
+        Handler().postDelayed({
+            setupNavigationMode()
+            Navigation.findNavController(this, R.id.navMenu)
+                    .navigate(R.id.action_dashboardFragment_to_viewAccountFragment)
+        },300)
     }
 
     override fun proceedToCategoryScreen() {
-        setupNavigationMode()
-        Navigation.findNavController(this, R.id.navMenu)
-                .navigate(R.id.action_dashboardFragment_to_viewCategoryFragment)
+        Handler().postDelayed({
+            setupNavigationMode()
+            Navigation.findNavController(this, R.id.navMenu)
+                    .navigate(R.id.action_dashboardFragment_to_viewCategoryFragment)
+        },300)
     }
 
     override fun proceedToHistoryScreen() {
-
+        Handler().postDelayed({
+            setupNavigationMode()
+            Navigation.findNavController(this, R.id.navMenu)
+                    .navigate(R.id.action_dashboardFragment_to_historyFragment)
+        },300)
     }
 
     override fun proceedToHistorySpecific() {

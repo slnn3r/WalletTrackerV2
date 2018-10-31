@@ -4,7 +4,7 @@ import android.content.Context
 
 interface SplashPresenterInterface {
 
-    interface SplashPresenter {
+    interface SplashViewPresenter {
         fun launchCrashlytics(mContext: Context)
         fun loadSession()
     }

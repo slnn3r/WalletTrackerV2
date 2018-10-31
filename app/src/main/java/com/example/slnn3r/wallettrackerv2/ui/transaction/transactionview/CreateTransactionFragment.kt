@@ -8,13 +8,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
-import android.widget.TextView
-
 import com.example.slnn3r.wallettrackerv2.R
+import com.example.slnn3r.wallettrackerv2.ui.menu.menuview.MenuActivity
+import com.example.slnn3r.wallettrackerv2.util.CustomCalculatorDialog
 import kotlinx.android.synthetic.main.fragment_create_transaction.*
 
 
-class CreateTransactionFragment : Fragment() {
+class CreateTransactionFragment : Fragment(),CustomCalculatorDialog.OnInputSelected {
+    override fun calculatorInput(input: String) {
+
+        (context as MenuActivity).setupNavigationMode()
+        if (input == "") {
+            etinlayouta.setText("Enter Amount")
+        } else {
+            etinlayouta.setText(input)
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -25,19 +34,40 @@ class CreateTransactionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        etinlayouta.setOnClickListener {
+
+            (context as MenuActivity).setupToDisable()
+
+            val args = Bundle()
+            if (etinlayouta.text.toString().toDoubleOrNull() != null) {
+                args.putString("key", etinlayouta.text.toString())
+            } else {
+                args.putString("key", "")
+
+            }
+
+            etinlayouta.setText("Loading...")
+
+            val calCustomDialog = CustomCalculatorDialog()
+            calCustomDialog.arguments = args
+            calCustomDialog.isCancelable = false
+            calCustomDialog.setTargetFragment(this, 1)
+            calCustomDialog.show(this.fragmentManager, "")
+        }
+
         switchbobo.setOnCheckedChangeListener{ _: CompoundButton, _: Boolean ->
 
             if(switchbobo.isChecked){
-                texttype.setText("Expense", TextView.BufferType.EDITABLE)
+                texttype.text = "Expense"
                 switchbobo.backColor = ColorStateList.valueOf(resources.getColor(R.color.colorLightRed))
-                texttype.setBackgroundResource(R.drawable.custom_lightred_background)
-                editTextdiam.setBackgroundResource(R.drawable.custom_lightred_background)
+                //texttype.setBackgroundResource(R.drawable.custom_lightred_background)
+                //etinlayouta.setBackgroundResource(R.drawable.custom_lightred_background)
 
             }else{
-                texttype.setText("Income", TextView.BufferType.EDITABLE)
+                texttype.text = "Income"
                 switchbobo.backColor = ColorStateList.valueOf(resources.getColor(R.color.colorLightGreen))
-                texttype.setBackgroundResource(R.drawable.custom_lightgreen_background)
-                editTextdiam.setBackgroundResource(R.drawable.custom_lightgreen_background)
+                //texttype.setBackgroundResource(R.drawable.custom_lightgreen_background)
+                //etinlayouta.setBackgroundResource(R.drawable.custom_lightgreen_background)
             }
         }
     }

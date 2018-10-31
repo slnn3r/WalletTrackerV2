@@ -5,9 +5,4 @@ interface BaseView {
     interface Universal {
         fun onError(message: String)
     }
-
-    interface Explicit {
-        fun showLoadingDialog()
-        fun dismissLoadingDialog()
-    }
 }

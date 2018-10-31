@@ -12,7 +12,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 
-class LoginPresenter : LoginPresenterInterface.LoginPresenter,
+class LoginViewPresenter : LoginPresenterInterface.LoginViewPresenter,
         BasePresenter<LoginViewInterface.LoginView>() {
 
     override fun executeGoogleSignIn(mContext: Context, requestCode: Int,

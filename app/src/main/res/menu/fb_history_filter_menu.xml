@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/fb_action_specific"
+        android:icon="@drawable/ic_specific"
+        android:title="@string/fb_action_specific_title"
+        android:orderInCategory="1"
+        />
+    <item
+        android:id="@+id/fb_action_range"
+        android:icon="@drawable/ic_range"
+        android:title="@string/fb_action_range_title"
+        android:orderInCategory="0"
+        />
+
+</menu>

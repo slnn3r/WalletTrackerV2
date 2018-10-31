@@ -6,50 +6,64 @@
     android:layout_height="match_parent"
     tools:context=".ui.transaction.transactionview.DetailsTransactionFragment">
 
-    <EditText
-        android:id="@+id/editText4"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/layout5"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/custom_default_background"
-        android:completionThreshold="1"
-        android:hint="@string/amount_title"
-        android:imeOptions="actionNext"
-        android:singleLine="true"
-        android:text="@string/enter_amount_title"
-        android:textAlignment="center"
-        android:textSize="36sp"
         android:theme="@style/EditTextTheme"
-        android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/layout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout3" />
+        app:layout_constraintTop_toBottomOf="@+id/layout3">
 
+        <EditText
+            android:id="@+id/editText4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:completionThreshold="1"
+            android:focusable="false"
+            android:hint="@string/amount_title"
+            android:inputType="text"
+            android:padding="@dimen/keyline_1_minus_8dp"
+            android:singleLine="true"
+            android:text="@string/enter_amount_title"
+            android:textAlignment="center"
+            android:textColor="@color/colorLightRed"
+            android:textSize="36sp"
+            android:theme="@style/EditTextTheme"
+            tools:ignore="Autofill" />
+
+    </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/layout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:background="@drawable/custom_default_background"
         android:theme="@style/EditTextTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout2">
+        app:layout_constraintTop_toBottomOf="@+id/spinner3">
 
         <AutoCompleteTextView
             android:id="@+id/editText3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@null"
             android:completionThreshold="1"
             android:hint="@string/remarks_title"
-            android:imeOptions="actionNext"
+            android:imeOptions="actionDone"
+            android:padding="@dimen/keyline_1_minus_8dp"
             android:singleLine="true"
             android:textAlignment="center"
             android:theme="@style/EditTextTheme" />
@@ -60,20 +74,23 @@
         android:id="@+id/layout2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/custom_default_background"
         android:theme="@style/EditTextTheme"
-        app:layout_constraintEnd_toStartOf="@+id/layout1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/gogolayout"
+        app:layout_constraintStart_toStartOf="parent">
 
         <AutoCompleteTextView
             android:id="@+id/editText2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@null"
             android:completionThreshold="1"
             android:hint="@string/date_title"
             android:imeOptions="actionNext"
+            android:padding="@dimen/keyline_1_minus_8dp"
             android:singleLine="true"
             android:textAlignment="center"
             android:theme="@style/EditTextTheme" />
@@ -81,23 +98,27 @@
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/layout1"
+        android:id="@+id/gogolayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="88dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/custom_default_background"
         android:theme="@style/EditTextTheme"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/layout2"
-        app:layout_constraintTop_toBottomOf="@+id/textView4">
+        app:layout_constraintStart_toEndOf="@+id/layout2">
 
         <AutoCompleteTextView
-            android:id="@+id/editText1"
+            android:id="@+id/goblaedt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@null"
             android:completionThreshold="1"
             android:hint="@string/time_title"
             android:imeOptions="actionNext"
+            android:padding="@dimen/keyline_1_minus_8dp"
             android:singleLine="true"
             android:textAlignment="center"
             android:theme="@style/EditTextTheme" />
@@ -174,7 +195,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="10dp"
         android:text="@string/selected_account_title"
         app:layout_constraintEnd_toStartOf="@+id/spinner2"
@@ -185,7 +206,7 @@
         android:id="@+id/spinner2"
         android:layout_width="0dp"
         android:layout_height="24dp"
-        android:layout_marginTop="23dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/custom_default_background"
         app:layout_constraintEnd_toEndOf="parent"
@@ -198,13 +219,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         app:fabBackgroundTint="@color/colorPrimaryDark"
+        app:fabDrawable="@drawable/ic_edit_delete"
         app:fabGravity="bottom_end"
         app:fabMenu="@menu/fb_edit_delete_menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:miniFabTitleTextColorList="@array/fab_menu_item_colors"
         app:miniFabBackgroundTintList="@array/fab_menu_item_colors"
-        app:miniFabDrawableTint="@color/colorPrimaryDark"
-        app:miniFabTitleBackgroundTint="@color/colorPrimaryDark" />
+        app:miniFabDrawableTint="@color/colorPrimaryLight"
+        app:miniFabTitleBackgroundTint="@color/colorPrimaryLight"
+        app:miniFabTitleTextColorList="@array/fab_menu_item_colors" />
 
 </android.support.constraint.ConstraintLayout>

@@ -7,8 +7,8 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
 import com.example.slnn3r.wallettrackerv2.R
-import com.example.slnn3r.wallettrackerv2.constant.Constant
-import com.example.slnn3r.wallettrackerv2.ui.login.loginpresenter.LoginPresenter
+import com.example.slnn3r.wallettrackerv2.constant.string.Constant
+import com.example.slnn3r.wallettrackerv2.ui.login.loginpresenter.LoginViewPresenter
 import com.example.slnn3r.wallettrackerv2.ui.menu.menuview.MenuActivity
 import com.example.slnn3r.wallettrackerv2.util.CustomAlertDialog
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity(), LoginViewInterface.LoginView {
 
-    private val mLoginPresenter: LoginPresenter = LoginPresenter()
+    private val mLoginViewPresenter: LoginViewPresenter = LoginViewPresenter()
     private val mCustomErrorDialog: CustomAlertDialog = CustomAlertDialog()
     private lateinit var mGoogleSignInClient: GoogleSignInClient
 
@@ -34,13 +34,13 @@ class LoginActivity : AppCompatActivity(), LoginViewInterface.LoginView {
 
     override fun onStart() {
         super.onStart()
-        mLoginPresenter.bindView(this)
-        mGoogleSignInClient = mLoginPresenter.getGoogleSignInClient(this)
+        mLoginViewPresenter.bindView(this)
+        mGoogleSignInClient = mLoginViewPresenter.getGoogleSignInClient(this)
     }
 
     override fun onStop() {
         super.onStop()
-        mLoginPresenter.unbindView() // Unbind the view when it stopped
+        mLoginViewPresenter.unbindView() // Unbind the view when it stopped
     }
 
     override fun onError(message: String) {
@@ -70,7 +70,7 @@ class LoginActivity : AppCompatActivity(), LoginViewInterface.LoginView {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        mLoginPresenter.executeGoogleSignIn(this, requestCode, resultCode, data!!)
+        mLoginViewPresenter.executeGoogleSignIn(this, requestCode, resultCode, data!!)
     }
 
     private fun launchGoogleLoginDialog() {

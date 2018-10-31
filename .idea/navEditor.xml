@@ -65,6 +65,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_dashboardFragment_to_historyFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_dashboardFragment_to_viewAccountFragment">
                               <value>
                                 <LayoutPositions />
@@ -111,6 +116,18 @@
                           <Point>
                             <option name="x" value="-645" />
                             <option name="y" value="125" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="historyFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-348" />
+                            <option name="y" value="535" />
                           </Point>
                         </option>
                       </LayoutPositions>

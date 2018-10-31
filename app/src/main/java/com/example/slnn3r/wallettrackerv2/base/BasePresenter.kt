@@ -1,7 +1,7 @@
 package com.example.slnn3r.wallettrackerv2.base
 
 import android.content.Context
-import com.example.slnn3r.wallettrackerv2.constant.Constant
+import com.example.slnn3r.wallettrackerv2.constant.string.Constant
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -38,5 +38,4 @@ open class BasePresenter<V : BaseView.Universal> {
     fun getSignedInUser(): FirebaseUser? {
         return baseModel.getSignedInUserFirebase()
     }
-
 }

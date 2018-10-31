@@ -5,7 +5,9 @@ import com.google.firebase.auth.FirebaseUser
 
 interface LoginViewInterface {
 
-    interface LoginView : BaseView.Universal, BaseView.Explicit {
+    interface LoginView : BaseView.Universal {
         fun signInSuccess(userFirebase: FirebaseUser)
+        fun showLoadingDialog()
+        fun dismissLoadingDialog()
     }
 }

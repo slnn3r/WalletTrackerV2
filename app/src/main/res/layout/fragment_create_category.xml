@@ -51,24 +51,29 @@
         android:id="@+id/layout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
+        android:background="@drawable/custom_default_background"
         android:theme="@style/EditTextTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Texttype">
 
-        <AutoCompleteTextView
+        <EditText
             android:id="@+id/editText2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@null"
             android:completionThreshold="1"
             android:hint="@string/category_name_title"
             android:imeOptions="actionDone"
+            android:padding="@dimen/keyline_1_minus_8dp"
             android:singleLine="true"
-            android:theme="@style/EditTextTheme" />
+            android:theme="@style/EditTextTheme"
+            tools:ignore="Autofill"
+            android:inputType="text" />
 
     </android.support.design.widget.TextInputLayout>
 

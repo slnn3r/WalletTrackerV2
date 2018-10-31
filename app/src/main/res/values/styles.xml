@@ -37,4 +37,9 @@
         <item>@color/colorLightGreen</item>
     </integer-array>
 
+    <style name="layout_error" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
 </resources>

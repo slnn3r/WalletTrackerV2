@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.history.historyview.HistoryFragment">
+
+    <io.github.yavski.fabspeeddial.FabSpeedDial
+        android:id="@+id/fab_speed_dial43"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        app:fabBackgroundTint="@color/colorPrimaryDark"
+        app:fabDrawable="@drawable/ic_filter"
+        app:miniFabBackgroundTint="@color/colorPrimaryDark"
+        app:fabGravity="bottom_end"
+        app:fabMenu="@menu/fb_history_filter_menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:miniFabDrawableTint="@color/colorPrimaryLight"
+        app:miniFabTitleBackgroundTint="@color/colorPrimaryLight"
+     />
+
+</android.support.constraint.ConstraintLayout>

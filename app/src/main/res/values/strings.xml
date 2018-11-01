@@ -43,18 +43,22 @@
     <string name="iv_login_desc">Image View Login Logo</string>
     <string name="sign_in_loading_message">Signing with Google Account…</string>
     <string name="sign_in_success_message">Sign In as %s</string>
+    <string name="no_internet_message">Please Make Sure you have connect to Internet Connection.</string>
 
     <!-- MenuActivity -->
     <string name="title_activity_menu">MenuActivity</string>
 
+    <!-- ViewAccountFragment -->
+    <string name="ab_viewAcc_title">Account List</string>
+
     <!-- CreateAccountFragment -->
-    <string name="ab_createAcc_title">Create Wallet Account</string>
+    <string name="ab_createAcc_title">Create Account</string>
     <string name="createAcc_created_message">Account Created Successfully</string>
     <string name="cd_createAcc_createSubmit_title">Create Account</string>
     <string name="cd_createAcc_createSubmit_desc">Are you confirm to Create this New Account?</string>
 
     <!-- DetailsAccountFragment -->
-    <string name="ab_detailsAcc_title">Wallet Account Details</string>
+    <string name="ab_detailsAcc_title">Account Details</string>
     <string name="detailsAcc_edited_message">Account Details Edited</string>
     <string name="cd_detailsAcc_editSubmit_title">Edit Account Details</string>
     <string name="cd_detailsAcc_editSubmit_desc">Are you confirm to Edit this Account Details?</string>
@@ -62,9 +66,23 @@
     <string name="cd_detailsAcc_deleteSubmit_title">Delete Account</string>
     <string name="cd_detailsAcc_deleteSubmit_desc">Are you confirm to Delete this Account?</string>
 
-    <!-- ViewAccountFragment -->
-    <string name="ab_viewAcc_title">Wallet Account List</string>
+    <!-- ViewCategoryFragment -->
+    <string name="ab_viewCat_title">Category List</string>
 
+    <!-- CreateCategoryFragment -->
+    <string name="ab_createCat_title">Create Category</string>
+    <string name="createCat_created_message">Category Created Successfully</string>
+    <string name="cd_createCat_createSubmit_title">Create Category</string>
+    <string name="cd_createCat_createSubmit_desc">Are you confirm to Create this New Category?</string>
+
+    <!-- DetailsAccountFragment -->
+    <string name="ab_detailsCat_title">Category Details</string>
+    <string name="detailsCat_edited_message">Category Details Edited</string>
+    <string name="cd_detailsCat_editSubmit_title">Edit Category Details</string>
+    <string name="cd_detailsCat_editSubmit_desc">Are you confirm to Edit this Category Details?</string>
+    <string name="detailsCat_deleted_message">Category Deleted</string>
+    <string name="cd_detailsCat_deleteSubmit_title">Delete Category</string>
+    <string name="cd_detailsCat_deleteSubmit_desc">Are you confirm to Delete this Category?</string>
 
     <!-- SOON TO BE REMOVED -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -72,7 +90,7 @@
     <!-- Share Title -->
     <string name="account_name_title">Account Name</string>
     <string name="initial_balance_title">Initial Balance</string>
-    <string name="transaction_type_title">Transaction Type</string>
+    <string name="category_type_title">Category Type</string>
     <string name="expense_title">Expense</string>
     <string name="category_name_title">Category Name</string>
     <string name="amount_title">Amount</string>
@@ -85,8 +103,17 @@
     <string name="non_deletable_title">(Non-Deletable)</string>
 
     <!-- Share Error Message -->
-    <string name="accName_empty">Please Enter Account Name</string>
-    <string name="accInitialBal_empty">Please Enter Initial Balance</string>
+    <string name="accName_empty_invalid_message">Please Enter Account Name</string>
+    <string name="accName_minWord_invalid_message">Please Enter At Least 4 and At Most 20 words</string>
+    <string name="accName_format_invalid_messagae">Format Invalid, Enter Character Only, Do not End with Space</string>
+    <string name="accName_used_invalid_message">Account Name have been already Used</string>
+    <string name="accName_databaseError_invalid_message">Account Database error occurred</string>
+    <string name="accInitialBal_empty_invalid_message">Please Enter Initial Balance</string>
+    <string name="catName_empty_invalid_message">Please Enter Category Name</string>
+    <string name="catName_minWord_invalid_message">Please Enter At Least 4 and At Most 20 words</string>
+    <string name="catName_format_invalid_messagae">Format Invalid, Enter Character Only, Do not End with Space</string>
+    <string name="catName_used_invalid_message">Category Name have been already Used</string>
+    <string name="catName_databaseError_invalid_message">Category Database error occurred</string>
 
     <!-- calculator_custom_dialog -->
     <string name="btnPlus">+</string>

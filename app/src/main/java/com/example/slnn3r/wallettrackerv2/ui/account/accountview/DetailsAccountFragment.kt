@@ -39,26 +39,10 @@ class DetailsAccountFragment : Fragment(), AccountViewInterface.DetailsAccountVi
         return inflater.inflate(R.layout.fragment_details_account, container, false)
     }
 
-    override fun onStart() {
-        super.onStart()
-        mDetailsAccountViewPresenter.bindView(this)
-        userData = mDetailsAccountViewPresenter.getSignedInUser()!!
-        mDetailsAccountViewPresenter.checkAccountStatus(accountArgData.accountStatus)
-
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Receive Argumemt
-        val accountDataJson = arguments?.getString(Constant.KeyId.ACCOUNT_DETAILS_ARG)
-
-        // user GSON convert to object
-        val gson = Gson()
-        accountArgData = gson.fromJson<Account>(accountDataJson, Account::class.java)
-
-        et_detailsAcc_AccName.setText(accountArgData.accountName)
-        et_detailsAcc_AccInitialBal.setText(accountArgData.accountInitialBalance.toString())
+        setupInitialUi()
 
         et_detailsAcc_AccName.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -84,8 +68,8 @@ class DetailsAccountFragment : Fragment(), AccountViewInterface.DetailsAccountVi
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 mDetailsAccountViewPresenter
                         .decimalInputCheck(et_detailsAcc_AccInitialBal.text.toString())
-                mDetailsAccountViewPresenter
-                        .validateAccountBalanceInput(et_detailsAcc_AccInitialBal.text.toString())
+                mDetailsAccountViewPresenter.validateAccountBalanceInput(context!!,
+                        et_detailsAcc_AccInitialBal.text.toString())
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -95,6 +79,13 @@ class DetailsAccountFragment : Fragment(), AccountViewInterface.DetailsAccountVi
         })
     }
 
+    override fun onStart() {
+        super.onStart()
+        mDetailsAccountViewPresenter.bindView(this)
+        userData = mDetailsAccountViewPresenter.getSignedInUser()!!
+        mDetailsAccountViewPresenter.checkAccountStatus(accountArgData.accountStatus)
+    }
+
     override fun onStop() {
         super.onStop()
         mDetailsAccountViewPresenter.unbindView()
@@ -102,12 +93,12 @@ class DetailsAccountFragment : Fragment(), AccountViewInterface.DetailsAccountVi
 
     override fun setupFloatingActionButton() {
 
-        fb_detailsAcc_editDelete.mainFabOpenedBackgroundColor =
+        fb_detailsAcc.mainFabOpenedBackgroundColor =
                 resources.getColor(R.color.colorPrimary)
-        fb_detailsAcc_editDelete.mainFabClosedBackgroundColor =
+        fb_detailsAcc.mainFabClosedBackgroundColor =
                 resources.getColor(R.color.colorPrimaryDark)
 
-        fb_detailsAcc_editDelete.addActionItem(
+        fb_detailsAcc.addActionItem(
                 SpeedDialActionItem.Builder(R.id.fb_action_edit, R.drawable.ic_edit)
                         .setFabBackgroundColor(resources.getColor(R.color.colorLightGreen))
                         .setLabel(getString(R.string.fb_action_edit_title))
@@ -116,7 +107,7 @@ class DetailsAccountFragment : Fragment(), AccountViewInterface.DetailsAccountVi
                         .create()
         )
 
-        fb_detailsAcc_editDelete.addActionItem(
+        fb_detailsAcc.addActionItem(
                 SpeedDialActionItem.Builder(R.id.fb_action_delete, R.drawable.ic_delete)
                         .setFabBackgroundColor(resources.getColor(R.color.colorLightRed))
                         .setLabel(getString(R.string.fb_action_delete_title))
@@ -125,7 +116,7 @@ class DetailsAccountFragment : Fragment(), AccountViewInterface.DetailsAccountVi
                         .create()
         )
 
-        fb_detailsAcc_editDelete.setOnActionSelectedListener { speedDialActionItem ->
+        fb_detailsAcc.setOnActionSelectedListener { speedDialActionItem ->
             mDetailsAccountViewPresenter.actionCheck(speedDialActionItem)
             false
         }
@@ -133,11 +124,11 @@ class DetailsAccountFragment : Fragment(), AccountViewInterface.DetailsAccountVi
 
     override fun setupFloatingDefaultButton() {
 
-        fb_detailsAcc_editDelete.mainFabClosedBackgroundColor =
+        fb_detailsAcc.mainFabClosedBackgroundColor =
                 resources.getColor(R.color.colorPrimaryDark)
-        fb_detailsAcc_editDelete.setMainFabClosedDrawable(resources.getDrawable(R.drawable.ic_edit))
+        fb_detailsAcc.setMainFabClosedDrawable(resources.getDrawable(R.drawable.ic_edit))
 
-        fb_detailsAcc_editDelete.setOnChangeListener(object : SpeedDialView.OnChangeListener {
+        fb_detailsAcc.setOnChangeListener(object : SpeedDialView.OnChangeListener {
             override fun onMainActionSelected(): Boolean {
 
                 mCustomConfirmationDialog.confirmationDialog(context!!,
@@ -153,9 +144,7 @@ class DetailsAccountFragment : Fragment(), AccountViewInterface.DetailsAccountVi
                                             accountArgData.userUid, accountArgData.accountStatus)
 
                             mDetailsAccountViewPresenter
-                                    .editAccount(context!!, accountInput,
-                                            tl_detailsAcc_AccName.error,
-                                            tl_detailsAcc_AccInitialBal.error)
+                                    .editAccount(context!!, accountInput)
                         }
                 ).show()
 
@@ -192,11 +181,11 @@ class DetailsAccountFragment : Fragment(), AccountViewInterface.DetailsAccountVi
     }
 
     override fun showFloatingButton() {
-        fb_detailsAcc_editDelete.show()
+        fb_detailsAcc.show()
     }
 
     override fun hideFloatingButton() {
-        fb_detailsAcc_editDelete.hide()
+        fb_detailsAcc.hide()
     }
 
     override fun editAccountPrompt() {
@@ -212,9 +201,7 @@ class DetailsAccountFragment : Fragment(), AccountViewInterface.DetailsAccountVi
                                     et_detailsAcc_AccInitialBal.text.toString().toDouble(),
                                     accountArgData.userUid, accountArgData.accountStatus)
 
-                    mDetailsAccountViewPresenter
-                            .editAccount(context!!, accountInput,
-                                    tl_detailsAcc_AccName.error, tl_detailsAcc_AccInitialBal.error)
+                    mDetailsAccountViewPresenter.editAccount(context!!, accountInput)
                 }
         ).show()
     }
@@ -254,5 +241,17 @@ class DetailsAccountFragment : Fragment(), AccountViewInterface.DetailsAccountVi
         Log.e(Constant.LoggingTag.DETAILS_ACCOUNT_LOGGING, message)
         mCustomErrorDialog.errorMessageDialog(context!!, message).show()
         return
+    }
+
+    private fun setupInitialUi() {
+        // Receive Argument
+        val accountDataJson = arguments?.getString(Constant.KeyId.ACCOUNT_DETAILS_ARG)
+
+        // user GSON convert to object
+        val gson = Gson()
+        accountArgData = gson.fromJson<Account>(accountDataJson, Account::class.java)
+
+        et_detailsAcc_AccName.setText(accountArgData.accountName)
+        et_detailsAcc_AccInitialBal.setText(accountArgData.accountInitialBalance.toString())
     }
 }

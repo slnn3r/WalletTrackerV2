@@ -57,7 +57,11 @@
         android:id="@+id/createCategoryFragment"
         android:name="com.example.slnn3r.wallettrackerv2.ui.category.categoryview.CreateCategoryFragment"
         android:label="fragment_create_category"
-        tools:layout="@layout/fragment_create_category" />
+        tools:layout="@layout/fragment_create_category" >
+        <argument
+            android:name="categoryCreateArg"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/viewAccountFragment"
         android:name="com.example.slnn3r.wallettrackerv2.ui.account.accountview.ViewAccountFragment"

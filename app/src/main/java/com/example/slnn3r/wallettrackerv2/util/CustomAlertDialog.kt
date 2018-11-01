@@ -28,7 +28,7 @@ class CustomAlertDialog {
 
         val errorMessageDialog = AlertDialog.Builder(mContext)
         errorMessageDialog.setTitle(mContext.getString(R.string.error_message_dialog_title))
-                //.setIcon()
+                .setIcon(mContext.getDrawable(R.drawable.ic_warning))
                 .setCancelable(false)
                 .setMessage(mContext.getString(R.string.error_message_dialog_message, message))
                 .setPositiveButton(mContext.getString(R.string.error_message_dialog_positive_title)) { dialogBox, _ ->

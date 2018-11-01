@@ -10,8 +10,6 @@ interface MenuViewInterface {
         fun proceedToCategoryScreen()
 
         fun proceedToHistoryScreen()
-        fun proceedToHistorySpecific()
-        fun proceedToHistoryRange()
 
         fun proceedToLineReportScreen()
         fun proceedToBarReportScreen()

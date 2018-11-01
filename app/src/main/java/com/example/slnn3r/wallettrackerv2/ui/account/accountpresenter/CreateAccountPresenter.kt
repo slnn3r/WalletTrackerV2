@@ -19,8 +19,8 @@ class CreateAccountPresenter : AccountPresenterInterface.CreateAccountPresenter,
                                           accountNameInput: String, updateAccountId: String?) {
 
         val accountList = baseModel.getAccountListByUserUidSync(mContext, userUid)
-        val errorMessage =
-                validation.accountNameValidation(accountNameInput, accountList, updateAccountId)
+        val errorMessage = validation.accountNameValidation(mContext, accountNameInput,
+                accountList, updateAccountId)
 
         if (errorMessage != null) {
             getView()!!.invalidAccountNameInput(errorMessage)
@@ -38,10 +38,10 @@ class CreateAccountPresenter : AccountPresenterInterface.CreateAccountPresenter,
         }
     }
 
-    override fun validateAccountBalanceInput(accountBalanceInput: String) {
+    override fun validateAccountBalanceInput(mContext: Context, accountBalanceInput: String) {
 
         val errorMessage =
-                validation.amountValidation(accountBalanceInput)
+                validation.amountValidation(mContext, accountBalanceInput)
 
         if (errorMessage != null) {
             getView()!!.invalidAccountBalanceInput(errorMessage)

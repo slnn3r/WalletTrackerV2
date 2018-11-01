@@ -26,9 +26,9 @@ class DetailsAccountViewModel : AccountModelInterface.DetailsAccountViewModel {
                             .equalTo(Constant.RealmVariableName.ACCOUNT_ID_VARIABLE,
                                     accountData.accountId).findAll()
 
-            accountRealm.forEach { accountList ->
-                accountList.accountName = accountData.accountName
-                accountList.accountInitialBalance = accountData.accountInitialBalance
+            accountRealm.forEach { accountRealmData ->
+                accountRealmData.accountName = accountData.accountName
+                accountRealmData.accountInitialBalance = accountData.accountInitialBalance
             }
         }
 
@@ -52,8 +52,8 @@ class DetailsAccountViewModel : AccountModelInterface.DetailsAccountViewModel {
                             .equalTo(Constant.RealmVariableName.ACCOUNT_ID_VARIABLE,
                                     accountId).findAll()
 
-            accountRealm.forEach { accountList ->
-                accountList.deleteFromRealm()
+            accountRealm.forEach { accountRealmData ->
+                accountRealmData.deleteFromRealm()
             }
         }
 

@@ -37,12 +37,6 @@ class CreateAccountFragment : Fragment(), AccountViewInterface.CreateAccountView
         return inflater.inflate(R.layout.fragment_create_account, container, false)
     }
 
-    override fun onStart() {
-        super.onStart()
-        mCreateAccountViewPresenter.bindView(this)
-        userData = mCreateAccountViewPresenter.getSignedInUser()!!
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -77,8 +71,8 @@ class CreateAccountFragment : Fragment(), AccountViewInterface.CreateAccountView
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 mCreateAccountViewPresenter
                         .decimalInputCheck(et_createAcc_accInitialBal.text.toString())
-                mCreateAccountViewPresenter
-                        .validateAccountBalanceInput(et_createAcc_accInitialBal.text.toString())
+                mCreateAccountViewPresenter.validateAccountBalanceInput(context!!,
+                        et_createAcc_accInitialBal.text.toString())
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -87,6 +81,12 @@ class CreateAccountFragment : Fragment(), AccountViewInterface.CreateAccountView
             }
         })
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mCreateAccountViewPresenter.bindView(this)
+        userData = mCreateAccountViewPresenter.getSignedInUser()!!
     }
 
     override fun onStop() {
@@ -138,8 +138,8 @@ class CreateAccountFragment : Fragment(), AccountViewInterface.CreateAccountView
     }
 
     private fun setupInitialUi() {
-        tl_createAcc_accName.error = getString(R.string.accName_empty)
-        tl_createAcc_accInitialBal.error = getString(R.string.accInitialBal_empty)
+        tl_createAcc_accName.error = getString(R.string.accName_empty_invalid_message)
+        tl_createAcc_accInitialBal.error = getString(R.string.accInitialBal_empty_invalid_message)
         fb_createAcc.hide()
     }
 

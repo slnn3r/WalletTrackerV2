@@ -10,7 +10,7 @@ interface MenuPresenterInterface {
         fun navigationDrawerSelection(item: MenuItem)
 
         fun checkNavigationStatus(isNavigated: String, selectedHistoryScreen: String,
-                                  isBackButton: Boolean, currentScreen: Int?,
+                                  isBackButton: Boolean, currentScreen: Int?, isOpenDrawer: Boolean,
                                   doubleBackToExitPressedOnce: Boolean)
     }
 }

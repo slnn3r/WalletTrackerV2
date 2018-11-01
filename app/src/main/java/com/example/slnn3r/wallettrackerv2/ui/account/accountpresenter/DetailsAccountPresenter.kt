@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.base.BaseModel
 import com.example.slnn3r.wallettrackerv2.base.BasePresenter
+import com.example.slnn3r.wallettrackerv2.constant.string.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
 import com.example.slnn3r.wallettrackerv2.ui.account.accountmodel.DetailsAccountViewModel
 import com.example.slnn3r.wallettrackerv2.ui.account.accountview.AccountViewInterface
@@ -18,7 +19,7 @@ class DetailsAccountPresenter : AccountPresenterInterface.DetailsAccountPresente
     private val validation = InputValidation()
 
     override fun checkAccountStatus(accountStatus: String) {
-        if (accountStatus == "Default") {
+        if (accountStatus == Constant.ConditionalKeyword.DEFAULT_STATUS) {
             getView()!!.setupFloatingDefaultButton()
         } else {
             getView()!!.setupFloatingActionButton()
@@ -29,8 +30,8 @@ class DetailsAccountPresenter : AccountPresenterInterface.DetailsAccountPresente
                                           accountNameInput: String, updateAccountId: String?) {
 
         val accountList = baseModel.getAccountListByUserUidSync(mContext, userUid)
-        val errorMessage =
-                validation.accountNameValidation(accountNameInput, accountList, updateAccountId)
+        val errorMessage = validation.accountNameValidation(mContext, accountNameInput,
+                accountList, updateAccountId)
 
         if (errorMessage != null) {
             getView()!!.invalidAccountNameInput(errorMessage)
@@ -40,9 +41,9 @@ class DetailsAccountPresenter : AccountPresenterInterface.DetailsAccountPresente
         }
     }
 
-    override fun validateAccountBalanceInput(accountBalanceInput: String) {
+    override fun validateAccountBalanceInput(mContext: Context, accountBalanceInput: String) {
         val errorMessage =
-                validation.amountValidation(accountBalanceInput)
+                validation.amountValidation(mContext, accountBalanceInput)
 
         if (errorMessage != null) {
             getView()!!.invalidAccountBalanceInput(errorMessage)
@@ -72,8 +73,7 @@ class DetailsAccountPresenter : AccountPresenterInterface.DetailsAccountPresente
         }
     }
 
-    override fun editAccount(mContext: Context, accountData: Account,
-                             errorAccountName: CharSequence?, errorAccountBalance: CharSequence?) {
+    override fun editAccount(mContext: Context, accountData: Account) {
         try {
             mDetailsAccountModel.editAccountRealm(mContext, accountData)
             getView()!!.editAccountSuccess()

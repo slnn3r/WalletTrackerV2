@@ -78,24 +78,20 @@ class MenuViewPresenter : MenuPresenterInterface.MenuViewPresenter,
 
     override fun checkNavigationStatus(isNavigated: String, selectedHistoryScreen: String,
                                        isBackButton: Boolean, currentScreen: Int?,
-                                       doubleBackToExitPressedOnce: Boolean) {
+                                       isOpenDrawer: Boolean, doubleBackToExitPressedOnce: Boolean) {
 
         // Check if Screen is navigated or not
         if (isNavigated=="MenuNavGraph") {
             getView()!!.setupNavigationFlow()
         } else if(isNavigated=="HistoryNavGraph"){
-
-            if(selectedHistoryScreen=="HistorySpecific"){
-                getView()!!.proceedToHistorySpecific()
-            }else{
-                getView()!!.proceedToHistoryRange()
-            }
-
+            getView()!!.proceedToHistoryScreen()
         }else if(isNavigated=="NavDisable"){
             // Do Nothing for the ToolBar at Dialogfragment Display
         }else {
             if(isBackButton){
-                if(currentScreen==R.id.dashboardFragment){
+                if(isOpenDrawer){
+                    getView()!!.closeDrawer()
+                }else if(currentScreen==R.id.dashboardFragment){
                     if (doubleBackToExitPressedOnce) {
                         getView()!!.superOnPressBack()
                     }else{

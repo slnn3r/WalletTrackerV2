@@ -67,11 +67,11 @@ class AccountViewHolder(val view: View, var passData: Account? = null) :
             if (passData != null) {
 
                 val gson = Gson()
-                val walletAccountData = Account(passData!!.accountId, passData!!.accountName,
+                val accountData = Account(passData!!.accountId, passData!!.accountName,
                         passData!!.accountInitialBalance, passData!!.userUid,
                         passData!!.accountStatus)
 
-                val json = gson.toJson(walletAccountData)
+                val json = gson.toJson(accountData)
 
                 val navController = view.findNavController()
 

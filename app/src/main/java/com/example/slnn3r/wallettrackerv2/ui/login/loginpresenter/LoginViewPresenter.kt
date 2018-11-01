@@ -3,6 +3,9 @@ package com.example.slnn3r.wallettrackerv2.ui.login.loginpresenter
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
+import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.base.BasePresenter
 import com.example.slnn3r.wallettrackerv2.ui.login.loginview.LoginViewInterface
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -25,6 +28,14 @@ class LoginViewPresenter : LoginPresenterInterface.LoginViewPresenter,
                 val accountGoogle = handleSignInResult(task)
                 firebaseAuthentication(mContext, accountGoogle)
             }
+        }else{
+            val cm = mContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
+            val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
+
+            if (!isConnected) {
+                getView()!!.onError(mContext.getString(R.string.no_internet_message))
+            }
         }
     }
 
@@ -44,7 +55,7 @@ class LoginViewPresenter : LoginPresenterInterface.LoginViewPresenter,
 
     private fun firebaseAuthentication(mContext: Context, accountGoogle: GoogleSignInAccount?) {
 
-        if (accountGoogle == null) {
+        if (accountGoogle == null) { // might null as handleSignInResult catch exception
             return
         }
 

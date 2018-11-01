@@ -28,17 +28,34 @@ class Constant {
     object ConditionalKeyword {
         const val DEFAULT_STATUS = "Default"
         const val NON_DEFAULT_STATUS = "New"
+        const val EXPENSE_STATUS = "Expense"
+        const val INCOME_STATUS = "Income"
     }
 
     object KeyId {
         const val ACCOUNT_DETAILS_ARG = "accountDetailsArg"
+        const val CATEGORY_CREATE_ARG = "categoryCreateArg"
+        const val CATEGORY_DETAILS_ARG = "categoryDetailsArg"
     }
 
     object RealmTableName {
         const val ACCOUNT_REALM_TABLE = "account.realm"
+        const val CATEGORY_REALM_TABLE = "category.realm"
     }
 
     object RealmVariableName {
+        const val USER_UID_VARIABLE = "userUid"
         const val ACCOUNT_ID_VARIABLE = "accountId"
+        const val CATEGORY_ID_VARIABLE = "categoryId"
+        const val CATEGORY_TYPE_VARIABLE = "categoryType"
+
+    }
+
+    object RegularExpression {
+        const val REX_NAME = "^[a-zA-Z]+(?: [a-zA-Z]+){0,3}\$"
+    }
+
+    object ConditionalFigure {
+        const val MIN_ACC_NAME = 4
     }
 }

@@ -7,89 +7,85 @@
     tools:context=".ui.category.categoryview.DetailsCategoryFragment">
 
     <com.kyleduo.switchbutton.SwitchButton
-        android:id="@+id/switch2"
+        android:id="@+id/sb_detailsCat_catType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:checked="true"
         app:kswBackColor="@color/colorLightRed"
-        app:kswThumbColor="@color/colorPrimaryDark"
+        app:kswThumbColor="@color/colorPrimaryLight"
         app:kswThumbWidth="30dp"
         app:kswTintColor="@color/fui_bgPhone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/tv_detailsCat_catType_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="18dp"
-        android:text="@string/transaction_type_title"
+        android:text="@string/category_type_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/Texttype"
+        android:id="@+id/tv_detailsCat_catType_selection"
         android:layout_width="0dp"
         android:layout_height="24dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/custom_default_background"
-        android:paddingLeft="4dp"
+        android:paddingLeft="8dp"
         android:paddingTop="2dp"
-        android:paddingRight="4dp"
+        android:paddingRight="8dp"
         android:text="@string/expense_title"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/switch2"
-        app:layout_constraintStart_toEndOf="@+id/textView7"
+        app:layout_constraintEnd_toStartOf="@+id/sb_detailsCat_catType"
+        app:layout_constraintStart_toEndOf="@+id/tv_detailsCat_catType_title"
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/layout2"
+        android:id="@+id/tl_detailsCat_catName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/custom_default_background"
+        android:paddingTop="4dp"
         android:theme="@style/EditTextTheme"
+        app:errorTextAppearance="@style/layout_error"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Texttype">
+        app:layout_constraintTop_toBottomOf="@+id/tv_detailsCat_catType_selection">
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/et_detailsCat_catName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
             android:completionThreshold="1"
             android:hint="@string/category_name_title"
             android:imeOptions="actionDone"
+            android:inputType="text"
             android:padding="@dimen/keyline_1_minus_8dp"
             android:singleLine="true"
             android:theme="@style/EditTextTheme"
-            android:inputType="text"
             tools:ignore="Autofill" />
 
     </android.support.design.widget.TextInputLayout>
 
-    <io.github.yavski.fabspeeddial.FabSpeedDial
-        android:id="@+id/fab_speed_dial"
+    <com.leinardi.android.speeddial.SpeedDialView
+        android:id="@+id/fb_detailsCat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        app:fabBackgroundTint="@color/colorPrimaryDark"
-        app:fabGravity="bottom_end"
-        app:fabMenu="@menu/fb_edit_delete_menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:miniFabTitleTextColorList="@array/fab_menu_item_colors"
-        app:miniFabBackgroundTintList="@array/fab_menu_item_colors"
-        app:miniFabDrawableTint="@color/colorPrimaryLight"
-        app:miniFabTitleBackgroundTint="@color/colorPrimaryLight" />
+        app:sdMainFabClosedSrc="@drawable/ic_edit_delete" />
 
 </android.support.constraint.ConstraintLayout>

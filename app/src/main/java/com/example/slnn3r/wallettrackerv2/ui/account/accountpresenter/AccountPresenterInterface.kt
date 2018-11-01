@@ -14,7 +14,7 @@ interface AccountPresenterInterface {
         fun validateAccountNameInput(mContext: Context, userUid: String,
                                      accountNameInput: String, updateAccountId: String?)
 
-        fun validateAccountBalanceInput(accountBalanceInput: String)
+        fun validateAccountBalanceInput(mContext: Context, accountBalanceInput: String)
         fun decimalInputCheck(accountBalanceInput: String)
         fun checkAllInputError(errorAccountName: CharSequence?, errorAccountBalance: CharSequence?)
         fun createAccount(mContext: Context, accountData: Account)
@@ -25,15 +25,13 @@ interface AccountPresenterInterface {
         fun validateAccountNameInput(mContext: Context, userUid: String,
                                      accountNameInput: String, updateAccountId: String?)
 
-        fun validateAccountBalanceInput(accountBalanceInput: String)
+        fun validateAccountBalanceInput(mContext: Context, accountBalanceInput: String)
         fun decimalInputCheck(accountBalanceInput: String)
 
         fun actionCheck(menuItem: SpeedDialActionItem)
         fun checkAllInputError(errorAccountName: CharSequence?, errorAccountBalance: CharSequence?)
 
-        fun editAccount(mContext: Context, accountData: Account,
-                        errorAccountName: CharSequence?, errorAccountBalance: CharSequence?)
-
+        fun editAccount(mContext: Context, accountData: Account)
         fun deleteAccount(mContext: Context, accountData: Account)
     }
 }

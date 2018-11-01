@@ -70,7 +70,7 @@
     </android.support.design.widget.TextInputLayout>
 
     <com.leinardi.android.speeddial.SpeedDialView
-        android:id="@+id/fb_detailsAcc_editDelete"
+        android:id="@+id/fb_detailsAcc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"

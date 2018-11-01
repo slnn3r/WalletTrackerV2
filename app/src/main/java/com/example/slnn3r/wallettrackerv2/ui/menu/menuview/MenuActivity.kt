@@ -68,7 +68,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Setup Custom Navigation Drawer Button Listener
         toolbar.setNavigationOnClickListener {
             mMenuPresenter.checkNavigationStatus(isNavigated, selectedHistoryScreen,
-                    false, null, doubleBackToExitPressedOnce)
+                    false, null, false, doubleBackToExitPressedOnce)
         }
 
         nav_view.setNavigationItemSelectedListener(this)
@@ -146,7 +146,8 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onBackPressed() {
         val currentScreen = findNavController(R.id.navMenu).currentDestination!!.id
         mMenuPresenter.checkNavigationStatus(isNavigated, selectedHistoryScreen,
-                true, currentScreen, doubleBackToExitPressedOnce)
+                true, currentScreen, drawer_layout.isDrawerOpen(GravityCompat.START),
+                doubleBackToExitPressedOnce)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -156,7 +157,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun signOutSuccess() {
-        Toast.makeText(this, "Sign Out Successful", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "Sign Out Successful", Toast.LENGTH_SHORT).show()
         val intent = Intent(applicationContext, LoginActivity::class.java)
         startActivity(intent)
         finish()
@@ -237,26 +238,6 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             Navigation.findNavController(this, R.id.navMenu)
                     .navigate(R.id.action_dashboardFragment_to_historyFragment)
         },300)
-    }
-
-    override fun proceedToHistorySpecific() {
-        /*
-        setupNavigationMode()
-
-        val navController = (this as Activity).findNavController(R.id.trxHistoryFragmentNavMenu)
-        navController.navigate(R.id.action_detailsTrxFragment_to_trxHistorySpecificDateFragment)
-        isNavigated = getString(R.string.navigatedIndicate)
-        */
-    }
-
-    override fun proceedToHistoryRange() {
-        /*
-        setupNavigationMode()
-
-        val navController = (this as Activity).findNavController(R.id.trxHistoryFragmentNavMenu)
-        navController.navigate(R.id.action_detailsTrxFragment_to_trxHistoryRangeDateFragment)
-        isNavigated = getString(R.string.navigatedIndicate)
-        */
     }
 
     override fun proceedToLineReportScreen() {

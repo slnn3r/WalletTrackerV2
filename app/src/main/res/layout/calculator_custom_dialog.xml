@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <EditText
-        android:id="@+id/calCustomDialogTextView"
+        android:id="@+id/tv_calCustomDialog_amount"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginStart="32dp"
@@ -23,226 +23,226 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calCustomDialogLabel"
+        app:layout_constraintTop_toBottomOf="@+id/tv_calCustomDialog_label"
         tools:ignore="Autofill,LabelFor" />
 
 
     <Button
-        android:id="@+id/btnPlus"
+        android:id="@+id/btn_plus_calCustomDialog"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
-        android:text="@string/btnPlus"
+        android:text="@string/btnPlus_label"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnMinus"
+        app:layout_constraintBottom_toTopOf="@+id/btn_minus_calCustomDialog"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.533"
-        app:layout_constraintStart_toEndOf="@+id/btn3"
-        app:layout_constraintTop_toBottomOf="@+id/calCustomDialogTextView" />
+        app:layout_constraintStart_toEndOf="@+id/btn_3_calCustomDialog"
+        app:layout_constraintTop_toBottomOf="@+id/tv_calCustomDialog_amount" />
 
     <Button
-        android:id="@+id/btnMinus"
+        android:id="@+id/btn_minus_calCustomDialog"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
-        android:text="@string/btnMinus"
+        android:text="@string/btnMinus_label"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnMultiply"
+        app:layout_constraintBottom_toTopOf="@+id/btn_multiply_calCustomDialog"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn6"
-        app:layout_constraintTop_toBottomOf="@+id/btnPlus" />
+        app:layout_constraintStart_toEndOf="@+id/btn_6_calCustomDialog"
+        app:layout_constraintTop_toBottomOf="@+id/btn_plus_calCustomDialog" />
 
     <Button
-        android:id="@+id/btnMultiply"
+        android:id="@+id/btn_multiply_calCustomDialog"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
-        android:text="@string/btnMultiply"
+        android:text="@string/btnMultiply_label"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnDivide"
+        app:layout_constraintBottom_toTopOf="@+id/btn_divide_calCustomDialog"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn9"
-        app:layout_constraintTop_toBottomOf="@+id/btnMinus" />
+        app:layout_constraintStart_toEndOf="@+id/btn_9_calCustomDialog"
+        app:layout_constraintTop_toBottomOf="@+id/btn_minus_calCustomDialog" />
 
     <Button
-        android:id="@+id/btnDivide"
+        android:id="@+id/btn_divide_calCustomDialog"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="8dp"
-        android:text="@string/btnDivide"
+        android:text="@string/btnDivide_label"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnDelete"
+        app:layout_constraintBottom_toTopOf="@+id/btn_delete_calCustomDialog"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/btnEqual"
-        app:layout_constraintTop_toBottomOf="@+id/btnMultiply" />
+        app:layout_constraintStart_toEndOf="@+id/btn_equal_calCustomDialog"
+        app:layout_constraintTop_toBottomOf="@+id/btn_multiply_calCustomDialog" />
 
     <Button
-        android:id="@+id/btn1"
+        android:id="@+id/btn_1_calCustomDialog"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
-        android:text="@string/btn1"
+        android:text="@string/btn1_label"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn4"
-        app:layout_constraintEnd_toStartOf="@+id/btn2"
+        app:layout_constraintBottom_toTopOf="@+id/btn_4_calCustomDialog"
+        app:layout_constraintEnd_toStartOf="@+id/btn_2_calCustomDialog"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calCustomDialogTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_calCustomDialog_amount" />
 
     <Button
-        android:id="@+id/btn2"
+        android:id="@+id/btn_2_calCustomDialog"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/btn2"
+        android:text="@string/btn2_label"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn5"
-        app:layout_constraintEnd_toStartOf="@+id/btn3"
-        app:layout_constraintStart_toEndOf="@+id/btn1"
-        app:layout_constraintTop_toBottomOf="@+id/calCustomDialogTextView" />
+        app:layout_constraintBottom_toTopOf="@+id/btn_5_calCustomDialog"
+        app:layout_constraintEnd_toStartOf="@+id/btn_3_calCustomDialog"
+        app:layout_constraintStart_toEndOf="@+id/btn_1_calCustomDialog"
+        app:layout_constraintTop_toBottomOf="@+id/tv_calCustomDialog_amount" />
 
     <Button
-        android:id="@+id/btn3"
+        android:id="@+id/btn_3_calCustomDialog"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/btn3"
+        android:text="@string/btn3_label"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn6"
-        app:layout_constraintEnd_toStartOf="@+id/btnPlus"
-        app:layout_constraintStart_toEndOf="@+id/btn2"
-        app:layout_constraintTop_toBottomOf="@+id/calCustomDialogTextView" />
+        app:layout_constraintBottom_toTopOf="@+id/btn_6_calCustomDialog"
+        app:layout_constraintEnd_toStartOf="@+id/btn_plus_calCustomDialog"
+        app:layout_constraintStart_toEndOf="@+id/btn_2_calCustomDialog"
+        app:layout_constraintTop_toBottomOf="@+id/tv_calCustomDialog_amount" />
 
     <Button
-        android:id="@+id/btn4"
+        android:id="@+id/btn_4_calCustomDialog"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:text="@string/btn4"
+        android:text="@string/btn4_label"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn7"
-        app:layout_constraintEnd_toStartOf="@+id/btn5"
+        app:layout_constraintBottom_toTopOf="@+id/btn_7_calCustomDialog"
+        app:layout_constraintEnd_toStartOf="@+id/btn_5_calCustomDialog"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn1" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_1_calCustomDialog" />
 
     <Button
-        android:id="@+id/btn5"
+        android:id="@+id/btn_5_calCustomDialog"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/btn5"
+        android:text="@string/btn5_label"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn8"
-        app:layout_constraintEnd_toStartOf="@+id/btn6"
-        app:layout_constraintStart_toEndOf="@+id/btn4"
-        app:layout_constraintTop_toBottomOf="@+id/btn2" />
+        app:layout_constraintBottom_toTopOf="@+id/btn_8_calCustomDialog"
+        app:layout_constraintEnd_toStartOf="@+id/btn_6_calCustomDialog"
+        app:layout_constraintStart_toEndOf="@+id/btn_4_calCustomDialog"
+        app:layout_constraintTop_toBottomOf="@+id/btn_2_calCustomDialog" />
 
     <Button
-        android:id="@+id/btn6"
+        android:id="@+id/btn_6_calCustomDialog"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/btn6"
+        android:text="@string/btn6_label"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn9"
-        app:layout_constraintEnd_toStartOf="@+id/btnMinus"
-        app:layout_constraintStart_toEndOf="@+id/btn5"
-        app:layout_constraintTop_toBottomOf="@+id/btn3" />
+        app:layout_constraintBottom_toTopOf="@+id/btn_9_calCustomDialog"
+        app:layout_constraintEnd_toStartOf="@+id/btn_minus_calCustomDialog"
+        app:layout_constraintStart_toEndOf="@+id/btn_5_calCustomDialog"
+        app:layout_constraintTop_toBottomOf="@+id/btn_3_calCustomDialog" />
 
     <Button
-        android:id="@+id/btn7"
+        android:id="@+id/btn_7_calCustomDialog"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:text="@string/btn7"
+        android:text="@string/btn7_label"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnDot"
-        app:layout_constraintEnd_toStartOf="@+id/btn8"
+        app:layout_constraintBottom_toTopOf="@+id/btn_dot_calCustomDialog"
+        app:layout_constraintEnd_toStartOf="@+id/btn_8_calCustomDialog"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn4" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_4_calCustomDialog" />
 
     <Button
-        android:id="@+id/btn8"
+        android:id="@+id/btn_8_calCustomDialog"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/btn8"
+        android:text="@string/btn8_label"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn0"
-        app:layout_constraintEnd_toStartOf="@+id/btn9"
-        app:layout_constraintStart_toEndOf="@+id/btn7"
-        app:layout_constraintTop_toBottomOf="@+id/btn5" />
+        app:layout_constraintBottom_toTopOf="@+id/btn_0_calCustomDialog"
+        app:layout_constraintEnd_toStartOf="@+id/btn_9_calCustomDialog"
+        app:layout_constraintStart_toEndOf="@+id/btn_7_calCustomDialog"
+        app:layout_constraintTop_toBottomOf="@+id/btn_5_calCustomDialog" />
 
     <Button
-        android:id="@+id/btn9"
+        android:id="@+id/btn_9_calCustomDialog"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/btn9"
+        android:text="@string/btn9_label"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnEqual"
-        app:layout_constraintEnd_toStartOf="@+id/btnMultiply"
-        app:layout_constraintStart_toEndOf="@+id/btn8"
-        app:layout_constraintTop_toBottomOf="@+id/btn6" />
+        app:layout_constraintBottom_toTopOf="@+id/btn_equal_calCustomDialog"
+        app:layout_constraintEnd_toStartOf="@+id/btn_multiply_calCustomDialog"
+        app:layout_constraintStart_toEndOf="@+id/btn_8_calCustomDialog"
+        app:layout_constraintTop_toBottomOf="@+id/btn_6_calCustomDialog" />
 
     <Button
-        android:id="@+id/btn0"
+        android:id="@+id/btn_0_calCustomDialog"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="@string/btn0"
+        android:text="@string/btn0_label"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnDelete"
-        app:layout_constraintEnd_toStartOf="@+id/btnEqual"
-        app:layout_constraintStart_toEndOf="@+id/btnDot"
-        app:layout_constraintTop_toBottomOf="@+id/btn8" />
+        app:layout_constraintBottom_toTopOf="@+id/btn_delete_calCustomDialog"
+        app:layout_constraintEnd_toStartOf="@+id/btn_equal_calCustomDialog"
+        app:layout_constraintStart_toEndOf="@+id/btn_dot_calCustomDialog"
+        app:layout_constraintTop_toBottomOf="@+id/btn_8_calCustomDialog" />
 
     <Button
-        android:id="@+id/btnDot"
+        android:id="@+id/btn_dot_calCustomDialog"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginBottom="8dp"
-        android:text="@string/btnDot"
+        android:text="@string/btnDot_label"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnDelete"
-        app:layout_constraintEnd_toStartOf="@+id/btn0"
+        app:layout_constraintBottom_toTopOf="@+id/btn_delete_calCustomDialog"
+        app:layout_constraintEnd_toStartOf="@+id/btn_0_calCustomDialog"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn7" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_7_calCustomDialog" />
 
     <Button
-        android:id="@+id/btnEqual"
+        android:id="@+id/btn_equal_calCustomDialog"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="@string/btnEqual"
+        android:text="@string/btnEqual_label"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnDelete"
-        app:layout_constraintEnd_toStartOf="@+id/btnDivide"
-        app:layout_constraintStart_toEndOf="@+id/btn0"
-        app:layout_constraintTop_toBottomOf="@+id/btn9" />
+        app:layout_constraintBottom_toTopOf="@+id/btn_delete_calCustomDialog"
+        app:layout_constraintEnd_toStartOf="@+id/btn_divide_calCustomDialog"
+        app:layout_constraintStart_toEndOf="@+id/btn_0_calCustomDialog"
+        app:layout_constraintTop_toBottomOf="@+id/btn_9_calCustomDialog" />
 
     <Button
-        android:id="@+id/btnClear"
+        android:id="@+id/btn_clear_calCustomDialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginBottom="24dp"
-        android:text="@string/btnClear"
+        android:text="@string/btnClear_label"
         android:textColor="@color/colorLightRed"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnDelete"
+        app:layout_constraintEnd_toStartOf="@+id/btn_delete_calCustomDialog"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnEqual" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_equal_calCustomDialog" />
 
     <TextView
-        android:id="@+id/calCustomDialogLabel"
+        android:id="@+id/tv_calCustomDialog_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        android:text="@string/calCustomDialogLabel"
+        android:text="@string/calCustomDialog_label"
         android:textAllCaps="true"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -251,17 +251,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnDelete"
+        android:id="@+id/btn_delete_calCustomDialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:text="@string/btnDelete"
+        android:text="@string/btnDelete_label"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnClear"
-        app:layout_constraintTop_toBottomOf="@+id/btn0" />
+        app:layout_constraintStart_toEndOf="@+id/btn_clear_calCustomDialog"
+        app:layout_constraintTop_toBottomOf="@+id/btn_0_calCustomDialog" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/btnConfirm"
+        android:id="@+id/btn_confirm_calCustomDialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -274,7 +274,7 @@
         app:srcCompat="@drawable/ic_check" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/btnCancel"
+        android:id="@+id/btn_cancel_calCustomDialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -283,7 +283,7 @@
         android:focusable="true"
         app:backgroundTint="@color/colorLightRed"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnConfirm"
+        app:layout_constraintEnd_toStartOf="@+id/btn_confirm_calCustomDialog"
         app:srcCompat="@drawable/ic_cross" />
 
 </android.support.constraint.ConstraintLayout>

@@ -98,7 +98,7 @@ class MenuViewPresenter : MenuPresenterInterface.MenuViewPresenter,
                         getView()!!.displayDoubleTabExitMessage()
                     }
                 }else{
-                    getView()!!.superOnPressBack()
+                    getView()!!.superOnPressBack() // not sure when will hit this?
                 }
             }else{
                 //displaySyncDateTime()

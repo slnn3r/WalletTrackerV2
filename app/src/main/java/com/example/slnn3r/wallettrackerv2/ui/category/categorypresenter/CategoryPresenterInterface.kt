@@ -9,8 +9,7 @@ interface CategoryPresenterInterface {
     interface ViewCategoryPresenter {
         fun checkToggle(isToggleOn: Boolean)
         fun checkSwitchButton(isChecked: Boolean)
-        fun getCategoryListByUserUidWithFilter(mContext: Context, userUid: String,
-                                               filterType: String)
+        fun getCategoryList(mContext: Context, userUid: String, filterType: String)
     }
 
     interface CreateCategoryPresenter {

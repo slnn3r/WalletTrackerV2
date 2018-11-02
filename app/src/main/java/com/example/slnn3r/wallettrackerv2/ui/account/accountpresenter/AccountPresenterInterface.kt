@@ -7,7 +7,7 @@ import com.leinardi.android.speeddial.SpeedDialActionItem
 interface AccountPresenterInterface {
 
     interface ViewAccountPresenter {
-        fun getAllAccountData(mContext: Context, userUid: String)
+        fun getAccountList(mContext: Context, userUid: String)
     }
 
     interface CreateAccountPresenter {

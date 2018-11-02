@@ -76,7 +76,9 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun setupNavigationFlow() {
 
-        onSupportNavigateUp() // Override the Navigation Up Button
+        mMenuPresenter.hideKeyboard(this) // hide any open keyboard to ensure navigated screen free from previous opened keyboard
+
+        onSupportNavigateUp() // call the back function (auto navigate to previous screen) of the navigation graph
 
         val currentScreen = findNavController(R.id.navMenu).currentDestination!!.id
 

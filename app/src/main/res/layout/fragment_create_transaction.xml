@@ -6,57 +6,111 @@
     android:layout_height="match_parent"
     tools:context=".ui.transaction.transactionview.CreateTransactionFragment">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/uniquelayouta"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="20dp"
+    <TextView
+        android:id="@+id/tv_createTrans_selectedAcc_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/selected_account_title"
+        app:layout_constraintEnd_toStartOf="@+id/sp_createTrans_selectedAcc_selection"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/sp_createTrans_selectedAcc_selection"
+        android:layout_width="0dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
         android:background="@drawable/custom_default_background"
-        android:theme="@style/EditTextTheme"
-        app:layout_constraintBottom_toTopOf="@+id/floatingActionButton6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_createTrans_selectedAcc_label"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_createTrans_catType_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="22dp"
+        android:text="@string/category_type_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_createTrans_selectedAcc_label" />
+
+    <TextView
+        android:id="@+id/tv_createTrans_catType_selection"
+        android:layout_width="0dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/custom_default_background"
+        android:paddingLeft="8dp"
+        android:paddingTop="2dp"
+        android:paddingRight="8dp"
+        android:text="@string/expense_title"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/sb_createTrans_catType"
+        app:layout_constraintStart_toEndOf="@+id/tv_createTrans_catType_label"
+        app:layout_constraintTop_toBottomOf="@+id/tv_createTrans_selectedAcc_label" />
+
+    <com.kyleduo.switchbutton.SwitchButton
+        android:id="@+id/sb_createTrans_catType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="16dp"
+        android:checked="true"
+        app:kswBackColor="@color/colorLightRed"
+        app:kswThumbColor="@color/colorPrimaryLight"
+        app:kswThumbWidth="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_createTrans_selectedAcc_label" />
+
+    <TextView
+        android:id="@+id/tv_createTrans_selectedCat_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="6dp"
+        android:text="@string/selected_category_title"
+        app:layout_constraintEnd_toStartOf="@+id/sp_createTrans_selectedCat_selection"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_createTrans_catType_label" />
+
+    <Spinner
+        android:id="@+id/sp_createTrans_selectedCat_selection"
+        android:layout_width="0dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/custom_default_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/uniquelayoutb">
-
-        <EditText
-            android:id="@+id/etinlayouta"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@null"
-            android:completionThreshold="1"
-            android:focusable="false"
-            android:hint="@string/amount_title"
-            android:inputType="text"
-            android:padding="@dimen/keyline_1_minus_8dp"
-            android:singleLine="true"
-            android:text="@string/enter_amount_title"
-            android:textAlignment="center"
-            android:textColor="@color/colorLightRed"
-            android:textSize="36sp"
-            android:theme="@style/EditTextTheme"
-            tools:ignore="Autofill" />
-
-    </android.support.design.widget.TextInputLayout>
+        app:layout_constraintStart_toEndOf="@+id/tv_createTrans_selectedCat_label"
+        app:layout_constraintTop_toBottomOf="@+id/tv_createTrans_catType_label" />
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/uniquelayoutb"
+        android:id="@+id/tl_createTrans_remarks"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/custom_default_background"
+        android:paddingTop="4dp"
         android:theme="@style/EditTextTheme"
+        app:errorTextAppearance="@style/layout_error"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner3">
+        app:layout_constraintTop_toBottomOf="@+id/sp_createTrans_selectedCat_selection">
 
         <AutoCompleteTextView
-            android:id="@+id/etInlayoutb"
+            android:id="@+id/ac_createTrans_remarks"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -71,24 +125,64 @@
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/uniquelayoutc"
+        android:id="@+id/tl_createTrans_amount"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/custom_default_background"
+        android:paddingTop="4dp"
+        android:theme="@style/EditTextTheme"
+        app:errorTextAppearance="@style/layout_error"
+        app:layout_constraintBottom_toTopOf="@+id/tl_createTrans_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tl_createTrans_remarks">
+
+        <EditText
+            android:id="@+id/et_createTrans_amount"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:completionThreshold="1"
+            android:focusable="false"
+            android:hint="@string/amount_required_title"
+            android:inputType="numberDecimal"
+            android:padding="@dimen/keyline_1_minus_8dp"
+            android:singleLine="true"
+            android:text="@string/enter_amount_title"
+            android:textAlignment="center"
+            android:textColor="@color/colorLightRed"
+            android:textSize="36sp"
+            android:theme="@style/EditTextTheme"
+            tools:ignore="Autofill" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/tl_createTrans_date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/custom_default_background"
+        android:paddingTop="4dp"
         android:theme="@style/EditTextTheme"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/uniqueInlayoutd"
+        app:layout_constraintEnd_toStartOf="@+id/tl_createTrans_time"
         app:layout_constraintStart_toStartOf="parent">
 
         <EditText
-            android:id="@+id/etInlayoutc"
+            android:id="@+id/et_createTrans_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
             android:completionThreshold="1"
+            android:focusable="false"
             android:hint="@string/date_title"
             android:imeOptions="actionNext"
             android:inputType="date"
@@ -101,23 +195,25 @@
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/uniqueInlayoutd"
+        android:id="@+id/tl_createTrans_time"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="84dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/custom_default_background"
+        android:paddingTop="4dp"
         android:theme="@style/EditTextTheme"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/floatingActionButton6"
-        app:layout_constraintStart_toEndOf="@+id/uniquelayoutc">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tl_createTrans_date">
 
         <EditText
-            android:id="@+id/etInlayputd"
+            android:id="@+id/et_createTrans_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
             android:completionThreshold="1"
+            android:focusable="false"
             android:hint="@string/time_title"
             android:imeOptions="actionNext"
             android:inputType="time"
@@ -129,95 +225,8 @@
 
     </android.support.design.widget.TextInputLayout>
 
-    <Spinner
-        android:id="@+id/spinner3"
-        android:layout_width="0dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="23dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/custom_default_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="6dp"
-        android:text="@string/selected_category_title"
-        app:layout_constraintEnd_toStartOf="@+id/spinner3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    <com.kyleduo.switchbutton.SwitchButton
-        android:id="@+id/switchbobo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="23dp"
-        android:layout_marginEnd="16dp"
-        android:checked="true"
-        app:kswBackColor="@color/colorLightRed"
-        app:kswThumbColor="@color/colorPrimaryDark"
-        app:kswThumbWidth="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-    <TextView
-        android:id="@+id/texttype"
-        android:layout_width="0dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="23dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/custom_default_background"
-        android:paddingLeft="4dp"
-        android:paddingTop="2dp"
-        android:paddingRight="4dp"
-        android:text="@string/expense_title"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/switchbobo"
-        app:layout_constraintStart_toEndOf="@+id/textView3"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/category_type_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="10dp"
-        android:text="@string/selected_account_title"
-        app:layout_constraintEnd_toStartOf="@+id/spinner2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Spinner
-        android:id="@+id/spinner2"
-        android:layout_width="0dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/custom_default_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton6"
+        android:id="@+id/fb_createTrans"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"

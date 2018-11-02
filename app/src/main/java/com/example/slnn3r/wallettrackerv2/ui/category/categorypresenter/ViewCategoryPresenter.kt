@@ -24,8 +24,8 @@ class ViewCategoryPresenter : CategoryPresenterInterface.ViewCategoryPresenter,
         }
     }
 
-    override fun getCategoryListByUserUidWithFilter(mContext: Context, userUid: String,
-                                                    filterType: String) {
+    override fun getCategoryList(mContext: Context, userUid: String,
+                                 filterType: String) {
 
         try {
             val categoryList = baseModel.getCategoryListByUserUidWithFilterSync(

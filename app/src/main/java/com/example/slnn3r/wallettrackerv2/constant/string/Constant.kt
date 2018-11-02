@@ -36,6 +36,8 @@ class Constant {
         const val ACCOUNT_DETAILS_ARG = "accountDetailsArg"
         const val CATEGORY_CREATE_ARG = "categoryCreateArg"
         const val CATEGORY_DETAILS_ARG = "categoryDetailsArg"
+
+        const val CALCULATE_DIALOG_ARG = "calculatorDialogArg"
     }
 
     object RealmTableName {
@@ -58,4 +60,31 @@ class Constant {
     object ConditionalFigure {
         const val MIN_ACC_NAME = 4
     }
+
+    object Format {
+        const val DATE_FORMAT = "yyyy/MM/dd"
+        const val MONTH_FORMAT = "MMM"
+
+        const val TIME_12HOURS_FORMAT = "hh:mm:ss a"
+        const val TIME_24HOURS_FORMAT = "HH:mm:ss"
+
+        const val DECIMAL_FORMAT = "#.##"
+    }
+
+    object Calculator {
+        const val MAX_AMOUNT = 999999999.99
+        const val MIN_AMOUNT = -999999999.99
+
+        const val ZERO = "0"
+        const val ONE = "1"
+        const val TWO = "2"
+        const val THREE = "3"
+        const val FOUR = "4"
+        const val FIVE = "5"
+        const val SIX = "6"
+        const val SEVEN = "7"
+        const val EIGHT = "8"
+        const val NINE = "9"
+    }
+
 }

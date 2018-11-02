@@ -134,7 +134,7 @@ class DetailsAccountFragment : Fragment(), AccountViewInterface.DetailsAccountVi
                 mCustomConfirmationDialog.confirmationDialog(context!!,
                         getString(R.string.cd_detailsAcc_editSubmit_title),
                         getString(R.string.cd_detailsAcc_editSubmit_desc),
-                        resources.getDrawable(android.R.drawable.ic_dialog_alert),
+                        resources.getDrawable(R.drawable.ic_warning),
                         DialogInterface.OnClickListener { _, _ ->
 
                             val accountInput =
@@ -192,7 +192,7 @@ class DetailsAccountFragment : Fragment(), AccountViewInterface.DetailsAccountVi
         mCustomConfirmationDialog.confirmationDialog(context!!,
                 getString(R.string.cd_detailsAcc_editSubmit_title),
                 getString(R.string.cd_detailsAcc_editSubmit_desc),
-                resources.getDrawable(R.drawable.ic_info),
+                resources.getDrawable(R.drawable.ic_warning),
                 DialogInterface.OnClickListener { _, _ ->
 
                     val accountInput =

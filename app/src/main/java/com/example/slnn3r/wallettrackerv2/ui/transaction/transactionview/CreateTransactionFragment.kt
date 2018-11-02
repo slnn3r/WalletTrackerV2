@@ -1,52 +1,79 @@
 package com.example.slnn3r.wallettrackerv2.ui.transaction.transactionview
 
-
+import android.app.Activity
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.CompoundButton
+import android.widget.Spinner
 import com.example.slnn3r.wallettrackerv2.R
+import com.example.slnn3r.wallettrackerv2.constant.string.Constant
+import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
+import com.example.slnn3r.wallettrackerv2.data.objectclass.Category
 import com.example.slnn3r.wallettrackerv2.ui.menu.menuview.MenuActivity
+import com.example.slnn3r.wallettrackerv2.ui.transaction.transactionpresenter.CreateTransactionPresenter
+import com.example.slnn3r.wallettrackerv2.util.CustomAlertDialog
 import com.example.slnn3r.wallettrackerv2.util.CustomCalculatorDialog
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.fragment_create_transaction.*
+import java.sql.Time
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
+class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTransactionView,
+        CustomCalculatorDialog.OnInputSelected {
 
-class CreateTransactionFragment : Fragment(),CustomCalculatorDialog.OnInputSelected {
-    override fun calculatorInput(input: String) {
+    private val myCalendar = Calendar.getInstance()
+    private lateinit var simpleDateFormat: SimpleDateFormat
 
-        (context as MenuActivity).setupNavigationMode()
-        if (input == "") {
-            etinlayouta.setText("Enter Amount")
-        } else {
-            etinlayouta.setText(input)
-        }
-    }
+    private val mCurrentTime = Calendar.getInstance()
+    private val hour = mCurrentTime.get(Calendar.HOUR_OF_DAY)
+    private val minute = mCurrentTime.get(Calendar.MINUTE)
+    private lateinit var simpleTimeFormat: SimpleDateFormat
+
+    private val mCreateTransactionViewPresenter: CreateTransactionPresenter =
+            CreateTransactionPresenter()
+    private val mCustomErrorDialog: CustomAlertDialog = CustomAlertDialog()
+
+    private lateinit var userData: FirebaseUser
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
+
+        simpleDateFormat = SimpleDateFormat((Constant.Format.DATE_FORMAT), Locale.US)
+        simpleTimeFormat = SimpleDateFormat((Constant.Format.TIME_12HOURS_FORMAT), Locale.US)
+
+        (activity as? AppCompatActivity)?.supportActionBar?.title =
+                getString(R.string.ab_createTrans_title)
         return inflater.inflate(R.layout.fragment_create_transaction, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        etinlayouta.setOnClickListener {
+        fb_createTrans.hide()
+        tl_createTrans_amount.error = getString(R.string.amount_error_label)
 
+        setupDatePicker()
+        setupTimePicker()
+
+        et_createTrans_amount.setOnClickListener {
+            disableAllUiComponent()
             (context as MenuActivity).setupToDisable()
 
             val args = Bundle()
-            if (etinlayouta.text.toString().toDoubleOrNull() != null) {
-                args.putString("key", etinlayouta.text.toString())
-            } else {
-                args.putString("key", "")
+            args.putString(Constant.KeyId.CALCULATE_DIALOG_ARG, et_createTrans_amount.text.toString())
 
-            }
-
-            etinlayouta.setText("Loading...")
+            et_createTrans_amount.setText(getString(R.string.amount_loading_label))
 
             val calCustomDialog = CustomCalculatorDialog()
             calCustomDialog.arguments = args
@@ -55,21 +82,193 @@ class CreateTransactionFragment : Fragment(),CustomCalculatorDialog.OnInputSelec
             calCustomDialog.show(this.fragmentManager, "")
         }
 
-        switchbobo.setOnCheckedChangeListener{ _: CompoundButton, _: Boolean ->
+        sb_createTrans_catType.setOnCheckedChangeListener { _: CompoundButton, _: Boolean ->
+            mCreateTransactionViewPresenter.checkSwitchButton(sb_createTrans_catType.isChecked)
+            mCreateTransactionViewPresenter.getCategoryList(context!!, userData.uid,
+                    tv_createTrans_catType_selection.text.toString())
+        }
 
-            if(switchbobo.isChecked){
-                texttype.text = "Expense"
-                switchbobo.backColor = ColorStateList.valueOf(resources.getColor(R.color.colorLightRed))
-                //texttype.setBackgroundResource(R.drawable.custom_lightred_background)
-                //etinlayouta.setBackgroundResource(R.drawable.custom_lightred_background)
-
-            }else{
-                texttype.text = "Income"
-                switchbobo.backColor = ColorStateList.valueOf(resources.getColor(R.color.colorLightGreen))
-                //texttype.setBackgroundResource(R.drawable.custom_lightgreen_background)
-                //etinlayouta.setBackgroundResource(R.drawable.custom_lightgreen_background)
-            }
+        fb_createTrans.setOnClickListener {
+            mCreateTransactionViewPresenter.createTransaction() // On-Going!
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        mCreateTransactionViewPresenter.bindView(this)
+
+        userData = mCreateTransactionViewPresenter.getSignedInUser()!!
+
+        mCreateTransactionViewPresenter.getAccountList(context!!, userData.uid)
+        mCreateTransactionViewPresenter.getCategoryList(context!!, userData.uid,
+                tv_createTrans_catType_selection.text.toString())
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mCreateTransactionViewPresenter.unbindView()
+    }
+
+    override fun calculatorInput(input: String) {
+        enableAllUiComponent()
+        (context as MenuActivity).setupNavigationMode()
+
+        fb_createTrans.show()
+        tl_createTrans_amount.error = null
+        tl_createTrans_amount.hint = getString(R.string.amount_title)
+        et_createTrans_amount.setText(input)
+    }
+
+    override fun calculatorNoInput() {
+        enableAllUiComponent()
+        (context as MenuActivity).setupNavigationMode()
+
+        fb_createTrans.hide()
+        tl_createTrans_amount.error = getString(R.string.amount_error_label)
+        tl_createTrans_amount.hint = getString(R.string.amount_required_title)
+        et_createTrans_amount.setText(getString(R.string.enter_amount_title))
+    }
+
+    override fun switchButtonExpenseMode() {
+        tv_createTrans_catType_selection.text = Constant.ConditionalKeyword.EXPENSE_STATUS
+        sb_createTrans_catType.backColor =
+                ColorStateList.valueOf(resources.getColor(R.color.colorLightRed))
+        et_createTrans_amount
+                .setTextColor(ColorStateList.valueOf(resources.getColor(R.color.colorLightRed)))
+    }
+
+    override fun switchButtonIncomeMode() {
+        tv_createTrans_catType_selection.text = Constant.ConditionalKeyword.INCOME_STATUS
+        sb_createTrans_catType.backColor =
+                ColorStateList.valueOf(resources.getColor(R.color.colorLightGreen))
+        et_createTrans_amount
+                .setTextColor(ColorStateList.valueOf(resources.getColor(R.color.colorLightGreen)))
+    }
+
+    override fun populateAccountSpinner(accountList: ArrayList<Account>) {
+        val accountNameList = ArrayList<String>()
+
+        accountList.forEach { data ->
+            accountNameList.add(data.accountName)
+        }
+
+        // Creating adapter for spinner
+        val dataAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, accountNameList)
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        val spinner = (context as Activity).findViewById(R.id.sp_createTrans_selectedAcc_selection) as Spinner
+        spinner.adapter = dataAdapter
+
+    }
+
+    override fun populateCategorySpinner(categoryList: ArrayList<Category>) {
+        val categoryNameList = ArrayList<String>()
+
+        categoryList.forEach { data ->
+            categoryNameList.add(data.categoryName)
+        }
+
+        // Creating adapter for spinner
+        val dataAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, categoryNameList)
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        val spinner = (context as Activity).findViewById(R.id.sp_createTrans_selectedCat_selection) as Spinner
+        spinner.adapter = dataAdapter
+    }
+
+    override fun createTransactionSuccess() {
+
+    }
+
+    override fun onError(message: String) {
+        Log.e(Constant.LoggingTag.CREATE_TRANSACTION_LOGGING, message)
+        mCustomErrorDialog.errorMessageDialog(context!!, message).show()
+        return
+    }
+
+    private fun setupDatePicker() {
+
+        val dateDialog =
+                DatePickerDialog(context!!,
+                        DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+                            enableAllUiComponent()
+                            (context as MenuActivity).setupNavigationMode()
+                            myCalendar.set(Calendar.YEAR, year)
+                            myCalendar.set(Calendar.MONTH, monthOfYear)
+                            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                            et_createTrans_date.setText(simpleDateFormat.format(myCalendar.time))
+                        }, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH))
+
+        dateDialog.setOnCancelListener {
+            enableAllUiComponent()
+            (context as MenuActivity).setupNavigationMode()
+        }
+
+        et_createTrans_date.setOnClickListener {
+            disableAllUiComponent()
+            (context as MenuActivity).setupToDisable()
+            dateDialog.show()
+        }
+
+        // Initial Date
+        et_createTrans_date.setText(simpleDateFormat.format(myCalendar.time))
+    }
+
+    private fun setupTimePicker() {
+
+        val timeDialog = TimePickerDialog(context,
+                TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
+                    enableAllUiComponent()
+                    (context as MenuActivity).setupNavigationMode()
+                    val time = Time(selectedHour, selectedMinute, 0)
+                    val formattedTime = simpleTimeFormat.format(time)
+                    et_createTrans_time.setText(formattedTime)
+                }, hour, minute, false)//Yes 24 hour time
+
+        timeDialog.setOnCancelListener {
+            enableAllUiComponent()
+            (context as MenuActivity).setupNavigationMode()
+        }
+
+        et_createTrans_time.setOnClickListener {
+            disableAllUiComponent()
+            (context as MenuActivity).setupToDisable()
+            timeDialog.show()
+        }
+
+        // Initial Time
+        val second = mCurrentTime.get(Calendar.SECOND)
+        val time = Time(hour, minute, second)
+
+        //format takes in a Date, and Time is a subclass of Date
+        val formattedTime = simpleTimeFormat.format(time)
+        et_createTrans_time.setText(formattedTime)
+    }
+
+    private fun enableAllUiComponent() {
+        sp_createTrans_selectedAcc_selection.isEnabled = true
+        sb_createTrans_catType.isEnabled = true
+        sp_createTrans_selectedCat_selection.isEnabled = true
+        ac_createTrans_remarks.isEnabled = true
+        et_createTrans_amount.isEnabled = true
+        et_createTrans_date.isEnabled = true
+        et_createTrans_time.isEnabled = true
+        fb_createTrans.isEnabled = true
+    }
+
+    private fun disableAllUiComponent() {
+        sp_createTrans_selectedAcc_selection.isEnabled = false
+        sb_createTrans_catType.isEnabled = false
+        sp_createTrans_selectedCat_selection.isEnabled = false
+        ac_createTrans_remarks.isEnabled = false
+        et_createTrans_amount.isEnabled = false
+        et_createTrans_date.isEnabled = false
+        et_createTrans_time.isEnabled = false
+        fb_createTrans.isEnabled = false
+    }
 }

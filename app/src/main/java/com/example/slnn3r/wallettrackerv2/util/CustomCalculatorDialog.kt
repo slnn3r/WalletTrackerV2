@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.example.slnn3r.wallettrackerv2.R
+import com.example.slnn3r.wallettrackerv2.constant.string.Constant
 import kotlinx.android.synthetic.main.calculator_custom_dialog.*
 import java.text.DecimalFormat
 
@@ -21,9 +22,10 @@ class CustomCalculatorDialog : BottomSheetDialogFragment() {
 
     interface OnInputSelected {
         fun calculatorInput(input: String)
+        fun calculatorNoInput()
     }
 
-    private lateinit var go: OnInputSelected
+    private lateinit var inputSelection: OnInputSelected
 
     private var valueOne = java.lang.Double.NaN
     private var valueTwo: Double = 0.toDouble()
@@ -38,14 +40,14 @@ class CustomCalculatorDialog : BottomSheetDialogFragment() {
 
     private lateinit var decFormat: DecimalFormat
 
+    override fun onCreateView(inflater: LayoutInflater,
+                              container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-        addition = getString(R.string.additionStatus)
-        subtraction = getString(R.string.subtractionStatus)
-        multiplication = getString(R.string.multiplicationStatus)
-        division = getString(R.string.divisionStatus)
-        decFormat = DecimalFormat(getString(R.string.decimalFormat))
+        addition = getString(R.string.btnPlus_label)
+        subtraction = getString(R.string.btnMinus_label)
+        multiplication = getString(R.string.btnMultiply_label)
+        division = getString(R.string.btnDivide_label)
+        decFormat = DecimalFormat(Constant.Format.DECIMAL_FORMAT)
 
         return inflater.inflate(R.layout.calculator_custom_dialog, container, false)
     }
@@ -55,7 +57,8 @@ class CustomCalculatorDialog : BottomSheetDialogFragment() {
 
         view.viewTreeObserver.addOnGlobalLayoutListener {
             val dialog = dialog as BottomSheetDialog
-            val bottomSheet = dialog.findViewById<View>(android.support.design.R.id.design_bottom_sheet) as FrameLayout?
+            val bottomSheet = dialog
+                    .findViewById<View>(android.support.design.R.id.design_bottom_sheet) as FrameLayout?
             val behavior = BottomSheetBehavior.from(bottomSheet!!)
 
             behavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
@@ -72,22 +75,27 @@ class CustomCalculatorDialog : BottomSheetDialogFragment() {
             behavior.peekHeight = 0
         }
 
-
         val mArgs = this.arguments
-        val myValue = mArgs!!.getString("key")
-        calCustomDialogTextView.setText(myValue)
+        val myValue = mArgs!!.getString(Constant.KeyId.CALCULATE_DIALOG_ARG)
 
-        calCustomDialogTextView.addTextChangedListener(object : TextWatcher {
+        if (myValue!!.toDoubleOrNull() != null) {
+            tv_calCustomDialog_amount.setText(myValue)
+        } else {
+            tv_calCustomDialog_amount.setText("")
+        }
+
+        tv_calCustomDialog_amount.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 Log.d("", "")
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
-                val text = calCustomDialogTextView.text.toString()
-                if (text.contains(".") && text.substring(text.indexOf(".") + 1).length > 2) {
-                    calCustomDialogTextView.setText(text.substring(0, text.length - 1))
-                    calCustomDialogTextView.setSelection(calCustomDialogTextView.text.length)
+                val text = tv_calCustomDialog_amount.text.toString()
+                if (text.contains(".") &&
+                        text.substring(text.indexOf(".") + 1).length > 2) {
+                    tv_calCustomDialog_amount.setText(text.substring(0, text.length - 1))
+                    tv_calCustomDialog_amount.setSelection(tv_calCustomDialog_amount.text.length)
                 }
             }
 
@@ -96,226 +104,244 @@ class CustomCalculatorDialog : BottomSheetDialogFragment() {
             }
         })
 
-        btnConfirm.setOnClickListener {
+        btn_confirm_calCustomDialog.setOnClickListener {
 
-            if (calCustomDialogTextView.text.toString() == getString(R.string.NotANumber)) {
-                go.calculatorInput("")
+            if (tv_calCustomDialog_amount.text.toString() == getString(R.string.notANumber_label)
+                    || tv_calCustomDialog_amount.text.toString() == "") {
+                inputSelection.calculatorNoInput()
             } else {
-                go.calculatorInput(calCustomDialogTextView.text.toString())
+                inputSelection.calculatorInput(tv_calCustomDialog_amount.text.toString())
             }
 
             dialog.dismiss()
         }
 
-        btnCancel.setOnClickListener {
-            go.calculatorInput(myValue!!)
-            dialog.dismiss()
+        btn_cancel_calCustomDialog.setOnClickListener {
+
+            if (myValue.toDoubleOrNull() != null) {
+                inputSelection.calculatorInput(myValue)
+                dialog.dismiss()
+            } else {
+                inputSelection.calculatorNoInput()
+                dialog.dismiss()
+            }
         }
 
-        btn0.setOnClickListener {
-            calCustomDialogTextView.setTextColor(Color.BLACK)
+        btn_0_calCustomDialog.setOnClickListener {
+            tv_calCustomDialog_amount.setTextColor(Color.BLACK)
 
             if (!rewriting) {
-                calCustomDialogTextView.text = calCustomDialogTextView.text.append(btn0.text)
+                tv_calCustomDialog_amount.text =
+                        tv_calCustomDialog_amount.text.append(Constant.Calculator.ZERO)
 
             } else {
-                calCustomDialogTextView.setText(btn0.text.toString())
+                tv_calCustomDialog_amount.setText(Constant.Calculator.ZERO)
                 rewriting = false
             }
         }
 
-        btn1.setOnClickListener {
-            calCustomDialogTextView.setTextColor(Color.BLACK)
+        btn_1_calCustomDialog.setOnClickListener {
+            tv_calCustomDialog_amount.setTextColor(Color.BLACK)
 
             if (!rewriting) {
-                calCustomDialogTextView.text = calCustomDialogTextView.text.append(btn1.text)
+                tv_calCustomDialog_amount.text =
+                        tv_calCustomDialog_amount.text.append(Constant.Calculator.ONE)
             } else {
-                calCustomDialogTextView.setText(btn1.text.toString())
+                tv_calCustomDialog_amount.setText(Constant.Calculator.ONE)
                 rewriting = false
             }
         }
 
-        btn2.setOnClickListener {
-            calCustomDialogTextView.setTextColor(Color.BLACK)
+        btn_2_calCustomDialog.setOnClickListener {
+            tv_calCustomDialog_amount.setTextColor(Color.BLACK)
 
             if (!rewriting) {
-                calCustomDialogTextView.text = calCustomDialogTextView.text.append(btn2.text)
+                tv_calCustomDialog_amount.text =
+                        tv_calCustomDialog_amount.text.append(Constant.Calculator.TWO)
             } else {
-                calCustomDialogTextView.setText(btn2.text.toString())
+                tv_calCustomDialog_amount.setText(Constant.Calculator.TWO)
                 rewriting = false
             }
         }
 
-        btn3.setOnClickListener {
+        btn_3_calCustomDialog.setOnClickListener {
 
-            calCustomDialogTextView.setTextColor(Color.BLACK)
+            tv_calCustomDialog_amount.setTextColor(Color.BLACK)
 
             if (!rewriting) {
-                calCustomDialogTextView.text = calCustomDialogTextView.text.append(btn3.text)
+                tv_calCustomDialog_amount.text =
+                        tv_calCustomDialog_amount.text.append(Constant.Calculator.THREE)
             } else {
-                calCustomDialogTextView.setText(btn3.text.toString())
+                tv_calCustomDialog_amount.setText(Constant.Calculator.THREE)
                 rewriting = false
             }
         }
 
-        btn4.setOnClickListener {
-            calCustomDialogTextView.setTextColor(Color.BLACK)
+        btn_4_calCustomDialog.setOnClickListener {
+            tv_calCustomDialog_amount.setTextColor(Color.BLACK)
 
             if (!rewriting) {
-                calCustomDialogTextView.text = calCustomDialogTextView.text.append(btn4.text)
+                tv_calCustomDialog_amount.text =
+                        tv_calCustomDialog_amount.text.append(Constant.Calculator.FOUR)
             } else {
-                calCustomDialogTextView.setText(btn4.text.toString())
+                tv_calCustomDialog_amount.setText(Constant.Calculator.FOUR)
                 rewriting = false
             }
         }
 
-        btn5.setOnClickListener {
-            calCustomDialogTextView.setTextColor(Color.BLACK)
+        btn_5_calCustomDialog.setOnClickListener {
+            tv_calCustomDialog_amount.setTextColor(Color.BLACK)
 
             if (!rewriting) {
-                calCustomDialogTextView.text = calCustomDialogTextView.text.append(btn5.text)
+                tv_calCustomDialog_amount.text =
+                        tv_calCustomDialog_amount.text.append(Constant.Calculator.FIVE)
             } else {
-                calCustomDialogTextView.setText(btn5.text.toString())
+                tv_calCustomDialog_amount.setText(Constant.Calculator.FIVE)
                 rewriting = false
             }
         }
 
-        btn6.setOnClickListener {
-            calCustomDialogTextView.setTextColor(Color.BLACK)
+        btn_6_calCustomDialog.setOnClickListener {
+            tv_calCustomDialog_amount.setTextColor(Color.BLACK)
 
             if (!rewriting) {
-                calCustomDialogTextView.text = calCustomDialogTextView.text.append(btn6.text)
+                tv_calCustomDialog_amount.text =
+                        tv_calCustomDialog_amount.text.append(Constant.Calculator.SIX)
             } else {
-                calCustomDialogTextView.setText(btn6.text.toString())
+                tv_calCustomDialog_amount.setText(Constant.Calculator.SIX)
                 rewriting = false
             }
         }
 
-        btn7.setOnClickListener {
-            calCustomDialogTextView.setTextColor(Color.BLACK)
+        btn_7_calCustomDialog.setOnClickListener {
+            tv_calCustomDialog_amount.setTextColor(Color.BLACK)
 
             if (!rewriting) {
-                calCustomDialogTextView.text = calCustomDialogTextView.text.append(btn7.text)
+                tv_calCustomDialog_amount.text =
+                        tv_calCustomDialog_amount.text.append(Constant.Calculator.SEVEN)
             } else {
-                calCustomDialogTextView.setText(btn7.text.toString())
+                tv_calCustomDialog_amount.setText(Constant.Calculator.SEVEN)
                 rewriting = false
             }
         }
 
-        btn8.setOnClickListener {
-            calCustomDialogTextView.setTextColor(Color.BLACK)
+        btn_8_calCustomDialog.setOnClickListener {
+            tv_calCustomDialog_amount.setTextColor(Color.BLACK)
 
             if (!rewriting) {
-                calCustomDialogTextView.text = calCustomDialogTextView.text.append(btn8.text)
+                tv_calCustomDialog_amount.text =
+                        tv_calCustomDialog_amount.text.append(Constant.Calculator.EIGHT)
             } else {
-                calCustomDialogTextView.setText(btn8.text.toString())
+                tv_calCustomDialog_amount.setText(Constant.Calculator.EIGHT)
                 rewriting = false
             }
         }
 
-        btn9.setOnClickListener {
-            calCustomDialogTextView.setTextColor(Color.BLACK)
+        btn_9_calCustomDialog.setOnClickListener {
+            tv_calCustomDialog_amount.setTextColor(Color.BLACK)
 
             if (!rewriting) {
-                calCustomDialogTextView.text = calCustomDialogTextView.text.append(btn9.text)
+                tv_calCustomDialog_amount.text =
+                        tv_calCustomDialog_amount.text.append(Constant.Calculator.NINE)
             } else {
-                calCustomDialogTextView.setText(btn9.text.toString())
+                tv_calCustomDialog_amount.setText(Constant.Calculator.NINE)
                 rewriting = false
             }
         }
 
-        btnDot.setOnClickListener {
-            calCustomDialogTextView.setTextColor(Color.BLACK)
+        btn_dot_calCustomDialog.setOnClickListener {
+            tv_calCustomDialog_amount.setTextColor(Color.BLACK)
 
             if (!rewriting) {
-                calCustomDialogTextView.text = calCustomDialogTextView.text.append(btnDot.text)
+                tv_calCustomDialog_amount.text =
+                        tv_calCustomDialog_amount.text.append(btn_dot_calCustomDialog.text)
             } else {
-                calCustomDialogTextView.setText(btnDot.text.toString())
+                tv_calCustomDialog_amount.setText(btn_dot_calCustomDialog.text.toString())
                 rewriting = false
             }
         }
 
-        btnDelete.setOnClickListener {
+        btn_delete_calCustomDialog.setOnClickListener {
 
             if (!rewriting) {
-                val length = calCustomDialogTextView.text.length
+                val length = tv_calCustomDialog_amount.text.length
                 if (length > 0) {
-                    calCustomDialogTextView.text.delete(length - 1, length)
+                    tv_calCustomDialog_amount.text.delete(length - 1, length)
                 }
             }
         }
 
-        btnClear.setOnClickListener {
-            calCustomDialogTextView.setText("")
+        btn_clear_calCustomDialog.setOnClickListener {
+            tv_calCustomDialog_amount.setText("")
             resetCalculator()
         }
 
-        btnPlus.setOnClickListener {
+        btn_plus_calCustomDialog.setOnClickListener {
 
             computeCalculation()
             currentAction = addition
 
-            btnPlus.setTextColor(Color.BLUE)
-            btnMinus.setTextColor(Color.BLACK)
-            btnMultiply.setTextColor(Color.BLACK)
-            btnDivide.setTextColor(Color.BLACK)
+            btn_plus_calCustomDialog.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn_minus_calCustomDialog.setTextColor(Color.BLACK)
+            btn_multiply_calCustomDialog.setTextColor(Color.BLACK)
+            btn_divide_calCustomDialog.setTextColor(Color.BLACK)
 
-            calCustomDialogTextView.setText(decFormat.format(valueOne))
-            calCustomDialogTextView.setTextColor(Color.BLUE)
+            tv_calCustomDialog_amount.setText(decFormat.format(valueOne))
+            tv_calCustomDialog_amount.setTextColor(resources.getColor(R.color.colorPrimary))
             rewriting = true
         }
 
-        btnMinus.setOnClickListener {
+        btn_minus_calCustomDialog.setOnClickListener {
 
             computeCalculation()
             currentAction = subtraction
 
-            btnPlus.setTextColor(Color.BLACK)
-            btnMinus.setTextColor(Color.BLUE)
-            btnMultiply.setTextColor(Color.BLACK)
-            btnDivide.setTextColor(Color.BLACK)
+            btn_plus_calCustomDialog.setTextColor(Color.BLACK)
+            btn_minus_calCustomDialog.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn_multiply_calCustomDialog.setTextColor(Color.BLACK)
+            btn_divide_calCustomDialog.setTextColor(Color.BLACK)
 
-            calCustomDialogTextView.setText(decFormat.format(valueOne))
-            calCustomDialogTextView.setTextColor(Color.BLUE)
+            tv_calCustomDialog_amount.setText(decFormat.format(valueOne))
+            tv_calCustomDialog_amount.setTextColor(resources.getColor(R.color.colorPrimary))
             rewriting = true
         }
 
-        btnMultiply.setOnClickListener {
+        btn_multiply_calCustomDialog.setOnClickListener {
 
             computeCalculation()
             currentAction = multiplication
 
-            btnPlus.setTextColor(Color.BLACK)
-            btnMinus.setTextColor(Color.BLACK)
-            btnMultiply.setTextColor(Color.BLUE)
-            btnDivide.setTextColor(Color.BLACK)
+            btn_plus_calCustomDialog.setTextColor(Color.BLACK)
+            btn_minus_calCustomDialog.setTextColor(Color.BLACK)
+            btn_multiply_calCustomDialog.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn_divide_calCustomDialog.setTextColor(Color.BLACK)
 
-            calCustomDialogTextView.setText(decFormat.format(valueOne))
-            calCustomDialogTextView.setTextColor(Color.BLUE)
+            tv_calCustomDialog_amount.setText(decFormat.format(valueOne))
+            tv_calCustomDialog_amount.setTextColor(resources.getColor(R.color.colorPrimary))
             rewriting = true
         }
 
-        btnDivide.setOnClickListener {
+        btn_divide_calCustomDialog.setOnClickListener {
 
             computeCalculation()
             currentAction = division
 
-            btnPlus.setTextColor(Color.BLACK)
-            btnMinus.setTextColor(Color.BLACK)
-            btnMultiply.setTextColor(Color.BLACK)
-            btnDivide.setTextColor(Color.BLUE)
+            btn_plus_calCustomDialog.setTextColor(Color.BLACK)
+            btn_minus_calCustomDialog.setTextColor(Color.BLACK)
+            btn_multiply_calCustomDialog.setTextColor(Color.BLACK)
+            btn_divide_calCustomDialog.setTextColor(resources.getColor(R.color.colorPrimary))
 
-            calCustomDialogTextView.setText(decFormat.format(valueOne))
-            calCustomDialogTextView.setTextColor(Color.BLUE)
+            tv_calCustomDialog_amount.setText(decFormat.format(valueOne))
+            tv_calCustomDialog_amount.setTextColor(resources.getColor(R.color.colorPrimary))
             rewriting = true
         }
 
 
-        btnEqual.setOnClickListener {
+        btn_equal_calCustomDialog.setOnClickListener {
 
             computeCalculation()
-            calCustomDialogTextView.setText(decFormat.format(valueOne))
-            calCustomDialogTextView.setTextColor(Color.BLUE)
+            tv_calCustomDialog_amount.setText(decFormat.format(valueOne))
+            tv_calCustomDialog_amount.setTextColor(resources.getColor(R.color.colorPrimary))
 
             resetCalculator()
         }
@@ -324,13 +350,13 @@ class CustomCalculatorDialog : BottomSheetDialogFragment() {
     private fun computeCalculation() {
         if (!java.lang.Double.isNaN(valueOne)) {
 
-            valueTwo = if (calCustomDialogTextView.text.toString().toDoubleOrNull() == null) {
+            valueTwo = if (tv_calCustomDialog_amount.text.toString().toDoubleOrNull() == null) {
                 Double.NaN
             } else {
-                calCustomDialogTextView.text.toString().toDouble()
+                tv_calCustomDialog_amount.text.toString().toDouble()
             }
 
-            calCustomDialogTextView.text = null
+            tv_calCustomDialog_amount.text = null
 
             when (currentAction) {
                 addition -> {
@@ -354,17 +380,17 @@ class CustomCalculatorDialog : BottomSheetDialogFragment() {
             }
         } else {
             try {
-                valueOne = calCustomDialogTextView.text.toString().toDouble()
+                valueOne = tv_calCustomDialog_amount.text.toString().toDouble()
             } catch (e: Exception) {
             }
         }
     }
 
     private fun checkExcessiveAmount() {
-        if (valueOne > getString(R.string.maxCalAmount).toDouble() || valueOne < getString(R.string.minCalAmount).toDouble()) {
+        if (valueOne > Constant.Calculator.MAX_AMOUNT || valueOne < Constant.Calculator.MIN_AMOUNT) {
             valueOne = Double.NaN
-            calCustomDialogTextView.setText(decFormat.format(valueOne))
-            calCustomDialogTextView.setTextColor(Color.BLUE)
+            tv_calCustomDialog_amount.setText(decFormat.format(valueOne))
+            tv_calCustomDialog_amount.setTextColor(resources.getColor(R.color.colorPrimary))
             currentAction = ""
             rewriting = false
         }
@@ -374,19 +400,17 @@ class CustomCalculatorDialog : BottomSheetDialogFragment() {
         super.onAttach(context)
 
         try {
-
-            go = this.targetFragment as OnInputSelected
-
+            inputSelection = this.targetFragment as OnInputSelected
         } catch (e: ClassCastException) {
             Log.e("", e.toString())
         }
     }
 
     private fun resetCalculator() {
-        btnPlus.setTextColor(Color.BLACK)
-        btnMinus.setTextColor(Color.BLACK)
-        btnMultiply.setTextColor(Color.BLACK)
-        btnDivide.setTextColor(Color.BLACK)
+        btn_plus_calCustomDialog.setTextColor(Color.BLACK)
+        btn_minus_calCustomDialog.setTextColor(Color.BLACK)
+        btn_multiply_calCustomDialog.setTextColor(Color.BLACK)
+        btn_divide_calCustomDialog.setTextColor(Color.BLACK)
         valueOne = Double.NaN
         currentAction = ""
         rewriting = true

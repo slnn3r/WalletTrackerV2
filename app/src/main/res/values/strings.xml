@@ -84,6 +84,10 @@
     <string name="cd_detailsCat_deleteSubmit_title">Delete Category</string>
     <string name="cd_detailsCat_deleteSubmit_desc">Are you confirm to Delete this Category?</string>
 
+    <!-- CreateTransactionFragment -->
+    <string name="ab_createTrans_title">New Transaction</string>
+
+
     <!-- SOON TO BE REMOVED -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
@@ -93,6 +97,7 @@
     <string name="category_type_title">Category Type</string>
     <string name="expense_title">Expense</string>
     <string name="category_name_title">Category Name</string>
+    <string name="amount_required_title">Amount (Required)</string>
     <string name="amount_title">Amount</string>
     <string name="enter_amount_title">Enter Amount</string>
     <string name="remarks_title">Remarks</string>
@@ -101,6 +106,9 @@
     <string name="selected_category_title">Selected Category</string>
     <string name="selected_account_title">Selected Account</string>
     <string name="non_deletable_title">(Non-Deletable)</string>
+    <string name="amount_loading_label">Loading…</string>
+    <string name="amount_error_label">error</string> <!-- Will not displayed, just for view error indication -->
+
 
     <!-- Share Error Message -->
     <string name="accName_empty_invalid_message">Please Enter Account Name</string>
@@ -116,34 +124,25 @@
     <string name="catName_databaseError_invalid_message">Category Database error occurred</string>
 
     <!-- calculator_custom_dialog -->
-    <string name="btnPlus">+</string>
-    <string name="btnMinus">-</string>
-    <string name="btnMultiply">*</string>
-    <string name="btnDivide">/</string>
-    <string name="btn0">0</string>
-    <string name="btn1">1</string>
-    <string name="btn2">2</string>
-    <string name="btn3">3</string>
-    <string name="btn4">4</string>
-    <string name="btn5">5</string>
-    <string name="btn6">6</string>
-    <string name="btn7">7</string>
-    <string name="btn8">8</string>
-    <string name="btn9">9</string>
-    <string name="btnDot">.</string>
-    <string name="btnEqual">=</string>
-    <string name="btnDelete">Del</string>
-    <string name="btnClear">Clear</string>
-    <string name="calCustomDialogLabel">Transaction Amount</string>
-
-    <!-- Calculator Dialog Fragment -->
-    <string name="additionStatus">+</string>
-    <string name="subtractionStatus">-</string>
-    <string name="multiplicationStatus">*</string>
-    <string name="divisionStatus">/</string>
-    <string name="decimalFormat">#.##</string>
-    <string name="NotANumber">NaN</string>
-    <string name="maxCalAmount">999999999.99</string>
-    <string name="minCalAmount">-999999999.99</string>
+    <string name="btnPlus_label">+</string>
+    <string name="btnMinus_label">-</string>
+    <string name="btnMultiply_label">*</string>
+    <string name="btnDivide_label">/</string>
+    <string name="btn0_label">0</string>
+    <string name="btn1_label">1</string>
+    <string name="btn2_label">2</string>
+    <string name="btn3_label">3</string>
+    <string name="btn4_label">4</string>
+    <string name="btn5_label">5</string>
+    <string name="btn6_label">6</string>
+    <string name="btn7_label">7</string>
+    <string name="btn8_label">8</string>
+    <string name="btn9_label">9</string>
+    <string name="btnDot_label">.</string> <!-- Should never change its format -->
+    <string name="btnEqual_label">=</string>
+    <string name="btnDelete_label">Del</string>
+    <string name="btnClear_label">Clear</string>
+    <string name="calCustomDialog_label">Transaction Amount</string>
+    <string name="notANumber_label">NaN</string>
 
 </resources>

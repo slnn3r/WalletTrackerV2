@@ -1,12 +1,15 @@
 package com.example.slnn3r.wallettrackerv2.base
 
+import android.app.Activity
 import android.content.Context
+import android.view.inputmethod.InputMethodManager
 import com.example.slnn3r.wallettrackerv2.constant.string.Constant
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseUser
 import java.lang.ref.WeakReference
+
 
 open class BasePresenter<V : BaseView.Universal> {
 
@@ -37,5 +40,12 @@ open class BasePresenter<V : BaseView.Universal> {
 
     fun getSignedInUser(): FirebaseUser? {
         return baseModel.getSignedInUserFirebase()
+    }
+
+    fun hideKeyboard(activity: Activity) {
+        val inputMethodManager = activity.getSystemService(
+                Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(
+                activity.currentFocus!!.windowToken, 0)
     }
 }

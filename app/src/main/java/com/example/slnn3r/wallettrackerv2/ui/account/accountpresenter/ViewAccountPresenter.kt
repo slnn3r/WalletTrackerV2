@@ -10,7 +10,7 @@ class ViewAccountPresenter : AccountPresenterInterface.ViewAccountPresenter,
 
     private val baseModel: BaseModel = BaseModel()
 
-    override fun getAllAccountData(mContext: Context, userUid: String) {
+    override fun getAccountList(mContext: Context, userUid: String) {
 
         try {
             val dataList = baseModel.getAccountListByUserUidSync(mContext, userUid)

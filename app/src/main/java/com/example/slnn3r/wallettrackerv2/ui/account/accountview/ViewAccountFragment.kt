@@ -48,7 +48,7 @@ class ViewAccountFragment : Fragment(), AccountViewInterface.ViewAccountView {
         mViewAccountViewPresenter.bindView(this)
         userData = mViewAccountViewPresenter.getSignedInUser()!!
 
-        mViewAccountViewPresenter.getAllAccountData(context!!, userData.uid)
+        mViewAccountViewPresenter.getAccountList(context!!, userData.uid)
     }
 
     override fun onStop() {

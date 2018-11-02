@@ -53,7 +53,7 @@ class ViewCategoryFragment : Fragment(), CategoryViewInterface.ViewCategoryView 
 
         sb_viewCat_catType.setOnCheckedChangeListener { _: CompoundButton, _: Boolean ->
             mViewCategoryViewPresenter.checkSwitchButton(sb_viewCat_catType.isChecked)
-            mViewCategoryViewPresenter.getCategoryListByUserUidWithFilter(context!!, userData.uid,
+            mViewCategoryViewPresenter.getCategoryList(context!!, userData.uid,
                     tv_viewCat_catType_selection.text.toString())
         }
     }
@@ -65,7 +65,7 @@ class ViewCategoryFragment : Fragment(), CategoryViewInterface.ViewCategoryView 
 
         mViewCategoryViewPresenter.checkToggle(sb_viewCat_catType.isChecked)
 
-        mViewCategoryViewPresenter.getCategoryListByUserUidWithFilter(context!!, userData.uid,
+        mViewCategoryViewPresenter.getCategoryList(context!!, userData.uid,
                 tv_viewCat_catType_selection.text.toString())
     }
 

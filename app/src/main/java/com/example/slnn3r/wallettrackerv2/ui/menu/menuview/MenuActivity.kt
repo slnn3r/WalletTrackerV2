@@ -37,18 +37,18 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private val mCustomConfirmationDialog: CustomAlertDialog = CustomAlertDialog()
     private val mCustomErrorDialog: CustomAlertDialog = CustomAlertDialog()
 
-    private lateinit var navigationView:NavigationView
+    private lateinit var navigationView: NavigationView
 
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var userData: FirebaseUser
 
-    private val initialScreen:Int = R.id.dashboardFragment
-    private var isNavigated:String = "NavDrawer" // Set Initial Navigation Status to false
-    private var selectedHistoryScreen=""
+    private val initialScreen: Int = R.id.dashboardFragment
+    private var isNavigated: String = "NavDrawer" // Set Initial Navigation Status to false
+    private var selectedHistoryScreen = ""
 
     private var doubleBackToExitPressedOnce = false
 
-    private lateinit var toggle:ActionBarDrawerToggle
+    private lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,77 +57,6 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         setupNavigation()
     }
-
-    private fun setupNavigation(){
-        toggle = ActionBarDrawerToggle(
-                this, drawer_layout, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close)
-        drawer_layout.addDrawerListener(toggle)
-        toggle.syncState()
-
-        // Setup Custom Navigation Drawer Button Listener
-        toolbar.setNavigationOnClickListener {
-            mMenuPresenter.checkNavigationStatus(isNavigated, selectedHistoryScreen,
-                    false, null, false, doubleBackToExitPressedOnce)
-        }
-
-        nav_view.setNavigationItemSelectedListener(this)
-    }
-
-    override fun setupNavigationFlow() {
-
-        mMenuPresenter.hideKeyboard(this) // hide any open keyboard to ensure navigated screen free from previous opened keyboard
-
-        onSupportNavigateUp() // call the back function (auto navigate to previous screen) of the navigation graph
-
-        val currentScreen = findNavController(R.id.navMenu).currentDestination!!.id
-
-        if (currentScreen == initialScreen) { // if Current screen is initial screen (Dashboard), switch Navigation Up button back to Drawer function
-            setupDrawerMode()
-        }
-    }
-
-    override fun onSupportNavigateUp() = findNavController(R.id.navMenu).navigateUp()
-
-    private fun setupDrawerMode() {
-        isNavigated = "NavDrawer"
-        drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-        animateIcon(1,0,800) // with Animation no need to deal with any Icon Change stuff
-    }
-
-    // If Use Loading indication then no need this implementation dy (NOT REALLY)
-    fun setupToDisable(){
-        if(isNavigated!="HistoryNavGraph"){ // If didnt use BottomNavigaton then no need everything relate to this
-            isNavigated = "NavDisable"
-        }
-    }
-
-    fun setupNavigationMode() {
-        if(isNavigated!="HistoryNavGraph"){
-            isNavigated = "MenuNavGraph"
-        }
-
-        drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-        animateIcon(0,1,800) // with Animation no need to deal with any Icon Change stuff
-
-        //supportActionBar!!.setDisplayHomeAsUpEnabled(true) // Make the button become Back Icon
-    }
-
-
-    private fun animateIcon(start:Int, end:Int, duration:Int){
-
-        val anim= ValueAnimator.ofFloat(start.toFloat(),end.toFloat())
-
-        anim.addUpdateListener { animation ->
-            val slideOffset = animation?.animatedValue as Float
-            toggle.onDrawerSlide(drawer_layout, slideOffset)
-        }
-
-        anim.interpolator = DecelerateInterpolator()
-        anim.duration = duration.toLong()
-        anim.start()
-    }
-
 
     override fun onStart() {
         super.onStart()
@@ -158,56 +87,27 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-    override fun signOutSuccess() {
-        Toast.makeText(this, "Sign Out Successful", Toast.LENGTH_SHORT).show()
-        val intent = Intent(applicationContext, LoginActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
+    override fun onSupportNavigateUp() = findNavController(R.id.navMenu).navigateUp()
 
-    override fun onError(message: String) {
-        Log.e(Constant.LoggingTag.MENU_LOGGING, message)
-        mCustomErrorDialog.errorMessageDialog(this, message).show()
-        return
-    }
+    override fun setupNavigationFlow() {
+        mMenuPresenter.hideKeyboard(this) // hide any open keyboard to ensure navigated screen free from previous opened keyboard
 
-    private fun displayUserDataToNavDrawer() {
-        val headerView = navigationView.getHeaderView(0)
+        onSupportNavigateUp() // call the back function (auto navigate to previous screen) of the navigation graph
 
-        val navHeaderUserName
-                = headerView.findViewById(R.id.tv_navHeader_username) as TextView
-        val navHeaderUserEmail
-                = headerView.findViewById(R.id.tv_navHeader_user_email) as TextView
-        val navHeaderUserPicture
-                = headerView.findViewById(R.id.iv_navHeader_user_image) as ImageView
+        val currentScreen = findNavController(R.id.navMenu).currentDestination!!.id
 
-        navHeaderUserName.text = userData.displayName
-        navHeaderUserEmail.text = userData.email
-        Picasso.get().load(userData.photoUrl).into(navHeaderUserPicture)
-    }
-
-    override fun proceedToSignOut() {
-        mCustomConfirmationDialog.confirmationDialog(this,
-                getString(R.string.sign_out_dialog_title),
-                getString(R.string.sign_out_dialog_message),
-                resources.getDrawable(android.R.drawable.ic_dialog_alert),
-                DialogInterface.OnClickListener { _, _ ->
-                    mMenuPresenter.executeGoogleSignOut(mGoogleSignInClient)
-                }).show()
+        if (currentScreen == initialScreen) { // if Current screen is initial screen (Dashboard), switch Navigation Up button back to Drawer function
+            setupDrawerMode()
+        }
     }
 
     override fun displayDrawerDropDown() {
-
         val menu = navigationView.menu
 
         val b = !menu.findItem(R.id.nav_sub_line_graph).isVisible
         //setting submenus visible state
         menu.findItem(R.id.nav_sub_line_graph).isVisible = b
         menu.findItem(R.id.nav_sub_bar_graph).isVisible = b
-    }
-
-    override fun superOnPressBack() {
-        super.onBackPressed()
     }
 
     override fun openDrawer() {
@@ -223,7 +123,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             setupNavigationMode()
             Navigation.findNavController(this, R.id.navMenu)
                     .navigate(R.id.action_dashboardFragment_to_viewAccountFragment)
-        },300)
+        }, 300)
     }
 
     override fun proceedToCategoryScreen() {
@@ -231,7 +131,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             setupNavigationMode()
             Navigation.findNavController(this, R.id.navMenu)
                     .navigate(R.id.action_dashboardFragment_to_viewCategoryFragment)
-        },300)
+        }, 300)
     }
 
     override fun proceedToHistoryScreen() {
@@ -239,7 +139,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             setupNavigationMode()
             Navigation.findNavController(this, R.id.navMenu)
                     .navigate(R.id.action_dashboardFragment_to_historyFragment)
-        },300)
+        }, 300)
     }
 
     override fun proceedToLineReportScreen() {
@@ -248,9 +148,102 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun proceedToBarReportScreen() {
     }
 
+    override fun proceedToSignOut() {
+        mCustomConfirmationDialog.confirmationDialog(this,
+                getString(R.string.sign_out_dialog_title),
+                getString(R.string.sign_out_dialog_message),
+                resources.getDrawable(android.R.drawable.ic_dialog_alert),
+                DialogInterface.OnClickListener { _, _ ->
+                    mMenuPresenter.executeGoogleSignOut(mGoogleSignInClient)
+                }).show()
+    }
+
+    override fun signOutSuccess() {
+        Toast.makeText(this, "Sign Out Successful", Toast.LENGTH_SHORT).show()
+
+        mMenuPresenter.clearSharePreferenceData(this, userData.uid) // remove sharePreference
+
+        val intent = Intent(applicationContext, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
     override fun displayDoubleTabExitMessage() {
         Toast.makeText(this, "Click One More to Exit", Toast.LENGTH_SHORT).show()
         doubleBackToExitPressedOnce = true
         Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
+    }
+
+    override fun superOnPressBack() {
+        super.onBackPressed()
+    }
+
+    override fun onError(message: String) {
+        Log.e(Constant.LoggingTag.MENU_LOGGING, message)
+        mCustomErrorDialog.errorMessageDialog(this, message).show()
+        return
+    }
+
+    private fun setupNavigation() {
+        toggle = ActionBarDrawerToggle(
+                this, drawer_layout, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        drawer_layout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        // Setup Custom Navigation Drawer Button Listener
+        toolbar.setNavigationOnClickListener {
+            mMenuPresenter.checkNavigationStatus(isNavigated, selectedHistoryScreen,
+                    false, null, false, doubleBackToExitPressedOnce)
+        }
+
+        nav_view.setNavigationItemSelectedListener(this)
+    }
+
+    private fun displayUserDataToNavDrawer() {
+        val headerView = navigationView.getHeaderView(0)
+
+        val navHeaderUserName = headerView.findViewById(R.id.tv_navHeader_username) as TextView
+        val navHeaderUserEmail = headerView.findViewById(R.id.tv_navHeader_user_email) as TextView
+        val navHeaderUserPicture = headerView.findViewById(R.id.iv_navHeader_user_image) as ImageView
+
+        navHeaderUserName.text = userData.displayName
+        navHeaderUserEmail.text = userData.email
+        Picasso.get().load(userData.photoUrl).into(navHeaderUserPicture)
+    }
+
+    private fun setupDrawerMode() {
+        isNavigated = "NavDrawer"
+        drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        animateIcon(1, 0, 800) // with Animation no need to deal with any Icon Change stuff
+    }
+
+    // If Use Loading indication then no need this implementation dy (NOT REALLY)
+    fun setupToDisable() {
+        if (isNavigated != "HistoryNavGraph") { // If didnt use BottomNavigaton then no need everything relate to this
+            isNavigated = "NavDisable"
+        }
+    }
+
+    fun setupNavigationMode() {
+        if (isNavigated != "HistoryNavGraph") {
+            isNavigated = "MenuNavGraph"
+        }
+
+        drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        animateIcon(0, 1, 800) // with Animation no need to deal with any Icon Change stuff
+    }
+
+    private fun animateIcon(start: Int, end: Int, duration: Int) {
+        val anim = ValueAnimator.ofFloat(start.toFloat(), end.toFloat())
+
+        anim.addUpdateListener { animation ->
+            val slideOffset = animation?.animatedValue as Float
+            toggle.onDrawerSlide(drawer_layout, slideOffset)
+        }
+
+        anim.interpolator = DecelerateInterpolator()
+        anim.duration = duration.toLong()
+        anim.start()
     }
 }

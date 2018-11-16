@@ -11,7 +11,6 @@ class CustomAlertDialog {
 
     fun confirmationDialog(mContext: Context, title: String, message: String, icon: Drawable,
                            dialogOnClickListener: DialogInterface.OnClickListener): Dialog {
-
         val confirmationDialog = AlertDialog.Builder(mContext)
         confirmationDialog.setTitle(title)
                 .setIcon(icon)
@@ -25,7 +24,6 @@ class CustomAlertDialog {
     }
 
     fun errorMessageDialog(mContext: Context, message: String): Dialog {
-
         val errorMessageDialog = AlertDialog.Builder(mContext)
         errorMessageDialog.setTitle(mContext.getString(R.string.error_message_dialog_title))
                 .setIcon(mContext.getDrawable(R.drawable.ic_warning))

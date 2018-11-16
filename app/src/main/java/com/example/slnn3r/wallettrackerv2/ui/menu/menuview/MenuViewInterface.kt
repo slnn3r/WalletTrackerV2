@@ -6,6 +6,12 @@ interface MenuViewInterface {
 
     interface MenuView : BaseView.Universal {
 
+        fun setupNavigationFlow()
+
+        fun displayDrawerDropDown()
+        fun openDrawer()
+        fun closeDrawer()
+
         fun proceedToAccountScreen()
         fun proceedToCategoryScreen()
 
@@ -19,11 +25,5 @@ interface MenuViewInterface {
 
         fun displayDoubleTabExitMessage()
         fun superOnPressBack()
-
-        fun setupNavigationFlow()
-
-        fun displayDrawerDropDown()
-        fun openDrawer()
-        fun closeDrawer()
     }
 }

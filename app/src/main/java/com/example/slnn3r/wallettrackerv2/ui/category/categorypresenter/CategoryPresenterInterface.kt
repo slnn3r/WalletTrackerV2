@@ -36,6 +36,6 @@ interface CategoryPresenterInterface {
         fun actionCheck(menuItem: SpeedDialActionItem)
 
         fun editAccount(mContext: Context, categoryData: Category)
-        fun deleteAccount(mContext: Context, categoryData: Category)
+        fun deleteAccount(mContext: Context, categoryId: String)
     }
 }

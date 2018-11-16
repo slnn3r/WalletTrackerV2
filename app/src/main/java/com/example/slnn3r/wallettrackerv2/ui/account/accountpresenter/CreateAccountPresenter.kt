@@ -17,8 +17,7 @@ class CreateAccountPresenter : AccountPresenterInterface.CreateAccountPresenter,
 
     override fun validateAccountNameInput(mContext: Context, userUid: String,
                                           accountNameInput: String, updateAccountId: String?) {
-
-        val accountList = baseModel.getAccountListByUserUidSync(mContext, userUid)
+        val accountList = baseModel.getAccListByUserUidSync(mContext, userUid)
         val errorMessage = validation.accountNameValidation(mContext, accountNameInput,
                 accountList, updateAccountId)
 
@@ -30,18 +29,9 @@ class CreateAccountPresenter : AccountPresenterInterface.CreateAccountPresenter,
         }
     }
 
-    override fun decimalInputCheck(accountBalanceInput: String) {
-        if (accountBalanceInput.contains(".") &&
-                accountBalanceInput.substring(
-                        accountBalanceInput.indexOf(".") + 1).length > 2) {
-            getView()!!.setTwoDecimalPlace()
-        }
-    }
-
-    override fun validateAccountBalanceInput(mContext: Context, accountBalanceInput: String) {
-
+    override fun validateAccountDescInput(mContext: Context, accountBalanceInput: String) {
         val errorMessage =
-                validation.amountValidation(mContext, accountBalanceInput)
+                validation.accountDescValidation(mContext, accountBalanceInput)
 
         if (errorMessage != null) {
             getView()!!.invalidAccountBalanceInput(errorMessage)

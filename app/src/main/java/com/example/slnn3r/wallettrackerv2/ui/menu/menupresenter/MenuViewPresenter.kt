@@ -10,10 +10,30 @@ import com.google.firebase.auth.FirebaseAuth
 class MenuViewPresenter : MenuPresenterInterface.MenuViewPresenter,
         BasePresenter<MenuViewInterface.MenuView>() {
 
+    override fun executeGoogleSignOut(mGoogleSignInClient: GoogleSignInClient) {
+        try {
+            FirebaseAuth.getInstance().signOut()
+        } catch (error: Exception) {
+            getView()!!.onError(error.toString())
+        }
+
+        mGoogleSignInClient.revokeAccess()
+                .addOnFailureListener {
+                    getView()!!.onError(it.message.toString())
+                    return@addOnFailureListener
+                }
+
+        mGoogleSignInClient.signOut()
+                .addOnFailureListener {
+                    getView()!!.onError(it.message.toString())
+                    return@addOnFailureListener
+                }
+
+        getView()!!.signOutSuccess()
+    }
+
     override fun navigationDrawerSelection(item: MenuItem) {
-
         when (item.itemId) {
-
             R.id.nav_account -> {
                 getView()!!.closeDrawer()
                 getView()!!.proceedToAccountScreen()
@@ -53,54 +73,30 @@ class MenuViewPresenter : MenuPresenterInterface.MenuViewPresenter,
         }
     }
 
-    override fun executeGoogleSignOut(mGoogleSignInClient: GoogleSignInClient) {
-
-        try {
-            FirebaseAuth.getInstance().signOut()
-        } catch (error: Exception) {
-            getView()!!.onError(error.toString())
-        }
-
-        mGoogleSignInClient.revokeAccess()
-                .addOnFailureListener {
-                    getView()!!.onError(it.message.toString())
-                    return@addOnFailureListener
-                }
-
-        mGoogleSignInClient.signOut()
-                .addOnFailureListener {
-                    getView()!!.onError(it.message.toString())
-                    return@addOnFailureListener
-                }
-
-        getView()!!.signOutSuccess()
-    }
-
     override fun checkNavigationStatus(isNavigated: String, selectedHistoryScreen: String,
                                        isBackButton: Boolean, currentScreen: Int?,
                                        isOpenDrawer: Boolean, doubleBackToExitPressedOnce: Boolean) {
-
         // Check if Screen is navigated or not
-        if (isNavigated=="MenuNavGraph") {
+        if (isNavigated == "MenuNavGraph") {
             getView()!!.setupNavigationFlow()
-        } else if(isNavigated=="HistoryNavGraph"){
+        } else if (isNavigated == "HistoryNavGraph") {
             getView()!!.proceedToHistoryScreen()
-        }else if(isNavigated=="NavDisable"){
+        } else if (isNavigated == "NavDisable") {
             // Do Nothing for the ToolBar at Dialogfragment Display
-        }else {
-            if(isBackButton){
-                if(isOpenDrawer){
+        } else {
+            if (isBackButton) {
+                if (isOpenDrawer) {
                     getView()!!.closeDrawer()
-                }else if(currentScreen==R.id.dashboardFragment){
+                } else if (currentScreen == R.id.dashboardFragment) {
                     if (doubleBackToExitPressedOnce) {
                         getView()!!.superOnPressBack()
-                    }else{
+                    } else {
                         getView()!!.displayDoubleTabExitMessage()
                     }
-                }else{
+                } else {
                     getView()!!.superOnPressBack() // not sure when will hit this?
                 }
-            }else{
+            } else {
                 //displaySyncDateTime()
                 getView()!!.openDrawer()
             }

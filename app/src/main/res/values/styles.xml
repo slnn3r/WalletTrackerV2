@@ -6,7 +6,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-
     </style>
 
     <!-- Style for Splash Screen -->
@@ -19,7 +18,6 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
-
     </style>
 
     <!-- EditText Theme -->
@@ -31,11 +29,6 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <integer-array name="fab_menu_item_colors">
-        <item>@color/colorLightRed</item>
-        <item>@color/colorLightGreen</item>
-    </integer-array>
 
     <style name="layout_error" parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/colorAccent</item>

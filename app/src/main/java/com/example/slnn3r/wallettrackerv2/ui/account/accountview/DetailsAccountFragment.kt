@@ -6,11 +6,13 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.constant.string.Constant
@@ -43,40 +45,8 @@ class DetailsAccountFragment : Fragment(), AccountViewInterface.DetailsAccountVi
         super.onViewCreated(view, savedInstanceState)
 
         setupInitialUi()
-
-        et_detailsAcc_AccName.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                Log.d("", "")
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                mDetailsAccountViewPresenter.validateAccountNameInput(context!!, userData.uid,
-                        et_detailsAcc_AccName.text.toString(), accountArgData.accountId)
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                mDetailsAccountViewPresenter.checkAllInputError(tl_detailsAcc_AccName.error,
-                        tl_detailsAcc_AccInitialBal.error)
-            }
-        })
-
-        et_detailsAcc_AccInitialBal.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                Log.d("", "")
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                mDetailsAccountViewPresenter
-                        .decimalInputCheck(et_detailsAcc_AccInitialBal.text.toString())
-                mDetailsAccountViewPresenter.validateAccountBalanceInput(context!!,
-                        et_detailsAcc_AccInitialBal.text.toString())
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                mDetailsAccountViewPresenter.checkAllInputError(tl_detailsAcc_AccName.error,
-                        tl_detailsAcc_AccInitialBal.error)
-            }
-        })
+        setupAccNameEditText()
+        setupAccDescEditText()
     }
 
     override fun onStart() {
@@ -140,7 +110,7 @@ class DetailsAccountFragment : Fragment(), AccountViewInterface.DetailsAccountVi
                             val accountInput =
                                     Account(accountArgData.accountId,
                                             et_detailsAcc_AccName.text.toString(),
-                                            et_detailsAcc_AccInitialBal.text.toString().toDouble(),
+                                            et_detailsAcc_AccDesc.text.toString(),
                                             accountArgData.userUid, accountArgData.accountStatus)
 
                             mDetailsAccountViewPresenter
@@ -166,18 +136,12 @@ class DetailsAccountFragment : Fragment(), AccountViewInterface.DetailsAccountVi
     }
 
     override fun validAccountBalanceInput() {
-        tl_detailsAcc_AccInitialBal.isErrorEnabled = false
-        tl_detailsAcc_AccInitialBal.error = null
+        tl_detailsAcc_AccDesc.isErrorEnabled = false
+        tl_detailsAcc_AccDesc.error = null
     }
 
     override fun invalidAccountBalanceInput(errorMessage: String) {
-        tl_detailsAcc_AccInitialBal.error = errorMessage
-    }
-
-    override fun setTwoDecimalPlace() {
-        val text = et_detailsAcc_AccInitialBal.text.toString()
-        et_detailsAcc_AccInitialBal.setText(text.substring(0, text.length - 1))
-        et_detailsAcc_AccInitialBal.setSelection(et_detailsAcc_AccInitialBal.text.length)
+        tl_detailsAcc_AccDesc.error = errorMessage
     }
 
     override fun showFloatingButton() {
@@ -194,11 +158,10 @@ class DetailsAccountFragment : Fragment(), AccountViewInterface.DetailsAccountVi
                 getString(R.string.cd_detailsAcc_editSubmit_desc),
                 resources.getDrawable(R.drawable.ic_warning),
                 DialogInterface.OnClickListener { _, _ ->
-
                     val accountInput =
                             Account(accountArgData.accountId,
                                     et_detailsAcc_AccName.text.toString(),
-                                    et_detailsAcc_AccInitialBal.text.toString().toDouble(),
+                                    et_detailsAcc_AccDesc.text.toString(),
                                     accountArgData.userUid, accountArgData.accountStatus)
 
                     mDetailsAccountViewPresenter.editAccount(context!!, accountInput)
@@ -212,15 +175,8 @@ class DetailsAccountFragment : Fragment(), AccountViewInterface.DetailsAccountVi
                 getString(R.string.cd_detailsAcc_deleteSubmit_desc),
                 resources.getDrawable(R.drawable.ic_warning),
                 DialogInterface.OnClickListener { _, _ ->
-
-                    val accountInput =
-                            Account(accountArgData.accountId,
-                                    et_detailsAcc_AccName.text.toString(),
-                                    et_detailsAcc_AccInitialBal.text.toString().toDouble(),
-                                    accountArgData.userUid, accountArgData.accountStatus)
-
                     mDetailsAccountViewPresenter
-                            .deleteAccount(context!!, accountInput)
+                            .deleteAccount(context!!, accountArgData.accountId)
                 }
         ).show()
     }
@@ -252,6 +208,47 @@ class DetailsAccountFragment : Fragment(), AccountViewInterface.DetailsAccountVi
         accountArgData = gson.fromJson<Account>(accountDataJson, Account::class.java)
 
         et_detailsAcc_AccName.setText(accountArgData.accountName)
-        et_detailsAcc_AccInitialBal.setText(accountArgData.accountInitialBalance.toString())
+
+        // Allow Multiline with ActionDone IME
+        et_detailsAcc_AccDesc.imeOptions = EditorInfo.IME_ACTION_DONE
+        et_detailsAcc_AccDesc.setRawInputType(InputType.TYPE_CLASS_TEXT)
+
+        et_detailsAcc_AccDesc.setText(accountArgData.accountDesc)
+    }
+
+    private fun setupAccNameEditText() {
+        et_detailsAcc_AccName.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                Log.d("", "")
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                mDetailsAccountViewPresenter.validateAccountNameInput(context!!, userData.uid,
+                        et_detailsAcc_AccName.text.toString(), accountArgData.accountId)
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                mDetailsAccountViewPresenter.checkAllInputError(tl_detailsAcc_AccName.error,
+                        tl_detailsAcc_AccDesc.error)
+            }
+        })
+    }
+
+    private fun setupAccDescEditText() {
+        et_detailsAcc_AccDesc.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                Log.d("", "")
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                mDetailsAccountViewPresenter.validateAccountDescInput(context!!,
+                        et_detailsAcc_AccDesc.text.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                mDetailsAccountViewPresenter.checkAllInputError(tl_detailsAcc_AccName.error,
+                        tl_detailsAcc_AccDesc.error)
+            }
+        })
     }
 }

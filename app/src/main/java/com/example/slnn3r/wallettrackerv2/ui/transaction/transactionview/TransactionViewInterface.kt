@@ -18,6 +18,22 @@ interface TransactionViewInterface {
 
     interface DetailsTransactionView : BaseView.Universal {
 
-    }
+        fun switchButtonToggle()
+        fun initialExpenseMode()
 
+        fun switchButtonExpenseMode()
+        fun switchButtonIncomeMode()
+
+        fun selectCategorySpinnerData(spinnerPosition: Int)
+        fun selectDeletedCategorySpinnerData(spinnerPosition: Int)
+
+        fun populateAccountSpinner(accountList: ArrayList<Account>)
+        fun populateCategorySpinner(categoryList: ArrayList<Category>)
+
+        fun editTransactionPrompt()
+        fun deleteTransactionPrompt()
+
+        fun editTransactionSuccess()
+        fun deleteTransactionSuccess()
+    }
 }

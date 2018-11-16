@@ -13,11 +13,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.CompoundButton
-import android.widget.Spinner
+import android.widget.Toast
 import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.constant.string.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Category
+import com.example.slnn3r.wallettrackerv2.data.objectclass.Transaction
 import com.example.slnn3r.wallettrackerv2.ui.menu.menuview.MenuActivity
 import com.example.slnn3r.wallettrackerv2.ui.transaction.transactionpresenter.CreateTransactionPresenter
 import com.example.slnn3r.wallettrackerv2.util.CustomAlertDialog
@@ -46,9 +47,11 @@ class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTra
 
     private lateinit var userData: FirebaseUser
 
+    private lateinit var loadedCategoryList: ArrayList<Category>
+    private lateinit var loadedAccountList: ArrayList<Account>
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
         simpleDateFormat = SimpleDateFormat((Constant.Format.DATE_FORMAT), Locale.US)
         simpleTimeFormat = SimpleDateFormat((Constant.Format.TIME_12HOURS_FORMAT), Locale.US)
 
@@ -60,37 +63,12 @@ class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTra
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fb_createTrans.hide()
-        tl_createTrans_amount.error = getString(R.string.amount_error_label)
-
+        setupInitialUi()
+        setupSwitchButton()
+        setupAmountEditText()
         setupDatePicker()
         setupTimePicker()
-
-        et_createTrans_amount.setOnClickListener {
-            disableAllUiComponent()
-            (context as MenuActivity).setupToDisable()
-
-            val args = Bundle()
-            args.putString(Constant.KeyId.CALCULATE_DIALOG_ARG, et_createTrans_amount.text.toString())
-
-            et_createTrans_amount.setText(getString(R.string.amount_loading_label))
-
-            val calCustomDialog = CustomCalculatorDialog()
-            calCustomDialog.arguments = args
-            calCustomDialog.isCancelable = false
-            calCustomDialog.setTargetFragment(this, 1)
-            calCustomDialog.show(this.fragmentManager, "")
-        }
-
-        sb_createTrans_catType.setOnCheckedChangeListener { _: CompoundButton, _: Boolean ->
-            mCreateTransactionViewPresenter.checkSwitchButton(sb_createTrans_catType.isChecked)
-            mCreateTransactionViewPresenter.getCategoryList(context!!, userData.uid,
-                    tv_createTrans_catType_selection.text.toString())
-        }
-
-        fb_createTrans.setOnClickListener {
-            mCreateTransactionViewPresenter.createTransaction() // On-Going!
-        }
+        setupCreateButton()
     }
 
     override fun onStart() {
@@ -107,6 +85,69 @@ class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTra
     override fun onStop() {
         super.onStop()
         mCreateTransactionViewPresenter.unbindView()
+    }
+
+    override fun switchButtonExpenseMode() {
+        tv_createTrans_catType_selection.text = Constant.ConditionalKeyword.EXPENSE_STATUS
+        sb_createTrans_catType.backColor =
+                ColorStateList.valueOf(resources.getColor(R.color.colorLightRed))
+        et_createTrans_amount
+                .setTextColor(ColorStateList.valueOf(resources.getColor(R.color.colorLightRed)))
+    }
+
+    override fun switchButtonIncomeMode() {
+        tv_createTrans_catType_selection.text = Constant.ConditionalKeyword.INCOME_STATUS
+        sb_createTrans_catType.backColor =
+                ColorStateList.valueOf(resources.getColor(R.color.colorLightGreen))
+        et_createTrans_amount
+                .setTextColor(ColorStateList.valueOf(resources.getColor(R.color.colorLightGreen)))
+    }
+
+    override fun populateAccountSpinner(accountList: ArrayList<Account>) {
+        loadedAccountList = accountList // store to global for create usage later
+
+        val accountNameList = ArrayList<String>()
+
+        accountList.forEach { data ->
+            accountNameList.add(data.accountName)
+        }
+
+        // Creating adapter for spinner
+        val dataAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, accountNameList)
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        sp_createTrans_selectedAcc_selection.adapter = dataAdapter
+
+        // Get SharedPreference saved Selection and Set to Spinner Selection
+        val selectedAccountSharePref =
+                mCreateTransactionViewPresenter.getSelectedAccount(context!!, userData.uid)
+        val spinnerPosition = dataAdapter.getPosition(selectedAccountSharePref)
+        sp_createTrans_selectedAcc_selection.setSelection(spinnerPosition)
+    }
+
+    override fun populateCategorySpinner(categoryList: ArrayList<Category>) {
+        loadedCategoryList = categoryList // store to global for create usage later
+
+        val categoryNameList = ArrayList<String>()
+
+        categoryList.forEach { data ->
+            categoryNameList.add(data.categoryName)
+        }
+
+        // Creating adapter for spinner
+        val dataAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, categoryNameList)
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        sp_createTrans_selectedCat_selection.adapter = dataAdapter
+    }
+
+    override fun createTransactionSuccess() {
+        Toast.makeText(context, getString(R.string.createTrans_created_message), Toast.LENGTH_LONG).show()
+        (context as Activity).onBackPressed()
     }
 
     override fun calculatorInput(input: String) {
@@ -129,69 +170,44 @@ class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTra
         et_createTrans_amount.setText(getString(R.string.enter_amount_title))
     }
 
-    override fun switchButtonExpenseMode() {
-        tv_createTrans_catType_selection.text = Constant.ConditionalKeyword.EXPENSE_STATUS
-        sb_createTrans_catType.backColor =
-                ColorStateList.valueOf(resources.getColor(R.color.colorLightRed))
-        et_createTrans_amount
-                .setTextColor(ColorStateList.valueOf(resources.getColor(R.color.colorLightRed)))
-    }
-
-    override fun switchButtonIncomeMode() {
-        tv_createTrans_catType_selection.text = Constant.ConditionalKeyword.INCOME_STATUS
-        sb_createTrans_catType.backColor =
-                ColorStateList.valueOf(resources.getColor(R.color.colorLightGreen))
-        et_createTrans_amount
-                .setTextColor(ColorStateList.valueOf(resources.getColor(R.color.colorLightGreen)))
-    }
-
-    override fun populateAccountSpinner(accountList: ArrayList<Account>) {
-        val accountNameList = ArrayList<String>()
-
-        accountList.forEach { data ->
-            accountNameList.add(data.accountName)
-        }
-
-        // Creating adapter for spinner
-        val dataAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, accountNameList)
-
-        // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-        val spinner = (context as Activity).findViewById(R.id.sp_createTrans_selectedAcc_selection) as Spinner
-        spinner.adapter = dataAdapter
-
-    }
-
-    override fun populateCategorySpinner(categoryList: ArrayList<Category>) {
-        val categoryNameList = ArrayList<String>()
-
-        categoryList.forEach { data ->
-            categoryNameList.add(data.categoryName)
-        }
-
-        // Creating adapter for spinner
-        val dataAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, categoryNameList)
-
-        // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-        val spinner = (context as Activity).findViewById(R.id.sp_createTrans_selectedCat_selection) as Spinner
-        spinner.adapter = dataAdapter
-    }
-
-    override fun createTransactionSuccess() {
-
-    }
-
     override fun onError(message: String) {
         Log.e(Constant.LoggingTag.CREATE_TRANSACTION_LOGGING, message)
         mCustomErrorDialog.errorMessageDialog(context!!, message).show()
         return
     }
 
-    private fun setupDatePicker() {
+    private fun setupInitialUi() {
+        fb_createTrans.hide()
+        tl_createTrans_amount.error = getString(R.string.amount_error_label)
+    }
 
+    private fun setupSwitchButton() {
+        sb_createTrans_catType.setOnCheckedChangeListener { _: CompoundButton, _: Boolean ->
+            mCreateTransactionViewPresenter.checkSwitchButton(sb_createTrans_catType.isChecked)
+            mCreateTransactionViewPresenter.getCategoryList(context!!, userData.uid,
+                    tv_createTrans_catType_selection.text.toString())
+        }
+    }
+
+    private fun setupAmountEditText() {
+        et_createTrans_amount.setOnClickListener {
+            disableAllUiComponent()
+            (context as MenuActivity).setupToDisable()
+
+            val args = Bundle()
+            args.putString(Constant.KeyId.CALCULATE_DIALOG_ARG, et_createTrans_amount.text.toString())
+
+            et_createTrans_amount.setText(getString(R.string.amount_loading_label))
+
+            val calCustomDialog = CustomCalculatorDialog()
+            calCustomDialog.arguments = args
+            calCustomDialog.isCancelable = false
+            calCustomDialog.setTargetFragment(this, 1)
+            calCustomDialog.show(this.fragmentManager, "")
+        }
+    }
+
+    private fun setupDatePicker() {
         val dateDialog =
                 DatePickerDialog(context!!,
                         DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
@@ -220,7 +236,6 @@ class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTra
     }
 
     private fun setupTimePicker() {
-
         val timeDialog = TimePickerDialog(context,
                 TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
                     enableAllUiComponent()
@@ -228,7 +243,7 @@ class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTra
                     val time = Time(selectedHour, selectedMinute, 0)
                     val formattedTime = simpleTimeFormat.format(time)
                     et_createTrans_time.setText(formattedTime)
-                }, hour, minute, false)//Yes 24 hour time
+                }, hour, minute, false)
 
         timeDialog.setOnCancelListener {
             enableAllUiComponent()
@@ -248,6 +263,28 @@ class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTra
         //format takes in a Date, and Time is a subclass of Date
         val formattedTime = simpleTimeFormat.format(time)
         et_createTrans_time.setText(formattedTime)
+    }
+
+    private fun setupCreateButton() {
+        fb_createTrans.setOnClickListener {
+            val uniqueID = UUID.randomUUID().toString()
+
+            // use empty Category and Account Data, process correct data when pass to presenter
+            val transactionInput =
+                    Transaction(
+                            uniqueID, et_createTrans_date.text.toString()
+                            , et_createTrans_time.text.toString()
+                            , et_createTrans_amount.text.toString().toDouble()
+                            , ac_createTrans_remarks.text.toString()
+                            , Category("", "", "", "", "")
+                            , Account("", "", "", "", "")
+                    )
+
+            mCreateTransactionViewPresenter.createTransaction(context!!, transactionInput,
+                    userData.uid, sp_createTrans_selectedAcc_selection.selectedItem.toString(),
+                    sp_createTrans_selectedCat_selection.selectedItem.toString(),
+                    loadedAccountList, loadedCategoryList)
+        }
     }
 
     private fun enableAllUiComponent() {

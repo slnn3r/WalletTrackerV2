@@ -1,6 +1,7 @@
 package com.example.slnn3r.wallettrackerv2.base
 
 import android.content.Context
+import android.support.v7.app.AppCompatActivity
 import com.example.slnn3r.wallettrackerv2.constant.string.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Category
@@ -21,7 +22,7 @@ class BaseModel {
     }
 
     // Asynchronous
-    fun getAccountListByUserUidAsync(mContext: Context, userUid: String):
+    fun getAccListByUserUidAsync(mContext: Context, userUid: String):
             Observable<ArrayList<Account>> {
 
         val realm: Realm?
@@ -46,7 +47,7 @@ class BaseModel {
                         Account(
                                 accountRealmData.accountId!!,
                                 accountRealmData.accountName!!,
-                                accountRealmData.accountInitialBalance,
+                                accountRealmData.accountDesc!!,
                                 accountRealmData.userUid!!,
                                 accountRealmData.accountStatus!!
                         )
@@ -59,10 +60,8 @@ class BaseModel {
     }
 
 
-
-
     // Synchronous
-    fun getAccountListByUserUidSync(mContext: Context, userUid: String): ArrayList<Account> {
+    fun getAccListByUserUidSync(mContext: Context, userUid: String): ArrayList<Account> {
 
         val realm: Realm?
         val accountList = ArrayList<Account>()
@@ -86,7 +85,7 @@ class BaseModel {
                         Account(
                                 accountRealmData.accountId!!,
                                 accountRealmData.accountName!!,
-                                accountRealmData.accountInitialBalance,
+                                accountRealmData.accountDesc!!,
                                 accountRealmData.userUid!!,
                                 accountRealmData.accountStatus!!
                         )
@@ -98,8 +97,8 @@ class BaseModel {
         return accountList
     }
 
-    fun getCategoryListByUserUidWithFilterSync(mContext: Context, userUid: String,
-                                                        filterType: String): ArrayList<Category> {
+    fun getCatListByUserUidWithFilterSync(mContext: Context, userUid: String,
+                                          filterType: String): ArrayList<Category> {
 
         val userUidRef = Constant.RealmVariableName.USER_UID_VARIABLE
         val categoryTypeRef = Constant.RealmVariableName.CATEGORY_TYPE_VARIABLE
@@ -159,4 +158,100 @@ class BaseModel {
         return categoryList
     }
 
+    fun getAccDataByIdNameSync(mContext: Context, userUid: String, accountName: String): Account {
+
+        val realm: Realm?
+        var accountData = Account("", "", "",
+                "", "")
+
+        Realm.init(mContext)
+
+        val config = RealmConfiguration.Builder()
+                .name(Constant.RealmTableName.ACCOUNT_REALM_TABLE)
+                .build()
+
+        realm = Realm.getInstance(config)
+
+        realm!!.executeTransaction {
+
+            val accountRealm = realm.where(AccountRealm::class.java)
+                    .equalTo(Constant.RealmVariableName.USER_UID_VARIABLE, userUid)
+                    .equalTo(Constant.RealmVariableName.ACCOUNT_NAME_VARIABLE, accountName)
+                    .findAll()
+
+            accountRealm.forEach { accountRealmData ->
+
+                accountData = Account(
+                        accountRealmData.accountId!!,
+                        accountRealmData.accountName!!,
+                        accountRealmData.accountDesc!!,
+                        accountRealmData.userUid!!,
+                        accountRealmData.accountStatus!!
+                )
+            }
+        }
+
+        realm.close()
+        return accountData
+    }
+
+    fun getCatDataByIdNameSync(mContext: Context, userUid: String, categoryName: String): Category {
+
+        val realm: Realm?
+        var categoryData = Category("", "", "",
+                "", "")
+
+        Realm.init(mContext)
+
+        val config = RealmConfiguration.Builder()
+                .name(Constant.RealmTableName.CATEGORY_REALM_TABLE)
+                .build()
+
+        realm = Realm.getInstance(config)
+
+        realm!!.executeTransaction {
+
+            val categoryRealm = realm.where(CategoryRealm::class.java)
+                    .equalTo(Constant.RealmVariableName.USER_UID_VARIABLE, userUid)
+                    .equalTo(Constant.RealmVariableName.CATEGORY_NAME_VARIABLE, categoryName)
+                    .findAll()
+
+            categoryRealm.forEach { categoryRealmData ->
+
+                categoryData = Category(
+                        categoryRealmData.categoryId!!,
+                        categoryRealmData.categoryName!!,
+                        categoryRealmData.categoryType!!,
+                        categoryRealmData.categoryStatus!!,
+                        categoryRealmData.userUid!!
+                )
+            }
+        }
+
+        realm.close()
+        return categoryData
+    }
+
+    // SharePreference
+    fun getSelectedAccountSharePreference(mContext: Context, userUid: String): String {
+        val editor = mContext.getSharedPreferences(Constant.KeyId.SHARE_PREF + userUid,
+                AppCompatActivity.MODE_PRIVATE)
+        return editor.getString(Constant.KeyId.SELECTED_ACCOUNT_KEY, "")!!
+    }
+
+    fun saveSelectedAccountSharePreference(mContext: Context, selectedAccount: String, userUid: String) {
+        val editor = mContext.getSharedPreferences(Constant.KeyId.SHARE_PREF + userUid,
+                AppCompatActivity.MODE_PRIVATE).edit()
+        editor.putString(Constant.KeyId.SELECTED_ACCOUNT_KEY, selectedAccount)
+        editor.apply()
+        editor.commit()
+    }
+
+    fun removeSharePreferenceData(mContext: Context, userUid: String) {
+        val editor = mContext.getSharedPreferences(Constant.KeyId.SHARE_PREF + userUid,
+                AppCompatActivity.MODE_PRIVATE).edit()
+        editor.clear()
+        editor.apply()
+        editor.commit()
+    }
 }

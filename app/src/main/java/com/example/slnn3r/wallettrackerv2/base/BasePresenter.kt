@@ -48,4 +48,16 @@ open class BasePresenter<V : BaseView.Universal> {
         inputMethodManager.hideSoftInputFromWindow(
                 activity.currentFocus!!.windowToken, 0)
     }
+
+    fun getSelectedAccount(mContext: Context, userUid: String): String {
+        return baseModel.getSelectedAccountSharePreference(mContext, userUid)
+    }
+
+    fun saveSelectedAccount(mContext: Context, selectedAccount: String, userUid: String) {
+        baseModel.saveSelectedAccountSharePreference(mContext, selectedAccount, userUid)
+    }
+
+    fun clearSharePreferenceData(mContext: Context, userUid: String) {
+        baseModel.removeSharePreferenceData(mContext, userUid)
+    }
 }

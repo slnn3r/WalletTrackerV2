@@ -10,7 +10,6 @@ import io.realm.RealmConfiguration
 class DetailsCategoryViewModel : CategoryModelInterface.DetailsCategoryViewModel {
 
     override fun editCategoryRealm(mContext: Context, categoryData: Category) {
-
         val realm: Realm?
         Realm.init(mContext)
 
@@ -21,7 +20,6 @@ class DetailsCategoryViewModel : CategoryModelInterface.DetailsCategoryViewModel
         realm = Realm.getInstance(config)
 
         realm!!.executeTransaction {
-
             val categoryRealm = realm.where(CategoryRealm::class.java)
                     .equalTo(Constant.RealmVariableName.CATEGORY_ID_VARIABLE,
                             categoryData.categoryId).findAll()
@@ -31,7 +29,6 @@ class DetailsCategoryViewModel : CategoryModelInterface.DetailsCategoryViewModel
                 categoryRealmData.categoryType = categoryData.categoryType
             }
         }
-
         realm.close()
     }
 
@@ -46,7 +43,6 @@ class DetailsCategoryViewModel : CategoryModelInterface.DetailsCategoryViewModel
         realm = Realm.getInstance(config)
 
         realm!!.executeTransaction {
-
             val categoryRealm = realm.where(CategoryRealm::class.java)
                     .equalTo(Constant.RealmVariableName.CATEGORY_ID_VARIABLE,
                             categoryId).findAll()
@@ -55,7 +51,6 @@ class DetailsCategoryViewModel : CategoryModelInterface.DetailsCategoryViewModel
                 categoryRealmData.deleteFromRealm()
             }
         }
-
         realm.close()
     }
 }

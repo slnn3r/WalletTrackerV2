@@ -9,10 +9,10 @@ class CategoryDefaultData {
         val spinnerItem = ArrayList<Category>()
 
         spinnerItem.add(Category(
-                "", "Food and Drink",
+                "", "Meals",
                 "Expense", "New", ""))
         spinnerItem.add(Category(
-                "", "Entertainment",
+                "", "Food and Drink",
                 "Expense", "New", ""))
         spinnerItem.add(Category(
                 "", "Transport",
@@ -28,6 +28,9 @@ class CategoryDefaultData {
                 "Income", "New", ""))
         spinnerItem.add(Category(
                 "", "Other",
+                "Income", "New", ""))
+        spinnerItem.add(Category(
+                "", "Initial Balance",
                 "Income", "Default", ""))
 
         return spinnerItem

@@ -4,7 +4,6 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-
         <item
             android:id="@+id/navDrawer_section_1"
             android:title="@string/navSection1_title">
@@ -28,15 +27,14 @@
 
                 <item
                     android:id="@+id/nav_sub_line_graph"
+                    android:background="@color/colorPrimary"
                     android:title="@string/navSection1_item4_sub1_title"
-                    android:visible="false"
-                    android:background="@color/colorPrimary" />
+                    android:visible="false" />
                 <item
                     android:id="@+id/nav_sub_bar_graph"
-                    android:title="@string/navSection1_item4_sub2_title"
                     android:background="@color/colorPrimary"
+                    android:title="@string/navSection1_item4_sub2_title"
                     android:visible="false" />
-
             </menu>
         </item>
     </group>

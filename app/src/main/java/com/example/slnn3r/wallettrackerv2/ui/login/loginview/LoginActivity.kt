@@ -27,9 +27,7 @@ class LoginActivity : AppCompatActivity(), LoginViewInterface.LoginView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        btn_google_sign_in.setOnClickListener {
-            launchGoogleLoginDialog()
-        }
+        setupSignInButton()
     }
 
     override fun onStart() {
@@ -51,14 +49,14 @@ class LoginActivity : AppCompatActivity(), LoginViewInterface.LoginView {
 
     override fun showLoadingDialog() {
         progressDialog = ProgressDialog.show(this, null
-                , getString(R.string.sign_in_loading_message))    }
+                , getString(R.string.sign_in_loading_message))
+    }
 
     override fun dismissLoadingDialog() {
         progressDialog.dismiss()
     }
 
     override fun signInSuccess(userFirebase: FirebaseUser) {
-
         Toast.makeText(this,
                 getString(R.string.sign_in_success_message, userFirebase.displayName)
                 , Toast.LENGTH_SHORT).show()
@@ -71,6 +69,12 @@ class LoginActivity : AppCompatActivity(), LoginViewInterface.LoginView {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         mLoginViewPresenter.executeGoogleSignIn(this, requestCode, resultCode, data!!)
+    }
+
+    private fun setupSignInButton() {
+        btn_google_sign_in.setOnClickListener {
+            launchGoogleLoginDialog()
+        }
     }
 
     private fun launchGoogleLoginDialog() {

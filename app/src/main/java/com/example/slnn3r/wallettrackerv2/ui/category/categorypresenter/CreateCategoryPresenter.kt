@@ -36,9 +36,8 @@ class CreateCategoryPresenter : CategoryPresenterInterface.CreateCategoryPresent
     override fun validateCategoryNameInput(mContext: Context, userUid: String,
                                            categoryNameInput: String, updateCategoryId: String?,
                                            filterType: String) {
-
         val categoryList =
-                baseModel.getCategoryListByUserUidWithFilterSync(mContext, userUid, filterType)
+                baseModel.getCatListByUserUidWithFilterSync(mContext, userUid, filterType)
         val errorMessage = validation.categoryNameValidation(mContext, categoryNameInput,
                 categoryList, updateCategoryId)
 
@@ -52,7 +51,6 @@ class CreateCategoryPresenter : CategoryPresenterInterface.CreateCategoryPresent
     }
 
     override fun createCategory(mContext: Context, categoryData: Category) {
-
         try {
             mCreateCategoryModel.createCategoryRealm(mContext, categoryData)
             getView()!!.createCategorySuccess()

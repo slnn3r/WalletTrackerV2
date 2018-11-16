@@ -17,8 +17,6 @@ interface AccountViewInterface {
         fun validAccountBalanceInput()
         fun invalidAccountBalanceInput(errorMessage: String)
 
-        fun setTwoDecimalPlace()
-
         fun showFloatingButton()
         fun hideFloatingButton()
 
@@ -35,8 +33,6 @@ interface AccountViewInterface {
 
         fun validAccountBalanceInput()
         fun invalidAccountBalanceInput(errorMessage: String)
-
-        fun setTwoDecimalPlace()
 
         fun showFloatingButton()
         fun hideFloatingButton()

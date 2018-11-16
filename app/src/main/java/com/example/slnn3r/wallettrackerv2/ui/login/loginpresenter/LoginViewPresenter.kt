@@ -20,7 +20,6 @@ class LoginViewPresenter : LoginPresenterInterface.LoginViewPresenter,
 
     override fun executeGoogleSignIn(mContext: Context, requestCode: Int,
                                      resultCode: Int, data: Intent) {
-
         if (resultCode != 0) { // Close the Google Sign In Dialog Manually or Unexpectedly will NOT return 0
             if (requestCode == 1) {
                 getView()!!.showLoadingDialog()
@@ -28,7 +27,7 @@ class LoginViewPresenter : LoginPresenterInterface.LoginViewPresenter,
                 val accountGoogle = handleSignInResult(task)
                 firebaseAuthentication(mContext, accountGoogle)
             }
-        }else{
+        } else {
             val cm = mContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
             val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
@@ -40,7 +39,6 @@ class LoginViewPresenter : LoginPresenterInterface.LoginViewPresenter,
     }
 
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>): GoogleSignInAccount? {
-
         var account: GoogleSignInAccount? = null
 
         try {
@@ -54,7 +52,6 @@ class LoginViewPresenter : LoginPresenterInterface.LoginViewPresenter,
     }
 
     private fun firebaseAuthentication(mContext: Context, accountGoogle: GoogleSignInAccount?) {
-
         if (accountGoogle == null) { // might null as handleSignInResult catch exception
             return
         }
@@ -64,7 +61,6 @@ class LoginViewPresenter : LoginPresenterInterface.LoginViewPresenter,
         val credential = GoogleAuthProvider.getCredential(accountGoogle.idToken, null)
         mAuth!!.signInWithCredential(credential)
                 .addOnCompleteListener(mContext as Activity) { task ->
-
                     if (task.isSuccessful) {
                         val userFirebase = mAuth.currentUser!!
                         getView()!!.dismissLoadingDialog()

@@ -42,7 +42,6 @@ class CustomCalculatorDialog : BottomSheetDialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
         addition = getString(R.string.btnPlus_label)
         subtraction = getString(R.string.btnMinus_label)
         multiplication = getString(R.string.btnMultiply_label)
@@ -90,7 +89,6 @@ class CustomCalculatorDialog : BottomSheetDialogFragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
                 val text = tv_calCustomDialog_amount.text.toString()
                 if (text.contains(".") &&
                         text.substring(text.indexOf(".") + 1).length > 2) {
@@ -105,7 +103,6 @@ class CustomCalculatorDialog : BottomSheetDialogFragment() {
         })
 
         btn_confirm_calCustomDialog.setOnClickListener {
-
             if (tv_calCustomDialog_amount.text.toString() == getString(R.string.notANumber_label)
                     || tv_calCustomDialog_amount.text.toString() == "") {
                 inputSelection.calculatorNoInput()
@@ -117,7 +114,6 @@ class CustomCalculatorDialog : BottomSheetDialogFragment() {
         }
 
         btn_cancel_calCustomDialog.setOnClickListener {
-
             if (myValue.toDoubleOrNull() != null) {
                 inputSelection.calculatorInput(myValue)
                 dialog.dismiss()
@@ -165,7 +161,6 @@ class CustomCalculatorDialog : BottomSheetDialogFragment() {
         }
 
         btn_3_calCustomDialog.setOnClickListener {
-
             tv_calCustomDialog_amount.setTextColor(Color.BLACK)
 
             if (!rewriting) {
@@ -262,7 +257,6 @@ class CustomCalculatorDialog : BottomSheetDialogFragment() {
         }
 
         btn_delete_calCustomDialog.setOnClickListener {
-
             if (!rewriting) {
                 val length = tv_calCustomDialog_amount.text.length
                 if (length > 0) {
@@ -277,7 +271,6 @@ class CustomCalculatorDialog : BottomSheetDialogFragment() {
         }
 
         btn_plus_calCustomDialog.setOnClickListener {
-
             computeCalculation()
             currentAction = addition
 
@@ -292,7 +285,6 @@ class CustomCalculatorDialog : BottomSheetDialogFragment() {
         }
 
         btn_minus_calCustomDialog.setOnClickListener {
-
             computeCalculation()
             currentAction = subtraction
 
@@ -307,7 +299,6 @@ class CustomCalculatorDialog : BottomSheetDialogFragment() {
         }
 
         btn_multiply_calCustomDialog.setOnClickListener {
-
             computeCalculation()
             currentAction = multiplication
 
@@ -322,7 +313,6 @@ class CustomCalculatorDialog : BottomSheetDialogFragment() {
         }
 
         btn_divide_calCustomDialog.setOnClickListener {
-
             computeCalculation()
             currentAction = division
 
@@ -338,18 +328,15 @@ class CustomCalculatorDialog : BottomSheetDialogFragment() {
 
 
         btn_equal_calCustomDialog.setOnClickListener {
-
             computeCalculation()
             tv_calCustomDialog_amount.setText(decFormat.format(valueOne))
             tv_calCustomDialog_amount.setTextColor(resources.getColor(R.color.colorPrimary))
-
             resetCalculator()
         }
     }
 
     private fun computeCalculation() {
         if (!java.lang.Double.isNaN(valueOne)) {
-
             valueTwo = if (tv_calCustomDialog_amount.text.toString().toDoubleOrNull() == null) {
                 Double.NaN
             } else {
@@ -370,12 +357,10 @@ class CustomCalculatorDialog : BottomSheetDialogFragment() {
                 multiplication -> {
                     valueOne *= valueTwo
                     checkExcessiveAmount()
-
                 }
                 division -> {
                     valueOne /= valueTwo
                     checkExcessiveAmount()
-
                 }
             }
         } else {

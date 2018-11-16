@@ -11,9 +11,8 @@ class ViewAccountPresenter : AccountPresenterInterface.ViewAccountPresenter,
     private val baseModel: BaseModel = BaseModel()
 
     override fun getAccountList(mContext: Context, userUid: String) {
-
         try {
-            val dataList = baseModel.getAccountListByUserUidSync(mContext, userUid)
+            val dataList = baseModel.getAccListByUserUidSync(mContext, userUid)
             getView()!!.populateAccountRecycleView(dataList)
         } catch (e: Exception) {
             getView()!!.onError(e.message.toString())

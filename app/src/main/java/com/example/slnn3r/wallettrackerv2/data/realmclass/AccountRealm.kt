@@ -10,7 +10,7 @@ open class AccountRealm : RealmObject() {
     @PrimaryKey
     var accountId: String? = null
     var accountName: String? = null
-    var accountInitialBalance: Double = 0.0
+    var accountDesc: String? = null
     var userUid: String? = null
     var accountStatus: String? = null
 }

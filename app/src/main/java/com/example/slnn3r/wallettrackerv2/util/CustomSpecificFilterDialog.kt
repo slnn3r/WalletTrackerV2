@@ -13,7 +13,7 @@ import android.widget.FrameLayout
 import com.example.slnn3r.wallettrackerv2.R
 import kotlinx.android.synthetic.main.specific_filter_custom_dialog.*
 
-class CustomSpecificFilterDialog : BottomSheetDialogFragment(){
+class CustomSpecificFilterDialog : BottomSheetDialogFragment() {
 
     private lateinit var go: OnSpecificFilter
 
@@ -22,7 +22,6 @@ class CustomSpecificFilterDialog : BottomSheetDialogFragment(){
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
         return inflater.inflate(R.layout.specific_filter_custom_dialog, container, false)
     }
 

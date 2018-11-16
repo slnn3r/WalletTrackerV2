@@ -28,8 +28,7 @@ class DetailsAccountPresenter : AccountPresenterInterface.DetailsAccountPresente
 
     override fun validateAccountNameInput(mContext: Context, userUid: String,
                                           accountNameInput: String, updateAccountId: String?) {
-
-        val accountList = baseModel.getAccountListByUserUidSync(mContext, userUid)
+        val accountList = baseModel.getAccListByUserUidSync(mContext, userUid)
         val errorMessage = validation.accountNameValidation(mContext, accountNameInput,
                 accountList, updateAccountId)
 
@@ -41,9 +40,9 @@ class DetailsAccountPresenter : AccountPresenterInterface.DetailsAccountPresente
         }
     }
 
-    override fun validateAccountBalanceInput(mContext: Context, accountBalanceInput: String) {
+    override fun validateAccountDescInput(mContext: Context, accountBalanceInput: String) {
         val errorMessage =
-                validation.amountValidation(mContext, accountBalanceInput)
+                validation.accountDescValidation(mContext, accountBalanceInput)
 
         if (errorMessage != null) {
             getView()!!.invalidAccountBalanceInput(errorMessage)
@@ -53,16 +52,7 @@ class DetailsAccountPresenter : AccountPresenterInterface.DetailsAccountPresente
         }
     }
 
-    override fun decimalInputCheck(accountBalanceInput: String) {
-        if (accountBalanceInput.contains(".") &&
-                accountBalanceInput.substring(
-                        accountBalanceInput.indexOf(".") + 1).length > 2) {
-            getView()!!.setTwoDecimalPlace()
-        }
-    }
-
     override fun actionCheck(menuItem: SpeedDialActionItem) {
-
         when (menuItem.id) {
             R.id.fb_action_edit -> {
                 getView()!!.editAccountPrompt()
@@ -70,6 +60,13 @@ class DetailsAccountPresenter : AccountPresenterInterface.DetailsAccountPresente
             R.id.fb_action_delete -> {
                 getView()!!.deleteAccountPrompt()
             }
+        }
+    }
+
+    override fun checkAllInputError(errorAccountName: CharSequence?,
+                                    errorAccountBalance: CharSequence?) {
+        if (errorAccountName == null && errorAccountBalance == null) {
+            getView()!!.showFloatingButton()
         }
     }
 
@@ -82,19 +79,12 @@ class DetailsAccountPresenter : AccountPresenterInterface.DetailsAccountPresente
         }
     }
 
-    override fun deleteAccount(mContext: Context, accountData: Account) {
+    override fun deleteAccount(mContext: Context, accountId: String) {
         try {
-            mDetailsAccountModel.deleteAccountRealm(mContext, accountData.accountId)
+            mDetailsAccountModel.deleteAccountRealm(mContext, accountId)
             getView()!!.deleteAccountSuccess()
         } catch (e: Exception) {
             getView()!!.onError(e.message.toString())
-        }
-    }
-
-    override fun checkAllInputError(errorAccountName: CharSequence?,
-                                    errorAccountBalance: CharSequence?) {
-        if (errorAccountName == null && errorAccountBalance == null) {
-            getView()!!.showFloatingButton()
         }
     }
 }

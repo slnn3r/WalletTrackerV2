@@ -20,7 +20,6 @@ class CreateCategoryViewModel : CategoryModelInterface.CreateCategoryViewModel {
         realm = Realm.getInstance(config)
 
         realm!!.executeTransaction {
-
             val categoryRealm = realm.createObject(CategoryRealm::class.java, categoryData.categoryId)
 
             categoryRealm.categoryName = categoryData.categoryName
@@ -28,7 +27,6 @@ class CreateCategoryViewModel : CategoryModelInterface.CreateCategoryViewModel {
             categoryRealm.categoryStatus = categoryData.categoryStatus
             categoryRealm.userUid = categoryData.userUid
         }
-
         realm.close()
     }
 }

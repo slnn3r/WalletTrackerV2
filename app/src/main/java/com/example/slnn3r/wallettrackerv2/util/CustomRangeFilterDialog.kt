@@ -13,7 +13,7 @@ import android.widget.FrameLayout
 import com.example.slnn3r.wallettrackerv2.R
 import kotlinx.android.synthetic.main.range_filter_custom_dialog.*
 
-class CustomRangeFilterDialog: BottomSheetDialogFragment(){
+class CustomRangeFilterDialog : BottomSheetDialogFragment() {
     private lateinit var go: OnRangeFilter
 
     interface OnRangeFilter {
@@ -21,7 +21,6 @@ class CustomRangeFilterDialog: BottomSheetDialogFragment(){
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
         return inflater.inflate(R.layout.range_filter_custom_dialog, container, false)
     }
 
@@ -56,7 +55,6 @@ class CustomRangeFilterDialog: BottomSheetDialogFragment(){
             go.rangeFilterInput("cancel")
             dialog.dismiss()
         }
-
     }
 
     override fun onAttach(context: Context?) {

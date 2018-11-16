@@ -6,24 +6,144 @@
     android:layout_height="match_parent"
     tools:context=".ui.transaction.transactionview.DetailsTransactionFragment">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/layout5bj"
+    <TextView
+        android:id="@+id/tv_detailsTrans_selectedAcc_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/selected_account_title"
+        app:layout_constraintEnd_toStartOf="@+id/sp_detailsTrans_selectedAcc_selection"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/sp_detailsTrans_selectedAcc_selection"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="20dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/custom_default_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_detailsTrans_selectedAcc_label"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_detailsTrans_catType_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="22dp"
+        android:text="@string/category_type_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_detailsTrans_selectedAcc_label" />
+
+    <TextView
+        android:id="@+id/tv_detailsTrans_catType_selection"
+        android:layout_width="0dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/custom_default_background"
+        android:paddingLeft="8dp"
+        android:paddingTop="2dp"
+        android:paddingRight="8dp"
+        android:text="@string/expense_title"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/sb_detailsTrans_catType"
+        app:layout_constraintStart_toEndOf="@+id/tv_detailsTrans_catType_label"
+        app:layout_constraintTop_toBottomOf="@+id/tv_detailsTrans_selectedAcc_label" />
+
+    <com.kyleduo.switchbutton.SwitchButton
+        android:id="@+id/sb_detailsTrans_catType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="16dp"
+        android:checked="true"
+        app:kswBackColor="@color/colorLightRed"
+        app:kswThumbColor="@color/colorPrimaryLight"
+        app:kswThumbWidth="30dp"
+        app:kswTintColor="@color/fui_bgPhone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_detailsTrans_selectedAcc_label" />
+
+    <TextView
+        android:id="@+id/tv_detailsTrans_selectedCat_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="6dp"
+        android:text="@string/selected_category_title"
+        app:layout_constraintEnd_toStartOf="@+id/sp_detailsTrans_selectedCat_selection"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_detailsTrans_catType_label" />
+
+    <Spinner
+        android:id="@+id/sp_detailsTrans_selectedCat_selection"
+        android:layout_width="0dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/custom_default_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/tv_detailsTrans_selectedCat_label"
+        app:layout_constraintTop_toBottomOf="@+id/tv_detailsTrans_catType_label" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/tl_detailsTrans_remarks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="20dp"
         android:background="@drawable/custom_default_background"
+        android:paddingTop="4dp"
         android:theme="@style/EditTextTheme"
-        app:layout_constraintBottom_toTopOf="@+id/layout2bj"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sp_detailsTrans_selectedCat_selection">
+
+        <AutoCompleteTextView
+            android:id="@+id/ac_detailsTrans_remarks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:completionThreshold="1"
+            android:hint="@string/remarks_title"
+            android:imeOptions="actionDone"
+            android:maxLength="60"
+            android:padding="8dp"
+            android:singleLine="true"
+            android:textAlignment="center"
+            android:theme="@style/EditTextTheme" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/tl_detailsTrans_amount"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/custom_default_background"
+        android:paddingTop="4dp"
+        android:theme="@style/EditTextTheme"
+        app:errorTextAppearance="@style/layout_error"
+        app:layout_constraintBottom_toTopOf="@+id/tl_detailsTrans_date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout3bj">
+        app:layout_constraintTop_toBottomOf="@+id/tl_detailsTrans_remarks">
 
         <EditText
-            android:id="@+id/editText4bj"
+            android:id="@+id/et_detailsTrans_amount"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
@@ -31,7 +151,7 @@
             android:focusable="false"
             android:hint="@string/amount_required_title"
             android:inputType="text"
-            android:padding="@dimen/keyline_1_minus_8dp"
+            android:padding="8dp"
             android:singleLine="true"
             android:text="@string/enter_amount_title"
             android:textAlignment="center"
@@ -43,190 +163,75 @@
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/layout3bj"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/custom_default_background"
-        android:theme="@style/EditTextTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner3bj">
-
-        <AutoCompleteTextView
-            android:id="@+id/editText3bj"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:completionThreshold="1"
-            android:hint="@string/remarks_title"
-            android:imeOptions="actionDone"
-            android:padding="@dimen/keyline_1_minus_8dp"
-            android:singleLine="true"
-            android:textAlignment="center"
-            android:theme="@style/EditTextTheme" />
-
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/layout2bj"
+        android:id="@+id/tl_detailsTrans_date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/custom_default_background"
+        android:paddingTop="4dp"
         android:theme="@style/EditTextTheme"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/gogolayoutbj"
+        app:layout_constraintEnd_toStartOf="@+id/tl_detailsTrans_time"
         app:layout_constraintStart_toStartOf="parent">
 
-        <AutoCompleteTextView
-            android:id="@+id/editText2bj"
+        <EditText
+            android:id="@+id/et_detailsTrans_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
             android:completionThreshold="1"
+            android:focusable="false"
             android:hint="@string/date_title"
             android:imeOptions="actionNext"
-            android:padding="@dimen/keyline_1_minus_8dp"
+            android:inputType="date"
+            android:padding="8dp"
             android:singleLine="true"
             android:textAlignment="center"
-            android:theme="@style/EditTextTheme" />
+            android:theme="@style/EditTextTheme"
+            tools:ignore="Autofill" />
 
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/gogolayoutbj"
+        android:id="@+id/tl_detailsTrans_time"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="88dp"
+        android:layout_marginEnd="84dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/custom_default_background"
+        android:paddingTop="4dp"
         android:theme="@style/EditTextTheme"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/layout2bj">
+        app:layout_constraintStart_toEndOf="@+id/tl_detailsTrans_date">
 
-        <AutoCompleteTextView
-            android:id="@+id/goblaedtbj"
+        <EditText
+            android:id="@+id/et_detailsTrans_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
             android:completionThreshold="1"
+            android:focusable="false"
             android:hint="@string/time_title"
             android:imeOptions="actionNext"
-            android:padding="@dimen/keyline_1_minus_8dp"
+            android:inputType="time"
+            android:padding="8dp"
             android:singleLine="true"
             android:textAlignment="center"
-            android:theme="@style/EditTextTheme" />
+            android:theme="@style/EditTextTheme"
+            tools:ignore="Autofill" />
 
     </android.support.design.widget.TextInputLayout>
 
-    <Spinner
-        android:id="@+id/spinner3bj"
-        android:layout_width="0dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="23dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/custom_default_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/textView4bj"
-        app:layout_constraintTop_toBottomOf="@+id/textView3bj" />
-
-    <TextView
-        android:id="@+id/textView4bj"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="6dp"
-        android:text="@string/selected_category_title"
-        app:layout_constraintEnd_toStartOf="@+id/spinner3bj"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3bj" />
-
-    <com.kyleduo.switchbutton.SwitchButton
-        android:id="@+id/switch3bj"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="23dp"
-        android:layout_marginEnd="16dp"
-        android:checked="true"
-        app:kswBackColor="@color/colorLightRed"
-        app:kswThumbColor="@color/colorPrimaryDark"
-        app:kswThumbWidth="30dp"
-        app:kswTintColor="@color/fui_bgPhone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvbelbj" />
-
-    <TextView
-        android:id="@+id/texttypebj"
-        android:layout_width="0dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="23dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/custom_default_background"
-        android:paddingLeft="4dp"
-        android:paddingTop="2dp"
-        android:paddingRight="4dp"
-        android:text="@string/expense_title"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/switch3bj"
-        app:layout_constraintStart_toEndOf="@+id/textView3bj"
-        app:layout_constraintTop_toBottomOf="@+id/tvbelbj" />
-
-    <TextView
-        android:id="@+id/textView3bj"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/category_type_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvbelbj" />
-
-    <TextView
-        android:id="@+id/tvbelbj"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="10dp"
-        android:text="@string/selected_account_title"
-        app:layout_constraintEnd_toStartOf="@+id/spinner2lbj"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Spinner
-        android:id="@+id/spinner2lbj"
-        android:layout_width="0dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/custom_default_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tvbelbj"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <io.github.yavski.fabspeeddial.FabSpeedDial
-        android:id="@+id/fab_speed_dialbj"
+    <com.leinardi.android.speeddial.SpeedDialView
+        android:id="@+id/fb_detailsTrans"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        app:fabBackgroundTint="@color/colorPrimaryDark"
-        app:fabDrawable="@drawable/ic_edit_delete"
-        app:fabGravity="bottom_end"
-        app:fabMenu="@menu/fb_edit_delete_menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:miniFabBackgroundTintList="@array/fab_menu_item_colors"
-        app:miniFabDrawableTint="@color/colorPrimaryLight"
-        app:miniFabTitleBackgroundTint="@color/colorPrimaryLight"
-        app:miniFabTitleTextColorList="@array/fab_menu_item_colors" />
+        app:sdMainFabClosedSrc="@drawable/ic_edit_delete" />
 
 </android.support.constraint.ConstraintLayout>

@@ -16,20 +16,17 @@ class AccountListAdapter(private val accountList: ArrayList<Account>) :
         RecyclerView.Adapter<AccountViewHolder>() {
 
     override fun getItemCount(): Int {
-        return accountList.count() + 1
         // +1 in order to create a empty list to resolve avoid floating button blocking issue
+        return accountList.count() + 1
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountViewHolder {
-
         val layoutInflater = LayoutInflater.from(parent.context)
         val cellForRow = layoutInflater.inflate(R.layout.account_list_row, parent, false)
-
         return AccountViewHolder(cellForRow)
     }
 
     override fun onBindViewHolder(holder: AccountViewHolder, position: Int) {
-
         val viewContext = holder.view.context
 
         /* onBindHolder called several times as recycler news needs a view unless new one.
@@ -46,7 +43,6 @@ class AccountListAdapter(private val accountList: ArrayList<Account>) :
 
             if (accountData.accountStatus.equals(
                             Constant.ConditionalKeyword.DEFAULT_STATUS, ignoreCase = true)) {
-
                 holder.view.tv_accListRow_accName.text = accountData.accountName
                 holder.view.tv_accListRow_remark.text = viewContext.getString(R.string.non_deletable_title)
             } else {
@@ -65,10 +61,9 @@ class AccountViewHolder(val view: View, var passData: Account? = null) :
         view.setOnClickListener {
 
             if (passData != null) {
-
                 val gson = Gson()
                 val accountData = Account(passData!!.accountId, passData!!.accountName,
-                        passData!!.accountInitialBalance, passData!!.userUid,
+                        passData!!.accountDesc, passData!!.userUid,
                         passData!!.accountStatus)
 
                 val json = gson.toJson(accountData)

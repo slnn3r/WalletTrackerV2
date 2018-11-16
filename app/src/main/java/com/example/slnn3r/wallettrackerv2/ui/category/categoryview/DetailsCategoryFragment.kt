@@ -46,31 +46,8 @@ class DetailsCategoryFragment : Fragment(), CategoryViewInterface.DetailsCategor
         super.onViewCreated(view, savedInstanceState)
 
         setupInitialUi()
-
-        sb_detailsCat_catType.setOnCheckedChangeListener { _: CompoundButton, _: Boolean ->
-            mDetailsCategoryViewPresenter.checkSwitchButton(sb_detailsCat_catType.isChecked)
-            mDetailsCategoryViewPresenter.validateCategoryNameInput(
-                    context!!, userData.uid,
-                    et_detailsCat_catName.text.toString(), categoryArgData.categoryId,
-                    tv_detailsCat_catType_selection.text.toString())
-        }
-
-        et_detailsCat_catName.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                Log.d("", "")
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                mDetailsCategoryViewPresenter.validateCategoryNameInput(
-                        context!!, userData.uid,
-                        et_detailsCat_catName.text.toString(), categoryArgData.categoryId,
-                        tv_detailsCat_catType_selection.text.toString())
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                Log.d("", "")
-            }
-        })
+        setupSwitchButton()
+        setupCatNameEditText()
     }
 
     override fun onStart() {
@@ -116,7 +93,6 @@ class DetailsCategoryFragment : Fragment(), CategoryViewInterface.DetailsCategor
             mDetailsCategoryViewPresenter.actionCheck(speedDialActionItem)
             false
         }
-
     }
 
     override fun setupFloatingDefaultButton() {
@@ -190,7 +166,6 @@ class DetailsCategoryFragment : Fragment(), CategoryViewInterface.DetailsCategor
                 getString(R.string.cd_detailsCat_editSubmit_desc),
                 resources.getDrawable(R.drawable.ic_warning),
                 DialogInterface.OnClickListener { _, _ ->
-
                     val categoryInput =
                             Category(categoryArgData.categoryId,
                                     et_detailsCat_catName.text.toString(),
@@ -209,15 +184,8 @@ class DetailsCategoryFragment : Fragment(), CategoryViewInterface.DetailsCategor
                 getString(R.string.cd_detailsCat_deleteSubmit_desc),
                 resources.getDrawable(R.drawable.ic_warning),
                 DialogInterface.OnClickListener { _, _ ->
-
-                    val categoryInput =
-                            Category(categoryArgData.categoryId,
-                                    et_detailsCat_catName.text.toString(),
-                                    tv_detailsCat_catType_selection.text.toString(),
-                                    categoryArgData.categoryStatus, categoryArgData.userUid)
-
                     mDetailsCategoryViewPresenter
-                            .deleteAccount(context!!, categoryInput)
+                            .deleteAccount(context!!, categoryArgData.categoryId)
                 }
         ).show()
     }
@@ -249,5 +217,34 @@ class DetailsCategoryFragment : Fragment(), CategoryViewInterface.DetailsCategor
         categoryArgData = gson.fromJson<Category>(categoryDataJson, Category::class.java)
 
         et_detailsCat_catName.setText(categoryArgData.categoryName)
+    }
+
+    private fun setupSwitchButton() {
+        sb_detailsCat_catType.setOnCheckedChangeListener { _: CompoundButton, _: Boolean ->
+            mDetailsCategoryViewPresenter.checkSwitchButton(sb_detailsCat_catType.isChecked)
+            mDetailsCategoryViewPresenter.validateCategoryNameInput(
+                    context!!, userData.uid,
+                    et_detailsCat_catName.text.toString(), categoryArgData.categoryId,
+                    tv_detailsCat_catType_selection.text.toString())
+        }
+    }
+
+    private fun setupCatNameEditText() {
+        et_detailsCat_catName.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                Log.d("", "")
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                mDetailsCategoryViewPresenter.validateCategoryNameInput(
+                        context!!, userData.uid,
+                        et_detailsCat_catName.text.toString(), categoryArgData.categoryId,
+                        tv_detailsCat_catType_selection.text.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                Log.d("", "")
+            }
+        })
     }
 }

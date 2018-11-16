@@ -20,15 +20,13 @@ class CreateAccountViewModel : AccountModelInterface.CreateAccountViewModel {
         realm = Realm.getInstance(config)
 
         realm!!.executeTransaction {
-
             val accountRealm = realm.createObject(AccountRealm::class.java, accountData.accountId)
 
             accountRealm.accountName = accountData.accountName
-            accountRealm.accountInitialBalance = accountData.accountInitialBalance
+            accountRealm.accountDesc = accountData.accountDesc
             accountRealm.userUid = accountData.userUid
             accountRealm.accountStatus = accountData.accountStatus
         }
-
         realm.close()
     }
 }

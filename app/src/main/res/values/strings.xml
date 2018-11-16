@@ -14,6 +14,10 @@
     <string name="fb_action_specific_title">Specific Date</string>
     <string name="fb_action_range_title">Range Date</string>
 
+    <!-- transaction_list_row -->
+    <string name="tv_accRow_defaultLine1">No Transaction Found</string>
+    <string name="tv_accRow_defaultLine2">Start Add New Transaction</string>
+    <string name="tv_accRow_defaultLine3">By click the Floating Button at Bottom Right Side</string>
 
     <!-- activity_menu_drawer -->
     <string name="navSection1_title">Wallet Management</string>
@@ -86,14 +90,32 @@
 
     <!-- CreateTransactionFragment -->
     <string name="ab_createTrans_title">New Transaction</string>
+    <string name="createTrans_created_message">Transaction Created Successfully</string>
 
+    <!-- DetailsTransactionFragment -->
+    <string name="ab_detailsTrans_title">Transaction Details</string>
+    <string name="detailsTrans_edited_message">Transaction Edited</string>
+    <string name="cd_detailsTrans_editSubmit_title">Edit Transaction Details</string>
+    <string name="cd_detailsTrans_editSubmit_desc">Are you confirm to Edit this Transaction Details?</string>
+    <string name="detailsTrans_deleted_message">Transaction Deleted</string>
+    <string name="cd_detailsTrans_deleteSubmit_title">Delete Transaction</string>
+    <string name="cd_detailsTrans_deleteSubmit_desc">Are you confirm to Delete this Transaction?</string>
+    <string name="deletedItem_spinner_label">\u0020(Not Existed/Deleted)</string>
+
+    <!-- Dashboard -->
+    <string name="ab_dashboard_title">Dashboard</string>
+    <string name="tv_dashboard_recentTransList_title">Recent 10(s) Transaction List</string>
+    <string name="tv_transList_datetime_labelFormat">%s (%s) %s</string>
+    <string name="tv_transList_categoryOnly_labelFormat">%s</string>
+    <string name="tv_transList_categoryRemark_labelFormat">%s \u2022 %s</string>
+    <string name="tv_transList_amount_labelFormat">%s $ %.2f</string>
 
     <!-- SOON TO BE REMOVED -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!-- Share Title -->
     <string name="account_name_title">Account Name</string>
-    <string name="initial_balance_title">Initial Balance</string>
+    <string name="account_desc_title">Account Description</string>
     <string name="category_type_title">Category Type</string>
     <string name="expense_title">Expense</string>
     <string name="category_name_title">Category Name</string>
@@ -116,7 +138,7 @@
     <string name="accName_format_invalid_messagae">Format Invalid, Enter Character Only, Do not End with Space</string>
     <string name="accName_used_invalid_message">Account Name have been already Used</string>
     <string name="accName_databaseError_invalid_message">Account Database error occurred</string>
-    <string name="accInitialBal_empty_invalid_message">Please Enter Initial Balance</string>
+    <string name="accDescription_empty_invalid_message">Please Enter Account Description</string>
     <string name="catName_empty_invalid_message">Please Enter Category Name</string>
     <string name="catName_minWord_invalid_message">Please Enter At Least 4 and At Most 20 words</string>
     <string name="catName_format_invalid_messagae">Format Invalid, Enter Character Only, Do not End with Space</string>

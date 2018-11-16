@@ -1,12 +1,10 @@
 package com.example.slnn3r.wallettrackerv2.ui.category.categoryview
 
-import android.app.Activity
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -40,22 +38,8 @@ class ViewCategoryFragment : Fragment(), CategoryViewInterface.ViewCategoryView 
         super.onViewCreated(view, savedInstanceState)
 
         setupInitialUi() // Setup Category type before call getCategoryFunction
-
-        fb_viewCat_createCat.setOnClickListener {
-
-            val navController = view.findNavController()
-            val bundle = Bundle()
-            bundle.putString(Constant.KeyId.CATEGORY_CREATE_ARG,
-                    tv_viewCat_catType_selection.text.toString())
-            navController
-                    .navigate(R.id.action_viewCategoryFragment_to_createCategoryFragment, bundle)
-        }
-
-        sb_viewCat_catType.setOnCheckedChangeListener { _: CompoundButton, _: Boolean ->
-            mViewCategoryViewPresenter.checkSwitchButton(sb_viewCat_catType.isChecked)
-            mViewCategoryViewPresenter.getCategoryList(context!!, userData.uid,
-                    tv_viewCat_catType_selection.text.toString())
-        }
+        setupCreateButton()
+        setupSwitchButton()
     }
 
     override fun onStart() {
@@ -91,11 +75,8 @@ class ViewCategoryFragment : Fragment(), CategoryViewInterface.ViewCategoryView 
     }
 
     override fun populateCategoryRecycleView(categoryList: ArrayList<Category>) {
-        val catListRecyclerView =
-                (context as Activity).findViewById(R.id.rv_viewCat_catList) as RecyclerView
-
-        catListRecyclerView.layoutManager = LinearLayoutManager(context)
-        catListRecyclerView.adapter = CategoryListAdapter(categoryList)
+        rv_viewCat_catList.layoutManager = LinearLayoutManager(context)
+        rv_viewCat_catList.adapter = CategoryListAdapter(categoryList)
     }
 
     override fun onError(message: String) {
@@ -106,5 +87,24 @@ class ViewCategoryFragment : Fragment(), CategoryViewInterface.ViewCategoryView 
 
     private fun setupInitialUi() {
         tv_viewCat_catType_selection.text = Constant.ConditionalKeyword.EXPENSE_STATUS
+    }
+
+    private fun setupCreateButton() {
+        fb_viewCat_createCat.setOnClickListener {
+            val navController = view!!.findNavController()
+            val bundle = Bundle()
+            bundle.putString(Constant.KeyId.CATEGORY_CREATE_ARG,
+                    tv_viewCat_catType_selection.text.toString())
+            navController
+                    .navigate(R.id.action_viewCategoryFragment_to_createCategoryFragment, bundle)
+        }
+    }
+
+    private fun setupSwitchButton() {
+        sb_viewCat_catType.setOnCheckedChangeListener { _: CompoundButton, _: Boolean ->
+            mViewCategoryViewPresenter.checkSwitchButton(sb_viewCat_catType.isChecked)
+            mViewCategoryViewPresenter.getCategoryList(context!!, userData.uid,
+                    tv_viewCat_catType_selection.text.toString())
+        }
     }
 }

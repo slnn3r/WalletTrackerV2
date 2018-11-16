@@ -30,7 +30,8 @@
             android:hint="@string/account_name_title"
             android:imeOptions="actionNext"
             android:inputType="text"
-            android:padding="@dimen/keyline_1_minus_8dp"
+            android:maxLength="20"
+            android:padding="8dp"
             android:singleLine="true"
             android:theme="@style/EditTextTheme"
             tools:ignore="Autofill" />
@@ -38,7 +39,7 @@
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/tl_detailsAcc_AccInitialBal"
+        android:id="@+id/tl_detailsAcc_AccDesc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -54,16 +55,19 @@
         app:layout_constraintTop_toBottomOf="@+id/tl_detailsAcc_AccName">
 
         <EditText
-            android:id="@+id/et_detailsAcc_AccInitialBal"
+            android:id="@+id/et_detailsAcc_AccDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
             android:completionThreshold="1"
-            android:hint="@string/initial_balance_title"
+            android:gravity="start"
+            android:hint="@string/account_desc_title"
             android:imeOptions="actionDone"
-            android:inputType="numberDecimal"
-            android:padding="@dimen/keyline_1_minus_8dp"
-            android:singleLine="true"
+            android:inputType="textMultiLine"
+            android:lines="6"
+            android:maxLength="200"
+            android:padding="8dp"
+            android:singleLine="false"
             android:theme="@style/EditTextTheme"
             tools:ignore="Autofill" />
 

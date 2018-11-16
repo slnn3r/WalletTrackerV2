@@ -44,4 +44,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/fb_filter_confirm"
         app:srcCompat="@drawable/ic_cross" />
+
 </android.support.constraint.ConstraintLayout>

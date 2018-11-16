@@ -36,21 +36,30 @@ class Constant {
         const val ACCOUNT_DETAILS_ARG = "accountDetailsArg"
         const val CATEGORY_CREATE_ARG = "categoryCreateArg"
         const val CATEGORY_DETAILS_ARG = "categoryDetailsArg"
+        const val TRANSACTION_DETAILS_ARG = "transactionDetailsArg"
 
         const val CALCULATE_DIALOG_ARG = "calculatorDialogArg"
+
+        const val SHARE_PREF = "sharePreference:"
+        const val SELECTED_ACCOUNT_KEY = "selectedAccount"
     }
 
     object RealmTableName {
         const val ACCOUNT_REALM_TABLE = "account.realm"
         const val CATEGORY_REALM_TABLE = "category.realm"
+        const val TRANSACTION_REALM_TABLE = "transaction.realm"
     }
 
     object RealmVariableName {
         const val USER_UID_VARIABLE = "userUid"
         const val ACCOUNT_ID_VARIABLE = "accountId"
+        const val ACCOUNT_NAME_VARIABLE = "accountName"
         const val CATEGORY_ID_VARIABLE = "categoryId"
+        const val CATEGORY_NAME_VARIABLE = "categoryName"
         const val CATEGORY_TYPE_VARIABLE = "categoryType"
-
+        const val TRANSACTION_DATE_VARIABLE = "transactionDate"
+        const val TRANSACTION_TIME_VARIABLE = "transactionTime"
+        const val TRANSACTION_ID_VARIABLE = "transactionId"
     }
 
     object RegularExpression {
@@ -58,7 +67,13 @@ class Constant {
     }
 
     object ConditionalFigure {
-        const val MIN_ACC_NAME = 4
+        const val MIN_ACCOUNT_NAME = 4
+    }
+
+    object DefaultValue {
+        const val DEFAULT_ACCOUNT_DESC = "Initial Default Account"
+        const val DEFAULT_STATUS = "Default"
+        const val DEFAULT_ACCOUNT_NAME = "Personal"
     }
 
     object Format {
@@ -86,5 +101,4 @@ class Constant {
         const val EIGHT = "8"
         const val NINE = "9"
     }
-
 }

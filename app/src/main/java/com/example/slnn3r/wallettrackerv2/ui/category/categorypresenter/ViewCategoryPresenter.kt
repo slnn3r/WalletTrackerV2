@@ -26,9 +26,8 @@ class ViewCategoryPresenter : CategoryPresenterInterface.ViewCategoryPresenter,
 
     override fun getCategoryList(mContext: Context, userUid: String,
                                  filterType: String) {
-
         try {
-            val categoryList = baseModel.getCategoryListByUserUidWithFilterSync(
+            val categoryList = baseModel.getCatListByUserUidWithFilterSync(
                     mContext, userUid, filterType)
 
             getView()!!.populateCategoryRecycleView(categoryList)

@@ -28,7 +28,6 @@ class CategoryListAdapter(private val categoryList: ArrayList<Category>) :
     }
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
-
         val viewContext = holder.view.context
 
         holder.setIsRecyclable(false)
@@ -37,16 +36,19 @@ class CategoryListAdapter(private val categoryList: ArrayList<Category>) :
             holder.view.cv_catListRow.background = null
             holder.view.cl_catListRow.isClickable = false
         } else {
-
             val categoryData = categoryList[position]
 
             if (categoryData.categoryType.equals(
                             Constant.ConditionalKeyword.EXPENSE_STATUS, ignoreCase = true)) {
-                holder.view.cv_catListRow.backgroundTintList =
-                        ColorStateList.valueOf(viewContext.getColor(R.color.colorLightRed))
+                holder.view.tv_catListRow_catName.setTextColor(
+                        ColorStateList.valueOf(viewContext.getColor(R.color.colorLightRed)))
+                holder.view.tv_catListRow_remark.setTextColor(
+                        ColorStateList.valueOf(viewContext.getColor(R.color.colorLightRed)))
             } else {
-                holder.view.cv_catListRow.backgroundTintList =
-                        ColorStateList.valueOf(viewContext.getColor(R.color.colorLightGreen))
+                holder.view.tv_catListRow_catName.setTextColor(
+                        ColorStateList.valueOf(viewContext.getColor(R.color.colorLightGreen)))
+                holder.view.tv_catListRow_remark.setTextColor(
+                        ColorStateList.valueOf(viewContext.getColor(R.color.colorLightGreen)))
             }
 
             if (categoryData.categoryStatus.equals(
@@ -61,17 +63,13 @@ class CategoryListAdapter(private val categoryList: ArrayList<Category>) :
             holder.passData = categoryData
         }
     }
-
 }
 
 class CategoryViewHolder(val view: View, var passData: Category? = null) :
         RecyclerView.ViewHolder(view) {
-
     init {
         view.setOnClickListener {
-
             if (passData != null) {
-
                 val gson = Gson()
                 val categoryData = Category(passData!!.categoryId,
                         passData!!.categoryName, passData!!.categoryType,

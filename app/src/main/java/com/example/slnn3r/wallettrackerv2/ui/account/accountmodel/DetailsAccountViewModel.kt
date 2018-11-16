@@ -20,7 +20,6 @@ class DetailsAccountViewModel : AccountModelInterface.DetailsAccountViewModel {
         realm = Realm.getInstance(config)
 
         realm!!.executeTransaction {
-
             val accountRealm =
                     realm.where(AccountRealm::class.java)
                             .equalTo(Constant.RealmVariableName.ACCOUNT_ID_VARIABLE,
@@ -28,10 +27,9 @@ class DetailsAccountViewModel : AccountModelInterface.DetailsAccountViewModel {
 
             accountRealm.forEach { accountRealmData ->
                 accountRealmData.accountName = accountData.accountName
-                accountRealmData.accountInitialBalance = accountData.accountInitialBalance
+                accountRealmData.accountDesc = accountData.accountDesc
             }
         }
-
         realm.close()
     }
 
@@ -46,7 +44,6 @@ class DetailsAccountViewModel : AccountModelInterface.DetailsAccountViewModel {
         realm = Realm.getInstance(config)
 
         realm!!.executeTransaction {
-
             val accountRealm =
                     realm.where(AccountRealm::class.java)
                             .equalTo(Constant.RealmVariableName.ACCOUNT_ID_VARIABLE,
@@ -56,7 +53,6 @@ class DetailsAccountViewModel : AccountModelInterface.DetailsAccountViewModel {
                 accountRealmData.deleteFromRealm()
             }
         }
-
         realm.close()
     }
 }

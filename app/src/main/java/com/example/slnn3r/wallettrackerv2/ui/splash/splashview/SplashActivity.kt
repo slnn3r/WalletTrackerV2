@@ -41,7 +41,6 @@ class SplashActivity : AppCompatActivity(), SplashViewInterface.SplashView {
     }
 
     override fun navigateToDashboard(userName: String) {
-
         Toast.makeText(this, getString(R.string.welcome_message, userName)
                 , Toast.LENGTH_SHORT).show()
         val intent = Intent(applicationContext, MenuActivity::class.java)

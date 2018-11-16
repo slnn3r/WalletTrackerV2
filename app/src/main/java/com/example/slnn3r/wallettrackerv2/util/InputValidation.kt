@@ -10,21 +10,16 @@ class InputValidation {
 
     fun accountNameValidation(mContext: Context, accountNameInput: String,
                               accountList: ArrayList<Account>, updateAccountId: String?): String? {
-
         val errorMessage: String?
         val rex = Constant.RegularExpression.REX_NAME.toRegex()
 
         if (accountNameInput.isEmpty()) {
             errorMessage = mContext.getString(R.string.accName_empty_invalid_message)
-
-        } else if (accountNameInput.length < Constant.ConditionalFigure.MIN_ACC_NAME) {
+        } else if (accountNameInput.length < Constant.ConditionalFigure.MIN_ACCOUNT_NAME) {
             errorMessage = mContext.getString(R.string.accName_minWord_invalid_message)
-
         } else if (!accountNameInput.matches(rex)) {
             errorMessage = mContext.getString(R.string.accName_format_invalid_messagae)
-
         } else if (accountList.size > 0) {
-
             var detectMatched = 0
 
             if (updateAccountId == null) {
@@ -57,10 +52,9 @@ class InputValidation {
         return errorMessage
     }
 
-    fun amountValidation(mContext: Context, accountBalanceInput: String): String? {
-
-        return if (accountBalanceInput.isEmpty()) {
-            mContext.getString(R.string.accInitialBal_empty_invalid_message)
+    fun accountDescValidation(mContext: Context, accountDescInput: String): String? {
+        return if (accountDescInput.isEmpty()) {
+            mContext.getString(R.string.accDescription_empty_invalid_message)
         } else {
             null
         }
@@ -69,21 +63,16 @@ class InputValidation {
     fun categoryNameValidation(mContext: Context, categoryNameInput: String,
                                categoryList: ArrayList<Category>,
                                updateCategoryId: String?): String? {
-
         val errorMessage: String?
         val rex = Constant.RegularExpression.REX_NAME.toRegex()
 
         if (categoryNameInput.isEmpty()) {
             errorMessage = mContext.getString(R.string.catName_empty_invalid_message)
-
-        } else if (categoryNameInput.length < Constant.ConditionalFigure.MIN_ACC_NAME) {
+        } else if (categoryNameInput.length < Constant.ConditionalFigure.MIN_ACCOUNT_NAME) {
             errorMessage = mContext.getString(R.string.catName_minWord_invalid_message)
-
         } else if (!categoryNameInput.matches(rex)) {
             errorMessage = mContext.getString(R.string.catName_format_invalid_messagae)
-
         } else if (categoryList.size > 0) {
-
             var detectMatched = 0
 
             if (updateCategoryId == null) {

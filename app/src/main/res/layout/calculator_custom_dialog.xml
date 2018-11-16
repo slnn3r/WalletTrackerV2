@@ -26,7 +26,6 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_calCustomDialog_label"
         tools:ignore="Autofill,LabelFor" />
 
-
     <Button
         android:id="@+id/btn_plus_calCustomDialog"
         android:layout_width="0dp"

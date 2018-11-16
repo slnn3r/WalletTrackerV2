@@ -46,7 +46,7 @@ class DetailsCategoryPresenter : CategoryPresenterInterface.DetailsCategoryPrese
     override fun validateCategoryNameInput(mContext: Context, userUid: String,
                                            categoryNameInput: String, updateCategoryId: String?,
                                            filterType: String) {
-        val categoryList = baseModel.getCategoryListByUserUidWithFilterSync(mContext, userUid, filterType)
+        val categoryList = baseModel.getCatListByUserUidWithFilterSync(mContext, userUid, filterType)
         val errorMessage = validation.categoryNameValidation(mContext, categoryNameInput,
                 categoryList, updateCategoryId)
 
@@ -79,9 +79,9 @@ class DetailsCategoryPresenter : CategoryPresenterInterface.DetailsCategoryPrese
         }
     }
 
-    override fun deleteAccount(mContext: Context, categoryData: Category) {
+    override fun deleteAccount(mContext: Context, categoryId: String) {
         try {
-            mDetailsAccountModel.deleteCategoryRealm(mContext, categoryData.categoryId)
+            mDetailsAccountModel.deleteCategoryRealm(mContext, categoryId)
             getView()!!.deleteCategorySuccess()
         } catch (e: Exception) {
             getView()!!.onError(e.message.toString())

@@ -1,11 +1,9 @@
 package com.example.slnn3r.wallettrackerv2.ui.account.accountview
 
-import android.app.Activity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -37,10 +35,7 @@ class ViewAccountFragment : Fragment(), AccountViewInterface.ViewAccountView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fb_viewAcc_createAcc.setOnClickListener {
-            val navController = view.findNavController()
-            navController.navigate(R.id.action_viewAccountFragment_to_createAccountFragment)
-        }
+        setupCreateButton()
     }
 
     override fun onStart() {
@@ -57,15 +52,20 @@ class ViewAccountFragment : Fragment(), AccountViewInterface.ViewAccountView {
     }
 
     override fun populateAccountRecycleView(accountList: ArrayList<Account>) {
-        val accListRecyclerView =
-                (context as Activity).findViewById(R.id.rv_viewAcc_accList) as RecyclerView
-        accListRecyclerView.layoutManager = LinearLayoutManager(context)
-        accListRecyclerView.adapter = AccountListAdapter(accountList)
+        rv_viewAcc_accList.layoutManager = LinearLayoutManager(context)
+        rv_viewAcc_accList.adapter = AccountListAdapter(accountList)
     }
 
     override fun onError(message: String) {
         Log.e(Constant.LoggingTag.VIEW_ACCOUNT_LOGGING, message)
         mCustomErrorDialog.errorMessageDialog(context!!, message).show()
         return
+    }
+
+    private fun setupCreateButton() {
+        fb_viewAcc_createAcc.setOnClickListener {
+            val navController = view!!.findNavController()
+            navController.navigate(R.id.action_viewAccountFragment_to_createAccountFragment)
+        }
     }
 }

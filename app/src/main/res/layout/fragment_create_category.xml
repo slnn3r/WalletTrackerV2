@@ -71,7 +71,8 @@
             android:hint="@string/category_name_title"
             android:imeOptions="actionDone"
             android:inputType="text"
-            android:padding="@dimen/keyline_1_minus_8dp"
+            android:maxLength="20"
+            android:padding="8dp"
             android:singleLine="true"
             android:theme="@style/EditTextTheme"
             tools:ignore="Autofill" />

@@ -42,35 +42,9 @@ class CreateCategoryFragment : Fragment(), CategoryViewInterface.CreateCategoryV
         super.onViewCreated(view, savedInstanceState)
 
         setupInitialUi()
-
-        fb_createCat.setOnClickListener {
-            createButtonSubmit()
-        }
-
-        sb_createCat_catType.setOnCheckedChangeListener { _: CompoundButton, _: Boolean ->
-            mCreateCategoryViewPresenter.checkSwitchButton(sb_createCat_catType.isChecked)
-            mCreateCategoryViewPresenter.validateCategoryNameInput(
-                    context!!, userData.uid,
-                    et_createCat_catName.text.toString(), null,
-                    tv_createCat_catType_selection.text.toString())
-        }
-
-        et_createCat_catName.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                Log.d("", "")
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                mCreateCategoryViewPresenter.validateCategoryNameInput(
-                        context!!, userData.uid,
-                        et_createCat_catName.text.toString(), null,
-                        tv_createCat_catType_selection.text.toString())
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                Log.d("", "")
-            }
-        })
+        setupCreateButton()
+        setupSwitchButton()
+        setupCatNameEditText()
     }
 
     override fun onStart() {
@@ -137,13 +111,47 @@ class CreateCategoryFragment : Fragment(), CategoryViewInterface.CreateCategoryV
         fb_createCat.hide()
     }
 
+    private fun setupCreateButton() {
+        fb_createCat.setOnClickListener {
+            createButtonSubmit()
+        }
+    }
+
+    private fun setupSwitchButton() {
+        sb_createCat_catType.setOnCheckedChangeListener { _: CompoundButton, _: Boolean ->
+            mCreateCategoryViewPresenter.checkSwitchButton(sb_createCat_catType.isChecked)
+            mCreateCategoryViewPresenter.validateCategoryNameInput(
+                    context!!, userData.uid,
+                    et_createCat_catName.text.toString(), null,
+                    tv_createCat_catType_selection.text.toString())
+        }
+    }
+
+    private fun setupCatNameEditText() {
+        et_createCat_catName.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                Log.d("", "")
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                mCreateCategoryViewPresenter.validateCategoryNameInput(
+                        context!!, userData.uid,
+                        et_createCat_catName.text.toString(), null,
+                        tv_createCat_catType_selection.text.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                Log.d("", "")
+            }
+        })
+    }
+
     private fun createButtonSubmit() {
         mCustomConfirmationDialog.confirmationDialog(context!!,
                 getString(R.string.cd_createCat_createSubmit_title),
                 getString(R.string.cd_createCat_createSubmit_desc),
                 resources.getDrawable(R.drawable.ic_info),
                 DialogInterface.OnClickListener { _, _ ->
-
                     val uniqueID = UUID.randomUUID().toString()
 
                     val categoryInput =

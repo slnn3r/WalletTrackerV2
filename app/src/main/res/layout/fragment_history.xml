@@ -14,13 +14,12 @@
         android:layout_gravity="bottom|end"
         app:fabBackgroundTint="@color/colorPrimaryDark"
         app:fabDrawable="@drawable/ic_filter"
-        app:miniFabBackgroundTint="@color/colorPrimaryDark"
         app:fabGravity="bottom_end"
         app:fabMenu="@menu/fb_history_filter_menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:miniFabBackgroundTint="@color/colorPrimaryDark"
         app:miniFabDrawableTint="@color/colorPrimaryLight"
-        app:miniFabTitleBackgroundTint="@color/colorPrimaryLight"
-     />
+        app:miniFabTitleBackgroundTint="@color/colorPrimaryLight" />
 
 </android.support.constraint.ConstraintLayout>

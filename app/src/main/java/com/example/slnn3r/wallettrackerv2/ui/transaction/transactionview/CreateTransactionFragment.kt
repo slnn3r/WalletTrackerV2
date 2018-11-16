@@ -237,7 +237,7 @@ class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTra
 
     private fun setupTimePicker() {
         val timeDialog = TimePickerDialog(context,
-                TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
+                TimePickerDialog.OnTimeSetListener { _, selectedHour, selectedMinute ->
                     enableAllUiComponent()
                     (context as MenuActivity).setupNavigationMode()
                     val time = Time(selectedHour, selectedMinute, 0)
@@ -269,15 +269,20 @@ class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTra
         fb_createTrans.setOnClickListener {
             val uniqueID = UUID.randomUUID().toString()
 
+            // format date and time input into Long Type
+            val dateTimeInput = Date.parse(getString(R.string.dateTime_format_string,
+                    et_createTrans_date.text.toString(),
+                    et_createTrans_time.text.toString()))
+
             // use empty Category and Account Data, process correct data when pass to presenter
             val transactionInput =
                     Transaction(
-                            uniqueID, et_createTrans_date.text.toString()
-                            , et_createTrans_time.text.toString()
-                            , et_createTrans_amount.text.toString().toDouble()
-                            , ac_createTrans_remarks.text.toString()
-                            , Category("", "", "", "", "")
-                            , Account("", "", "", "", "")
+                            uniqueID,
+                            dateTimeInput,
+                            et_createTrans_amount.text.toString().toDouble(),
+                            ac_createTrans_remarks.text.toString(),
+                            Category("", "", "", "", ""),
+                            Account("", "", "", "", "")
                     )
 
             mCreateTransactionViewPresenter.createTransaction(context!!, transactionInput,

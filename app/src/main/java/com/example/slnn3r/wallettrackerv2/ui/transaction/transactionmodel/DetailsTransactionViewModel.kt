@@ -32,8 +32,7 @@ class DetailsTransactionViewModel : TransactionModelInterface.DetailsTransaction
             transactionRealm.forEach { transactionRealmData ->
                 transactionRealmData.transactionAmount = transactionData.transactionAmount
                 transactionRealmData.transactionRemark = transactionData.transactionRemark
-                transactionRealmData.transactionDate = transactionData.transactionDate
-                transactionRealmData.transactionTime = transactionData.transactionTime
+                transactionRealmData.transactionDateTime = transactionData.transactionDateTime
                 transactionRealmData.category = convertedCategory
                 transactionRealmData.account = convertedAccount
             }

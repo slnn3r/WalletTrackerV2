@@ -109,6 +109,9 @@
     <string name="tv_transList_categoryOnly_labelFormat">%s</string>
     <string name="tv_transList_categoryRemark_labelFormat">%s \u2022 %s</string>
     <string name="tv_transList_amount_labelFormat">%s $ %.2f</string>
+    <string name="positive_figure_symbol">+</string>
+    <string name="negative_figure_symbol">-</string>
+    <string name="mp_amount_labelFormat">$ %.2f</string>
 
     <!-- SOON TO BE REMOVED -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -130,7 +133,7 @@
     <string name="non_deletable_title">(Non-Deletable)</string>
     <string name="amount_loading_label">Loading…</string>
     <string name="amount_error_label">error</string> <!-- Will not displayed, just for view error indication -->
-
+    <string name="dateTime_format_string">%s %s</string>
 
     <!-- Share Error Message -->
     <string name="accName_empty_invalid_message">Please Enter Account Name</string>

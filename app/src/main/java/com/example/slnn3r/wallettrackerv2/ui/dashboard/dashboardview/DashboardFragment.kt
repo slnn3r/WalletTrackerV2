@@ -1,5 +1,8 @@
 package com.example.slnn3r.wallettrackerv2.ui.dashboard.dashboardview
 
+import android.content.Context
+import android.graphics.Color
+import android.graphics.Paint
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -15,10 +18,19 @@ import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.constant.string.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Transaction
+import com.example.slnn3r.wallettrackerv2.ui.dashboard.dashboardadapter.CustomMarkerAdapter
 import com.example.slnn3r.wallettrackerv2.ui.dashboard.dashboardadapter.TransactionListAdapter
 import com.example.slnn3r.wallettrackerv2.ui.dashboard.dashboardpresenter.DashboardViewPresenter
 import com.example.slnn3r.wallettrackerv2.ui.menu.menuview.MenuActivity
 import com.example.slnn3r.wallettrackerv2.util.CustomAlertDialog
+import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.IAxisValueFormatter
+import com.github.mikephil.charting.formatter.IValueFormatter
+import com.github.mikephil.charting.utils.ViewPortHandler
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 
@@ -90,7 +102,11 @@ class DashboardFragment : Fragment(), DashboardViewInterface.DashboardView {
                                 accountList[sp_dashboard_selectedAcc_selection
                                         .selectedItemPosition].accountName,
                                 userData.uid) //Save Select Account in SharedPreference for future use
-                        mDashboardViewPresenter.getTransactionData(context!!,
+                        mDashboardViewPresenter.getTransactionData(context!!, // get RecycleView Data
+                                userData.uid,
+                                accountList[sp_dashboard_selectedAcc_selection
+                                        .selectedItemPosition].accountId)
+                        mDashboardViewPresenter.getRecentExpenseTransaction(context!!, // get graph Data
                                 userData.uid,
                                 accountList[sp_dashboard_selectedAcc_selection
                                         .selectedItemPosition].accountId)
@@ -101,6 +117,38 @@ class DashboardFragment : Fragment(), DashboardViewInterface.DashboardView {
     override fun populateTransactionRecycleView(transactionList: ArrayList<Transaction>) {
         rv_dashboard_transList.layoutManager = LinearLayoutManager(context)
         rv_dashboard_transList.adapter = TransactionListAdapter(transactionList)
+    }
+
+    override fun populateExpenseGraph(mContext: Context, entryList: ArrayList<Entry>,
+                                      xAxisList: ArrayList<String>) {
+        val dataSet = LineDataSet(entryList, null)
+
+        dataSet.setDrawFilled(true)
+        dataSet.valueFormatter = MyValueFormatter()
+        dataSet.setColors(Color.LTGRAY)
+        dataSet.setDrawFilled(true)
+
+        val data = LineData(dataSet)
+
+        val xAxis = mp_dashboard_transFlow.xAxis
+        xAxis.isGranularityEnabled = true
+        xAxis.valueFormatter = MyXAxisValueFormatter(xAxisList)
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.setDrawGridLines(false)
+
+        mp_dashboard_transFlow.description.text = "Past 31 Days Expense Transactions Flow"
+        mp_dashboard_transFlow.description.textSize = 10f
+        mp_dashboard_transFlow.description.textAlign = Paint.Align.CENTER
+        mp_dashboard_transFlow.description.setPosition(mp_dashboard_transFlow.pivotX, 25f)
+
+        mp_dashboard_transFlow.data = data
+        mp_dashboard_transFlow.legend.isEnabled = false
+
+        val mv = CustomMarkerAdapter(context!!, R.layout.marker_view)
+        mp_dashboard_transFlow.markerView = mv
+
+        mp_dashboard_transFlow.notifyDataSetChanged() // this line solve weird auto resize when refresh graph(becuz of being call from spinner listener change)
+        mp_dashboard_transFlow.invalidate() // refresh
     }
 
     override fun proceedToFirstTimeSetup() {
@@ -123,6 +171,21 @@ class DashboardFragment : Fragment(), DashboardViewInterface.DashboardView {
 
             val navController = view!!.findNavController()
             navController.navigate(R.id.action_dashboardFragment_to_createTransactionFragment)
+        }
+    }
+
+    // Format the Y Axis Value to 2Decimal value + add Dollar Sign
+    inner class MyValueFormatter : IValueFormatter {
+        override fun getFormattedValue(value: Float, entry: Entry, dataSetIndex: Int, viewPortHandler: ViewPortHandler): String {
+            return "" // Override the Implementation Display Nothing
+        }
+    }
+
+    // Format the X Axis Value to Display Desired String Value
+    inner class MyXAxisValueFormatter(private val mValues: ArrayList<String>) : IAxisValueFormatter {
+        override fun getFormattedValue(value: Float, axis: AxisBase): String {
+            // "value" represents the position of the label on the axis (x or y)
+            return mValues[value.toInt()]
         }
     }
 }

@@ -27,8 +27,7 @@ class CreateTransactionViewModel : TransactionModelInterface.CreateTransactionVi
             val convertedCategory = gson.toJson(transactionData.category)
             val convertedAccount = gson.toJson(transactionData.account)
 
-            creating.transactionDate = transactionData.transactionDate
-            creating.transactionTime = transactionData.transactionTime
+            creating.transactionDateTime = transactionData.transactionDateTime
             creating.transactionAmount = transactionData.transactionAmount
             creating.transactionRemark = transactionData.transactionRemark
             creating.category = convertedCategory

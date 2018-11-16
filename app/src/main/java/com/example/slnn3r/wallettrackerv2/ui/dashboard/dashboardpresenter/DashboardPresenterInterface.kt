@@ -8,5 +8,6 @@ interface DashboardPresenterInterface {
         fun getAllAccountData(mContext: Context, userUid: String)
         fun firstTimeSetup(mContext: Context, userUid: String)
         fun getTransactionData(mContext: Context, userUid: String, accountId: String)
+        fun getRecentExpenseTransaction(mContext: Context, userUid: String, accountId: String)
     }
 }

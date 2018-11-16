@@ -12,7 +12,6 @@ import com.example.slnn3r.wallettrackerv2.data.objectclass.Transaction
 import com.example.slnn3r.wallettrackerv2.ui.transaction.transactionmodel.DetailsTransactionViewModel
 import com.example.slnn3r.wallettrackerv2.ui.transaction.transactionview.TransactionViewInterface
 import com.leinardi.android.speeddial.SpeedDialActionItem
-import java.text.SimpleDateFormat
 import java.util.*
 
 class DetailsTransactionPresenter : TransactionPresenterInterface.DetailsTransactionPresenter,
@@ -122,16 +121,9 @@ class DetailsTransactionPresenter : TransactionPresenterInterface.DetailsTransac
                 }
             }
 
-            // store 24hour in database for sorting purpose
-            val unformattedTime = transactionData.transactionTime
-            val date12Format = SimpleDateFormat(Constant.Format.TIME_12HOURS_FORMAT, Locale.US)
-            val date24Format = SimpleDateFormat(Constant.Format.TIME_24HOURS_FORMAT, Locale.US)
-            val formattedTime = date24Format.format(date12Format.parse(unformattedTime))
-
             val finalizedTransactionData =
                     Transaction(transactionData.transactionId,
-                            transactionData.transactionDate,
-                            formattedTime,
+                            transactionData.transactionDateTime,
                             transactionData.transactionAmount,
                             transactionData.transactionRemark,
                             categoryData,

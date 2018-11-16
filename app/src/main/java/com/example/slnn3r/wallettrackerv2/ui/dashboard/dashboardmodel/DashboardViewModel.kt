@@ -80,8 +80,7 @@ class DashboardViewModel : DashboardModelInterface.DashboardViewModel {
 
         realm!!.executeTransaction {
             val transactionRealm = realm.where(TransactionRealm::class.java)
-                    .sort(Constant.RealmVariableName.TRANSACTION_DATE_VARIABLE, Sort.DESCENDING,
-                            Constant.RealmVariableName.TRANSACTION_TIME_VARIABLE, Sort.DESCENDING)
+                    .sort(Constant.RealmVariableName.TRANSACTION_DATETIME_VARIABLE, Sort.DESCENDING)
                     .findAll()
 
             var count = 0
@@ -96,19 +95,11 @@ class DashboardViewModel : DashboardModelInterface.DashboardViewModel {
                 val categoryData = gson.fromJson<Category>(categoryJson, Category::class.java)
 
                 if (accountData.accountId == accountId && accountData.userUid == userUid
-                        && count < 10) {
-
-                    // convert to 12hour for display purpose
-                    val unformattedTime = transactionRealmData.transactionTime
-                    val date12Format = SimpleDateFormat(Constant.Format.TIME_12HOURS_FORMAT, Locale.US)
-                    val date24Format = SimpleDateFormat(Constant.Format.TIME_24HOURS_FORMAT, Locale.US)
-                    val formattedTime = date12Format.format(date24Format.parse(unformattedTime))
-
+                        && count < Constant.ConditionalFigure.MAX_RECENT_TRANSACTION_LIST) {
                     transactionList.add(
                             Transaction(
                                     transactionRealmData.transactionId!!,
-                                    transactionRealmData.transactionDate!!,
-                                    formattedTime,
+                                    transactionRealmData.transactionDateTime!!,
                                     transactionRealmData.transactionAmount,
                                     transactionRealmData.transactionRemark!!,
                                     categoryData,
@@ -116,6 +107,61 @@ class DashboardViewModel : DashboardModelInterface.DashboardViewModel {
                             )
                     )
                     count += 1
+                }
+            }
+        }
+        realm.close()
+        return Observable.just(transactionList)
+    }
+
+    override fun getRecentMonthTransactionRealm(mContext: Context, userUid: String, accountId: String):
+            Observable<ArrayList<Transaction>> {
+        val realm: Realm?
+        val transactionList = ArrayList<Transaction>()
+
+        Realm.init(mContext)
+
+        val config = RealmConfiguration.Builder()
+                .name(Constant.RealmTableName.TRANSACTION_REALM_TABLE)
+                .build()
+
+        realm = Realm.getInstance(config)
+
+        val sdf = SimpleDateFormat(Constant.Format.DATE_FORMAT, Locale.US)
+
+        val tempCalender = Calendar.getInstance()
+        tempCalender.add(Calendar.DAY_OF_MONTH, 1)
+        val todayDate = Date.parse(sdf.format(tempCalender.time))
+        tempCalender.add(Calendar.DAY_OF_MONTH, -31)
+        val previous30DaysDate = Date.parse(sdf.format(tempCalender.time))
+
+        realm!!.executeTransaction {
+            val transactionRealm = realm.where(TransactionRealm::class.java)
+                    .sort(Constant.RealmVariableName.TRANSACTION_DATETIME_VARIABLE, Sort.DESCENDING)
+                    .between(Constant.RealmVariableName.TRANSACTION_DATETIME_VARIABLE,
+                            previous30DaysDate, todayDate)
+                    .findAll()
+
+            transactionRealm.forEach { transactionRealmData ->
+                val gson = Gson()
+
+                val accountJson = transactionRealmData.account
+                val categoryJson = transactionRealmData.category
+
+                val accountData = gson.fromJson<Account>(accountJson, Account::class.java)
+                val categoryData = gson.fromJson<Category>(categoryJson, Category::class.java)
+
+                if (accountData.accountId == accountId && accountData.userUid == userUid) {
+                    transactionList.add(
+                            Transaction(
+                                    transactionRealmData.transactionId!!,
+                                    transactionRealmData.transactionDateTime!!,
+                                    transactionRealmData.transactionAmount,
+                                    transactionRealmData.transactionRemark!!,
+                                    categoryData,
+                                    accountData
+                            )
+                    )
                 }
             }
         }

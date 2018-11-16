@@ -43,22 +43,28 @@ class TransactionListAdapter(private val transactionList: ArrayList<Transaction>
         } else if (transactionList.count() > 0) {
             val transactionData = transactionList[position]
 
-            val sdf = SimpleDateFormat("EEE", Locale.US)
-            val d = Date.parse(transactionData.transactionDate)
+            val dateFormat = SimpleDateFormat(Constant.Format.DATE_FORMAT, Locale.US)
+            val date12Format = SimpleDateFormat(Constant.Format.TIME_12HOURS_FORMAT, Locale.US)
+
+            val timeOnly = date12Format.format(transactionData.transactionDateTime)
+            val dateOnly = dateFormat.format(transactionData.transactionDateTime)
+
+            val sdf = SimpleDateFormat(Constant.Format.DAY_FORMAT, Locale.US)
+            val d = Date.parse(dateOnly)
             val dayOfTheWeek = sdf.format(d)
 
             if (transactionData.category.categoryType.equals(
                             Constant.ConditionalKeyword.EXPENSE_STATUS, ignoreCase = true)) {
                 holder.view.tv_transList_amount_label.text =
                         viewContext.getString(R.string.tv_transList_amount_labelFormat,
-                                "-",
+                                viewContext.getString(R.string.negative_figure_symbol),
                                 transactionData.transactionAmount)
                 holder.view.tv_transList_amount_label.setTextColor(
                         ColorStateList.valueOf(viewContext.getColor(R.color.colorLightRed)))
             } else {
                 holder.view.tv_transList_amount_label.text =
                         viewContext.getString(R.string.tv_transList_amount_labelFormat,
-                                "+",
+                                viewContext.getString(R.string.positive_figure_symbol),
                                 transactionData.transactionAmount)
                 holder.view.tv_transList_amount_label.setTextColor(
                         ColorStateList.valueOf(viewContext.getColor(R.color.colorLightGreen)))
@@ -66,9 +72,9 @@ class TransactionListAdapter(private val transactionList: ArrayList<Transaction>
 
             holder.view.tv_transList_datetime_label.text =
                     viewContext.getString(R.string.tv_transList_datetime_labelFormat,
-                            transactionData.transactionDate,
+                            dateOnly,
                             dayOfTheWeek,
-                            transactionData.transactionTime)
+                            timeOnly)
 
             if (transactionData.transactionRemark!!.isEmpty()) {
                 holder.view.tv_transList_category_label.text =
@@ -91,10 +97,10 @@ class TransactionViewHolder(val view: View, var passData: Transaction? = null) :
     init {
         view.setOnClickListener {
             if (passData != null) {
-
                 val gson = Gson()
+
                 val transactionData = Transaction(passData!!.transactionId,
-                        passData!!.transactionDate, passData!!.transactionTime,
+                        passData!!.transactionDateTime,
                         passData!!.transactionAmount, passData!!.transactionRemark,
                         passData!!.category, passData!!.account)
 

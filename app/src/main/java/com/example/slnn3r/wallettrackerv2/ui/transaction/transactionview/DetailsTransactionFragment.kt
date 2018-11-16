@@ -187,11 +187,15 @@ class DetailsTransactionFragment : Fragment(), TransactionViewInterface.DetailsT
                 getString(R.string.cd_detailsTrans_editSubmit_desc),
                 resources.getDrawable(R.drawable.ic_warning),
                 DialogInterface.OnClickListener { _, _ ->
+                    // format date and time input into Long Type
+                    val dateTimeInput = Date.parse(getString(R.string.dateTime_format_string,
+                            et_detailsTrans_date.text.toString(),
+                            et_detailsTrans_time.text.toString()))
+
                     // input empty Category and Account Data initially
                     val transactionInput =
                             Transaction(transactionArgData.transactionId,
-                                    et_detailsTrans_date.text.toString(),
-                                    et_detailsTrans_time.text.toString(),
+                                    dateTimeInput,
                                     et_detailsTrans_amount.text.toString().toDouble(),
                                     ac_detailsTrans_remarks.text.toString(),
                                     Category("", "", "", "", ""),
@@ -264,8 +268,11 @@ class DetailsTransactionFragment : Fragment(), TransactionViewInterface.DetailsT
 
         ac_detailsTrans_remarks.setText(transactionArgData.transactionRemark)
         et_detailsTrans_amount.setText(transactionArgData.transactionAmount.toString())
-        et_detailsTrans_date.setText(transactionArgData.transactionDate)
-        et_detailsTrans_time.setText(transactionArgData.transactionTime)
+
+        val dateOnly = simpleDateFormat.format(transactionArgData.transactionDateTime)
+        val timeOnly = simpleTimeFormat.format(transactionArgData.transactionDateTime)
+        et_detailsTrans_date.setText(dateOnly)
+        et_detailsTrans_time.setText(timeOnly)
     }
 
     private fun setupSwitchButton() {
@@ -321,7 +328,7 @@ class DetailsTransactionFragment : Fragment(), TransactionViewInterface.DetailsT
 
     private fun setupTimePicker() {
         val timeDialog = TimePickerDialog(context,
-                TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
+                TimePickerDialog.OnTimeSetListener { _, selectedHour, selectedMinute ->
                     enableAllUiComponent()
                     (context as MenuActivity).setupNavigationMode()
                     val time = Time(selectedHour, selectedMinute, 0)

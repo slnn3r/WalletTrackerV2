@@ -6,6 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".ui.dashboard.dashboardview.DashboardFragment">
 
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/mp_dashboard_transFlow"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside" />
+
+    <TextView
+        android:id="@+id/tv_dashboard_selectedAcc_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/selected_account_title"
+        app:layout_constraintEnd_toStartOf="@+id/sp_dashboard_selectedAcc_selection"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mp_dashboard_transFlow" />
+
     <Spinner
         android:id="@+id/sp_dashboard_selectedAcc_selection"
         android:layout_width="0dp"
@@ -15,29 +36,21 @@
         android:background="@drawable/custom_default_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tv_dashboard_selectedAcc_label"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/mp_dashboard_transFlow" />
 
     <TextView
-        android:id="@+id/tv_dashboard_selectedAcc_label"
+        android:id="@+id/tv_dashboard_recentTransList_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/selected_account_title"
-        app:layout_constraintEnd_toStartOf="@+id/sp_dashboard_selectedAcc_selection"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.github.mikephil.charting.charts.HorizontalBarChart
-        android:id="@+id/mp_dashboard_transSummary"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="8dp"
+        android:text="@string/tv_dashboard_recentTransList_title"
+        android:textAllCaps="true"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sp_dashboard_selectedAcc_selection"
-        app:layout_constraintVertical_chainStyle="spread_inside" />
+        app:layout_constraintTop_toBottomOf="@+id/sp_dashboard_selectedAcc_selection" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_dashboard_transList"
@@ -64,18 +77,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:useCompatPadding="false" />
-
-    <TextView
-        android:id="@+id/tv_dashboard_recentTransList_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/tv_dashboard_recentTransList_title"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mp_dashboard_transSummary" />
 
 </android.support.constraint.ConstraintLayout>

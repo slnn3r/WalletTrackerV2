@@ -57,8 +57,7 @@ class Constant {
         const val CATEGORY_ID_VARIABLE = "categoryId"
         const val CATEGORY_NAME_VARIABLE = "categoryName"
         const val CATEGORY_TYPE_VARIABLE = "categoryType"
-        const val TRANSACTION_DATE_VARIABLE = "transactionDate"
-        const val TRANSACTION_TIME_VARIABLE = "transactionTime"
+        const val TRANSACTION_DATETIME_VARIABLE = "transactionDateTime"
         const val TRANSACTION_ID_VARIABLE = "transactionId"
     }
 
@@ -68,6 +67,7 @@ class Constant {
 
     object ConditionalFigure {
         const val MIN_ACCOUNT_NAME = 4
+        const val MAX_RECENT_TRANSACTION_LIST = 10
     }
 
     object DefaultValue {
@@ -79,10 +79,9 @@ class Constant {
     object Format {
         const val DATE_FORMAT = "yyyy/MM/dd"
         const val MONTH_FORMAT = "MMM"
+        const val DAY_FORMAT = "EEE"
 
         const val TIME_12HOURS_FORMAT = "hh:mm:ss a"
-        const val TIME_24HOURS_FORMAT = "HH:mm:ss"
-
         const val DECIMAL_FORMAT = "#.##"
     }
 

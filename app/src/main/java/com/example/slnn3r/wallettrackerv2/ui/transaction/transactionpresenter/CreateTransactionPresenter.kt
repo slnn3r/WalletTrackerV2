@@ -3,13 +3,11 @@ package com.example.slnn3r.wallettrackerv2.ui.transaction.transactionpresenter
 import android.content.Context
 import com.example.slnn3r.wallettrackerv2.base.BaseModel
 import com.example.slnn3r.wallettrackerv2.base.BasePresenter
-import com.example.slnn3r.wallettrackerv2.constant.string.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Category
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Transaction
 import com.example.slnn3r.wallettrackerv2.ui.transaction.transactionmodel.CreateTransactionViewModel
 import com.example.slnn3r.wallettrackerv2.ui.transaction.transactionview.TransactionViewInterface
-import java.text.SimpleDateFormat
 import java.util.*
 
 class CreateTransactionPresenter : TransactionPresenterInterface.CreateTransactionPresenter,
@@ -68,17 +66,10 @@ class CreateTransactionPresenter : TransactionPresenterInterface.CreateTransacti
                 }
             }
 
-            // store 24hour in database for sorting purpose
-            val unformattedTime = transactionData.transactionTime
-            val date12Format = SimpleDateFormat(Constant.Format.TIME_12HOURS_FORMAT, Locale.US)
-            val date24Format = SimpleDateFormat(Constant.Format.TIME_24HOURS_FORMAT, Locale.US)
-            val formattedTime = date24Format.format(date12Format.parse(unformattedTime))
-
             // create new Transaction Data with Account, Category Data, formatted Time within it
             val finalizedTransactionData = Transaction(
                     transactionData.transactionId,
-                    transactionData.transactionDate,
-                    formattedTime,
+                    transactionData.transactionDateTime,
                     transactionData.transactionAmount,
                     transactionData.transactionRemark,
                     categoryData,

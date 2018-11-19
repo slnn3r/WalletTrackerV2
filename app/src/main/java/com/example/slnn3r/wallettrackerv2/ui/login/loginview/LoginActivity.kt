@@ -5,14 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.widget.Toast
 import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.constant.string.Constant
 import com.example.slnn3r.wallettrackerv2.ui.login.loginpresenter.LoginViewPresenter
 import com.example.slnn3r.wallettrackerv2.ui.menu.menuview.MenuActivity
 import com.example.slnn3r.wallettrackerv2.util.CustomAlertDialog
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity(), LoginViewInterface.LoginView {
@@ -56,11 +54,7 @@ class LoginActivity : AppCompatActivity(), LoginViewInterface.LoginView {
         progressDialog.dismiss()
     }
 
-    override fun signInSuccess(userFirebase: FirebaseUser) {
-        Toast.makeText(this,
-                getString(R.string.sign_in_success_message, userFirebase.displayName)
-                , Toast.LENGTH_SHORT).show()
-
+    override fun signInSuccess() {
         val intent = Intent(applicationContext, MenuActivity::class.java)
         startActivity(intent)
         finish()

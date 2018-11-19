@@ -29,7 +29,7 @@ class SplashViewPresenter : SplashPresenterInterface.SplashViewPresenter,
             if (signedInUser == null) {
                 getView()!!.navigateToLogin()
             } else {
-                getView()!!.navigateToDashboard(signedInUser.displayName!!)
+                getView()!!.navigateToDashboard()
             }
 
         } catch (error: Exception) {

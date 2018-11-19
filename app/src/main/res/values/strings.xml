@@ -41,16 +41,15 @@
     <string name="sign_out_dialog_title">Sign Out Account</string>
     <string name="sign_out_dialog_message">Please Make Sure to Backup Data Before Sign Out. All Pending Backup Process will Remove.</string>
 
-    <string name="welcome_message">Welcome, %s</string> <!-- SplashActivity -->
-
     <!-- LoginActivity-->
     <string name="iv_login_desc">Image View Login Logo</string>
     <string name="sign_in_loading_message">Signing with Google Account…</string>
-    <string name="sign_in_success_message">Sign In as %s</string>
     <string name="no_internet_message">Please Make Sure you have connect to Internet Connection.</string>
 
     <!-- MenuActivity -->
     <string name="title_activity_menu">MenuActivity</string>
+    <string name="welcome_message">Welcome, %s</string>
+    <string name="doubleTabExit_label">Tab Back Again to Exit</string>
 
     <!-- ViewAccountFragment -->
     <string name="ab_viewAcc_title">Account List</string>
@@ -105,13 +104,15 @@
     <!-- Dashboard -->
     <string name="ab_dashboard_title">Dashboard</string>
     <string name="tv_dashboard_recentTransList_title">Recent 10(s) Transaction List</string>
-    <string name="tv_transList_datetime_labelFormat">%s (%s) %s</string>
+    <string name="tv_transList_datetime_labelFormat">%s, %s (%s)</string>
     <string name="tv_transList_categoryOnly_labelFormat">%s</string>
     <string name="tv_transList_categoryRemark_labelFormat">%s \u2022 %s</string>
     <string name="tv_transList_amount_labelFormat">%s $ %.2f</string>
     <string name="positive_figure_symbol">+</string>
     <string name="negative_figure_symbol">-</string>
     <string name="mp_amount_labelFormat">$ %.2f</string>
+    <string name="mp_loading_label">Loading Graph…</string>
+    <string name="mp_desc_label">Past 31 Days Expense Transactions Flow</string>
 
     <!-- SOON TO BE REMOVED -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

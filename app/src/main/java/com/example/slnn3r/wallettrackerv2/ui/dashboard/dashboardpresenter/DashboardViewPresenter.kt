@@ -32,7 +32,7 @@ class DashboardViewPresenter : DashboardPresenterInterface.DashboardViewInterfac
                     }
 
                     override fun onNext(dataList: ArrayList<Account>) {
-                        if (dataList.size < 1) {
+                        if (dataList.size < 1 && getView() != null) {
                             getView()!!.proceedToFirstTimeSetup()
                         } else {
                             getView()!!.populateAccountSpinner(dataList)
@@ -40,7 +40,9 @@ class DashboardViewPresenter : DashboardPresenterInterface.DashboardViewInterfac
                     }
 
                     override fun onError(e: Throwable) {
-                        getView()!!.onError(e.message.toString())
+                        if (getView() != null) {
+                            getView()!!.onError(e.message.toString())
+                        }
                     }
 
                     override fun onComplete() {
@@ -51,35 +53,27 @@ class DashboardViewPresenter : DashboardPresenterInterface.DashboardViewInterfac
     override fun firstTimeSetup(mContext: Context, userUid: String) {
         try {
             mDashboardViewModel.firstTimeSetupRealm(mContext, userUid)
-            getView()!!.firstTimeSetupSuccess()
+            if (getView() != null) {
+                getView()!!.firstTimeSetupSuccess()
+            }
         } catch (e: Exception) {
-            getView()!!.onError(e.message.toString())
+            if (getView() != null) {
+                getView()!!.onError(e.message.toString())
+            }
         }
     }
 
     override fun getTransactionData(mContext: Context, userUid: String, accountId: String) {
-        mDashboardViewModel.getTransactionRealm(mContext, userUid, accountId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<ArrayList<Transaction>> {
-                    override fun onSubscribe(d: Disposable) {
-                    }
-
-                    override fun onNext(dataList: ArrayList<Transaction>) {
-                        if (dataList.size < 1) {
-                            getView()!!.populateTransactionRecycleView(dataList)
-                        } else {
-                            getView()!!.populateTransactionRecycleView(dataList)
-                        }
-                    }
-
-                    override fun onError(e: Throwable) {
-                        getView()!!.onError(e.message.toString())
-                    }
-
-                    override fun onComplete() {
-                    }
-                })
+        try {
+            if (getView() != null) {
+                getView()!!.populateTransactionRecycleView(
+                        mDashboardViewModel.getTransactionRealm(mContext, userUid, accountId))
+            }
+        } catch (e: Exception) {
+            if (getView() != null) {
+                getView()!!.onError(e.message.toString())
+            }
+        }
     }
 
     override fun getRecentExpenseTransaction(mContext: Context, userUid: String, accountId: String) {
@@ -117,11 +111,16 @@ class DashboardViewPresenter : DashboardPresenterInterface.DashboardViewInterfac
                             }
                             entries.add(BarEntry(a.toFloat(), expense.toFloat()))
                         }
-                        getView()!!.populateExpenseGraph(mContext, entries, xAxisLabel)
+
+                        if (getView() != null) {
+                            getView()!!.populateExpenseGraph(mContext, entries, xAxisLabel)
+                        }
                     }
 
                     override fun onError(e: Throwable) {
-                        getView()!!.onError(e.message.toString())
+                        if (getView() != null) {
+                            getView()!!.onError(e.message.toString())
+                        }
                     }
 
                     override fun onComplete() {

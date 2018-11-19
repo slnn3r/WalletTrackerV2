@@ -65,8 +65,7 @@ class DashboardViewModel : DashboardModelInterface.DashboardViewModel {
         realm.close()
     }
 
-    override fun getTransactionRealm(mContext: Context, userUid: String, accountId: String):
-            Observable<ArrayList<Transaction>> {
+    override fun getTransactionRealm(mContext: Context, userUid: String, accountId: String): ArrayList<Transaction> {
         val realm: Realm?
         val transactionList = ArrayList<Transaction>()
 
@@ -111,7 +110,7 @@ class DashboardViewModel : DashboardModelInterface.DashboardViewModel {
             }
         }
         realm.close()
-        return Observable.just(transactionList)
+        return transactionList
     }
 
     override fun getRecentMonthTransactionRealm(mContext: Context, userUid: String, accountId: String):

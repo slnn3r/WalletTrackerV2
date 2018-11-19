@@ -9,7 +9,7 @@ interface DashboardModelInterface {
     interface DashboardViewModel {
         fun firstTimeSetupRealm(mContext: Context, userUid: String)
         fun getTransactionRealm(mContext: Context, userUid: String, accountId: String):
-                Observable<ArrayList<Transaction>>
+                ArrayList<Transaction>
 
         fun getRecentMonthTransactionRealm(mContext: Context, userUid: String, accountId: String):
                 Observable<ArrayList<Transaction>>

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.DialogInterface
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
@@ -13,8 +14,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
-import android.widget.Toast
-
 import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.constant.string.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Category
@@ -65,7 +64,6 @@ class DetailsCategoryFragment : Fragment(), CategoryViewInterface.DetailsCategor
     }
 
     override fun setupFloatingActionButton() {
-
         fb_detailsCat.mainFabOpenedBackgroundColor =
                 resources.getColor(R.color.colorPrimary)
         fb_detailsCat.mainFabClosedBackgroundColor =
@@ -191,14 +189,16 @@ class DetailsCategoryFragment : Fragment(), CategoryViewInterface.DetailsCategor
     }
 
     override fun editCategorySuccess() {
-        Toast.makeText(context, getString(R.string.detailsCat_edited_message),
-                Toast.LENGTH_LONG).show()
+        Snackbar.make(view!!,
+                getString(R.string.detailsCat_edited_message), Snackbar.LENGTH_SHORT)
+                .show()
         (context as Activity).onBackPressed()
     }
 
     override fun deleteCategorySuccess() {
-        Toast.makeText(context, getString(R.string.detailsCat_deleted_message),
-                Toast.LENGTH_LONG).show()
+        Snackbar.make(view!!,
+                getString(R.string.detailsCat_deleted_message), Snackbar.LENGTH_SHORT)
+                .show()
         (context as Activity).onBackPressed()
     }
 

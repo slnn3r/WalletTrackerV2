@@ -6,6 +6,6 @@ interface SplashViewInterface {
 
     interface SplashView : BaseView.Universal {
         fun navigateToLogin()
-        fun navigateToDashboard(userName: String)
+        fun navigateToDashboard()
     }
 }

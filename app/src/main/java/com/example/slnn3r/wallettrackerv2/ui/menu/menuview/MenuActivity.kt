@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.NavigationView
+import android.support.design.widget.Snackbar
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
@@ -16,7 +17,6 @@ import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import com.example.slnn3r.wallettrackerv2.R
@@ -43,8 +43,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var userData: FirebaseUser
 
     private val initialScreen: Int = R.id.dashboardFragment
-    private var isNavigated: String = "NavDrawer" // Set Initial Navigation Status to false
-    private var selectedHistoryScreen = ""
+    private var isNavigated: String = Constant.NavigationKey.NAV_DRAWER // Set Initial Navigation Status to false
 
     private var doubleBackToExitPressedOnce = false
 
@@ -67,6 +66,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navigationView = findViewById<View>(R.id.nav_view) as NavigationView
 
         displayUserDataToNavDrawer()
+        displayWelcomeMessage()
     }
 
     override fun onStop() {
@@ -76,9 +76,8 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onBackPressed() {
         val currentScreen = findNavController(R.id.navMenu).currentDestination!!.id
-        mMenuPresenter.checkNavigationStatus(isNavigated, selectedHistoryScreen,
-                true, currentScreen, drawer_layout.isDrawerOpen(GravityCompat.START),
-                doubleBackToExitPressedOnce)
+        mMenuPresenter.checkNavigationStatus(isNavigated, true, currentScreen,
+                drawer_layout.isDrawerOpen(GravityCompat.START), doubleBackToExitPressedOnce)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -159,8 +158,6 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun signOutSuccess() {
-        Toast.makeText(this, "Sign Out Successful", Toast.LENGTH_SHORT).show()
-
         mMenuPresenter.clearSharePreferenceData(this, userData.uid) // remove sharePreference
 
         val intent = Intent(applicationContext, LoginActivity::class.java)
@@ -169,7 +166,10 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun displayDoubleTabExitMessage() {
-        Toast.makeText(this, "Click One More to Exit", Toast.LENGTH_SHORT).show()
+        Snackbar.make(findViewById<View>(android.R.id.content),
+                getString(R.string.doubleTabExit_label), Snackbar.LENGTH_SHORT)
+                .show()
+
         doubleBackToExitPressedOnce = true
         Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
     }
@@ -193,8 +193,8 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // Setup Custom Navigation Drawer Button Listener
         toolbar.setNavigationOnClickListener {
-            mMenuPresenter.checkNavigationStatus(isNavigated, selectedHistoryScreen,
-                    false, null, false, doubleBackToExitPressedOnce)
+            mMenuPresenter.checkNavigationStatus(isNavigated, false,
+                    null, false, doubleBackToExitPressedOnce)
         }
 
         nav_view.setNavigationItemSelectedListener(this)
@@ -212,23 +212,24 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         Picasso.get().load(userData.photoUrl).into(navHeaderUserPicture)
     }
 
+    private fun displayWelcomeMessage() {
+        Snackbar.make(findViewById<View>(android.R.id.content),
+                getString(R.string.welcome_message, userData.displayName), Snackbar.LENGTH_SHORT)
+                .show()
+    }
+
     private fun setupDrawerMode() {
-        isNavigated = "NavDrawer"
+        isNavigated = Constant.NavigationKey.NAV_DRAWER
         drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
         animateIcon(1, 0, 800) // with Animation no need to deal with any Icon Change stuff
     }
 
-    // If Use Loading indication then no need this implementation dy (NOT REALLY)
     fun setupToDisable() {
-        if (isNavigated != "HistoryNavGraph") { // If didnt use BottomNavigaton then no need everything relate to this
-            isNavigated = "NavDisable"
-        }
+        isNavigated = Constant.NavigationKey.NAV_DISABLE
     }
 
     fun setupNavigationMode() {
-        if (isNavigated != "HistoryNavGraph") {
-            isNavigated = "MenuNavGraph"
-        }
+        isNavigated = Constant.NavigationKey.NAV_MENU
 
         drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         animateIcon(0, 1, 800) // with Animation no need to deal with any Icon Change stuff

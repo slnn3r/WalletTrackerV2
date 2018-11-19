@@ -10,7 +10,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseUser
 import java.lang.ref.WeakReference
 
-
 open class BasePresenter<V : BaseView.Universal> {
 
     lateinit var view: WeakReference<V>

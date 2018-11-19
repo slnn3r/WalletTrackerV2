@@ -15,8 +15,15 @@ import kotlinx.android.synthetic.main.transaction_list_row.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
+var dashboardAdapterClickCount = 0
+
 class TransactionListAdapter(private val transactionList: ArrayList<Transaction>) :
         RecyclerView.Adapter<TransactionViewHolder>() {
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        dashboardAdapterClickCount = 0
+    }
 
     override fun getItemCount(): Int {
         return transactionList.count() + 1
@@ -72,9 +79,7 @@ class TransactionListAdapter(private val transactionList: ArrayList<Transaction>
 
             holder.view.tv_transList_datetime_label.text =
                     viewContext.getString(R.string.tv_transList_datetime_labelFormat,
-                            dateOnly,
-                            dayOfTheWeek,
-                            timeOnly)
+                            dayOfTheWeek, dateOnly, timeOnly)
 
             if (transactionData.transactionRemark!!.isEmpty()) {
                 holder.view.tv_transList_category_label.text =
@@ -96,7 +101,7 @@ class TransactionViewHolder(val view: View, var passData: Transaction? = null) :
         RecyclerView.ViewHolder(view) {
     init {
         view.setOnClickListener {
-            if (passData != null) {
+            if (passData != null && dashboardAdapterClickCount < 1) {
                 val gson = Gson()
 
                 val transactionData = Transaction(passData!!.transactionId,
@@ -112,6 +117,8 @@ class TransactionViewHolder(val view: View, var passData: Transaction? = null) :
                 bundle.putString(Constant.KeyId.TRANSACTION_DETAILS_ARG, json)
                 navController
                         .navigate(R.id.action_dashboardFragment_to_detailsTransactionFragment, bundle)
+
+                dashboardAdapterClickCount += 1
             }
         }
     }

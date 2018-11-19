@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.widget.Toast
 import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.constant.string.Constant
 import com.example.slnn3r.wallettrackerv2.ui.login.loginview.LoginActivity
@@ -40,9 +39,7 @@ class SplashActivity : AppCompatActivity(), SplashViewInterface.SplashView {
         finish()
     }
 
-    override fun navigateToDashboard(userName: String) {
-        Toast.makeText(this, getString(R.string.welcome_message, userName)
-                , Toast.LENGTH_SHORT).show()
+    override fun navigateToDashboard() {
         val intent = Intent(applicationContext, MenuActivity::class.java)
         startActivity(intent)
         finish()

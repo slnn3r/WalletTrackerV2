@@ -20,6 +20,7 @@ import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Transaction
 import com.example.slnn3r.wallettrackerv2.ui.dashboard.dashboardadapter.CustomMarkerAdapter
 import com.example.slnn3r.wallettrackerv2.ui.dashboard.dashboardadapter.TransactionListAdapter
+import com.example.slnn3r.wallettrackerv2.ui.dashboard.dashboardadapter.dashboardAdapterClickCount
 import com.example.slnn3r.wallettrackerv2.ui.dashboard.dashboardpresenter.DashboardViewPresenter
 import com.example.slnn3r.wallettrackerv2.ui.menu.menuview.MenuActivity
 import com.example.slnn3r.wallettrackerv2.util.CustomAlertDialog
@@ -51,6 +52,7 @@ class DashboardFragment : Fragment(), DashboardViewInterface.DashboardView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupInitialUi()
         setupCreateButton()
     }
 
@@ -102,11 +104,11 @@ class DashboardFragment : Fragment(), DashboardViewInterface.DashboardView {
                                 accountList[sp_dashboard_selectedAcc_selection
                                         .selectedItemPosition].accountName,
                                 userData.uid) //Save Select Account in SharedPreference for future use
-                        mDashboardViewPresenter.getTransactionData(context!!, // get RecycleView Data
+                        mDashboardViewPresenter.getRecentExpenseTransaction(context!!, // get graph Data
                                 userData.uid,
                                 accountList[sp_dashboard_selectedAcc_selection
                                         .selectedItemPosition].accountId)
-                        mDashboardViewPresenter.getRecentExpenseTransaction(context!!, // get graph Data
+                        mDashboardViewPresenter.getTransactionData(context!!, // get RecycleView Data
                                 userData.uid,
                                 accountList[sp_dashboard_selectedAcc_selection
                                         .selectedItemPosition].accountId)
@@ -136,7 +138,7 @@ class DashboardFragment : Fragment(), DashboardViewInterface.DashboardView {
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.setDrawGridLines(false)
 
-        mp_dashboard_transFlow.description.text = "Past 31 Days Expense Transactions Flow"
+        mp_dashboard_transFlow.description.text = getString(R.string.mp_desc_label)
         mp_dashboard_transFlow.description.textSize = 10f
         mp_dashboard_transFlow.description.textAlign = Paint.Align.CENTER
         mp_dashboard_transFlow.description.setPosition(mp_dashboard_transFlow.pivotX, 25f)
@@ -165,18 +167,31 @@ class DashboardFragment : Fragment(), DashboardViewInterface.DashboardView {
         return
     }
 
+    private fun setupInitialUi() {
+        mp_dashboard_transFlow.setNoDataText(getString(R.string.mp_loading_label))
+    }
+
     private fun setupCreateButton() {
         fb_dashboard_createTrans.setOnClickListener {
+            if (dashboardAdapterClickCount > 0) {
+                return@setOnClickListener
+            }
+
             (activity as MenuActivity).setupNavigationMode()
 
             val navController = view!!.findNavController()
             navController.navigate(R.id.action_dashboardFragment_to_createTransactionFragment)
+
+            // Used to Prevent navController unknown destination error (trigger when receive multiple time same request in other screen)
+            fb_dashboard_createTrans.isEnabled = false
+            dashboardAdapterClickCount += 1
         }
     }
 
     // Format the Y Axis Value to 2Decimal value + add Dollar Sign
     inner class MyValueFormatter : IValueFormatter {
-        override fun getFormattedValue(value: Float, entry: Entry, dataSetIndex: Int, viewPortHandler: ViewPortHandler): String {
+        override fun getFormattedValue(value: Float, entry: Entry, dataSetIndex: Int,
+                                       viewPortHandler: ViewPortHandler): String {
             return "" // Override the Implementation Display Nothing
         }
     }

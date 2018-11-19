@@ -62,9 +62,8 @@ class LoginViewPresenter : LoginPresenterInterface.LoginViewPresenter,
         mAuth!!.signInWithCredential(credential)
                 .addOnCompleteListener(mContext as Activity) { task ->
                     if (task.isSuccessful) {
-                        val userFirebase = mAuth.currentUser!!
                         getView()!!.dismissLoadingDialog()
-                        getView()!!.signInSuccess(userFirebase)
+                        getView()!!.signInSuccess()
                     }
                 }
                 .addOnFailureListener {

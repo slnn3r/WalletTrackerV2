@@ -3,6 +3,7 @@ package com.example.slnn3r.wallettrackerv2.ui.account.accountview
 import android.app.Activity
 import android.content.DialogInterface
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
@@ -13,7 +14,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.Toast
 import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.constant.string.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
@@ -62,7 +62,6 @@ class DetailsAccountFragment : Fragment(), AccountViewInterface.DetailsAccountVi
     }
 
     override fun setupFloatingActionButton() {
-
         fb_detailsAcc.mainFabOpenedBackgroundColor =
                 resources.getColor(R.color.colorPrimary)
         fb_detailsAcc.mainFabClosedBackgroundColor =
@@ -93,7 +92,6 @@ class DetailsAccountFragment : Fragment(), AccountViewInterface.DetailsAccountVi
     }
 
     override fun setupFloatingDefaultButton() {
-
         fb_detailsAcc.mainFabClosedBackgroundColor =
                 resources.getColor(R.color.colorPrimaryDark)
         fb_detailsAcc.setMainFabClosedDrawable(resources.getDrawable(R.drawable.ic_edit))
@@ -182,14 +180,16 @@ class DetailsAccountFragment : Fragment(), AccountViewInterface.DetailsAccountVi
     }
 
     override fun editAccountSuccess() {
-        Toast.makeText(context, getString(R.string.detailsAcc_edited_message),
-                Toast.LENGTH_LONG).show()
+        Snackbar.make(view!!,
+                getString(R.string.detailsAcc_edited_message), Snackbar.LENGTH_SHORT)
+                .show()
         (context as Activity).onBackPressed()
     }
 
     override fun deleteAccountSuccess() {
-        Toast.makeText(context, getString(R.string.detailsAcc_deleted_message),
-                Toast.LENGTH_LONG).show()
+        Snackbar.make(view!!,
+                getString(R.string.detailsAcc_deleted_message), Snackbar.LENGTH_SHORT)
+                .show()
         (context as Activity).onBackPressed()
     }
 

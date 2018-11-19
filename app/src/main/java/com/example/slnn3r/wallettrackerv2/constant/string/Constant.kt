@@ -44,6 +44,12 @@ class Constant {
         const val SELECTED_ACCOUNT_KEY = "selectedAccount"
     }
 
+    object NavigationKey {
+        const val NAV_DRAWER = "NavDrawer"
+        const val NAV_MENU = "MenuNavGraph"
+        const val NAV_DISABLE = "NavDisable"
+    }
+
     object RealmTableName {
         const val ACCOUNT_REALM_TABLE = "account.realm"
         const val CATEGORY_REALM_TABLE = "category.realm"
@@ -53,9 +59,7 @@ class Constant {
     object RealmVariableName {
         const val USER_UID_VARIABLE = "userUid"
         const val ACCOUNT_ID_VARIABLE = "accountId"
-        const val ACCOUNT_NAME_VARIABLE = "accountName"
         const val CATEGORY_ID_VARIABLE = "categoryId"
-        const val CATEGORY_NAME_VARIABLE = "categoryName"
         const val CATEGORY_TYPE_VARIABLE = "categoryType"
         const val TRANSACTION_DATETIME_VARIABLE = "transactionDateTime"
         const val TRANSACTION_ID_VARIABLE = "transactionId"

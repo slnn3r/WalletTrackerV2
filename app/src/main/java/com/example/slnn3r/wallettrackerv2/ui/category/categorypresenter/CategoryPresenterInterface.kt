@@ -23,7 +23,6 @@ interface CategoryPresenterInterface {
     }
 
     interface DetailsCategoryPresenter {
-
         fun checkCategoryStatus(categoryStatus: String)
         fun checkSelectedCategoryType(filterType: String)
 

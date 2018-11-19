@@ -15,6 +15,7 @@ import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.constant.string.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Category
 import com.example.slnn3r.wallettrackerv2.ui.category.categoryadapter.CategoryListAdapter
+import com.example.slnn3r.wallettrackerv2.ui.category.categoryadapter.catAdapterClickCount
 import com.example.slnn3r.wallettrackerv2.ui.category.categorypresenter.ViewCategoryPresenter
 import com.example.slnn3r.wallettrackerv2.util.CustomAlertDialog
 import com.google.firebase.auth.FirebaseUser
@@ -91,12 +92,20 @@ class ViewCategoryFragment : Fragment(), CategoryViewInterface.ViewCategoryView 
 
     private fun setupCreateButton() {
         fb_viewCat_createCat.setOnClickListener {
+
+            if (catAdapterClickCount > 0) {
+                return@setOnClickListener
+            }
+
             val navController = view!!.findNavController()
             val bundle = Bundle()
             bundle.putString(Constant.KeyId.CATEGORY_CREATE_ARG,
                     tv_viewCat_catType_selection.text.toString())
             navController
                     .navigate(R.id.action_viewCategoryFragment_to_createCategoryFragment, bundle)
+
+            catAdapterClickCount += 1
+            fb_viewCat_createCat.isEnabled = false
         }
     }
 

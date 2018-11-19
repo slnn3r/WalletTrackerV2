@@ -24,7 +24,6 @@ class BaseModel {
     // Asynchronous
     fun getAccListByUserUidAsync(mContext: Context, userUid: String):
             Observable<ArrayList<Account>> {
-
         val realm: Realm?
         val accountList = ArrayList<Account>()
 
@@ -54,7 +53,6 @@ class BaseModel {
                 )
             }
         }
-
         realm.close()
         return Observable.just(accountList)
     }
@@ -62,7 +60,6 @@ class BaseModel {
 
     // Synchronous
     fun getAccListByUserUidSync(mContext: Context, userUid: String): ArrayList<Account> {
-
         val realm: Realm?
         val accountList = ArrayList<Account>()
 
@@ -92,14 +89,12 @@ class BaseModel {
                 )
             }
         }
-
         realm.close()
         return accountList
     }
 
     fun getCatListByUserUidWithFilterSync(mContext: Context, userUid: String,
                                           filterType: String): ArrayList<Category> {
-
         val userUidRef = Constant.RealmVariableName.USER_UID_VARIABLE
         val categoryTypeRef = Constant.RealmVariableName.CATEGORY_TYPE_VARIABLE
 
@@ -153,83 +148,8 @@ class BaseModel {
                 )
             }
         }
-
         realm.close()
         return categoryList
-    }
-
-    fun getAccDataByIdNameSync(mContext: Context, userUid: String, accountName: String): Account {
-
-        val realm: Realm?
-        var accountData = Account("", "", "",
-                "", "")
-
-        Realm.init(mContext)
-
-        val config = RealmConfiguration.Builder()
-                .name(Constant.RealmTableName.ACCOUNT_REALM_TABLE)
-                .build()
-
-        realm = Realm.getInstance(config)
-
-        realm!!.executeTransaction {
-
-            val accountRealm = realm.where(AccountRealm::class.java)
-                    .equalTo(Constant.RealmVariableName.USER_UID_VARIABLE, userUid)
-                    .equalTo(Constant.RealmVariableName.ACCOUNT_NAME_VARIABLE, accountName)
-                    .findAll()
-
-            accountRealm.forEach { accountRealmData ->
-
-                accountData = Account(
-                        accountRealmData.accountId!!,
-                        accountRealmData.accountName!!,
-                        accountRealmData.accountDesc!!,
-                        accountRealmData.userUid!!,
-                        accountRealmData.accountStatus!!
-                )
-            }
-        }
-
-        realm.close()
-        return accountData
-    }
-
-    fun getCatDataByIdNameSync(mContext: Context, userUid: String, categoryName: String): Category {
-
-        val realm: Realm?
-        var categoryData = Category("", "", "",
-                "", "")
-
-        Realm.init(mContext)
-
-        val config = RealmConfiguration.Builder()
-                .name(Constant.RealmTableName.CATEGORY_REALM_TABLE)
-                .build()
-
-        realm = Realm.getInstance(config)
-
-        realm!!.executeTransaction {
-
-            val categoryRealm = realm.where(CategoryRealm::class.java)
-                    .equalTo(Constant.RealmVariableName.USER_UID_VARIABLE, userUid)
-                    .equalTo(Constant.RealmVariableName.CATEGORY_NAME_VARIABLE, categoryName)
-                    .findAll()
-
-            categoryRealm.forEach { categoryRealmData ->
-
-                categoryData = Category(
-                        categoryRealmData.categoryId!!,
-                        categoryRealmData.categoryName!!,
-                        categoryRealmData.categoryType!!,
-                        categoryRealmData.categoryStatus!!,
-                        categoryRealmData.userUid!!
-                )
-            }
-        }
-
-        realm.close()
-        return categoryData
     }
 
     // SharePreference

@@ -3,6 +3,7 @@ package com.example.slnn3r.wallettrackerv2.ui.menu.menupresenter
 import android.view.MenuItem
 import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.base.BasePresenter
+import com.example.slnn3r.wallettrackerv2.constant.string.Constant
 import com.example.slnn3r.wallettrackerv2.ui.menu.menuview.MenuViewInterface
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
@@ -73,15 +74,12 @@ class MenuViewPresenter : MenuPresenterInterface.MenuViewPresenter,
         }
     }
 
-    override fun checkNavigationStatus(isNavigated: String, selectedHistoryScreen: String,
-                                       isBackButton: Boolean, currentScreen: Int?,
+    override fun checkNavigationStatus(isNavigated: String, isBackButton: Boolean, currentScreen: Int?,
                                        isOpenDrawer: Boolean, doubleBackToExitPressedOnce: Boolean) {
         // Check if Screen is navigated or not
-        if (isNavigated == "MenuNavGraph") {
+        if (isNavigated == Constant.NavigationKey.NAV_MENU) {
             getView()!!.setupNavigationFlow()
-        } else if (isNavigated == "HistoryNavGraph") {
-            getView()!!.proceedToHistoryScreen()
-        } else if (isNavigated == "NavDisable") {
+        } else if (isNavigated == Constant.NavigationKey.NAV_DISABLE) {
             // Do Nothing for the ToolBar at Dialogfragment Display
         } else {
             if (isBackButton) {

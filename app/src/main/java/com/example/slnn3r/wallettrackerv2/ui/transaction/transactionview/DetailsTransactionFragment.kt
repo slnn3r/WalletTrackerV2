@@ -13,6 +13,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.CompoundButton
 import com.example.slnn3r.wallettrackerv2.R
@@ -77,6 +78,7 @@ class DetailsTransactionFragment : Fragment(), TransactionViewInterface.DetailsT
         setupInitialUi()
         setupSwitchButton()
         setupAmountEditText()
+        setupRemarkAutoComplete()
         setupDatePicker()
         setupTimePicker()
         setupFloatingActionButton()
@@ -201,6 +203,10 @@ class DetailsTransactionFragment : Fragment(), TransactionViewInterface.DetailsT
                                     Category("", "", "", "", ""),
                                     Account("", "", "", "", ""))
 
+                    // save remark to Realm
+                    mDetailsTransactionViewPresenter.saveRemark(context!!,
+                            ac_detailsTrans_remarks.text.toString())
+
                     mDetailsTransactionViewPresenter
                             .editTransaction(context!!, transactionInput, userData.uid,
                                     sp_detailsTrans_selectedAcc_selection.selectedItem.toString(),
@@ -303,6 +309,19 @@ class DetailsTransactionFragment : Fragment(), TransactionViewInterface.DetailsT
             calCustomDialog.setTargetFragment(this, 1)
             calCustomDialog.show(this.fragmentManager, "")
         }
+    }
+
+    private fun setupRemarkAutoComplete() {
+        val remarkList = mDetailsTransactionViewPresenter.getRemark(context!!)
+        val adapter = ArrayAdapter(context!!,
+                android.R.layout.simple_list_item_1, remarkList)
+        ac_detailsTrans_remarks.setAdapter<ArrayAdapter<String>>(adapter)
+
+        // on click hint selection, will close keyboard
+        ac_detailsTrans_remarks.onItemClickListener =
+                AdapterView.OnItemClickListener { _: AdapterView<*>, _: View, _: Int, _: Long ->
+                    mDetailsTransactionViewPresenter.hideKeyboard(activity!!)
+                }
     }
 
     private fun setupDatePicker() {

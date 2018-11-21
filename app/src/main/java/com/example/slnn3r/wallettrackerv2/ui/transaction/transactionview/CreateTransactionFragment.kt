@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.CompoundButton
 import com.example.slnn3r.wallettrackerv2.R
@@ -29,6 +30,7 @@ import java.sql.Time
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+
 
 class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTransactionView,
         CustomCalculatorDialog.OnInputSelected {
@@ -66,6 +68,7 @@ class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTra
         setupInitialUi()
         setupSwitchButton()
         setupAmountEditText()
+        setupRemarkAutoComplete()
         setupDatePicker()
         setupTimePicker()
         setupCreateButton()
@@ -209,6 +212,19 @@ class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTra
         }
     }
 
+    private fun setupRemarkAutoComplete() {
+        val remarkList = mCreateTransactionViewPresenter.getRemark(context!!)
+        val adapter = ArrayAdapter(context!!,
+                android.R.layout.simple_list_item_1, remarkList)
+        ac_createTrans_remarks.setAdapter<ArrayAdapter<String>>(adapter)
+
+        // on click hint selection, will close keyboard
+        ac_createTrans_remarks.onItemClickListener =
+                AdapterView.OnItemClickListener { _: AdapterView<*>, _: View, _: Int, _: Long ->
+                    mCreateTransactionViewPresenter.hideKeyboard(activity!!)
+                }
+    }
+
     private fun setupDatePicker() {
         val dateDialog =
                 DatePickerDialog(context!!,
@@ -286,6 +302,10 @@ class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTra
                             Category("", "", "", "", ""),
                             Account("", "", "", "", "")
                     )
+
+            // save remark to Realm
+            mCreateTransactionViewPresenter.saveRemark(context!!,
+                    ac_createTrans_remarks.text.toString())
 
             mCreateTransactionViewPresenter.createTransaction(context!!, transactionInput,
                     userData.uid, sp_createTrans_selectedAcc_selection.selectedItem.toString(),

@@ -54,6 +54,7 @@ class Constant {
         const val ACCOUNT_REALM_TABLE = "account.realm"
         const val CATEGORY_REALM_TABLE = "category.realm"
         const val TRANSACTION_REALM_TABLE = "transaction.realm"
+        const val PREVIOUSREMARK_REALM_TABLE = "previousremark.realm"
     }
 
     object RealmVariableName {

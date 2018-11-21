@@ -59,4 +59,42 @@ open class BasePresenter<V : BaseView.Universal> {
     fun clearSharePreferenceData(mContext: Context, userUid: String) {
         baseModel.removeSharePreferenceData(mContext, userUid)
     }
+
+    fun getRemark(mContext: Context): ArrayList<String> {
+        val stringList = ArrayList<String>()
+
+        try {
+            val previousRemarkList = baseModel.getRemarkRealm(mContext)
+
+            previousRemarkList.forEach { data ->
+                stringList.add(data.remarkString)
+            }
+        } catch (e: Exception) {
+            getView()!!.onError(e.message.toString())
+        }
+        return stringList
+    }
+
+    fun saveRemark(mContext: Context, remarkString: String) {
+        try {
+            val previousRemarkList = baseModel.getRemarkRealm(mContext)
+
+            if (previousRemarkList.size > 0) {
+                var matchCount = 0
+                previousRemarkList.forEach { data ->
+                    if (data.remarkString.equals(remarkString, ignoreCase = true)) {
+                        matchCount += 1
+                    }
+                }
+
+                if (matchCount < 1) {
+                    baseModel.saveRemarkRealm(mContext, remarkString)
+                }
+            } else {
+                baseModel.saveRemarkRealm(mContext, remarkString)
+            }
+        } catch (e: Exception) {
+            getView()!!.onError(e.message.toString())
+        }
+    }
 }

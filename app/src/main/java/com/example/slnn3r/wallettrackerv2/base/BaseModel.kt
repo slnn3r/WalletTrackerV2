@@ -5,8 +5,10 @@ import android.support.v7.app.AppCompatActivity
 import com.example.slnn3r.wallettrackerv2.constant.string.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Category
+import com.example.slnn3r.wallettrackerv2.data.objectclass.PreviousRemark
 import com.example.slnn3r.wallettrackerv2.data.realmclass.AccountRealm
 import com.example.slnn3r.wallettrackerv2.data.realmclass.CategoryRealm
+import com.example.slnn3r.wallettrackerv2.data.realmclass.PreviousRemarkRealm
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import io.reactivex.Observable
@@ -150,6 +152,48 @@ class BaseModel {
         }
         realm.close()
         return categoryList
+    }
+
+    fun getRemarkRealm(mContext: Context): ArrayList<PreviousRemark> {
+        val realm: Realm?
+        val previousRemarkList = ArrayList<PreviousRemark>()
+
+        Realm.init(mContext)
+
+        val config = RealmConfiguration.Builder()
+                .name(Constant.RealmTableName.PREVIOUSREMARK_REALM_TABLE)
+                .build()
+
+        realm = Realm.getInstance(config)
+
+        realm!!.executeTransaction {
+
+            val previousRemarkRealm = realm.where(PreviousRemarkRealm::class.java)
+                    .findAll()
+
+            previousRemarkRealm.forEach { previousRemarkRealmData ->
+                previousRemarkList.add(PreviousRemark(previousRemarkRealmData.remarkString!!))
+            }
+        }
+        realm.close()
+        return previousRemarkList
+    }
+
+    fun saveRemarkRealm(mContext: Context, remarkString: String) {
+        val realm: Realm?
+        Realm.init(mContext)
+
+        val config = RealmConfiguration.Builder()
+                .name(Constant.RealmTableName.PREVIOUSREMARK_REALM_TABLE)
+                .build()
+
+        realm = Realm.getInstance(config)
+
+        realm!!.executeTransaction {
+            val creating = realm.createObject(PreviousRemarkRealm::class.java)
+            creating.remarkString = remarkString
+        }
+        realm.close()
     }
 
     // SharePreference

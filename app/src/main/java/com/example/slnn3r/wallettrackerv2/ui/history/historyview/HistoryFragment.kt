@@ -2,6 +2,7 @@ package com.example.slnn3r.wallettrackerv2.ui.history.historyview
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -14,7 +15,6 @@ import com.example.slnn3r.wallettrackerv2.util.CustomSpecificFilterDialog
 import io.github.yavski.fabspeeddial.SimpleMenuListenerAdapter
 import kotlinx.android.synthetic.main.fragment_history.*
 
-
 class HistoryFragment : Fragment(), CustomSpecificFilterDialog.OnSpecificFilter, CustomRangeFilterDialog.OnRangeFilter {
     override fun rangeFilterInput(input: String) {
         (context as MenuActivity).setupNavigationMode()
@@ -26,10 +26,10 @@ class HistoryFragment : Fragment(), CustomSpecificFilterDialog.OnSpecificFilter,
         Toast.makeText(context, input,Toast.LENGTH_SHORT).show()
     }
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
+        (activity as? AppCompatActivity)?.supportActionBar?.title =
+                getString(R.string.ab_historyTrans_title)
         return inflater.inflate(R.layout.fragment_history, container, false)
     }
 

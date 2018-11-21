@@ -4,7 +4,6 @@ import android.content.Context
 import com.example.slnn3r.wallettrackerv2.base.BaseModel
 import com.example.slnn3r.wallettrackerv2.base.BasePresenter
 import com.example.slnn3r.wallettrackerv2.constant.string.Constant
-import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Transaction
 import com.example.slnn3r.wallettrackerv2.ui.dashboard.dashboardmodel.DashboardViewModel
 import com.example.slnn3r.wallettrackerv2.ui.dashboard.dashboardview.DashboardViewInterface
@@ -24,30 +23,19 @@ class DashboardViewPresenter : DashboardPresenterInterface.DashboardViewInterfac
     private val mDashboardViewModel: DashboardViewModel = DashboardViewModel()
 
     override fun getAllAccountData(mContext: Context, userUid: String) {
-        baseModel.getAccListByUserUidAsync(mContext, userUid)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<ArrayList<Account>> {
-                    override fun onSubscribe(d: Disposable) {
-                    }
+        try {
+            val dataList = baseModel.getAccListByUserUidSync(mContext, userUid)
 
-                    override fun onNext(dataList: ArrayList<Account>) {
-                        if (dataList.size < 1 && getView() != null) {
-                            getView()!!.proceedToFirstTimeSetup()
-                        } else {
-                            getView()!!.populateAccountSpinner(dataList)
-                        }
-                    }
-
-                    override fun onError(e: Throwable) {
-                        if (getView() != null) {
-                            getView()!!.onError(e.message.toString())
-                        }
-                    }
-
-                    override fun onComplete() {
-                    }
-                })
+            if (dataList.size < 1 && getView() != null) {
+                getView()!!.proceedToFirstTimeSetup()
+            } else {
+                getView()!!.populateAccountSpinner(dataList)
+            }
+        } catch (e: Exception) {
+            if (getView() != null) {
+                getView()!!.onError(e.message.toString())
+            }
+        }
     }
 
     override fun firstTimeSetup(mContext: Context, userUid: String) {

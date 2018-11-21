@@ -15,6 +15,7 @@
         android:background="@drawable/custom_default_background"
         android:clickable="false"
         android:ems="10"
+        android:longClickable="false"
         android:focusable="false"
         android:inputType="numberDecimal"
         android:maxLength="12"

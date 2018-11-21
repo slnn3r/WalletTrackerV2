@@ -6,7 +6,6 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt' // Original kapt is deprecated. Please add "apply plugin: 'kotlin-kapt'" to your build.gradle. ??? Realm Fix?
 
-
 apply plugin: 'io.fabric' // Crashlytics
 apply plugin: 'com.google.gms.google-services' // Firebase + Crashlytics
 apply plugin: 'realm-android' // Realm

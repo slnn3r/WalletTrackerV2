@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -67,6 +68,7 @@ class DashboardFragment : Fragment(), DashboardViewInterface.DashboardView {
     override fun onStop() {
         super.onStop()
         mDashboardViewPresenter.unbindView()
+        dashboardAdapterClickCount = 0 // reset click count
     }
 
     override fun populateAccountSpinner(accountList: ArrayList<Account>) {
@@ -95,20 +97,29 @@ class DashboardFragment : Fragment(), DashboardViewInterface.DashboardView {
         // Listener here because require keep update the accountId for get account list
         sp_dashboard_selectedAcc_selection.onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
-
                     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
                     override fun onItemSelected(parent: AdapterView<*>?, view: View?,
                                                 position: Int, id: Long) {
+
+                        cv_transListLoading.visibility = View.VISIBLE // display Loading cardview
+                        rv_dashboard_transList.adapter = null // remove adapter every reloading
+
                         mDashboardViewPresenter.saveSelectedAccount(context!!,
                                 accountList[sp_dashboard_selectedAcc_selection
                                         .selectedItemPosition].accountName,
                                 userData.uid) //Save Select Account in SharedPreference for future use
+
+                        Handler().postDelayed({
+                            if (getView() != null) {
+                                mDashboardViewPresenter.getTransactionData(context!!, // get RecycleView Data
+                                        userData.uid,
+                                        accountList[sp_dashboard_selectedAcc_selection
+                                                .selectedItemPosition].accountId)
+                            }
+                        }, 1000)
+
                         mDashboardViewPresenter.getRecentExpenseTransaction(context!!, // get graph Data
-                                userData.uid,
-                                accountList[sp_dashboard_selectedAcc_selection
-                                        .selectedItemPosition].accountId)
-                        mDashboardViewPresenter.getTransactionData(context!!, // get RecycleView Data
                                 userData.uid,
                                 accountList[sp_dashboard_selectedAcc_selection
                                         .selectedItemPosition].accountId)
@@ -119,6 +130,7 @@ class DashboardFragment : Fragment(), DashboardViewInterface.DashboardView {
     override fun populateTransactionRecycleView(transactionList: ArrayList<Transaction>) {
         rv_dashboard_transList.layoutManager = LinearLayoutManager(context)
         rv_dashboard_transList.adapter = TransactionListAdapter(transactionList)
+        cv_transListLoading.visibility = View.INVISIBLE // remove loading cardview
     }
 
     override fun populateExpenseGraph(mContext: Context, entryList: ArrayList<Entry>,

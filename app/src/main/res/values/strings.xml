@@ -101,6 +101,9 @@
     <string name="cd_detailsTrans_deleteSubmit_desc">Are you confirm to Delete this Transaction?</string>
     <string name="deletedItem_spinner_label">\u0020(Not Existed/Deleted)</string>
 
+    <!-- HistoryFragment -->
+    <string name="ab_historyTrans_title">Transaction History</string>
+
     <!-- Dashboard -->
     <string name="ab_dashboard_title">Dashboard</string>
     <string name="tv_dashboard_recentTransList_title">Recent 10(s) Transaction List</string>
@@ -113,6 +116,7 @@
     <string name="mp_amount_labelFormat">$ %.2f</string>
     <string name="mp_loading_label">Loading Graph…</string>
     <string name="mp_desc_label">Past 31 Days Expense Transactions Flow</string>
+    <string name="cv_loading_label">Loading…</string>
 
     <!-- SOON TO BE REMOVED -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -137,8 +137,11 @@ class DashboardViewModel : DashboardModelInterface.DashboardViewModel {
         realm!!.executeTransaction {
             val transactionRealm = realm.where(TransactionRealm::class.java)
                     .sort(Constant.RealmVariableName.TRANSACTION_DATETIME_VARIABLE, Sort.DESCENDING)
-                    .between(Constant.RealmVariableName.TRANSACTION_DATETIME_VARIABLE,
-                            previous30DaysDate, todayDate)
+                    .greaterThanOrEqualTo(Constant.RealmVariableName.TRANSACTION_DATETIME_VARIABLE,
+                            previous30DaysDate)
+                    .lessThan(Constant.RealmVariableName.TRANSACTION_DATETIME_VARIABLE,
+                            todayDate)
+                    //.between(Constant.RealmVariableName.TRANSACTION_DATETIME_VARIABLE, previous30DaysDate, todayDate)
                     .findAll()
 
             transactionRealm.forEach { transactionRealmData ->

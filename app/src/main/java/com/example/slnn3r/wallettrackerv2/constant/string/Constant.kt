@@ -18,6 +18,9 @@ class Constant {
 
         const val CREATE_TRANSACTION_LOGGING = "CREATE TRANS ERROR"
         const val DETAILS_TRANSACTION_LOGGING = "DETAILS TRANS ERROR"
+
+        const val HISTORY_VIEW_LOGGING = "HIS VIEW ERROR"
+        const val HISTORY_DIALOG_LOGGING = "HIS DIALOG ERROR"
     }
 
     object GoogleLoginApi {

@@ -1,4 +1,4 @@
-package com.example.slnn3r.wallettrackerv2.ui.dashboard.dashboardadapter
+package com.example.slnn3r.wallettrackerv2.ui.history.historyadapter
 
 import android.content.res.ColorStateList
 import android.os.Bundle
@@ -15,14 +15,14 @@ import kotlinx.android.synthetic.main.list_row_transaction.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-var dashboardAdapterClickCount = 0
+var historyAdapterClickCount = 0
 
-class TransactionListAdapter(private val transactionList: ArrayList<Transaction>) :
+class HistoryListAdapter(private val transactionList: ArrayList<Transaction>) :
         RecyclerView.Adapter<TransactionViewHolder>() {
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
-        dashboardAdapterClickCount = 0
+        historyAdapterClickCount = 0
     }
 
     override fun getItemCount(): Int {
@@ -101,7 +101,7 @@ class TransactionViewHolder(val view: View, var passData: Transaction? = null) :
         RecyclerView.ViewHolder(view) {
     init {
         view.setOnClickListener {
-            if (passData != null && dashboardAdapterClickCount < 1) {
+            if (passData != null && historyAdapterClickCount < 1) {
                 val gson = Gson()
 
                 val transactionData = Transaction(passData!!.transactionId,
@@ -116,9 +116,9 @@ class TransactionViewHolder(val view: View, var passData: Transaction? = null) :
                 val bundle = Bundle()
                 bundle.putString(Constant.KeyId.TRANSACTION_DETAILS_ARG, json)
                 navController
-                        .navigate(R.id.action_dashboardFragment_to_detailsTransactionFragment, bundle)
+                        .navigate(R.id.action_historyFragment_to_detailsTransactionFragment, bundle)
 
-                dashboardAdapterClickCount += 1
+                historyAdapterClickCount += 1
             }
         }
     }

@@ -54,11 +54,8 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5' // GSON
     implementation 'com.squareup.picasso:picasso:2.71828' // Picasso
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3' // MPAndroidChart
-    implementation 'io.github.yavski:fab-speed-dial:1.0.6' // Floating Button (will be remove soon)
     implementation 'com.kyleduo.switchbutton:library:2.0.0' // Switch Button
-
     implementation "com.leinardi.android:speed-dial:2.0.0" // Floating Button
-
 
     // Android Navigation Library
     def nav_version = "1.0.0-alpha06"

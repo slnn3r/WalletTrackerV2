@@ -1,4 +1,4 @@
-package com.example.slnn3r.wallettrackerv2.util
+package com.example.slnn3r.wallettrackerv2.ui.transaction.transactiondialog
 
 import android.content.Context
 import android.graphics.Color
@@ -15,10 +15,10 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.constant.string.Constant
-import kotlinx.android.synthetic.main.calculator_custom_dialog.*
+import kotlinx.android.synthetic.main.dialog_calculator.*
 import java.text.DecimalFormat
 
-class CustomCalculatorDialog : BottomSheetDialogFragment() {
+class CalculatorDialog : BottomSheetDialogFragment() {
 
     interface OnInputSelected {
         fun calculatorInput(input: String)
@@ -48,7 +48,7 @@ class CustomCalculatorDialog : BottomSheetDialogFragment() {
         division = getString(R.string.btnDivide_label)
         decFormat = DecimalFormat(Constant.Format.DECIMAL_FORMAT)
 
-        return inflater.inflate(R.layout.calculator_custom_dialog, container, false)
+        return inflater.inflate(R.layout.dialog_calculator, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

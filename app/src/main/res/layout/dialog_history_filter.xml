@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_historyFilter_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/tv_historyFilter_title"
+        android:textAllCaps="true"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_historyFilter_selectedAcc_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/selected_account_title"
+        app:layout_constraintEnd_toStartOf="@+id/sp_historyFilter_selectedAcc"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_historyFilter_title" />
+
+    <Spinner
+        android:id="@+id/sp_historyFilter_selectedAcc"
+        android:layout_width="0dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/custom_default_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_historyFilter_selectedAcc_label"
+        app:layout_constraintTop_toBottomOf="@+id/tv_historyFilter_title" />
+
+    <TextView
+        android:id="@+id/tv_historyFilter_transType_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="31dp"
+        android:text="@string/category_type_title"
+        app:layout_constraintEnd_toStartOf="@+id/sp_historyFilter_transType"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_historyFilter_selectedAcc_label" />
+
+    <Spinner
+        android:id="@+id/sp_historyFilter_transType"
+        android:layout_width="0dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/custom_default_background"
+        android:entries="@array/sp_defaultHistoryFilter_transType"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_historyFilter_transType_label"
+        app:layout_constraintTop_toBottomOf="@+id/tv_historyFilter_selectedAcc_label" />
+
+    <TextView
+        android:id="@+id/tv_historyFilter_selectedCat_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="6dp"
+        android:text="@string/selected_category_title"
+        app:layout_constraintEnd_toStartOf="@+id/sp_historyFilter_selectedCat"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_historyFilter_transType_label" />
+
+    <Spinner
+        android:id="@+id/sp_historyFilter_selectedCat"
+        android:layout_width="0dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/custom_default_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_historyFilter_selectedCat_label"
+        app:layout_constraintTop_toBottomOf="@+id/tv_historyFilter_transType_label" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/colorPrimaryLight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tl_historyFilter_remarks">
+
+        <TextView
+            android:id="@+id/tv_historyFilter_dateOption_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/tv_historyFilter_dateOption_title"
+            app:layout_constraintEnd_toStartOf="@+id/tv_historyFilter_dateOption"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_historyFilter_dateOption"
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/custom_default_background"
+            android:paddingLeft="8dp"
+            android:paddingTop="2dp"
+            android:paddingRight="8dp"
+            android:text="Specific Date"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/sb_historyFilter_dateOption"
+            app:layout_constraintStart_toEndOf="@+id/tv_historyFilter_dateOption_label"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.kyleduo.switchbutton.SwitchButton
+            android:id="@+id/sb_historyFilter_dateOption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:checked="true"
+            app:kswBackColor="@color/colorPrimaryDark"
+            app:kswThumbColor="@color/colorPrimaryLight"
+            app:kswThumbWidth="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/tv_historyFilter_dateOption"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/sp_historyFilter_specificDay"
+            android:layout_width="70dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/custom_default_background"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_historyFilter_dateOption_label" />
+
+        <Spinner
+            android:id="@+id/sp_historyFilter_specificYear"
+            android:layout_width="85dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/custom_default_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/sp_historyFilter_specificMonth"
+            app:layout_constraintTop_toBottomOf="@+id/tv_historyFilter_dateOption_label" />
+
+        <Spinner
+            android:id="@+id/sp_historyFilter_specificMonth"
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="8dp"
+            android:entries="@array/sp_defaultHistoryFilter_months"
+            android:background="@drawable/custom_default_background"
+            app:layout_constraintEnd_toStartOf="@+id/sp_historyFilter_specificYear"
+            app:layout_constraintStart_toEndOf="@+id/sp_historyFilter_specificDay"
+            app:layout_constraintTop_toBottomOf="@+id/tv_historyFilter_dateOption_label" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tl_historyFilter_rangeFrom"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/custom_default_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tl_historyFilter_rangeTo"
+            app:layout_constraintHorizontal_bias="0.372"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sp_historyFilter_specificDay">
+
+            <EditText
+                android:id="@+id/et_historyFilter_rangeFrom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:focusable="false"
+                android:hint="@string/tl_historyFilter_startDate_title"
+                android:inputType="date"
+                android:padding="8dp"
+                android:textAlignment="center"
+                android:textSize="14sp"
+                tools:ignore="Autofill" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tl_historyFilter_rangeTo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/custom_default_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tl_historyFilter_rangeFrom"
+            app:layout_constraintTop_toBottomOf="@+id/sp_historyFilter_specificDay">
+
+            <EditText
+                android:id="@+id/et_historyFilter_rangeTo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:focusable="false"
+                android:hint="@string/tl_historyFilter_endDate_title"
+                android:inputType="date"
+                android:padding="8dp"
+                android:textAlignment="center"
+                android:textSize="14sp"
+                tools:ignore="Autofill" />
+
+        </android.support.design.widget.TextInputLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/tl_historyFilter_remarks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/custom_default_background"
+        android:paddingTop="4dp"
+        android:theme="@style/EditTextTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sp_historyFilter_selectedCat">
+
+        <AutoCompleteTextView
+            android:id="@+id/ac_historyFilter_remarks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:completionThreshold="1"
+            android:dropDownHeight="100dp"
+            android:hint="@string/remarks_title"
+            android:imeOptions="actionDone"
+            android:maxLength="60"
+            android:padding="8dp"
+            android:singleLine="true"
+            android:textAlignment="center"
+            android:theme="@style/EditTextTheme" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btn_historyFilter_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:backgroundTint="@color/colorLightGreen"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:srcCompat="@drawable/ic_check" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btn_historyFilter_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:backgroundTint="@color/colorLightRed"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_historyFilter_confirm"
+        app:srcCompat="@drawable/ic_cross" />
+
+</android.support.constraint.ConstraintLayout>

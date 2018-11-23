@@ -212,10 +212,16 @@ class BaseModel {
     }
 
     fun removeSharePreferenceData(mContext: Context, userUid: String) {
-        val editor = mContext.getSharedPreferences(Constant.KeyId.SHARE_PREF + userUid,
+        val sharePrefEditor = mContext.getSharedPreferences(Constant.KeyId.SHARE_PREF + userUid,
                 AppCompatActivity.MODE_PRIVATE).edit()
-        editor.clear()
-        editor.apply()
-        editor.commit()
+        sharePrefEditor.clear()
+        sharePrefEditor.apply()
+        sharePrefEditor.commit()
+
+        val filterInputEditor = mContext.getSharedPreferences("PreviousInput",
+                AppCompatActivity.MODE_PRIVATE).edit()
+        filterInputEditor.clear()
+        filterInputEditor.apply()
+        filterInputEditor.commit()
     }
 }

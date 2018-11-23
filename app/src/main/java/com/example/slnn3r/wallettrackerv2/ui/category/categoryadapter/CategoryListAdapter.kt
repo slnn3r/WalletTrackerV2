@@ -11,7 +11,7 @@ import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.constant.string.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Category
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.category_list_row.view.*
+import kotlinx.android.synthetic.main.list_row_category.view.*
 
 var catAdapterClickCount = 0
 
@@ -29,7 +29,7 @@ class CategoryListAdapter(private val categoryList: ArrayList<Category>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val cellForRow = layoutInflater.inflate(R.layout.category_list_row, parent, false)
+        val cellForRow = layoutInflater.inflate(R.layout.list_row_category, parent, false)
 
         return CategoryViewHolder(cellForRow)
     }

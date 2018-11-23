@@ -21,9 +21,9 @@ import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Category
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Transaction
 import com.example.slnn3r.wallettrackerv2.ui.menu.menuview.MenuActivity
+import com.example.slnn3r.wallettrackerv2.ui.transaction.transactiondialog.CalculatorDialog
 import com.example.slnn3r.wallettrackerv2.ui.transaction.transactionpresenter.CreateTransactionPresenter
 import com.example.slnn3r.wallettrackerv2.util.CustomAlertDialog
-import com.example.slnn3r.wallettrackerv2.util.CustomCalculatorDialog
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.fragment_create_transaction.*
 import java.sql.Time
@@ -33,7 +33,7 @@ import kotlin.collections.ArrayList
 
 
 class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTransactionView,
-        CustomCalculatorDialog.OnInputSelected {
+        CalculatorDialog.OnInputSelected {
 
     private val myCalendar = Calendar.getInstance()
     private lateinit var simpleDateFormat: SimpleDateFormat
@@ -204,7 +204,7 @@ class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTra
 
             et_createTrans_amount.setText(getString(R.string.amount_loading_label))
 
-            val calCustomDialog = CustomCalculatorDialog()
+            val calCustomDialog = CalculatorDialog()
             calCustomDialog.arguments = args
             calCustomDialog.isCancelable = false
             calCustomDialog.setTargetFragment(this, 1)

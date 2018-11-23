@@ -14,7 +14,7 @@
     <string name="fb_action_specific_title">Specific Date</string>
     <string name="fb_action_range_title">Range Date</string>
 
-    <!-- transaction_list_row -->
+    <!-- list_row_transaction -->
     <string name="tv_accRow_defaultLine1">No Transaction Found</string>
     <string name="tv_accRow_defaultLine2">Start Add New Transaction</string>
     <string name="tv_accRow_defaultLine3">By click the Floating Button at Bottom Right Side</string>
@@ -153,7 +153,7 @@
     <string name="catName_used_invalid_message">Category Name have been already Used</string>
     <string name="catName_databaseError_invalid_message">Category Database error occurred</string>
 
-    <!-- calculator_custom_dialog -->
+    <!-- dialog_calculator -->
     <string name="btnPlus_label">+</string>
     <string name="btnMinus_label">-</string>
     <string name="btnMultiply_label">*</string>
@@ -174,5 +174,44 @@
     <string name="btnClear_label">Clear</string>
     <string name="calCustomDialog_label">Transaction Amount</string>
     <string name="notANumber_label">NaN</string>
+
+
+    <!--  dialog_history_filter-->
+    <string-array name="sp_defaultHistoryFilter_transType">
+        <item>All Type</item>
+        <item>Expense</item>
+        <item>Income</item>
+    </string-array>
+
+    <string-array name="sp_defaultHistoryFilter_months">
+        <item>All Month</item>
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+
+    <string name="tv_historyFilter_title">History Filter Configuration</string>
+    <string name="tv_historyFilter_dateOption_title">Date Filter Option</string>
+    <string name="tl_historyFilter_startDate_title">From</string>
+    <string name="tl_historyFilter_endDate_title">To</string>
+
+    <!-- Should be Constant!-->
+    <string name="allYear">All Year</string>
+    <string name="allMonth">All Month</string>
+    <string name="allDay">All Day</string>
+
+    <string name="history_exp_labelFormat">%s (- $ %.2f)</string>
+    <string name="history_inc_labelFormat">%s (+ $ %.2f)</string>
+    <string name="history_totalBal_labelFormat">($) %.2f</string>
+
 
 </resources>

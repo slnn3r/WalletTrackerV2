@@ -10,7 +10,7 @@ import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.constant.string.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.account_list_row.view.*
+import kotlinx.android.synthetic.main.list_row_account.view.*
 
 var accAdapterClickCount = 0
 
@@ -29,7 +29,7 @@ class AccountListAdapter(private val accountList: ArrayList<Account>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val cellForRow = layoutInflater.inflate(R.layout.account_list_row, parent, false)
+        val cellForRow = layoutInflater.inflate(R.layout.list_row_account, parent, false)
         return AccountViewHolder(cellForRow)
     }
 

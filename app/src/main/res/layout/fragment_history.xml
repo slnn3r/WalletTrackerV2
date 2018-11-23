@@ -7,19 +7,135 @@
     android:layout_height="match_parent"
     tools:context=".ui.history.historyview.HistoryFragment">
 
-    <io.github.yavski.fabspeeddial.FabSpeedDial
-        android:id="@+id/fab_speed_dial43"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fb_historyTrans_filterOption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        app:fabBackgroundTint="@color/colorPrimaryDark"
-        app:fabDrawable="@drawable/ic_filter"
-        app:fabGravity="bottom_end"
-        app:fabMenu="@menu/fb_history_filter_menu"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_filter"
+        app:backgroundTint="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_history_transCount_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Transaction Count(s)"
+        app:layout_constraintEnd_toStartOf="@+id/tv_history_transCount"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_history_incCount_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="35dp"
+        android:text="Income Count(s)"
+        app:layout_constraintEnd_toStartOf="@+id/tv_history_incCount"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_history_expCount_label" />
+
+    <TextView
+        android:id="@+id/tv_history_expCount_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="29dp"
+        android:text="Expense Count(s)"
+        app:layout_constraintEnd_toStartOf="@+id/tv_history_expCount"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_history_transCount_label" />
+
+    <TextView
+        android:id="@+id/tv_history_transCount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="158"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/tv_history_transCount_label"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_history_expCount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="157 ($ 3234.23)"
+        android:textAllCaps="false"
+        android:textColor="@color/colorLightRed"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_history_expCount_label"
+        app:layout_constraintTop_toBottomOf="@+id/tv_history_transCount_label" />
+
+    <TextView
+        android:id="@+id/tv_history_incCount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="456 ($ 2341.43)"
+        android:textColor="@color/colorLightGreen"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_history_incCount_label"
+        app:layout_constraintTop_toBottomOf="@+id/tv_history_expCount_label" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_history_transList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:miniFabBackgroundTint="@color/colorPrimaryDark"
-        app:miniFabDrawableTint="@color/colorPrimaryLight"
-        app:miniFabTitleBackgroundTint="@color/colorPrimaryLight" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_history_totalBal" />
+
+    <TextView
+        android:id="@+id/tv_history_totalBal_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="56dp"
+        android:text="Total Balance"
+        app:layout_constraintEnd_toStartOf="@+id/tv_history_totalBal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_history_incCount_label" />
+
+    <TextView
+        android:id="@+id/tv_history_totalBal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="$ 2342.43"
+        android:textColor="@color/browser_actions_text_color"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_history_totalBal_label"
+        app:layout_constraintTop_toBottomOf="@+id/tv_history_incCount" />
 
 </android.support.constraint.ConstraintLayout>

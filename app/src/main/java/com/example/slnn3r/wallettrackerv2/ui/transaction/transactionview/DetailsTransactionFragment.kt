@@ -22,9 +22,9 @@ import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Category
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Transaction
 import com.example.slnn3r.wallettrackerv2.ui.menu.menuview.MenuActivity
+import com.example.slnn3r.wallettrackerv2.ui.transaction.transactiondialog.CalculatorDialog
 import com.example.slnn3r.wallettrackerv2.ui.transaction.transactionpresenter.DetailsTransactionPresenter
 import com.example.slnn3r.wallettrackerv2.util.CustomAlertDialog
-import com.example.slnn3r.wallettrackerv2.util.CustomCalculatorDialog
 import com.google.firebase.auth.FirebaseUser
 import com.google.gson.Gson
 import com.leinardi.android.speeddial.SpeedDialActionItem
@@ -35,7 +35,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class DetailsTransactionFragment : Fragment(), TransactionViewInterface.DetailsTransactionView,
-        CustomCalculatorDialog.OnInputSelected {
+        CalculatorDialog.OnInputSelected {
 
     private val myCalendar = Calendar.getInstance()
     private lateinit var simpleDateFormat: SimpleDateFormat
@@ -303,7 +303,7 @@ class DetailsTransactionFragment : Fragment(), TransactionViewInterface.DetailsT
 
             et_detailsTrans_amount.setText(getString(R.string.amount_loading_label))
 
-            val calCustomDialog = CustomCalculatorDialog()
+            val calCustomDialog = CalculatorDialog()
             calCustomDialog.arguments = args
             calCustomDialog.isCancelable = false
             calCustomDialog.setTargetFragment(this, 1)

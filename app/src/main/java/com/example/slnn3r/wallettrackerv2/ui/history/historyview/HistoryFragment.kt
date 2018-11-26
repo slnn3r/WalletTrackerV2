@@ -9,7 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.slnn3r.wallettrackerv2.R
-import com.example.slnn3r.wallettrackerv2.constant.string.Constant
+import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Transaction
 import com.example.slnn3r.wallettrackerv2.ui.history.historyadapter.HistoryListAdapter
 import com.example.slnn3r.wallettrackerv2.ui.history.historyadapter.historyAdapterClickCount
@@ -45,12 +45,11 @@ class HistoryFragment : Fragment(), HistoryViewInterface.HistoryView,
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        setupFloatingButton()
+    }
 
-        //removeSharePreferenceData
-        mHistoryViewPresenter.removePreviousInput(context!!)
-
+    private fun setupFloatingButton() {
         fb_historyTrans_filterOption.setOnClickListener {
-
             if (historyAdapterClickCount > 0) {
                 return@setOnClickListener
             }

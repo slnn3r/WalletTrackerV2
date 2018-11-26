@@ -17,8 +17,6 @@ interface HistoryViewInterface {
     interface HistoryFilterDialog : BaseView.Universal {
         fun populateAccountSpinner(accountList: ArrayList<Account>)
         fun populateCategorySpinner(categoryList: ArrayList<Category>)
-
-        fun setupPreviousInput(editor: SharedPreferences)
-        fun setupDefaultInput()
+        fun setupFilterInput(editor: SharedPreferences)
     }
 }

@@ -17,7 +17,7 @@ import android.widget.ArrayAdapter
 import android.widget.CompoundButton
 import android.widget.FrameLayout
 import com.example.slnn3r.wallettrackerv2.R
-import com.example.slnn3r.wallettrackerv2.constant.string.Constant
+import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Category
 import com.example.slnn3r.wallettrackerv2.ui.history.historypresenter.HistoryFilterDialogPresenter
@@ -51,12 +51,15 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
     private var havePreviousDay = false
     private var havePreviousDayCount = 0
 
+    private val monthList = ArrayList<String>()
+
     interface OnFilterTrigger {
         fun filterInputSubmit()
         fun filterInputCancel()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         simpleDateFormat = SimpleDateFormat((Constant.Format.DATE_FORMAT), Locale.US)
         simpleMonthFormat = SimpleDateFormat((Constant.Format.MONTH_FORMAT), Locale.US)
         return inflater.inflate(R.layout.dialog_history_filter, container, false)
@@ -69,22 +72,39 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
         setupButton()
         setupStartDatePicker()
         setupEndDatePicker()
+        setupSpecificDateSpinner()
+        setupTransTypeSpinner()
+        setupDateOptionSwitchButton()
+    }
 
-        sp_historyFilter_specificYear.onItemSelectedListener = fixDays
-        sp_historyFilter_specificMonth.onItemSelectedListener = fixDays
+    private fun setupDateOptionSwitchButton() {
+        sb_historyFilter_dateOption.setOnCheckedChangeListener { _: CompoundButton, _: Boolean ->
+            setupCurrentSpecificDate()
+            setupDateInput()
+        }
+    }
 
+    private fun setupTransTypeSpinner() {
         sp_historyFilter_transType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
+            override fun onItemSelected(parentView: AdapterView<*>,
+                                        selectedItemView: View, position: Int, id: Long) {
                 if (!havePreviousType) {
                     when {
-                        sp_historyFilter_transType.selectedItem == Constant.ConditionalKeyword.EXPENSE_STATUS -> mHistoryFilterDialogPresenter.getCategoryList(context!!, userData.uid, sp_historyFilter_transType.selectedItem.toString())
-                        sp_historyFilter_transType.selectedItem == Constant.ConditionalKeyword.INCOME_STATUS -> mHistoryFilterDialogPresenter.getCategoryList(context!!, userData.uid, sp_historyFilter_transType.selectedItem.toString())
+                        sp_historyFilter_transType.selectedItem ==
+                                Constant.ConditionalKeyword.EXPENSE_STATUS ->
+                            mHistoryFilterDialogPresenter.getCategoryList(context!!, userData.uid,
+                                    sp_historyFilter_transType.selectedItem.toString())
+                        sp_historyFilter_transType.selectedItem
+                                == Constant.ConditionalKeyword.INCOME_STATUS ->
+                            mHistoryFilterDialogPresenter.getCategoryList(context!!, userData.uid,
+                                    sp_historyFilter_transType.selectedItem.toString())
                         else -> {
                             val spinnerItem = ArrayList<String>()
 
-                            spinnerItem.add("All Category")
+                            spinnerItem.add(Constant.ConditionalKeyword.ALL_CATEGORY_STATUS)
 
-                            val dataAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, spinnerItem)
+                            val dataAdapter = ArrayAdapter(context!!,
+                                    android.R.layout.simple_spinner_item, spinnerItem)
 
                             // Drop down layout style - list view with radio button
                             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -92,36 +112,31 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
                             sp_historyFilter_selectedCat.adapter = dataAdapter
                             sp_historyFilter_selectedCat.isEnabled = false
                         }
-
                     }
                 } else {
                     havePreviousType = false
                 }
             }
 
-            override fun onNothingSelected(parentView: AdapterView<*>) {
-                // your code here
-            }
+            override fun onNothingSelected(parentView: AdapterView<*>) {}
         }
+    }
 
-        sb_historyFilter_dateOption.setOnCheckedChangeListener { _: CompoundButton, _: Boolean ->
-
-            setupCurrentSpecificDate()
-            setupDateInput()
-
-        }
+    private fun setupSpecificDateSpinner() {
+        sp_historyFilter_specificYear.onItemSelectedListener = fixDays
+        sp_historyFilter_specificMonth.onItemSelectedListener = fixDays
     }
 
     private fun setupDateInput() {
         if (sb_historyFilter_dateOption.isChecked) {
-            tv_historyFilter_dateOption.text = "Specific Date"
+            tv_historyFilter_dateOption.text = Constant.ConditionalKeyword.SPECIFIC_DATE
             et_historyFilter_rangeFrom.isEnabled = false
             et_historyFilter_rangeTo.isEnabled = false
             sp_historyFilter_specificDay.isEnabled = true
             sp_historyFilter_specificMonth.isEnabled = true
             sp_historyFilter_specificYear.isEnabled = true
         } else {
-            tv_historyFilter_dateOption.text = "Date Range"
+            tv_historyFilter_dateOption.text = Constant.ConditionalKeyword.DATE_RANGE
             et_historyFilter_rangeFrom.isEnabled = true
             et_historyFilter_rangeTo.isEnabled = true
             sp_historyFilter_specificDay.isEnabled = false
@@ -131,14 +146,15 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
     }
 
     private fun setupCurrentSpecificDate() {
-
         sp_historyFilter_specificYear.setSelection(6)
         sp_historyFilter_specificMonth.setSelection(myCalendar.get(Calendar.MONTH) + 1)
 
         // Initial Date
-        et_historyFilter_rangeFrom.setText(SimpleDateFormat("yyyy/MM/1", Locale.US).format(myCalendar.time))
+        et_historyFilter_rangeFrom
+                .setText(SimpleDateFormat("yyyy/MM/1", Locale.US).format(myCalendar.time))
         et_historyFilter_rangeTo.setText(SimpleDateFormat("yyyy/MM/"
-                + Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH).toString(), Locale.US).format(myCalendar.time))
+                + Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH).toString(),
+                Locale.US).format(myCalendar.time))
 
     }
 
@@ -154,7 +170,7 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
 
         setupCurrentSpecificDate()
 
-        mHistoryFilterDialogPresenter.getPreviousInput(context!!)
+        mHistoryFilterDialogPresenter.getFilterInput(context!!)
     }
 
 
@@ -163,20 +179,19 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
         mHistoryFilterDialogPresenter.unbindView()
     }
 
-    override fun setupPreviousInput(editor: SharedPreferences) {
-
+    override fun setupFilterInput(editor: SharedPreferences) {
         havePreviousType = true
 
-        val previousAccount = editor.getString("previousAccount", "")
-        val previousCatType = editor.getString("previousCatType", "")
-        val previousCategory = editor.getString("previousCategory", "")
-        val previousRemark = editor.getString("previousRemark", "")
-        val previousDateOption = editor.getString("previousDateOption", "")
-        val previousDay = editor.getString("previousDay", "")
-        val previousMonth = editor.getString("previousMonth", "")
-        val previousYear = editor.getString("previousYear", "")
-        val previousStartDate = editor.getString("previousStartDate", "")
-        val previousEndDate = editor.getString("previousEndDate", "")
+        val filterAccount = editor.getString(Constant.KeyId.FILTER_INPUT_ACCOUNT, "")
+        val filterCatType = editor.getString(Constant.KeyId.FILTER_INPUT_CATTYPE, "")
+        val filterCategory = editor.getString(Constant.KeyId.FILTER_INPUT_CATEGORY, "")
+        val filterRemark = editor.getString(Constant.KeyId.FILTER_INPUT_REMARK, "")
+        val filterDateOption = editor.getString(Constant.KeyId.FILTER_INPUT_DATEOPTION, "")
+        val filterDay = editor.getString(Constant.KeyId.FILTER_INPUT_DAY, "")
+        val filterMonth = editor.getString(Constant.KeyId.FILTER_INPUT_MONTH, "")
+        val filterYear = editor.getString(Constant.KeyId.FILTER_INPUT_YEAR, "")
+        val filterStartDate = editor.getString(Constant.KeyId.FILTER_INPUT_STARTDATE, "")
+        val filterEndDate = editor.getString(Constant.KeyId.FILTER_INPUT_ENDDATE, "")
 
         val accountNameList = ArrayList<String>()
         loadedAccountList.forEach { data ->
@@ -184,23 +199,23 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
         }
 
         val dataAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, accountNameList)
-        sp_historyFilter_selectedAcc.setSelection(dataAdapter.getPosition(previousAccount))
+        sp_historyFilter_selectedAcc.setSelection(dataAdapter.getPosition(filterAccount))
 
-
-
-        when (previousCatType) {
+        when (filterCatType) {
             Constant.ConditionalKeyword.EXPENSE_STATUS -> {
-                mHistoryFilterDialogPresenter.getCategoryList(context!!, userData.uid, "Expense")
+                mHistoryFilterDialogPresenter.getCategoryList(context!!, userData.uid,
+                        Constant.ConditionalKeyword.EXPENSE_STATUS)
                 sp_historyFilter_transType.setSelection(1)
             }
             Constant.ConditionalKeyword.INCOME_STATUS -> {
-                mHistoryFilterDialogPresenter.getCategoryList(context!!, userData.uid, "Income")
+                mHistoryFilterDialogPresenter.getCategoryList(context!!, userData.uid,
+                        Constant.ConditionalKeyword.INCOME_STATUS)
                 sp_historyFilter_transType.setSelection(2)
             }
             else -> {
                 val spinnerItem = ArrayList<String>()
 
-                spinnerItem.add("All Category")
+                spinnerItem.add(Constant.ConditionalKeyword.ALL_CATEGORY_STATUS)
 
                 val dataAdapterBo = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, spinnerItem)
 
@@ -214,56 +229,50 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
             }
         }
 
-        if (previousCategory != "All Category") {
+        if (filterCategory != Constant.ConditionalKeyword.ALL_CATEGORY_STATUS) {
             val categoryNameList = ArrayList<String>()
             loadedCategoryList.forEach { data ->
                 categoryNameList.add(data.categoryName)
             }
 
             val dataAdapterCat = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, categoryNameList)
-            sp_historyFilter_selectedCat.setSelection(dataAdapterCat.getPosition(previousCategory))
+            sp_historyFilter_selectedCat.setSelection(dataAdapterCat.getPosition(filterCategory))
         }
 
-        ac_historyFilter_remarks.setText(previousRemark)
+        ac_historyFilter_remarks.setText(filterRemark)
 
-        if (previousDateOption != "Specific Date") {
+        if (filterDateOption != Constant.ConditionalKeyword.SPECIFIC_DATE) {
             sb_historyFilter_dateOption.toggle()
         }
         setupDateInput()
 
-        if (previousDateOption != "Specific Date") {
-            et_historyFilter_rangeFrom.setText(previousStartDate)
-            et_historyFilter_rangeTo.setText(previousEndDate)
+        if (filterDateOption != Constant.ConditionalKeyword.SPECIFIC_DATE) {
+            et_historyFilter_rangeFrom.setText(filterStartDate)
+            et_historyFilter_rangeTo.setText(filterEndDate)
         } else {
             havePreviousDay = true
 
-            if (previousYear != "All Year") {
-                sp_historyFilter_specificYear.setSelection(tempYearAdapter.getPosition(previousYear))
+            if (filterYear != Constant.ConditionalKeyword.All_YEAR_STATUS) {
+                sp_historyFilter_specificYear.setSelection(tempYearAdapter.getPosition(filterYear))
             } else {
                 sp_historyFilter_specificYear.setSelection(0)
             }
 
-            if (previousMonth != "All Month") {
+            if (filterMonth != Constant.ConditionalKeyword.All_MONTH_STATUS) {
                 val cal = Calendar.getInstance()
-                cal.time = simpleMonthFormat.parse(previousMonth)
+                cal.time = simpleMonthFormat.parse(filterMonth)
                 sp_historyFilter_specificMonth.setSelection(cal.get(Calendar.MONTH) + 1)
             } else {
                 sp_historyFilter_specificMonth.setSelection(0)
             }
 
             setDays()
-            if (previousDay != "All Day") {
-                sp_historyFilter_specificDay.setSelection(previousDay!!.toInt())
+            if (filterDay != Constant.ConditionalKeyword.All_DAY_STATUS) {
+                sp_historyFilter_specificDay.setSelection(filterDay!!.toInt())
             } else {
                 sp_historyFilter_specificDay.setSelection(0)
             }
         }
-
-
-    }
-
-    override fun setupDefaultInput() {
-        //setupCurrentSpecificDate()
     }
 
     override fun populateAccountSpinner(accountList: ArrayList<Account>) {
@@ -282,6 +291,12 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         sp_historyFilter_selectedAcc.adapter = dataAdapter
+
+        // Get SharedPreference saved Selection and Set to Spinner Selection
+        val selectedAccountSharePref =
+                mHistoryFilterDialogPresenter.getSelectedAccount(context!!, userData.uid)
+        val spinnerPosition = dataAdapter.getPosition(selectedAccountSharePref)
+        sp_historyFilter_selectedAcc.setSelection(spinnerPosition)
     }
 
     override fun populateCategorySpinner(categoryList: ArrayList<Category>) {
@@ -289,7 +304,7 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
 
         val categoryNameList = ArrayList<String>()
 
-        categoryNameList.add("All Category")
+        categoryNameList.add(Constant.ConditionalKeyword.ALL_CATEGORY_STATUS)
 
         categoryList.forEach { data ->
             categoryNameList.add(data.categoryName)
@@ -308,7 +323,7 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
     private fun setupButton() {
         btn_historyFilter_confirm.setOnClickListener {
 
-            mHistoryFilterDialogPresenter.savePreviousInput(context!!,
+            mHistoryFilterDialogPresenter.saveFilterInput(context!!,
                     sp_historyFilter_selectedAcc.selectedItem.toString(),
                     sp_historyFilter_transType.selectedItem.toString(),
                     sp_historyFilter_selectedCat.selectedItem.toString(),
@@ -320,7 +335,7 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
                     et_historyFilter_rangeFrom.text.toString(),
                     et_historyFilter_rangeTo.text.toString())
 
-            if (tv_historyFilter_dateOption.text == "Specific Date") {
+            if (tv_historyFilter_dateOption.text == Constant.ConditionalKeyword.SPECIFIC_DATE) {
                 onFilterTriggerDialog.filterInputSubmit()
                 dialog.dismiss()
             } else {
@@ -356,6 +371,37 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
             behavior.state = BottomSheetBehavior.STATE_EXPANDED
             behavior.peekHeight = 0
         }
+
+        tv_historyFilter_dateOption.text = Constant.ConditionalKeyword.SPECIFIC_DATE
+
+        val transTypeList = ArrayList<String>()
+        transTypeList.add(Constant.ConditionalKeyword.All_TYPE_STATUS)
+        transTypeList.add(Constant.ConditionalKeyword.EXPENSE_STATUS)
+        transTypeList.add(Constant.ConditionalKeyword.INCOME_STATUS)
+
+        // Creating adapter for month spinner
+        val transTypeAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, transTypeList)
+        transTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        sp_historyFilter_transType.adapter = transTypeAdapter
+
+        monthList.add(Constant.ConditionalKeyword.All_MONTH_STATUS)
+        monthList.add(Constant.DefaultValue.JAN)
+        monthList.add(Constant.DefaultValue.FEB)
+        monthList.add(Constant.DefaultValue.MAR)
+        monthList.add(Constant.DefaultValue.APR)
+        monthList.add(Constant.DefaultValue.MAY)
+        monthList.add(Constant.DefaultValue.JUN)
+        monthList.add(Constant.DefaultValue.JUL)
+        monthList.add(Constant.DefaultValue.AUG)
+        monthList.add(Constant.DefaultValue.SEP)
+        monthList.add(Constant.DefaultValue.OCT)
+        monthList.add(Constant.DefaultValue.NOV)
+        monthList.add(Constant.DefaultValue.DEC)
+
+        // Creating adapter for month spinner
+        val monthAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, monthList)
+        monthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        sp_historyFilter_specificMonth.adapter = monthAdapter
     }
 
     override fun onAttach(context: Context?) {
@@ -386,20 +432,18 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
             }
         }
 
-        override fun onNothingSelected(parent: AdapterView<*>) {
-            //Another interface callback
-        }
+        override fun onNothingSelected(parent: AdapterView<*>) {}
     }
 
     private fun setDays() {
-
-        if (sp_historyFilter_specificYear.selectedItem.toString() == getString(R.string.allYear) || sp_historyFilter_specificMonth.selectedItem.toString() == getString(R.string.allMonth)) {
+        if (sp_historyFilter_specificYear.selectedItem.toString() == Constant.ConditionalKeyword.All_YEAR_STATUS ||
+                sp_historyFilter_specificMonth.selectedItem.toString() == Constant.ConditionalKeyword.All_MONTH_STATUS) {
 
             sp_historyFilter_specificDay.isEnabled = false
             sp_historyFilter_specificMonth.isEnabled = false
 
             val daysArray = arrayOfNulls<String>(1)
-            daysArray[0] = "All Day"
+            daysArray[0] = Constant.ConditionalKeyword.All_DAY_STATUS
 
             val spinnerArrayAdapter = ArrayAdapter(context!!,
                     android.R.layout.simple_spinner_dropdown_item, daysArray)
@@ -410,27 +454,25 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
             sp_historyFilter_specificMonth.setSelection(0)
         }
 
-        if (sp_historyFilter_specificYear.selectedItem.toString() != getString(R.string.allYear) && sp_historyFilter_specificMonth.selectedItem.toString() == getString(R.string.allMonth)) {
+        if (sp_historyFilter_specificYear.selectedItem.toString() != Constant.ConditionalKeyword.All_YEAR_STATUS &&
+                sp_historyFilter_specificMonth.selectedItem.toString() == Constant.ConditionalKeyword.All_MONTH_STATUS) {
             sp_historyFilter_specificMonth.isEnabled = true
         }
 
-        if (sp_historyFilter_specificMonth.selectedItem.toString() != getString(R.string.allMonth) && sp_historyFilter_specificYear.selectedItem.toString() != getString(R.string.allYear)) {
-
+        if (sp_historyFilter_specificMonth.selectedItem.toString() != Constant.ConditionalKeyword.All_MONTH_STATUS &&
+                sp_historyFilter_specificYear.selectedItem.toString() != Constant.ConditionalKeyword.All_YEAR_STATUS) {
             sp_historyFilter_specificDay.isEnabled = sb_historyFilter_dateOption.isChecked
 
             val year = Integer.parseInt(sp_historyFilter_specificYear.selectedItem.toString())
-            val month = sp_historyFilter_specificMonth.selectedItem.toString()
-
-            val months = resources.getStringArray(R.array.sp_defaultHistoryFilter_months)
-
-            val mycal = GregorianCalendar(year, months.indexOf(month) - 1, 1)
+            val month = sp_historyFilter_specificMonth.selectedItemPosition
+            val mycal = GregorianCalendar(year, month - 1, 1)
 
             // Get the number of days in that month
             val daysInMonth = mycal.getActualMaximum(Calendar.DAY_OF_MONTH)
 
             val daysArray = arrayOfNulls<String>(daysInMonth + 1)
 
-            daysArray[0] = getString(R.string.allDay)
+            daysArray[0] = Constant.ConditionalKeyword.All_DAY_STATUS
 
             for (k in 1 until daysInMonth + 1)
                 daysArray[k] = "" + (k)
@@ -445,10 +487,9 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
 
 
     private fun populateYears(minYear: Int, maxYear: Int) {
-
         val yearsArray = arrayOfNulls<String>(maxYear - minYear + 2)
 
-        yearsArray[0] = getString(R.string.allYear)
+        yearsArray[0] = Constant.ConditionalKeyword.All_YEAR_STATUS
 
         var count = 1
         for (i in minYear..maxYear) {

@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import com.example.slnn3r.wallettrackerv2.R
-import com.example.slnn3r.wallettrackerv2.constant.string.Constant
+import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
 import com.example.slnn3r.wallettrackerv2.ui.account.accountadapter.AccountListAdapter
 import com.example.slnn3r.wallettrackerv2.ui.account.accountadapter.accAdapterClickCount

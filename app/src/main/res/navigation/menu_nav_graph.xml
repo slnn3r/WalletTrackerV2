@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_dashboardFragment_to_historyFragment"
             app:destination="@id/historyFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_reportFragment"
+            app:destination="@id/reportFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailsTransactionFragment"
@@ -101,4 +104,9 @@
             android:id="@+id/action_historyFragment_to_detailsTransactionFragment"
             app:destination="@id/detailsTransactionFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/reportFragment"
+        android:name="com.example.slnn3r.wallettrackerv2.ui.report.reportview.ReportFragment"
+        android:label="fragment_report"
+        tools:layout="@layout/fragment_report" />
 </navigation>

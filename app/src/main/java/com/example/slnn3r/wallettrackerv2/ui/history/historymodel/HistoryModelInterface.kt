@@ -7,9 +7,7 @@ import com.example.slnn3r.wallettrackerv2.data.objectclass.Transaction
 interface HistoryModelInterface {
 
     interface HistoryViewModel {
-        fun getPreviousInputSharePreference(mContext: Context): SharedPreferences
-        fun removePreviousInputSharePreference(mContext: Context)
-
+        fun getFilterInputSharePreference(mContext: Context): SharedPreferences
 
         fun getTransactionDataRealm(mContext: Context, userUid: String,
                                     accountId: String, startDate: Long,
@@ -17,18 +15,17 @@ interface HistoryModelInterface {
     }
 
     interface HistoryFilterDialogModel {
-        fun getPreviousInputSharePreference(mContext: Context): SharedPreferences
+        fun getFilterInputSharePreference(mContext: Context): SharedPreferences
 
-        fun savePreviousInputSharePreference(mContext: Context, previousAccount: String,
-                                             previousCatType: String,
-                                             previousCategory: String,
-                                             previousRemark: String,
-                                             previousDateOption: String,
-                                             previousDay: String,
-                                             previousMonth: String,
-                                             previousYear: String,
-                                             previousStartDate: String,
-                                             previousEndDate: String)
+        fun saveFilterInputSharePreference(mContext: Context, filterAccount: String,
+                                           filterCatType: String,
+                                           filterCategory: String,
+                                           filterRemark: String,
+                                           filterDateOption: String,
+                                           filterDay: String,
+                                           filterMonth: String,
+                                           filterYear: String,
+                                           filterStartDate: String,
+                                           filterEndDate: String)
     }
-
 }

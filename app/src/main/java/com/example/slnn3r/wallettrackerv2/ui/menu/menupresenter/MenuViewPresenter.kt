@@ -1,9 +1,10 @@
 package com.example.slnn3r.wallettrackerv2.ui.menu.menupresenter
 
+import android.os.Handler
 import android.view.MenuItem
 import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.base.BasePresenter
-import com.example.slnn3r.wallettrackerv2.constant.string.Constant
+import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.example.slnn3r.wallettrackerv2.ui.menu.menuview.MenuViewInterface
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
@@ -34,44 +35,35 @@ class MenuViewPresenter : MenuPresenterInterface.MenuViewPresenter,
     }
 
     override fun navigationDrawerSelection(item: MenuItem) {
-        when (item.itemId) {
-            R.id.nav_account -> {
-                getView()!!.closeDrawer()
-                getView()!!.proceedToAccountScreen()
-            }
 
-            R.id.nav_category -> {
-                getView()!!.closeDrawer()
-                getView()!!.proceedToCategoryScreen()
-            }
+        getView()!!.closeDrawer()
 
-            R.id.nav_history -> {
-                getView()!!.closeDrawer()
-                getView()!!.proceedToHistoryScreen()
-            }
+        Handler().postDelayed({
+            when (item.itemId) {
+                R.id.nav_account -> {
+                    getView()!!.proceedToAccountScreen()
+                }
 
-            R.id.nav_report -> {
-                getView()!!.displayDrawerDropDown()
-            }
+                R.id.nav_category -> {
+                    getView()!!.proceedToCategoryScreen()
+                }
 
-            R.id.nav_sub_line_graph -> {
-                getView()!!.closeDrawer()
-                getView()!!.proceedToLineReportScreen()
-            }
+                R.id.nav_history -> {
+                    getView()!!.proceedToHistoryScreen()
+                }
 
-            R.id.nav_sub_bar_graph -> {
-                getView()!!.closeDrawer()
-                getView()!!.proceedToBarReportScreen()
-            }
+                R.id.nav_report -> {
+                    getView()!!.proceedToReportScreen()
+                }
 
-            R.id.nav_backup -> {
-                getView()!!.closeDrawer()
-            }
+                R.id.nav_backup -> {
+                }
 
-            R.id.nav_sign_out -> {
-                getView()!!.proceedToSignOut()
+                R.id.nav_sign_out -> {
+                    getView()!!.proceedToSignOut()
+                }
             }
-        }
+        }, 300)
     }
 
     override fun checkNavigationStatus(isNavigated: String, isBackButton: Boolean, currentScreen: Int?,

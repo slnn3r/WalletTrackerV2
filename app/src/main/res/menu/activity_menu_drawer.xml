@@ -24,17 +24,6 @@
                     android:id="@+id/nav_report"
                     android:icon="@drawable/ic_report"
                     android:title="@string/navSection1_item4_title" />
-
-                <item
-                    android:id="@+id/nav_sub_line_graph"
-                    android:background="@color/colorPrimary"
-                    android:title="@string/navSection1_item4_sub1_title"
-                    android:visible="false" />
-                <item
-                    android:id="@+id/nav_sub_bar_graph"
-                    android:background="@color/colorPrimary"
-                    android:title="@string/navSection1_item4_sub2_title"
-                    android:visible="false" />
             </menu>
         </item>
     </group>

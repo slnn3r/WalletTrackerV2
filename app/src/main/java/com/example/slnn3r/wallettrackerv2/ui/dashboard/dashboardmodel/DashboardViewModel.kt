@@ -1,14 +1,14 @@
 package com.example.slnn3r.wallettrackerv2.ui.dashboard.dashboardmodel
 
 import android.content.Context
-import com.example.slnn3r.wallettrackerv2.constant.defaultdata.CategoryDefaultData
-import com.example.slnn3r.wallettrackerv2.constant.string.Constant
+import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Category
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Transaction
 import com.example.slnn3r.wallettrackerv2.data.realmclass.AccountRealm
 import com.example.slnn3r.wallettrackerv2.data.realmclass.CategoryRealm
 import com.example.slnn3r.wallettrackerv2.data.realmclass.TransactionRealm
+import com.example.slnn3r.wallettrackerv2.defaultrealmdata.CategoryData
 import com.google.gson.Gson
 import io.reactivex.Observable
 import io.realm.Realm
@@ -24,7 +24,7 @@ class DashboardViewModel : DashboardModelInterface.DashboardViewModel {
         val uniqueAccountId = UUID.randomUUID().toString()
         val defaultAccountName = Constant.DefaultValue.DEFAULT_ACCOUNT_NAME
         val defaultAccountBalance = Constant.DefaultValue.DEFAULT_ACCOUNT_DESC
-        val defaultAccountStatus = Constant.DefaultValue.DEFAULT_STATUS
+        val defaultAccountStatus = Constant.ConditionalKeyword.DEFAULT_STATUS
 
         var realm: Realm?
         Realm.init(mContext)
@@ -52,7 +52,7 @@ class DashboardViewModel : DashboardModelInterface.DashboardViewModel {
         realm = Realm.getInstance(categoryTableConfig)
 
         realm!!.executeTransaction {
-            for (item in CategoryDefaultData().getListItem()) {
+            for (item in CategoryData().getListItem()) {
                 val uniqueCategoryId = UUID.randomUUID().toString()
                 val creating = realm.createObject(CategoryRealm::class.java, uniqueCategoryId)
 

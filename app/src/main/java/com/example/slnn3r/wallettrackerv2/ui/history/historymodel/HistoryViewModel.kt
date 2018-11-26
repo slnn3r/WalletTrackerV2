@@ -3,7 +3,7 @@ package com.example.slnn3r.wallettrackerv2.ui.history.historymodel
 import android.content.Context
 import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
-import com.example.slnn3r.wallettrackerv2.constant.string.Constant
+import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Category
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Transaction
@@ -30,20 +30,18 @@ class HistoryViewModel : HistoryModelInterface.HistoryViewModel {
         realm = Realm.getInstance(config)
 
         realm!!.executeTransaction {
-
             val transactionRealm: RealmResults<TransactionRealm>
 
-            if (remark != "" && remark != "All Year") {
+            if (remark != "" && remark != Constant.ConditionalKeyword.All_YEAR_STATUS) {
                 transactionRealm = realm.where(TransactionRealm::class.java)
                         .sort(Constant.RealmVariableName.TRANSACTION_DATETIME_VARIABLE, Sort.DESCENDING)
                         .greaterThanOrEqualTo(Constant.RealmVariableName.TRANSACTION_DATETIME_VARIABLE,
                                 startDate)
                         .lessThan(Constant.RealmVariableName.TRANSACTION_DATETIME_VARIABLE,
                                 endDate)
-                        //.between(Constant.RealmVariableName.TRANSACTION_DATETIME_VARIABLE, startDate, endDate)
-                        .equalTo("transactionRemark", remark)
+                        .equalTo(Constant.RealmVariableName.TRANSACTION_REMARK_VARIABLE, remark)
                         .findAll()
-            } else if (remark == "All Year") {
+            } else if (remark == Constant.ConditionalKeyword.All_YEAR_STATUS) {
                 transactionRealm = realm.where(TransactionRealm::class.java)
                         .sort(Constant.RealmVariableName.TRANSACTION_DATETIME_VARIABLE, Sort.DESCENDING)
                         .findAll()
@@ -54,7 +52,6 @@ class HistoryViewModel : HistoryModelInterface.HistoryViewModel {
                                 startDate)
                         .lessThan(Constant.RealmVariableName.TRANSACTION_DATETIME_VARIABLE,
                                 endDate)
-                        //.between(Constant.RealmVariableName.TRANSACTION_DATETIME_VARIABLE, startDate, endDate)
                         .findAll()
             }
 
@@ -82,22 +79,11 @@ class HistoryViewModel : HistoryModelInterface.HistoryViewModel {
             }
         }
         realm.close()
-
         return transactionList
     }
 
-    override fun getPreviousInputSharePreference(mContext: Context): SharedPreferences {
-        return mContext.getSharedPreferences("PreviousInput",
+    override fun getFilterInputSharePreference(mContext: Context): SharedPreferences {
+        return mContext.getSharedPreferences(Constant.KeyId.FILTER_INPUT_SHARE_PREF,
                 AppCompatActivity.MODE_PRIVATE)
     }
-
-    override fun removePreviousInputSharePreference(mContext: Context) {
-        val editor = mContext.getSharedPreferences("PreviousInput",
-                AppCompatActivity.MODE_PRIVATE).edit()
-        editor.clear()
-        editor.apply()
-        editor.commit()
-    }
-
-
 }

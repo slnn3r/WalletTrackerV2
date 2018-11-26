@@ -3,6 +3,7 @@ package com.example.slnn3r.wallettrackerv2.ui.history.historypresenter
 import android.content.Context
 import com.example.slnn3r.wallettrackerv2.base.BaseModel
 import com.example.slnn3r.wallettrackerv2.base.BasePresenter
+import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.example.slnn3r.wallettrackerv2.ui.history.historymodel.HistoryFilterDialogModel
 import com.example.slnn3r.wallettrackerv2.ui.history.historyview.HistoryViewInterface
 
@@ -31,39 +32,35 @@ class HistoryFilterDialogPresenter : HistoryPresenterInterface.HistoryFilterDial
         }
     }
 
-    override fun getPreviousInput(mContext: Context) {
+    override fun getFilterInput(mContext: Context) {
+        val data = mHistoryDialogModel.getFilterInputSharePreference(mContext)
 
-        val data = mHistoryDialogModel.getPreviousInputSharePreference(mContext)
-
-        if (data.getString("previousAccount","")!=""){
-            getView()!!.setupPreviousInput(mHistoryDialogModel.getPreviousInputSharePreference(mContext))
-        }else{
-            getView()!!.setupDefaultInput()
+        if (data.getString(Constant.KeyId.FILTER_INPUT_ACCOUNT, "") != "") {
+            getView()!!.setupFilterInput(mHistoryDialogModel.getFilterInputSharePreference(mContext))
         }
-
     }
 
-    override fun savePreviousInput(mContext: Context, previousAccount: String,
-                                   previousCatType: String,
-                                   previousCategory: String,
-                                   previousRemark: String,
-                                   previousDateOption: String,
-                                   previousDay: String,
-                                   previousMonth: String,
-                                   previousYear: String,
-                                   previousStartDate: String,
-                                   previousEndDate: String) {
+    override fun saveFilterInput(mContext: Context, filterAccount: String,
+                                 filterCatType: String,
+                                 filterCategory: String,
+                                 filterRemark: String,
+                                 filterDateOption: String,
+                                 filterDay: String,
+                                 filterMonth: String,
+                                 filterYear: String,
+                                 filterStartDate: String,
+                                 filterEndDate: String) {
 
-        mHistoryDialogModel.savePreviousInputSharePreference(mContext,
-                previousAccount,
-                previousCatType,
-                previousCategory,
-                previousRemark,
-                previousDateOption,
-                previousDay,
-                previousMonth,
-                previousYear,
-                previousStartDate,
-                previousEndDate)
+        mHistoryDialogModel.saveFilterInputSharePreference(mContext,
+                filterAccount,
+                filterCatType,
+                filterCategory,
+                filterRemark,
+                filterDateOption,
+                filterDay,
+                filterMonth,
+                filterYear,
+                filterStartDate,
+                filterEndDate)
     }
 }

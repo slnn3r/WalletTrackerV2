@@ -10,14 +10,8 @@
     <string name="fb_action_edit_title">Edit</string>
     <string name="fb_action_delete_title">Delete</string>
 
-    <!-- fb_history_filter_menu -->
-    <string name="fb_action_specific_title">Specific Date</string>
-    <string name="fb_action_range_title">Range Date</string>
-
     <!-- list_row_transaction -->
     <string name="tv_accRow_defaultLine1">No Transaction Found</string>
-    <string name="tv_accRow_defaultLine2">Start Add New Transaction</string>
-    <string name="tv_accRow_defaultLine3">By click the Floating Button at Bottom Right Side</string>
 
     <!-- activity_menu_drawer -->
     <string name="navSection1_title">Wallet Management</string>
@@ -25,8 +19,6 @@
     <string name="navSection1_item2_title">Transaction Category</string>
     <string name="navSection1_item3_title">Transaction History</string>
     <string name="navSection1_item4_title">Transaction Report</string>
-    <string name="navSection1_item4_sub1_title">\u2022 Cash Flow</string>
-    <string name="navSection1_item4_sub2_title">\u2022 Category Expense</string>
     <string name="navSection2_title">Wallet Backup</string>
     <string name="navSection2_item1_title">Backup Data</string>
     <string name="navSection3_title">Account</string>
@@ -103,6 +95,16 @@
 
     <!-- HistoryFragment -->
     <string name="ab_historyTrans_title">Transaction History</string>
+    <string name="tv_historyTrans_TransCountLabel">Transaction Count(s)</string>
+    <string name="tv_historyTrans_TransIncCountLabel">Income Count(s)</string>
+    <string name="tv_historyTrans_TransExpCountLabel">Expense Count(s)</string>
+    <string name="tv_historyTrans_TotalBalLabel">Total Balance</string>
+    <string name="history_exp_labelFormat">%s (- $ %.2f)</string>
+    <string name="history_inc_labelFormat">%s (+ $ %.2f)</string>
+    <string name="history_totalBal_labelFormat">($) %.2f</string>
+
+    <!-- ReportFragment -->
+    <string name="ab_report_title">Transaction Report</string>
 
     <!-- Dashboard -->
     <string name="ab_dashboard_title">Dashboard</string>
@@ -118,14 +120,10 @@
     <string name="mp_desc_label">Past 31 Days Expense Transactions Flow</string>
     <string name="cv_loading_label">Loading…</string>
 
-    <!-- SOON TO BE REMOVED -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
     <!-- Share Title -->
     <string name="account_name_title">Account Name</string>
     <string name="account_desc_title">Account Description</string>
     <string name="category_type_title">Category Type</string>
-    <string name="expense_title">Expense</string>
     <string name="category_name_title">Category Name</string>
     <string name="amount_required_title">Amount (Required)</string>
     <string name="amount_title">Amount</string>
@@ -175,43 +173,9 @@
     <string name="calCustomDialog_label">Transaction Amount</string>
     <string name="notANumber_label">NaN</string>
 
-
-    <!--  dialog_history_filter-->
-    <string-array name="sp_defaultHistoryFilter_transType">
-        <item>All Type</item>
-        <item>Expense</item>
-        <item>Income</item>
-    </string-array>
-
-    <string-array name="sp_defaultHistoryFilter_months">
-        <item>All Month</item>
-        <item>January</item>
-        <item>February</item>
-        <item>March</item>
-        <item>April</item>
-        <item>May</item>
-        <item>June</item>
-        <item>July</item>
-        <item>August</item>
-        <item>September</item>
-        <item>October</item>
-        <item>November</item>
-        <item>December</item>
-    </string-array>
-
     <string name="tv_historyFilter_title">History Filter Configuration</string>
+    <string name="tv_historyFilter_remark_title">Remarks (Case Sensitive)</string>
     <string name="tv_historyFilter_dateOption_title">Date Filter Option</string>
     <string name="tl_historyFilter_startDate_title">From</string>
     <string name="tl_historyFilter_endDate_title">To</string>
-
-    <!-- Should be Constant!-->
-    <string name="allYear">All Year</string>
-    <string name="allMonth">All Month</string>
-    <string name="allDay">All Day</string>
-
-    <string name="history_exp_labelFormat">%s (- $ %.2f)</string>
-    <string name="history_inc_labelFormat">%s (+ $ %.2f)</string>
-    <string name="history_totalBal_labelFormat">($) %.2f</string>
-
-
 </resources>

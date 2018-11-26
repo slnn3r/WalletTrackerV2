@@ -1,4 +1,4 @@
-package com.example.slnn3r.wallettrackerv2.constant.string
+package com.example.slnn3r.wallettrackerv2.constant
 
 class Constant {
 
@@ -31,8 +31,21 @@ class Constant {
     object ConditionalKeyword {
         const val DEFAULT_STATUS = "Default"
         const val NON_DEFAULT_STATUS = "New"
+
+        // Localize Value
         const val EXPENSE_STATUS = "Expense"
         const val INCOME_STATUS = "Income"
+
+        const val All_YEAR_STATUS = "All Year"
+        const val All_MONTH_STATUS = "All Month"
+        const val All_DAY_STATUS = "All Day"
+
+        const val All_TYPE_STATUS = "All Type"
+        const val ALL_CATEGORY_STATUS = "All Category"
+
+        const val SPECIFIC_DATE = "Specific Date"
+        const val DATE_RANGE = "Date Range"
+        // Localize Value
     }
 
     object KeyId {
@@ -45,6 +58,18 @@ class Constant {
 
         const val SHARE_PREF = "sharePreference:"
         const val SELECTED_ACCOUNT_KEY = "selectedAccount"
+
+        const val FILTER_INPUT_SHARE_PREF = "filterInput"
+        const val FILTER_INPUT_ACCOUNT = "filterAccount"
+        const val FILTER_INPUT_CATTYPE = "filterCatType"
+        const val FILTER_INPUT_CATEGORY = "filterCategory"
+        const val FILTER_INPUT_REMARK = "filterRemark"
+        const val FILTER_INPUT_DATEOPTION = "filterDateOption"
+        const val FILTER_INPUT_DAY = "filterDay"
+        const val FILTER_INPUT_MONTH = "filterMonth"
+        const val FILTER_INPUT_YEAR = "filterYear"
+        const val FILTER_INPUT_STARTDATE = "filterStartDate"
+        const val FILTER_INPUT_ENDDATE = "filterEndDate"
     }
 
     object NavigationKey {
@@ -67,6 +92,7 @@ class Constant {
         const val CATEGORY_TYPE_VARIABLE = "categoryType"
         const val TRANSACTION_DATETIME_VARIABLE = "transactionDateTime"
         const val TRANSACTION_ID_VARIABLE = "transactionId"
+        const val TRANSACTION_REMARK_VARIABLE = "transactionRemark"
     }
 
     object RegularExpression {
@@ -79,9 +105,31 @@ class Constant {
     }
 
     object DefaultValue {
+        // Localize Value
         const val DEFAULT_ACCOUNT_DESC = "Initial Default Account"
-        const val DEFAULT_STATUS = "Default"
         const val DEFAULT_ACCOUNT_NAME = "Personal"
+
+        const val CATEGORY_DATA_DEFAULT1 = "Meals"
+        const val CATEGORY_DATA_DEFAULT2 = "Food and Drink"
+        const val CATEGORY_DATA_DEFAULT3 = "Transport"
+        const val CATEGORY_DATA_DEFAULT4 = "Bills"
+        const val CATEGORY_DATA_DEFAULT5 = "Other"
+        const val CATEGORY_DATA_DEFAULT6 = "Salary"
+        const val CATEGORY_DATA_DEFAULT7 = "Initial Balance"
+
+        const val JAN = "January"
+        const val FEB = "February"
+        const val MAR = "March"
+        const val APR = "April"
+        const val MAY = "May"
+        const val JUN = "June"
+        const val JUL = "July"
+        const val AUG = "August"
+        const val SEP = "September"
+        const val OCT = "October"
+        const val NOV = "November"
+        const val DEC = "December"
+        // Localize Value
     }
 
     object Format {

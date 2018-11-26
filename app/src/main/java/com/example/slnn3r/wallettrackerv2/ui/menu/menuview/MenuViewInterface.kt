@@ -7,7 +7,6 @@ interface MenuViewInterface {
     interface MenuView : BaseView.Universal {
         fun setupNavigationFlow()
 
-        fun displayDrawerDropDown()
         fun openDrawer()
         fun closeDrawer()
 
@@ -15,9 +14,7 @@ interface MenuViewInterface {
         fun proceedToCategoryScreen()
 
         fun proceedToHistoryScreen()
-
-        fun proceedToLineReportScreen()
-        fun proceedToBarReportScreen()
+        fun proceedToReportScreen()
 
         fun proceedToSignOut()
         fun signOutSuccess()

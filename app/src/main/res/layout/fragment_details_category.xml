@@ -41,7 +41,6 @@
         android:paddingLeft="8dp"
         android:paddingTop="2dp"
         android:paddingRight="8dp"
-        android:text="@string/expense_title"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/sb_detailsCat_catType"
         app:layout_constraintStart_toEndOf="@+id/tv_detailsCat_catType_title"

@@ -15,7 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import com.example.slnn3r.wallettrackerv2.R
-import com.example.slnn3r.wallettrackerv2.constant.string.Constant
+import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Category
 import com.example.slnn3r.wallettrackerv2.ui.category.categorypresenter.DetailsCategoryPresenter
 import com.example.slnn3r.wallettrackerv2.util.CustomAlertDialog
@@ -217,6 +217,8 @@ class DetailsCategoryFragment : Fragment(), CategoryViewInterface.DetailsCategor
         categoryArgData = gson.fromJson<Category>(categoryDataJson, Category::class.java)
 
         et_detailsCat_catName.setText(categoryArgData.categoryName)
+
+        tv_detailsCat_catType_selection.text = Constant.ConditionalKeyword.EXPENSE_STATUS
     }
 
     private fun setupSwitchButton() {

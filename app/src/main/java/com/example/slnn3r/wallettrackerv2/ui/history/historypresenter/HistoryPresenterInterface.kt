@@ -8,22 +8,21 @@ interface HistoryPresenterInterface {
     interface HistoryViewPresenter {
         fun getHistoryData(mContext: Context, userUid: String)
         fun calculateHistoryData(transactionList: ArrayList<Transaction>)
-        fun removePreviousInput(mContext: Context)
     }
 
     interface HistoryFilterDialogPresenter {
         fun getAccountList(mContext: Context, userUid: String)
         fun getCategoryList(mContext: Context, userUid: String, filterType: String)
-        fun getPreviousInput(mContext: Context)
-        fun savePreviousInput(mContext: Context, previousAccount: String,
-                              previousCatType: String,
-                              previousCategory: String,
-                              previousRemark: String,
-                              previousDateOption: String,
-                              previousDay: String,
-                              previousMonth: String,
-                              previousYear: String,
-                              previousStartDate: String,
-                              previousEndDate: String)
+        fun getFilterInput(mContext: Context)
+        fun saveFilterInput(mContext: Context, filterAccount: String,
+                            filterCatType: String,
+                            filterCategory: String,
+                            filterRemark: String,
+                            filterDateOption: String,
+                            filterDay: String,
+                            filterMonth: String,
+                            filterYear: String,
+                            filterStartDate: String,
+                            filterEndDate: String)
     }
 }

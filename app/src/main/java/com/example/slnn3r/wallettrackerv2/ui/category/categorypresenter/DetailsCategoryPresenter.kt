@@ -4,7 +4,7 @@ import android.content.Context
 import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.base.BaseModel
 import com.example.slnn3r.wallettrackerv2.base.BasePresenter
-import com.example.slnn3r.wallettrackerv2.constant.string.Constant
+import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Category
 import com.example.slnn3r.wallettrackerv2.ui.category.categorymodel.DetailsCategoryViewModel
 import com.example.slnn3r.wallettrackerv2.ui.category.categoryview.CategoryViewInterface

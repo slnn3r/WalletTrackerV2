@@ -16,7 +16,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.navigation.findNavController
 import com.example.slnn3r.wallettrackerv2.R
-import com.example.slnn3r.wallettrackerv2.constant.string.Constant
+import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Transaction
 import com.example.slnn3r.wallettrackerv2.ui.dashboard.dashboardadapter.CustomMarkerAdapter
@@ -52,6 +52,9 @@ class DashboardFragment : Fragment(), DashboardViewInterface.DashboardView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // clear Filter Input store from History Module
+        mDashboardViewPresenter.clearFilterInputSharePreference(context!!)
 
         setupInitialUi()
         setupCreateButton()

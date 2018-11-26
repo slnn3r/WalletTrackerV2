@@ -3,7 +3,7 @@ package com.example.slnn3r.wallettrackerv2.base
 import android.app.Activity
 import android.content.Context
 import android.view.inputmethod.InputMethodManager
-import com.example.slnn3r.wallettrackerv2.constant.string.Constant
+import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -56,8 +56,12 @@ open class BasePresenter<V : BaseView.Universal> {
         baseModel.saveSelectedAccountSharePreference(mContext, selectedAccount, userUid)
     }
 
-    fun clearSharePreferenceData(mContext: Context, userUid: String) {
-        baseModel.removeSharePreferenceData(mContext, userUid)
+    fun clearSelectedAccountSharePreference(mContext: Context, userUid: String) {
+        baseModel.removeSelectedAccountSharePreference(mContext, userUid)
+    }
+
+    fun clearFilterInputSharePreference(mContext: Context) {
+        baseModel.removeFilterInputSharePreference(mContext)
     }
 
     fun getRemark(mContext: Context): ArrayList<String> {

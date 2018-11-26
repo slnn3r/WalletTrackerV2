@@ -1,7 +1,7 @@
 package com.example.slnn3r.wallettrackerv2.ui.category.categorymodel
 
 import android.content.Context
-import com.example.slnn3r.wallettrackerv2.constant.string.Constant
+import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Category
 import com.example.slnn3r.wallettrackerv2.data.realmclass.CategoryRealm
 import io.realm.Realm

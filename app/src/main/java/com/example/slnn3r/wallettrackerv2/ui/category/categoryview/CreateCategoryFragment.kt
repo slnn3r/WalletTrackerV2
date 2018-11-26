@@ -15,7 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import com.example.slnn3r.wallettrackerv2.R
-import com.example.slnn3r.wallettrackerv2.constant.string.Constant
+import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Category
 import com.example.slnn3r.wallettrackerv2.ui.category.categorypresenter.CreateCategoryPresenter
 import com.example.slnn3r.wallettrackerv2.util.CustomAlertDialog

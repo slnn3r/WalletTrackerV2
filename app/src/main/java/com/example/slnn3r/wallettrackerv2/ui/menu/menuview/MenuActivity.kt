@@ -20,7 +20,7 @@ import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import com.example.slnn3r.wallettrackerv2.R
-import com.example.slnn3r.wallettrackerv2.constant.string.Constant
+import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.example.slnn3r.wallettrackerv2.ui.login.loginview.LoginActivity
 import com.example.slnn3r.wallettrackerv2.ui.menu.menupresenter.MenuViewPresenter
 import com.example.slnn3r.wallettrackerv2.util.CustomAlertDialog
@@ -100,15 +100,6 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    override fun displayDrawerDropDown() {
-        val menu = navigationView.menu
-
-        val b = !menu.findItem(R.id.nav_sub_line_graph).isVisible
-        //setting submenus visible state
-        menu.findItem(R.id.nav_sub_line_graph).isVisible = b
-        menu.findItem(R.id.nav_sub_bar_graph).isVisible = b
-    }
-
     override fun openDrawer() {
         drawer_layout.openDrawer(GravityCompat.START)
     }
@@ -118,33 +109,27 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun proceedToAccountScreen() {
-        Handler().postDelayed({
-            setupNavigationMode()
-            Navigation.findNavController(this, R.id.navMenu)
-                    .navigate(R.id.action_dashboardFragment_to_viewAccountFragment)
-        }, 300)
+        setupNavigationMode()
+        Navigation.findNavController(this, R.id.navMenu)
+                .navigate(R.id.action_dashboardFragment_to_viewAccountFragment)
     }
 
     override fun proceedToCategoryScreen() {
-        Handler().postDelayed({
-            setupNavigationMode()
-            Navigation.findNavController(this, R.id.navMenu)
-                    .navigate(R.id.action_dashboardFragment_to_viewCategoryFragment)
-        }, 300)
+        setupNavigationMode()
+        Navigation.findNavController(this, R.id.navMenu)
+                .navigate(R.id.action_dashboardFragment_to_viewCategoryFragment)
     }
 
     override fun proceedToHistoryScreen() {
-        Handler().postDelayed({
-            setupNavigationMode()
-            Navigation.findNavController(this, R.id.navMenu)
-                    .navigate(R.id.action_dashboardFragment_to_historyFragment)
-        }, 300)
+        setupNavigationMode()
+        Navigation.findNavController(this, R.id.navMenu)
+                .navigate(R.id.action_dashboardFragment_to_historyFragment)
     }
 
-    override fun proceedToLineReportScreen() {
-    }
-
-    override fun proceedToBarReportScreen() {
+    override fun proceedToReportScreen() {
+        setupNavigationMode()
+        Navigation.findNavController(this, R.id.navMenu)
+                .navigate(R.id.action_dashboardFragment_to_reportFragment)
     }
 
     override fun proceedToSignOut() {
@@ -158,7 +143,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun signOutSuccess() {
-        mMenuPresenter.clearSharePreferenceData(this, userData.uid) // remove sharePreference
+        mMenuPresenter.clearSelectedAccountSharePreference(this, userData.uid) // remove sharePreference
 
         val intent = Intent(applicationContext, LoginActivity::class.java)
         startActivity(intent)

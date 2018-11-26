@@ -2,7 +2,7 @@ package com.example.slnn3r.wallettrackerv2.base
 
 import android.content.Context
 import android.support.v7.app.AppCompatActivity
-import com.example.slnn3r.wallettrackerv2.constant.string.Constant
+import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Category
 import com.example.slnn3r.wallettrackerv2.data.objectclass.PreviousRemark
@@ -11,7 +11,6 @@ import com.example.slnn3r.wallettrackerv2.data.realmclass.CategoryRealm
 import com.example.slnn3r.wallettrackerv2.data.realmclass.PreviousRemarkRealm
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import io.reactivex.Observable
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmResults
@@ -22,43 +21,6 @@ class BaseModel {
         val mAuth = FirebaseAuth.getInstance()
         return mAuth.currentUser
     }
-
-    // Asynchronous
-    fun getAccListByUserUidAsync(mContext: Context, userUid: String):
-            Observable<ArrayList<Account>> {
-        val realm: Realm?
-        val accountList = ArrayList<Account>()
-
-        Realm.init(mContext)
-
-        val config = RealmConfiguration.Builder()
-                .name(Constant.RealmTableName.ACCOUNT_REALM_TABLE)
-                .build()
-
-        realm = Realm.getInstance(config)
-
-        realm!!.executeTransaction {
-
-            val accountRealm = realm.where(AccountRealm::class.java)
-                    .equalTo(Constant.RealmVariableName.USER_UID_VARIABLE, userUid)
-                    .findAll()
-
-            accountRealm.forEach { accountRealmData ->
-                accountList.add(
-                        Account(
-                                accountRealmData.accountId!!,
-                                accountRealmData.accountName!!,
-                                accountRealmData.accountDesc!!,
-                                accountRealmData.userUid!!,
-                                accountRealmData.accountStatus!!
-                        )
-                )
-            }
-        }
-        realm.close()
-        return Observable.just(accountList)
-    }
-
 
     // Synchronous
     fun getAccListByUserUidSync(mContext: Context, userUid: String): ArrayList<Account> {
@@ -211,14 +173,16 @@ class BaseModel {
         editor.commit()
     }
 
-    fun removeSharePreferenceData(mContext: Context, userUid: String) {
+    fun removeSelectedAccountSharePreference(mContext: Context, userUid: String) {
         val sharePrefEditor = mContext.getSharedPreferences(Constant.KeyId.SHARE_PREF + userUid,
                 AppCompatActivity.MODE_PRIVATE).edit()
         sharePrefEditor.clear()
         sharePrefEditor.apply()
         sharePrefEditor.commit()
+    }
 
-        val filterInputEditor = mContext.getSharedPreferences("PreviousInput",
+    fun removeFilterInputSharePreference(mContext: Context) {
+        val filterInputEditor = mContext.getSharedPreferences(Constant.KeyId.FILTER_INPUT_SHARE_PREF,
                 AppCompatActivity.MODE_PRIVATE).edit()
         filterInputEditor.clear()
         filterInputEditor.apply()

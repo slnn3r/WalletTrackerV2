@@ -21,6 +21,8 @@ class Constant {
 
         const val HISTORY_VIEW_LOGGING = "HIS VIEW ERROR"
         const val HISTORY_DIALOG_LOGGING = "HIS DIALOG ERROR"
+
+        const val REPORT_VIEW_LOGGING = "REPORT VIEW ERROR"
     }
 
     object GoogleLoginApi {

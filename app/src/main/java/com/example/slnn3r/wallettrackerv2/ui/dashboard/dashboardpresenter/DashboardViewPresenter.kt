@@ -91,6 +91,32 @@ class DashboardViewPresenter : DashboardPresenterInterface.DashboardViewInterfac
                             val compareDate = sdf.format(tempCalendar.time)
                             var expense = 0.0
 
+                            /*
+                            val realm: Realm?
+                            Realm.init(mContext)
+
+                            val config = RealmConfiguration.Builder()
+                                    .name(Constant.RealmTableName.TRANSACTION_REALM_TABLE)
+                                    .build()
+
+                            realm = Realm.getInstance(config)
+
+                            realm!!.executeTransaction {
+                                val creating = realm.createObject(TransactionRealm::class.java, UUID.randomUUID().toString())
+
+                                val gson = Gson()
+                                val convertedCategory = gson.toJson(dataList[0].category)
+                                val convertedAccount = gson.toJson(dataList[0].account)
+
+                                creating.transactionDateTime = Date.parse(compareDate)
+                                creating.transactionAmount = 10.0
+                                creating.transactionRemark = "test"
+                                creating.category = convertedCategory
+                                creating.account = convertedAccount
+                            }
+                            realm.close()
+                            */
+
                             dataList.forEach { data ->
                                 if (sdf.format(data.transactionDateTime) == compareDate &&
                                         data.category.categoryType == Constant.ConditionalKeyword.EXPENSE_STATUS) {

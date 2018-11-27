@@ -1,4 +1,4 @@
-package com.example.slnn3r.wallettrackerv2.defaultrealmdata
+package com.example.slnn3r.wallettrackerv2.initialdatabase
 
 import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Category

@@ -174,7 +174,7 @@
     <string name="notANumber_label">NaN</string>
 
     <string name="tv_historyFilter_title">History Filter Configuration</string>
-    <string name="tv_historyFilter_remark_title">Remarks (Case Sensitive)</string>
+    <string name="tv_historyFilter_remark_title">Remarks (Wild Card, Case Insensitive)</string>
     <string name="tv_historyFilter_dateOption_title">Date Filter Option</string>
     <string name="tl_historyFilter_startDate_title">From</string>
     <string name="tl_historyFilter_endDate_title">To</string>

@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="14dp"
-        android:text="Filter Date"
+        android:text="Date Selection"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textviews" />
 
@@ -45,7 +45,7 @@
         android:id="@+id/spinner2"
         android:layout_width="0dp"
         android:layout_height="24dp"
-        android:layout_marginStart="58dp"
+        android:layout_marginStart="31dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/custom_default_background"
@@ -55,7 +55,7 @@
 
     <Spinner
         android:id="@+id/spinner3"
-        android:layout_width="69dp"
+        android:layout_width="85dp"
         android:layout_height="24dp"
 
         android:layout_marginTop="8dp"
@@ -106,20 +106,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Summary Report"
+        android:text="Summary Report (click for details)"
         android:textAllCaps="true"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner2" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/ic_info"
-        app:layout_constraintStart_toEndOf="@+id/textView8"
-        app:layout_constraintTop_toBottomOf="@+id/spinner2" />
 
 </android.support.constraint.ConstraintLayout>

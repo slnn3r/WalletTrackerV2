@@ -8,7 +8,7 @@ import com.example.slnn3r.wallettrackerv2.data.objectclass.Transaction
 import com.example.slnn3r.wallettrackerv2.data.realmclass.AccountRealm
 import com.example.slnn3r.wallettrackerv2.data.realmclass.CategoryRealm
 import com.example.slnn3r.wallettrackerv2.data.realmclass.TransactionRealm
-import com.example.slnn3r.wallettrackerv2.defaultrealmdata.CategoryData
+import com.example.slnn3r.wallettrackerv2.initialdatabase.CategoryData
 import com.google.gson.Gson
 import io.reactivex.Observable
 import io.realm.Realm

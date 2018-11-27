@@ -51,7 +51,6 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
     private var havePreviousDay = false
     private var havePreviousDayCount = 0
 
-    private val monthList = ArrayList<String>()
 
     interface OnFilterTrigger {
         fun filterInputSubmit()
@@ -236,7 +235,7 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
             }
 
             val dataAdapterCat = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, categoryNameList)
-            sp_historyFilter_selectedCat.setSelection(dataAdapterCat.getPosition(filterCategory))
+            sp_historyFilter_selectedCat.setSelection(dataAdapterCat.getPosition(filterCategory)+1)
         }
 
         ac_historyFilter_remarks.setText(filterRemark)
@@ -379,11 +378,11 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
         transTypeList.add(Constant.ConditionalKeyword.EXPENSE_STATUS)
         transTypeList.add(Constant.ConditionalKeyword.INCOME_STATUS)
 
-        // Creating adapter for month spinner
         val transTypeAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, transTypeList)
         transTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         sp_historyFilter_transType.adapter = transTypeAdapter
 
+        val monthList = ArrayList<String>()
         monthList.add(Constant.ConditionalKeyword.All_MONTH_STATUS)
         monthList.add(Constant.DefaultValue.JAN)
         monthList.add(Constant.DefaultValue.FEB)

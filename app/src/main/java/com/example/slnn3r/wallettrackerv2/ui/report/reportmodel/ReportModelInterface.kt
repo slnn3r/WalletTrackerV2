@@ -5,7 +5,7 @@ import com.example.slnn3r.wallettrackerv2.data.objectclass.Transaction
 
 interface ReportModelInterface {
 
-    interface ReportViewModel{
+    interface ReportViewModel {
         fun getReportDataRealm(mContext: Context, userUid: String,
                                accountId: String, startDate: Long, endDate: Long,
                                isAllYear: Boolean): ArrayList<Transaction>

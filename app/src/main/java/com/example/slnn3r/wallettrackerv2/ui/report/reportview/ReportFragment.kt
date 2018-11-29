@@ -2,6 +2,7 @@ package com.example.slnn3r.wallettrackerv2.ui.report.reportview
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
@@ -14,9 +15,20 @@ import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Transaction
+import com.example.slnn3r.wallettrackerv2.data.objectclass.TransactionSummary
 import com.example.slnn3r.wallettrackerv2.ui.report.reportadapter.ReportListAdapter
 import com.example.slnn3r.wallettrackerv2.ui.report.reportpresenter.ReportViewPresenter
 import com.example.slnn3r.wallettrackerv2.util.CustomAlertDialog
+import com.example.slnn3r.wallettrackerv2.util.CustomMarkerAdapter
+import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.formatter.IAxisValueFormatter
+import com.github.mikephil.charting.formatter.IValueFormatter
+import com.github.mikephil.charting.utils.ViewPortHandler
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.fragment_report.*
 import java.util.*
@@ -36,7 +48,6 @@ class ReportFragment : Fragment(), ReportViewInterface.ReportView {
     private var initialLaunch = true
     private var initialListenerCount = 0
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         (activity as? AppCompatActivity)?.supportActionBar?.title =
@@ -55,7 +66,7 @@ class ReportFragment : Fragment(), ReportViewInterface.ReportView {
     }
 
     private fun setupAccountSpinner() {
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        sp_report_selectedAcc.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parentView: AdapterView<*>,
                                         selectedItemView: View, position: Int, id: Long) {
                 loadReportData()
@@ -66,7 +77,7 @@ class ReportFragment : Fragment(), ReportViewInterface.ReportView {
     }
 
     private fun setupMonthSpinner() {
-        spinner2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        sp_report_monthSelection.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parentView: AdapterView<*>,
                                         selectedItemView: View, position: Int, id: Long) {
                 loadReportData()
@@ -86,9 +97,8 @@ class ReportFragment : Fragment(), ReportViewInterface.ReportView {
         mReportViewPresenter.getAccountList(context!!, userData.uid)
 
         mReportViewPresenter.getReportData(context!!, userData.uid,
-                spinner.selectedItem.toString(), loadedAccountList,
-                spinner2.selectedItem.toString(), spinner3.selectedItem.toString())
-
+                sp_report_selectedAcc.selectedItem.toString(), loadedAccountList,
+                sp_report_monthSelection.selectedItem.toString(), sp_report_yearSelection.selectedItem.toString())
     }
 
     override fun onStop() {
@@ -111,31 +121,81 @@ class ReportFragment : Fragment(), ReportViewInterface.ReportView {
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
-        spinner.adapter = dataAdapter
+        sp_report_selectedAcc.adapter = dataAdapter
 
         // Get SharedPreference saved Selection and Set to Spinner Selection
         val selectedAccountSharePref =
                 mReportViewPresenter.getSelectedAccount(context!!, userData.uid)
         val spinnerPosition = dataAdapter.getPosition(selectedAccountSharePref)
-        spinner.setSelection(spinnerPosition)
+        sp_report_selectedAcc.setSelection(spinnerPosition)
     }
 
     override fun enableMonthSelection() {
-        spinner2.isEnabled = true
+        sp_report_monthSelection.isEnabled = true
     }
 
     override fun disableMonthSelection() {
-        spinner2.isEnabled = false
-        spinner2.setSelection(0)
+        sp_report_monthSelection.isEnabled = false
+        sp_report_monthSelection.setSelection(0)
     }
 
-    override fun populateReportRecycleView(transactionList: ArrayList<Transaction>) {
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = ReportListAdapter(transactionList)
+    override fun populateReportRecycleView(transactionSummaryList: ArrayList<TransactionSummary>,
+                                           transactionList: ArrayList<Transaction>) {
+        rv_report_summaryTrans_list.layoutManager = LinearLayoutManager(context)
+        rv_report_summaryTrans_list.adapter = ReportListAdapter(transactionSummaryList, transactionList, this)
     }
 
-    override fun populateSummaryGraph() {
+    override fun populateSummaryGraph(entryList: ArrayList<BarEntry>, yAxisList: ArrayList<String>) {
+        mp_report_summaryChart.setScaleEnabled(false)
+        mp_report_summaryChart.description = null
+        mp_report_summaryChart.axisLeft.setDrawLabels(false)
 
+        val dataSet = BarDataSet(entryList, "")
+        dataSet.setDrawValues(true)
+        dataSet.valueFormatter = MyValueFormatter()
+        dataSet.setColors()
+
+        dataSet.setColors(
+                ContextCompat.getColor(context!!, R.color.colorGraphBlue),
+                ContextCompat.getColor(context!!, R.color.colorGraphRed),
+                ContextCompat.getColor(context!!, R.color.colorGraphGreen))
+
+        val xAxis = mp_report_summaryChart.xAxis
+        xAxis.isGranularityEnabled = true
+        xAxis.granularity = 1f
+        xAxis.valueFormatter = MyXAxisValueFormatter(yAxisList)
+        xAxis.position = XAxis.XAxisPosition.TOP
+        xAxis.setDrawGridLines(false)
+
+        val data = BarData(dataSet)
+        data.barWidth = 0.9f // set custom bar width
+        mp_report_summaryChart.data = data
+        mp_report_summaryChart.setFitBars(true) // make the x-axis fit exactly all bars
+        mp_report_summaryChart.notifyDataSetChanged() // this line solve weird auto resize when refresh graph(becuz of being call from spinner listener change)
+        mp_report_summaryChart.invalidate() // refresh
+
+        mp_report_summaryChart.legend.isEnabled = false
+
+        val mv = CustomMarkerAdapter(context!!, R.layout.marker_barchart_view)
+        mp_report_summaryChart.markerView = mv
+    }
+
+
+    // Format the X Axis Value to Display Desired String Value
+    inner class MyXAxisValueFormatter(private val mValues: ArrayList<String>) : IAxisValueFormatter {
+        override fun getFormattedValue(value: Float, axis: AxisBase): String {
+            // "value" represents the position of the label on the axis (x or y)
+            return mValues[value.toInt()]
+        }
+    }
+
+
+    // Format the Y Axis Value to 2Decimal value + add Dollar Sign
+    inner class MyValueFormatter : IValueFormatter {
+        override fun getFormattedValue(value: Float, entry: Entry, dataSetIndex: Int,
+                                       viewPortHandler: ViewPortHandler): String {
+            return ""// Override the Implementation Display Nothing
+        }
     }
 
     override fun onError(message: String) {
@@ -146,8 +206,8 @@ class ReportFragment : Fragment(), ReportViewInterface.ReportView {
 
     private fun setupInitialUi() {
         setInitialMonth()
-        spinner3.setSelection(6)
-        spinner2.setSelection(myCalendar.get(Calendar.MONTH) + 1)
+        sp_report_yearSelection.setSelection(6)
+        sp_report_monthSelection.setSelection(myCalendar.get(Calendar.MONTH) + 1)
     }
 
     private fun setInitialMonth() {
@@ -169,15 +229,15 @@ class ReportFragment : Fragment(), ReportViewInterface.ReportView {
         // Creating adapter for month spinner
         val monthAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, monthList)
         monthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner2.adapter = monthAdapter
+        sp_report_monthSelection.adapter = monthAdapter
     }
 
     private fun setupYearSpinner() {
-        spinner3.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        sp_report_yearSelection.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parentView: AdapterView<*>,
                                         selectedItemView: View, position: Int, id: Long) {
-                mReportViewPresenter.checkDateFilter(spinner3.selectedItem.toString(),
-                        spinner2.selectedItem.toString())
+                mReportViewPresenter.checkDateFilter(sp_report_yearSelection.selectedItem.toString(),
+                        sp_report_monthSelection.selectedItem.toString())
                 loadReportData()
             }
 
@@ -199,15 +259,14 @@ class ReportFragment : Fragment(), ReportViewInterface.ReportView {
         val spinnerArrayAdapter = ArrayAdapter(context!!,
                 android.R.layout.simple_spinner_dropdown_item, yearsArray)
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner3.adapter = spinnerArrayAdapter
+        sp_report_yearSelection.adapter = spinnerArrayAdapter
     }
 
     private fun loadReportData() {
-
         if (!initialLaunch) {
             mReportViewPresenter.getReportData(context!!, userData.uid,
-                    spinner.selectedItem.toString(), loadedAccountList,
-                    spinner2.selectedItem.toString(), spinner3.selectedItem.toString())
+                    sp_report_selectedAcc.selectedItem.toString(), loadedAccountList,
+                    sp_report_monthSelection.selectedItem.toString(), sp_report_yearSelection.selectedItem.toString())
         } else {
             if (initialListenerCount > 1) {
                 initialLaunch = false

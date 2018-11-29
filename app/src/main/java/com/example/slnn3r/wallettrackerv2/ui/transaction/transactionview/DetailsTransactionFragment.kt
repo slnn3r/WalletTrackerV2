@@ -65,8 +65,6 @@ class DetailsTransactionFragment : Fragment(), TransactionViewInterface.DetailsT
 
         (activity as? AppCompatActivity)?.supportActionBar?.title =
                 getString(R.string.ab_detailsTrans_title)
-
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_details_transaction, container, false)
     }
 

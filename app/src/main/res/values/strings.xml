@@ -105,6 +105,15 @@
 
     <!-- ReportFragment -->
     <string name="ab_report_title">Transaction Report</string>
+    <string name="tv_countRow_format">Total Count: %d</string>
+    <string name="tv_amountRow_format">Total Amount: ($) %.2f</string>
+    <string name="tv_reportDialog_title">%s Transaction List</string>
+    <string name="mp_barChart_income_title">Income</string>
+    <string name="mp_barChart_expense_title">Expense</string>
+    <string name="mp_barChart_balance_title">Balance</string>
+    <string name="tv_dateSelection_title">Date Selection</string>
+    <string name="tv_report_summaryTitle">Summary Report</string>
+    <string name="tv_report_transactionTitle">Summary Transaction</string>
 
     <!-- Dashboard -->
     <string name="ab_dashboard_title">Dashboard</string>

@@ -1,4 +1,4 @@
-package com.example.slnn3r.wallettrackerv2.ui.dashboard.dashboardadapter
+package com.example.slnn3r.wallettrackerv2.util
 
 import android.annotation.SuppressLint
 import android.content.Context

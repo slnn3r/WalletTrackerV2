@@ -7,4 +7,8 @@
 
     <color name="colorLightRed">#9e4949</color>
     <color name="colorLightGreen">#69794f</color>
+
+    <color name="colorGraphBlue">#8c9eff</color>
+    <color name="colorGraphGreen">#9ccc65</color>
+    <color name="colorGraphRed">#ffa4a2</color>
 </resources>

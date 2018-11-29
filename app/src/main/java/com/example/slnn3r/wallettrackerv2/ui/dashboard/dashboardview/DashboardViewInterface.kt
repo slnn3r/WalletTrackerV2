@@ -1,6 +1,5 @@
 package com.example.slnn3r.wallettrackerv2.ui.dashboard.dashboardview
 
-import android.content.Context
 import com.example.slnn3r.wallettrackerv2.base.BaseView
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Transaction
@@ -11,8 +10,7 @@ interface DashboardViewInterface {
     interface DashboardView : BaseView.Universal {
         fun populateAccountSpinner(accountList: ArrayList<Account>)
         fun populateTransactionRecycleView(transactionList: ArrayList<Transaction>)
-        fun populateExpenseGraph(mContext: Context, entryList: ArrayList<Entry>,
-                                 xAxisList: ArrayList<String>)
+        fun populateExpenseGraph(entryList: ArrayList<Entry>, xAxisList: ArrayList<String>)
 
         fun proceedToFirstTimeSetup()
         fun firstTimeSetupSuccess()

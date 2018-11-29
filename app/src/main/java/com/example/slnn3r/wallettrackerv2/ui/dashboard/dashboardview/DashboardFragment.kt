@@ -1,11 +1,9 @@
 package com.example.slnn3r.wallettrackerv2.ui.dashboard.dashboardview
 
-import android.content.Context
-import android.graphics.Color
-import android.graphics.Paint
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
@@ -19,12 +17,12 @@ import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Transaction
-import com.example.slnn3r.wallettrackerv2.ui.dashboard.dashboardadapter.CustomMarkerAdapter
 import com.example.slnn3r.wallettrackerv2.ui.dashboard.dashboardadapter.TransactionListAdapter
 import com.example.slnn3r.wallettrackerv2.ui.dashboard.dashboardadapter.dashboardAdapterClickCount
 import com.example.slnn3r.wallettrackerv2.ui.dashboard.dashboardpresenter.DashboardViewPresenter
 import com.example.slnn3r.wallettrackerv2.ui.menu.menuview.MenuActivity
 import com.example.slnn3r.wallettrackerv2.util.CustomAlertDialog
+import com.example.slnn3r.wallettrackerv2.util.CustomMarkerAdapter
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -136,14 +134,12 @@ class DashboardFragment : Fragment(), DashboardViewInterface.DashboardView {
         cv_transListLoading.visibility = View.INVISIBLE // remove loading cardview
     }
 
-    override fun populateExpenseGraph(mContext: Context, entryList: ArrayList<Entry>,
-                                      xAxisList: ArrayList<String>) {
+    override fun populateExpenseGraph(entryList: ArrayList<Entry>, xAxisList: ArrayList<String>) {
         val dataSet = LineDataSet(entryList, null)
 
         dataSet.setDrawFilled(true)
         dataSet.valueFormatter = MyValueFormatter()
-        dataSet.setColors(Color.LTGRAY)
-        dataSet.setDrawFilled(true)
+        dataSet.setColors(ContextCompat.getColor(context!!, R.color.colorLightRed))
 
         val data = LineData(dataSet)
 
@@ -153,15 +149,11 @@ class DashboardFragment : Fragment(), DashboardViewInterface.DashboardView {
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.setDrawGridLines(false)
 
-        mp_dashboard_transFlow.description.text = getString(R.string.mp_desc_label)
-        mp_dashboard_transFlow.description.textSize = 10f
-        mp_dashboard_transFlow.description.textAlign = Paint.Align.CENTER
-        mp_dashboard_transFlow.description.setPosition(mp_dashboard_transFlow.pivotX, 25f)
-
+        mp_dashboard_transFlow.description = null
         mp_dashboard_transFlow.data = data
         mp_dashboard_transFlow.legend.isEnabled = false
 
-        val mv = CustomMarkerAdapter(context!!, R.layout.marker_view)
+        val mv = CustomMarkerAdapter(context!!, R.layout.marker_linechart_view)
         mp_dashboard_transFlow.markerView = mv
 
         mp_dashboard_transFlow.notifyDataSetChanged() // this line solve weird auto resize when refresh graph(becuz of being call from spinner listener change)

@@ -36,7 +36,8 @@ class HistoryViewModel : HistoryModelInterface.HistoryViewModel {
                                 startDate)
                         .lessThan(Constant.RealmVariableName.TRANSACTION_DATETIME_VARIABLE,
                                 endDate)
-                        .contains(Constant.RealmVariableName.TRANSACTION_REMARK_VARIABLE, remark, Case.INSENSITIVE)
+                        .contains(Constant.RealmVariableName.TRANSACTION_REMARK_VARIABLE,
+                                remark, Case.INSENSITIVE)
                         .findAll()
             } else if (remark == Constant.ConditionalKeyword.All_YEAR_STATUS) {
                 transactionRealm = realm.where(TransactionRealm::class.java)

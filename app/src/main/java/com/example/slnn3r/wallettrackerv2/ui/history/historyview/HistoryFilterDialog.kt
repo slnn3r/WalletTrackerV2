@@ -104,8 +104,6 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
 
                             val dataAdapter = ArrayAdapter(context!!,
                                     android.R.layout.simple_spinner_item, spinnerItem)
-
-                            // Drop down layout style - list view with radio button
                             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
                             sp_historyFilter_selectedCat.adapter = dataAdapter
@@ -217,8 +215,6 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
                 spinnerItem.add(Constant.ConditionalKeyword.ALL_CATEGORY_STATUS)
 
                 val dataAdapterBo = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, spinnerItem)
-
-                // Drop down layout style - list view with radio button
                 dataAdapterBo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
                 sp_historyFilter_selectedCat.adapter = dataAdapterBo
@@ -235,7 +231,7 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
             }
 
             val dataAdapterCat = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, categoryNameList)
-            sp_historyFilter_selectedCat.setSelection(dataAdapterCat.getPosition(filterCategory)+1)
+            sp_historyFilter_selectedCat.setSelection(dataAdapterCat.getPosition(filterCategory) + 1)
         }
 
         ac_historyFilter_remarks.setText(filterRemark)
@@ -285,8 +281,6 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
 
         // Creating adapter for spinner
         val dataAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, accountNameList)
-
-        // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         sp_historyFilter_selectedAcc.adapter = dataAdapter
@@ -435,8 +429,10 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
     }
 
     private fun setDays() {
-        if (sp_historyFilter_specificYear.selectedItem.toString() == Constant.ConditionalKeyword.All_YEAR_STATUS ||
-                sp_historyFilter_specificMonth.selectedItem.toString() == Constant.ConditionalKeyword.All_MONTH_STATUS) {
+        if (sp_historyFilter_specificYear.selectedItem.toString() ==
+                Constant.ConditionalKeyword.All_YEAR_STATUS ||
+                sp_historyFilter_specificMonth.selectedItem.toString() ==
+                Constant.ConditionalKeyword.All_MONTH_STATUS) {
 
             sp_historyFilter_specificDay.isEnabled = false
             sp_historyFilter_specificMonth.isEnabled = false
@@ -453,13 +449,17 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
             sp_historyFilter_specificMonth.setSelection(0)
         }
 
-        if (sp_historyFilter_specificYear.selectedItem.toString() != Constant.ConditionalKeyword.All_YEAR_STATUS &&
-                sp_historyFilter_specificMonth.selectedItem.toString() == Constant.ConditionalKeyword.All_MONTH_STATUS) {
+        if (sp_historyFilter_specificYear.selectedItem.toString() !=
+                Constant.ConditionalKeyword.All_YEAR_STATUS &&
+                sp_historyFilter_specificMonth.selectedItem.toString() ==
+                Constant.ConditionalKeyword.All_MONTH_STATUS) {
             sp_historyFilter_specificMonth.isEnabled = true
         }
 
-        if (sp_historyFilter_specificMonth.selectedItem.toString() != Constant.ConditionalKeyword.All_MONTH_STATUS &&
-                sp_historyFilter_specificYear.selectedItem.toString() != Constant.ConditionalKeyword.All_YEAR_STATUS) {
+        if (sp_historyFilter_specificMonth.selectedItem.toString() !=
+                Constant.ConditionalKeyword.All_MONTH_STATUS &&
+                sp_historyFilter_specificYear.selectedItem.toString() !=
+                Constant.ConditionalKeyword.All_YEAR_STATUS) {
             sp_historyFilter_specificDay.isEnabled = sb_historyFilter_dateOption.isChecked
 
             val year = Integer.parseInt(sp_historyFilter_specificYear.selectedItem.toString())

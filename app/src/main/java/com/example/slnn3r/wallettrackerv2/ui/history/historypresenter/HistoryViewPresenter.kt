@@ -50,7 +50,6 @@ class HistoryViewPresenter : HistoryPresenterInterface.HistoryViewPresenter,
             val filterEndDate =
                     filterInput.getString(Constant.KeyId.FILTER_INPUT_ENDDATE, "")
 
-            ////
             lateinit var selectedAccountId: String
             val accountList = baseModel.getAccListByUserUidSync(mContext, userUid)
             accountList.forEach { data ->
@@ -60,7 +59,6 @@ class HistoryViewPresenter : HistoryPresenterInterface.HistoryViewPresenter,
             }
 
             if (filterDateOption == Constant.ConditionalKeyword.SPECIFIC_DATE) {
-
                 if (filterDay == Constant.ConditionalKeyword.All_DAY_STATUS &&
                         filterMonth != Constant.ConditionalKeyword.All_MONTH_STATUS) {
                     val tempCalender = Calendar.getInstance()

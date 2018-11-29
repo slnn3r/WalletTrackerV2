@@ -10,6 +10,7 @@ import com.google.gson.Gson
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmResults
+import io.realm.Sort
 
 class ReportViewModel : ReportModelInterface.ReportViewModel {
 
@@ -30,6 +31,7 @@ class ReportViewModel : ReportModelInterface.ReportViewModel {
         realm!!.executeTransaction {
             val transactionRealm: RealmResults<TransactionRealm> = if (!isAllYear) {
                 realm.where(TransactionRealm::class.java)
+                        .sort(Constant.RealmVariableName.TRANSACTION_DATETIME_VARIABLE, Sort.DESCENDING)
                         .greaterThanOrEqualTo(Constant.RealmVariableName.TRANSACTION_DATETIME_VARIABLE,
                                 startDate)
                         .lessThan(Constant.RealmVariableName.TRANSACTION_DATETIME_VARIABLE,
@@ -37,6 +39,7 @@ class ReportViewModel : ReportModelInterface.ReportViewModel {
                         .findAll()
             } else {
                 realm.where(TransactionRealm::class.java)
+                        .sort(Constant.RealmVariableName.TRANSACTION_DATETIME_VARIABLE, Sort.DESCENDING)
                         .findAll()
             }
 

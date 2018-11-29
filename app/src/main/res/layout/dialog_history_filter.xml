@@ -233,7 +233,6 @@
                 tools:ignore="Autofill" />
 
         </android.support.design.widget.TextInputLayout>
-
     </android.support.constraint.ConstraintLayout>
 
     <android.support.design.widget.TextInputLayout

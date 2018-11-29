@@ -141,7 +141,6 @@ class DashboardViewModel : DashboardModelInterface.DashboardViewModel {
                             previous30DaysDate)
                     .lessThan(Constant.RealmVariableName.TRANSACTION_DATETIME_VARIABLE,
                             todayDate)
-                    //.between(Constant.RealmVariableName.TRANSACTION_DATETIME_VARIABLE, previous30DaysDate, todayDate)
                     .findAll()
 
             transactionRealm.forEach { transactionRealmData ->

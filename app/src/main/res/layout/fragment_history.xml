@@ -7,19 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.history.historyview.HistoryFragment">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fb_historyTrans_filterOption"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@drawable/ic_filter"
-        app:backgroundTint="@color/colorPrimaryDark"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
     <TextView
         android:id="@+id/tv_history_transCount_label"
         android:layout_width="wrap_content"
@@ -34,16 +21,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_history_incCount_label"
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_history_transCount"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="35dp"
-        android:text="@string/tv_historyTrans_TransIncCountLabel"
-        app:layout_constraintEnd_toStartOf="@+id/tv_history_incCount"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_history_expCount_label" />
+        android:layout_marginEnd="8dp"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/tv_history_transCount_label"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_history_expCount_label"
@@ -60,19 +48,6 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_history_transCount_label" />
 
     <TextView
-        android:id="@+id/tv_history_transCount"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAllCaps="false"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/tv_history_transCount_label"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
         android:id="@+id/tv_history_expCount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -86,6 +61,18 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_history_transCount_label" />
 
     <TextView
+        android:id="@+id/tv_history_incCount_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="35dp"
+        android:text="@string/tv_historyTrans_TransIncCountLabel"
+        app:layout_constraintEnd_toStartOf="@+id/tv_history_incCount"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_history_expCount_label" />
+
+    <TextView
         android:id="@+id/tv_history_incCount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -96,19 +83,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tv_history_incCount_label"
         app:layout_constraintTop_toBottomOf="@+id/tv_history_expCount_label" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_history_transList"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_history_totalBal" />
 
     <TextView
         android:id="@+id/tv_history_totalBal_label"
@@ -133,5 +107,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tv_history_totalBal_label"
         app:layout_constraintTop_toBottomOf="@+id/tv_history_incCount" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_history_transList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_history_totalBal" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fb_historyTrans_filterOption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_filter"
+        app:backgroundTint="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

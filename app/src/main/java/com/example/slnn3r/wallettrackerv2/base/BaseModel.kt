@@ -36,7 +36,6 @@ class BaseModel {
         realm = Realm.getInstance(config)
 
         realm!!.executeTransaction {
-
             val accountRealm = realm.where(AccountRealm::class.java)
                     .equalTo(Constant.RealmVariableName.USER_UID_VARIABLE, userUid)
                     .findAll()
@@ -74,7 +73,6 @@ class BaseModel {
         realm = Realm.getInstance(config)
 
         realm!!.executeTransaction {
-
             val categoryRealm: RealmResults<CategoryRealm>?
             val incomeType = Constant.ConditionalKeyword.INCOME_STATUS
             val expenseType = Constant.ConditionalKeyword.EXPENSE_STATUS
@@ -129,7 +127,6 @@ class BaseModel {
         realm = Realm.getInstance(config)
 
         realm!!.executeTransaction {
-
             val previousRemarkRealm = realm.where(PreviousRemarkRealm::class.java)
                     .findAll()
 

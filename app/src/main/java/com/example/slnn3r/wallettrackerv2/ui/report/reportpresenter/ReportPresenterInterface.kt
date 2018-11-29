@@ -12,5 +12,4 @@ interface ReportPresenterInterface {
                           selectedAccount: String, accountList: ArrayList<Account>,
                           selectedMonth: String, selectedYear: String)
     }
-
 }

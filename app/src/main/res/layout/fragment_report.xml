@@ -6,31 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".ui.report.reportview.ReportFragment">
 
-
     <TextView
-        android:id="@+id/textviews"
+        android:id="@+id/tv_report_selectedAcc_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="3dp"
-        android:text="Selected Account"
-        app:layout_constraintEnd_toStartOf="@+id/spinner"
+        android:text="@string/selected_account_title"
+        app:layout_constraintEnd_toStartOf="@+id/sp_report_selectedAcc"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="14dp"
-        android:text="Date Selection"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textviews" />
-
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/sp_report_selectedAcc"
         android:layout_width="0dp"
         android:layout_height="24dp"
         android:layout_marginStart="8dp"
@@ -38,32 +27,53 @@
         android:layout_marginEnd="16dp"
         android:background="@drawable/custom_default_background"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textviews"
+        app:layout_constraintStart_toEndOf="@+id/tv_report_selectedAcc_title"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/tv_report_dateSelection_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="14dp"
+        android:text="@string/tv_dateSelection_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_report_selectedAcc_title" />
+
     <Spinner
-        android:id="@+id/spinner2"
+        android:id="@+id/sp_report_monthSelection"
         android:layout_width="0dp"
         android:layout_height="24dp"
         android:layout_marginStart="31dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/custom_default_background"
-        app:layout_constraintEnd_toStartOf="@+id/spinner3"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+        app:layout_constraintEnd_toStartOf="@+id/sp_report_yearSelection"
+        app:layout_constraintStart_toEndOf="@+id/tv_report_dateSelection_title"
+        app:layout_constraintTop_toBottomOf="@+id/sp_report_selectedAcc" />
 
     <Spinner
-        android:id="@+id/spinner3"
+        android:id="@+id/sp_report_yearSelection"
         android:layout_width="85dp"
         android:layout_height="24dp"
-
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/custom_default_background"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/spinner2"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+        app:layout_constraintStart_toEndOf="@+id/sp_report_monthSelection"
+        app:layout_constraintTop_toBottomOf="@+id/sp_report_selectedAcc" />
+
+    <TextView
+        android:id="@+id/tv_report_summary_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/tv_report_summaryTitle"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sp_report_monthSelection" />
 
     <com.github.mikephil.charting.charts.HorizontalBarChart
         android:id="@+id/mp_report_summaryChart"
@@ -72,10 +82,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_report_summary_title" />
+
+    <TextView
+        android:id="@+id/tv_report_transaction_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/tv_report_transactionTitle"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mp_report_summaryChart" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/rv_report_summaryTrans_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -84,34 +109,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="Summary Transaction"
-        android:textAllCaps="true"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mp_report_summaryChart" />
-
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Summary Report (click for details)"
-        android:textAllCaps="true"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner2" />
-
+        app:layout_constraintTop_toBottomOf="@+id/tv_report_transaction_title" />
 
 </android.support.constraint.ConstraintLayout>

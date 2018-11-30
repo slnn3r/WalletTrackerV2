@@ -12,7 +12,7 @@ import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.base.BaseModel
 import com.example.slnn3r.wallettrackerv2.base.BasePresenter
 import com.example.slnn3r.wallettrackerv2.constant.Constant
-import com.example.slnn3r.wallettrackerv2.service.BackupService.DataBackupJobService
+import com.example.slnn3r.wallettrackerv2.service.DataBackupJobService
 import com.example.slnn3r.wallettrackerv2.ui.menu.menuview.MenuViewInterface
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth

@@ -151,7 +151,6 @@ class Constant {
         const val DAY_FORMAT = "EEE"
 
         const val TIME_12HOURS_FORMAT = "hh:mm:ss a"
-        const val TIME_24HOURS_FORMAT ="HH:mm:ss"
         const val DECIMAL_FORMAT = "#.##"
     }
 

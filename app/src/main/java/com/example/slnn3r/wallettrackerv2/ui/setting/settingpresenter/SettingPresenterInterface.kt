@@ -8,10 +8,6 @@ interface SettingPresenterInterface {
         fun checkBackupSetting(mContext: Context, userUid: String)
         fun checkBackupSwitchButton(isChecked: Boolean)
 
-        fun checkReminderSetting(mContext: Context, userUid: String)
-        fun checkReminderSwitchButton(isChecked: Boolean)
-
-        fun saveSetting(mContext: Context, userUid: String, backupSetting: Boolean,
-                        reminderSetting: Boolean, reminderTime: String)
+        fun saveSetting(mContext: Context, userUid: String, backupSetting: Boolean)
     }
 }

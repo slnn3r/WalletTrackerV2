@@ -8,13 +8,6 @@ interface SettingViewInterface {
         fun backupSettingToggle()
         fun setBackupSettingEnable()
         fun setBackupSettingDisable()
-
-        fun setReminderTime(reminderTime: String)
-
-        fun reminderSettingToggle()
-        fun setReminderSettingEnable()
-        fun setReminderSettingDisable()
-
         fun saveSettingSuccess()
     }
 }

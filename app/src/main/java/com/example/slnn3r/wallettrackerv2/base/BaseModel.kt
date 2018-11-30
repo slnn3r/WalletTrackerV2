@@ -184,34 +184,6 @@ class BaseModel {
         editor.commit()
     }
 
-    fun getReminderSettingSharePreference(mContext: Context, userUid: String): Boolean {
-        val editor = mContext.getSharedPreferences(Constant.KeyId.SHARE_PREF + userUid,
-                AppCompatActivity.MODE_PRIVATE)
-        return editor.getBoolean("ReminderSetting", false)
-    }
-
-    fun saveReminderSettingSharePreference(mContext: Context, userUid: String, reminderSetting: Boolean) {
-        val editor = mContext.getSharedPreferences(Constant.KeyId.SHARE_PREF + userUid,
-                AppCompatActivity.MODE_PRIVATE).edit()
-        editor.putBoolean("ReminderSetting", reminderSetting)
-        editor.apply()
-        editor.commit()
-    }
-
-    fun getReminderTimeSharePreference(mContext: Context, userUid: String): String {
-        val editor = mContext.getSharedPreferences(Constant.KeyId.SHARE_PREF + userUid,
-                AppCompatActivity.MODE_PRIVATE)
-        return editor.getString("ReminderTime", "")!!
-    }
-
-    fun saveReminderTimeSharePreference(mContext: Context, userUid: String, reminderTime: String) {
-        val editor = mContext.getSharedPreferences(Constant.KeyId.SHARE_PREF + userUid,
-                AppCompatActivity.MODE_PRIVATE).edit()
-        editor.putString("ReminderTime", reminderTime)
-        editor.apply()
-        editor.commit()
-    }
-
     fun getBackupTypeSharePreference(mContext: Context, userUid: String): String {
         val editor = mContext.getSharedPreferences(Constant.KeyId.SHARE_PREF + userUid,
                 AppCompatActivity.MODE_PRIVATE)

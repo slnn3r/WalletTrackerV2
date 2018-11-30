@@ -43,48 +43,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/tl_setting_reminderTime"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/custom_default_background"
-        android:paddingTop="4dp"
-        android:theme="@style/EditTextTheme"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2">
-
-        <EditText
-            android:id="@+id/et_setting_reminderTime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:enabled="false"
-            android:background="@null"
-            android:focusable="false"
-            android:hint="Reminder Do Record Notification Daily at"
-            android:imeOptions="actionNext"
-            android:inputType="time"
-            android:padding="8dp"
-            android:singleLine="true"
-            android:text="12:00:00 PM"
-            android:textAlignment="center"
-            android:theme="@style/EditTextTheme"
-            tools:ignore="Autofill" />
-
-    </android.support.design.widget.TextInputLayout>
-
-    <com.kyleduo.switchbutton.SwitchButton
-        android:id="@+id/sb_setting_reminderSetting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="34dp"
-        android:layout_marginEnd="16dp"
-        android:checked="false"
-        app:kswBackColor="@color/colorLightRed"
-        app:kswThumbColor="@color/colorPrimaryLight"
-        app:kswThumbWidth="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sb_setting_backupSetting" />
-
 </android.support.constraint.ConstraintLayout>

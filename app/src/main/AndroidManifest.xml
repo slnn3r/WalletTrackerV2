@@ -25,12 +25,12 @@
             android:screenOrientation="portrait" />
 
         <!-- Backup JobService -->
-        <service android:name=".service.BackupService.DataBackupJobService"
+        <service android:name=".service.DataBackupJobService"
             android:permission="android.permission.BIND_JOB_SERVICE"
             />
 
         <!-- Stop Backup Service -->
-        <receiver android:name=".service.BackupService.StopBackupJobService" />
+        <receiver android:name=".service.StopBackupJobService" />
 
         <!-- Stop Reminder Service -->
         <receiver android:name=".service.ReminderService.ReminderService"/>

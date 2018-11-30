@@ -92,7 +92,7 @@ class ReportFragment : Fragment(), ReportViewInterface.ReportView {
 
         mReportViewPresenter.bindView(this)
 
-        if(initialLaunch){
+        if (initialLaunch) {
             userData = mReportViewPresenter.getSignedInUser()!!
 
             mReportViewPresenter.getAccountList(context!!, userData.uid)

@@ -54,12 +54,12 @@ class CreateCategoryFragment : Fragment(), CategoryViewInterface.CreateCategoryV
         mCreateCategoryViewPresenter.bindView(this)
         userData = mCreateCategoryViewPresenter.getSignedInUser()!!
 
-        if(initialLaunch){
+        if (initialLaunch) {
             // Receive Selected Category Type Argument from View screen
             val selectedCategoryType = arguments?.getString(Constant.KeyId.CATEGORY_CREATE_ARG)
             mCreateCategoryViewPresenter.checkSelectedCategoryType(selectedCategoryType!!)
         }
-       initialLaunch=false
+        initialLaunch = false
     }
 
     override fun onStop() {

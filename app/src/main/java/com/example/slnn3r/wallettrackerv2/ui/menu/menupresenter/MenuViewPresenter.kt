@@ -103,21 +103,20 @@ class MenuViewPresenter : MenuPresenterInterface.MenuViewPresenter,
                     getView()!!.superOnPressBack() // not sure when will hit this?
                 }
             } else {
-                //displaySyncDateTime()
                 getView()!!.openDrawer()
             }
         }
     }
 
     override fun checkBackupSetting(mContext: Context, userUid: String) {
-        if(baseModel.getBackupSettingSharePreference(mContext, userUid)){
+        if (baseModel.getBackupSettingSharePreference(mContext, userUid)) {
             getView()!!.executePeriodicalBackup()
         }
     }
 
     override fun checkBackupDateTime(mContext: Context, userUid: String) {
         val backupDateTime = baseModel.getBackupDateTimeSharePreference(mContext, userUid)
-        if(backupDateTime!=""){
+        if (backupDateTime != "") {
             getView()!!.updateDrawerBackupDateTime(backupDateTime)
         }
     }
@@ -127,7 +126,8 @@ class MenuViewPresenter : MenuPresenterInterface.MenuViewPresenter,
         val bundle = PersistableBundle()
         bundle.putString(Constant.KeyId.JOBSERVICE_USERID_KEY, userUid)
 
-        baseModel.saveBackTypeSharePreference(mContext, userUid, "Manual")
+        baseModel.saveBackTypeSharePreference(mContext, userUid,
+                Constant.ConditionalKeyword.MANUAL_BACKUP)
 
         val component = ComponentName(mContext, DataBackupJobService::class.java)
         val info = JobInfo.Builder(Constant.KeyId.JOBSERVICE_ID_KEY, component)
@@ -142,7 +142,7 @@ class MenuViewPresenter : MenuPresenterInterface.MenuViewPresenter,
         if (resultCode == JobScheduler.RESULT_SUCCESS) {
             getView()!!.backupOnBackgroundStart()
         } else {
-            getView()!!.onError("Job Schedule Failed")
+            getView()!!.onError(mContext.getString(R.string.autoBackupFailedMessage))
         }
     }
 
@@ -151,7 +151,8 @@ class MenuViewPresenter : MenuPresenterInterface.MenuViewPresenter,
         val bundle = PersistableBundle()
         bundle.putString(Constant.KeyId.JOBSERVICE_USERID_KEY, userUid)
 
-        baseModel.saveBackTypeSharePreference(mContext, userUid, "Auto")
+        baseModel.saveBackTypeSharePreference(mContext, userUid,
+                Constant.ConditionalKeyword.AUTO_BACKUP)
 
         val component = ComponentName(mContext, DataBackupJobService::class.java)
         val info = JobInfo.Builder(Constant.KeyId.JOBSERVICE_ID_KEY, component)
@@ -167,7 +168,7 @@ class MenuViewPresenter : MenuPresenterInterface.MenuViewPresenter,
         if (resultCode == JobScheduler.RESULT_SUCCESS) {
             getView()!!.backupPeriodicallyStart()
         } else {
-            getView()!!.onError("Job Schedule Failed")
+            getView()!!.onError(mContext.getString(R.string.autoBackupFailedMessage))
         }
     }
 

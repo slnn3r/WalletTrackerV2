@@ -6,6 +6,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
+import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.base.BaseModel
 import com.example.slnn3r.wallettrackerv2.base.BasePresenter
 import com.example.slnn3r.wallettrackerv2.constant.Constant
@@ -50,7 +51,7 @@ class SettingViewPresenter : SettingPresenterInterface.SettingViewPresenter,
         val bundle = PersistableBundle()
         bundle.putString(Constant.KeyId.JOBSERVICE_USERID_KEY, userUid)
 
-        baseModel.saveBackTypeSharePreference(mContext, userUid, "Auto")
+        baseModel.saveBackTypeSharePreference(mContext, userUid, Constant.ConditionalKeyword.AUTO_BACKUP)
 
         val component = ComponentName(mContext, DataBackupJobService::class.java)
         val info = JobInfo.Builder(Constant.KeyId.JOBSERVICE_ID_KEY, component)
@@ -64,7 +65,7 @@ class SettingViewPresenter : SettingPresenterInterface.SettingViewPresenter,
         val resultCode = scheduler.schedule(info)
 
         if (resultCode != JobScheduler.RESULT_SUCCESS) {
-            getView()!!.onError("Job Schedule Failed")
+            getView()!!.onError(mContext.getString(R.string.autoBackupFailedMessage))
         }
     }
 

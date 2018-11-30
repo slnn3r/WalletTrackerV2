@@ -37,13 +37,17 @@
     <string name="iv_login_desc">Image View Login Logo</string>
     <string name="sign_in_loading_message">Signing with Google Account…</string>
     <string name="no_internet_message">Please Make Sure you have connect to Internet Connection.</string>
+    <string name="sync_loading_message">Sync Data In Progress…</string>
 
     <!-- MenuActivity -->
     <string name="title_activity_menu">MenuActivity</string>
     <string name="welcome_message">Welcome, %s</string>
     <string name="doubleTabExit_label">Tab Back Again to Exit</string>
     <string name="formatDisplayDateTime">%s (%s)</string>
-
+    <string name="autoBackupFailedMessage">Auto Backup at Background Process Failed.</string>
+    <string name="backup_drawerDateTime">Backup at - %s</string>
+    <string name="manualBackup_start_message">Backup Data on Background…</string>
+    <string name="autoBackup_start_message">Auto-Backup every 15 minutes</string>
 
     <!-- ViewAccountFragment -->
     <string name="ab_viewAcc_title">Account List</string>
@@ -117,6 +121,11 @@
     <string name="tv_report_summaryTitle">Summary Report</string>
     <string name="tv_report_transactionTitle">Summary Transaction</string>
 
+    <!-- SettingFragment-->
+    <string name="ab_setting_title">Application Setting</string>
+    <string name="save_setting_message">App Setting Saved</string>
+    <string name="tv_setting_backupSetting_label">Auto Backup Data on Launch App</string>
+
     <!-- Dashboard -->
     <string name="ab_dashboard_title">Dashboard</string>
     <string name="tv_dashboard_recentTransList_title">Recent 10(s) Transaction List</string>
@@ -130,6 +139,13 @@
     <string name="mp_loading_label">Loading Graph…</string>
     <string name="mp_desc_label">Past 31 Days Expense Transactions Flow</string>
     <string name="cv_loading_label">Loading…</string>
+
+    <!-- PushNotification -->
+    <string name="backupDataCompleteTitle">Backup Data Completed</string>
+    <string name="backupDataCompleteMessage">Your Wallet Tracker Data have Successfully Backup.</string>
+    <string name="backupDataCompleteAction">Stop Auto Backup at Background</string>
+    <string name="backupDataCompleteName">Wallet Tracker Notification</string>
+    <string name="backupDataCompleteDesc">Notification About Wallet Tracker Backup</string>
 
     <!-- Share Title -->
     <string name="account_name_title">Account Name</string>

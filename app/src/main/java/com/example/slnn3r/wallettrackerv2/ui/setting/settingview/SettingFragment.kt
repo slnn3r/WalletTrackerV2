@@ -17,8 +17,6 @@ import com.example.slnn3r.wallettrackerv2.ui.setting.settingpresenter.SettingVie
 import com.example.slnn3r.wallettrackerv2.util.CustomAlertDialog
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.fragment_setting.*
-import java.text.SimpleDateFormat
-import java.util.*
 
 class SettingFragment : Fragment(), SettingViewInterface.SettingView {
 
@@ -27,19 +25,12 @@ class SettingFragment : Fragment(), SettingViewInterface.SettingView {
 
     private lateinit var userData: FirebaseUser
 
-    private val mCurrentTime = Calendar.getInstance()
-    private val hour = mCurrentTime.get(Calendar.HOUR_OF_DAY)
-    private val minute = mCurrentTime.get(Calendar.MINUTE)
-    private lateinit var simpleTimeFormat: SimpleDateFormat
-
     private var initialLaunch = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        simpleTimeFormat = SimpleDateFormat((Constant.Format.TIME_12HOURS_FORMAT), Locale.US)
-
         (activity as? AppCompatActivity)?.supportActionBar?.title =
-                "Application Setting"
+                getString(R.string.ab_setting_title)
         return inflater.inflate(R.layout.fragment_setting, container, false)
     }
 
@@ -48,7 +39,7 @@ class SettingFragment : Fragment(), SettingViewInterface.SettingView {
 
         setupBackupSettingSwitchButton()
 
-        floatingActionButton.setOnClickListener {
+        fb_setting_save.setOnClickListener {
             mSettingPresenter.saveSetting(context!!, userData.uid,
                     sb_setting_backupSetting.isChecked)
         }
@@ -87,7 +78,7 @@ class SettingFragment : Fragment(), SettingViewInterface.SettingView {
 
     override fun saveSettingSuccess() {
         Snackbar.make(view!!,
-                "App Setting Saved", Snackbar.LENGTH_SHORT)
+                getString(R.string.save_setting_message), Snackbar.LENGTH_SHORT)
                 .show()
         (context as Activity).onBackPressed()
     }

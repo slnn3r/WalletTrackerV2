@@ -173,13 +173,13 @@ class BaseModel {
     fun getBackupSettingSharePreference(mContext: Context, userUid: String): Boolean {
         val editor = mContext.getSharedPreferences(Constant.KeyId.SHARE_PREF + userUid,
                 AppCompatActivity.MODE_PRIVATE)
-        return editor.getBoolean("BackupSetting", true)
+        return editor.getBoolean(Constant.KeyId.BACKUP_SETTING_KEY, true)
     }
 
     fun saveBackupSettingSharePreference(mContext: Context, userUid: String, backupSetting: Boolean) {
         val editor = mContext.getSharedPreferences(Constant.KeyId.SHARE_PREF + userUid,
                 AppCompatActivity.MODE_PRIVATE).edit()
-        editor.putBoolean("BackupSetting", backupSetting)
+        editor.putBoolean(Constant.KeyId.BACKUP_SETTING_KEY, backupSetting)
         editor.apply()
         editor.commit()
     }
@@ -187,13 +187,13 @@ class BaseModel {
     fun getBackupTypeSharePreference(mContext: Context, userUid: String): String {
         val editor = mContext.getSharedPreferences(Constant.KeyId.SHARE_PREF + userUid,
                 AppCompatActivity.MODE_PRIVATE)
-        return editor.getString("BackupType", "")!!
+        return editor.getString(Constant.KeyId.BACKUP_TYPE_KEY, "")!!
     }
 
     fun saveBackTypeSharePreference(mContext: Context, userUid: String, backupType: String) {
         val editor = mContext.getSharedPreferences(Constant.KeyId.SHARE_PREF + userUid,
                 AppCompatActivity.MODE_PRIVATE).edit()
-        editor.putString("BackupType", backupType)
+        editor.putString(Constant.KeyId.BACKUP_TYPE_KEY, backupType)
         editor.apply()
         editor.commit()
     }
@@ -201,13 +201,13 @@ class BaseModel {
     fun getBackupDateTimeSharePreference(mContext: Context, userUid: String): String {
         val editor = mContext.getSharedPreferences(Constant.KeyId.SHARE_PREF + userUid,
                 AppCompatActivity.MODE_PRIVATE)
-        return editor.getString("BackupDateTime", "")!!
+        return editor.getString(Constant.KeyId.BACKUP_DATETIME_KEY, "")!!
     }
 
     fun saveBackupDateTimeSharePreference(mContext: Context, userUid: String, backupDateTime: String) {
         val editor = mContext.getSharedPreferences(Constant.KeyId.SHARE_PREF + userUid,
                 AppCompatActivity.MODE_PRIVATE).edit()
-        editor.putString("BackupDateTime", backupDateTime)
+        editor.putString(Constant.KeyId.BACKUP_DATETIME_KEY, backupDateTime)
         editor.apply()
         editor.commit()
     }

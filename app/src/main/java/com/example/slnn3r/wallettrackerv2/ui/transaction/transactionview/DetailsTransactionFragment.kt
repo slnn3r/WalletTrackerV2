@@ -86,7 +86,7 @@ class DetailsTransactionFragment : Fragment(), TransactionViewInterface.DetailsT
         super.onStart()
         mDetailsTransactionViewPresenter.bindView(this)
 
-        if(initialLaunch){
+        if (initialLaunch) {
             userData = mDetailsTransactionViewPresenter.getSignedInUser()!!
 
             mDetailsTransactionViewPresenter.getAccountList(context!!, userData.uid)

@@ -50,6 +50,9 @@ class Constant {
         const val SPECIFIC_DATE = "Specific Date"
         const val DATE_RANGE = "Date Range"
         // Localize Value
+
+        const val MANUAL_BACKUP = "Manual"
+        const val AUTO_BACKUP = "Auto"
     }
 
     object KeyId {
@@ -62,6 +65,9 @@ class Constant {
 
         const val SHARE_PREF = "sharePreference:"
         const val SELECTED_ACCOUNT_KEY = "selectedAccount"
+        const val BACKUP_SETTING_KEY = "backupSetting"
+        const val BACKUP_TYPE_KEY = "backupType"
+        const val BACKUP_DATETIME_KEY = "backupDateTime"
 
         const val FILTER_INPUT_SHARE_PREF = "filterInput"
         const val FILTER_INPUT_ACCOUNT = "filterAccount"
@@ -77,6 +83,9 @@ class Constant {
 
         const val JOBSERVICE_USERID_KEY = "jobServiceUserUid"
         const val JOBSERVICE_ID_KEY = 123
+
+        const val NOTIFICATION_CHANNEL = "Channel890"
+        const val NOTIFICATION_ID = 890
     }
 
     object NavigationKey {

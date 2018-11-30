@@ -50,22 +50,24 @@ class DataBackupJobService : JobService() {
 
     private fun updateTransactionCategory(categoryList: ArrayList<Category>) {
         categoryList.forEach { data ->
-            database.reference.child(Constant.FirebasePushKey.CATEGORY_FIREBASE_KEY).push().setValue(data)
+            database.reference.child(Constant.FirebasePushKey.CATEGORY_FIREBASE_KEY)
+                    .push().setValue(data)
         }
     }
 
     private fun updateWalletAccount(accountList: ArrayList<Account>) {
         accountList.forEach { data ->
-            database.reference.child(Constant.FirebasePushKey.ACCOUNT_FIREBASE_KEY).push().setValue(data)
+            database.reference.child(Constant.FirebasePushKey.ACCOUNT_FIREBASE_KEY)
+                    .push().setValue(data)
         }
     }
 
     private fun updateTransaction(transactionList: ArrayList<Transaction>) {
         transactionList.forEach { data ->
-            database.reference.child(Constant.FirebasePushKey.TRANSACTION_FIREBASE_KEY).push().setValue(data)
+            database.reference.child(Constant.FirebasePushKey.TRANSACTION_FIREBASE_KEY)
+                    .push().setValue(data)
         }
     }
-
 
     //(No Error Handling for Firebase)
     private fun doBackgroundWork(params: JobParameters) {
@@ -78,95 +80,99 @@ class DataBackupJobService : JobService() {
         val categoryList = dataBackupModel.getAllCategoryDataByUserUid(applicationContext, userUid)
         val transactionList = dataBackupModel.getAllTransactionDataByUserUid(applicationContext, userUid)
 
-        database.reference.child(Constant.FirebasePushKey.CATEGORY_FIREBASE_KEY).addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (dataSnapshot in snapshot.children) {
+        database.reference.child(Constant.FirebasePushKey.CATEGORY_FIREBASE_KEY)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        for (dataSnapshot in snapshot.children) {
 
-                    val message = dataSnapshot.getValue(CategoryFirebase::class.java)
+                            val message = dataSnapshot.getValue(CategoryFirebase::class.java)
 
-                    if (message!!.userUid == userUid) {
-                        dataSnapshot.ref.setValue(null)
+                            if (message!!.userUid == userUid) {
+                                dataSnapshot.ref.setValue(null)
+                            }
+                        }
+
+                        updateTransactionCategory(categoryList)
                     }
-                }
 
-                updateTransactionCategory(categoryList)
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.w("TAG: ", databaseError.message)
-            }
-        })
-
-
-        database.reference.child(Constant.FirebasePushKey.ACCOUNT_FIREBASE_KEY).addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (dataSnapshot in snapshot.children) {
-
-                    val message = dataSnapshot.getValue(AccountFirebase::class.java)
-
-                    if (message!!.userUid == userUid) {
-                        dataSnapshot.ref.setValue(null)
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        Log.w("TAG: ", databaseError.message)
                     }
-                }
-
-                updateWalletAccount(accountList)
-
-                val df = SimpleDateFormat(Constant.Format.DATE_FORMAT, Locale.US)
-                val date12Format = SimpleDateFormat(Constant.Format.TIME_12HOURS_FORMAT, Locale.US)
-                val date = Calendar.getInstance().time
-                val formattedDate = df.format(date).toString()
-                val formattedTime = date12Format.format(date).toString()
-                baseModel.saveBackupDateTimeSharePreference(applicationContext, userUid,
-                        applicationContext.getString(R.string.formatDisplayDateTime,
-                                formattedDate, formattedTime))
-
-                // pop out push notification
-                Handler().postDelayed({
-                    createPushNotification(backupType, backupSetting, userUid)
-                }, 200)
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.w("TAG: ", databaseError.message)
-            }
-        })
+                })
 
 
-        database.reference.child(Constant.FirebasePushKey.TRANSACTION_FIREBASE_KEY).addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (dataSnapshot in snapshot.children) {
+        database.reference.child(Constant.FirebasePushKey.ACCOUNT_FIREBASE_KEY)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        for (dataSnapshot in snapshot.children) {
 
-                    val message = dataSnapshot.getValue(TransactionFirebase::class.java)
+                            val message = dataSnapshot.getValue(AccountFirebase::class.java)
 
-                    if (message!!.account.userUid == userUid) {
-                        dataSnapshot.ref.setValue(null)
+                            if (message!!.userUid == userUid) {
+                                dataSnapshot.ref.setValue(null)
+                            }
+                        }
+
+                        updateWalletAccount(accountList)
+
+                        val df = SimpleDateFormat(Constant.Format.DATE_FORMAT, Locale.US)
+                        val date12Format = SimpleDateFormat(Constant.Format.TIME_12HOURS_FORMAT, Locale.US)
+                        val date = Calendar.getInstance().time
+                        val formattedDate = df.format(date).toString()
+                        val formattedTime = date12Format.format(date).toString()
+                        baseModel.saveBackupDateTimeSharePreference(applicationContext, userUid,
+                                applicationContext.getString(R.string.formatDisplayDateTime,
+                                        formattedDate, formattedTime))
+
+                        // pop out push notification
+                        Handler().postDelayed({
+                            createPushNotification(backupType, backupSetting, userUid)
+                        }, 200)
                     }
-                }
 
-                updateTransaction(transactionList)
-            }
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        Log.w("TAG: ", databaseError.message)
+                    }
+                })
 
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.w("TAG: ", databaseError.message)
-            }
-        })
+
+        database.reference.child(Constant.FirebasePushKey.TRANSACTION_FIREBASE_KEY)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        for (dataSnapshot in snapshot.children) {
+
+                            val message = dataSnapshot.getValue(TransactionFirebase::class.java)
+
+                            if (message!!.account.userUid == userUid) {
+                                dataSnapshot.ref.setValue(null)
+                            }
+                        }
+
+                        updateTransaction(transactionList)
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        Log.w("TAG: ", databaseError.message)
+                    }
+                })
     }
 
     private fun createPushNotification(backupType: String, backupSetting: Boolean, userUid: String) {
-        if (backupType == "Manual") {
-            val mBuilder = NotificationCompat.Builder(applicationContext, "channel1")
+        if (backupType == Constant.ConditionalKeyword.MANUAL_BACKUP) {
+            val mBuilder = NotificationCompat.Builder(applicationContext, Constant.KeyId.NOTIFICATION_CHANNEL)
                     .setSmallIcon(R.drawable.ic_backup)
-                    .setContentTitle("Backup Data Completed")
-                    .setContentText("Your Wallet Tracker Data have Successfully Backup.")
+                    .setContentTitle(applicationContext.getString(R.string.backupDataCompleteTitle))
+                    .setContentText(applicationContext.getString(R.string.backupDataCompleteMessage))
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val name = "Wallet Tracker Notification"
-                val descriptionText = "Notification About Wallet Tracker Backup"
+                val name = applicationContext.getString(R.string.backupDataCompleteName)
+                val descriptionText = applicationContext.getString(R.string.backupDataCompleteDesc)
                 val importance = NotificationManager.IMPORTANCE_DEFAULT
-                val channel = NotificationChannel("channel1", name, importance).apply {
-                    description = descriptionText
-                }
+                val channel = NotificationChannel(Constant.KeyId.NOTIFICATION_CHANNEL, name, importance)
+                        .apply {
+                            description = descriptionText
+                        }
                 // Register the channel with the system
                 val notificationManager: NotificationManager =
                         getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -175,30 +181,32 @@ class DataBackupJobService : JobService() {
 
             with(NotificationManagerCompat.from(applicationContext)) {
                 // notificationId is a unique int for each notification that you must define
-                notify(1, mBuilder.build())
+                notify(Constant.KeyId.NOTIFICATION_ID, mBuilder.build())
             }
 
-            baseModel.saveBackTypeSharePreference(applicationContext, userUid, "Auto")
+            baseModel.saveBackTypeSharePreference(applicationContext, userUid,
+                    Constant.ConditionalKeyword.AUTO_BACKUP)
 
-        } else if (backupType != "Manual" && backupSetting) {
+        } else if (backupType != Constant.ConditionalKeyword.MANUAL_BACKUP && backupSetting) {
             val stopBackupIntent = Intent(applicationContext, StopBackupJobService::class.java)
 
             val stopBackupPendingIntent: PendingIntent =
                     PendingIntent.getBroadcast(applicationContext, 0, stopBackupIntent, 0)
 
-            val mBuilder = NotificationCompat.Builder(applicationContext, "channel1")
+            val mBuilder = NotificationCompat.Builder(applicationContext, Constant.KeyId.NOTIFICATION_CHANNEL)
                     .setSmallIcon(R.drawable.ic_backup)
-                    .setContentTitle("Backup Data Completed")
-                    .setContentText("Your Wallet Tracker Data have Successfully Backup.")
+                    .setContentTitle(applicationContext.getString(R.string.backupDataCompleteTitle))
+                    .setContentText(applicationContext.getString(R.string.backupDataCompleteMessage))
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .addAction(R.drawable.ic_stop, "Stop Auto Backup at Background",
+                    .addAction(R.drawable.ic_stop, applicationContext.getString(R.string.backupDataCompleteAction),
                             stopBackupPendingIntent)
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val name = "Wallet Tracker Notification"
-                val descriptionText = "Notification About Wallet Tracker Backup"
+                val name = applicationContext.getString(R.string.backupDataCompleteName)
+                val descriptionText = applicationContext.getString(R.string.backupDataCompleteDesc)
                 val importance = NotificationManager.IMPORTANCE_DEFAULT
-                val channel = NotificationChannel("channel1", name, importance).apply {
+                val channel = NotificationChannel(Constant.KeyId.NOTIFICATION_CHANNEL,
+                        name, importance).apply {
                     description = descriptionText
                 }
                 // Register the channel with the system
@@ -209,7 +217,7 @@ class DataBackupJobService : JobService() {
 
             with(NotificationManagerCompat.from(applicationContext)) {
                 // notificationId is a unique int for each notification that you must define
-                notify(1, mBuilder.build())
+                notify(Constant.KeyId.NOTIFICATION_ID, mBuilder.build())
             }
         } else { // might no need as setting already stop it
             val scheduler: JobScheduler = applicationContext

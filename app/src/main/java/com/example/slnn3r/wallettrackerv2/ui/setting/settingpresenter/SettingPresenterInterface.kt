@@ -4,7 +4,7 @@ import android.content.Context
 
 interface SettingPresenterInterface {
 
-    interface SettingViewPresenter{
+    interface SettingViewPresenter {
         fun checkBackupSetting(mContext: Context, userUid: String)
         fun checkBackupSwitchButton(isChecked: Boolean)
 

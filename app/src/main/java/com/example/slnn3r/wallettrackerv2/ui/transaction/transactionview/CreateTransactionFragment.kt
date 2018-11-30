@@ -79,14 +79,14 @@ class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTra
         super.onStart()
         mCreateTransactionViewPresenter.bindView(this)
 
-        if(initialLaunch){
+        if (initialLaunch) {
             userData = mCreateTransactionViewPresenter.getSignedInUser()!!
 
             mCreateTransactionViewPresenter.getAccountList(context!!, userData.uid)
             mCreateTransactionViewPresenter.getCategoryList(context!!, userData.uid,
                     tv_createTrans_catType_selection.text.toString())
         }
-        initialLaunch= false
+        initialLaunch = false
     }
 
     override fun onStop() {

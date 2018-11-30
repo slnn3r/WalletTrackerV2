@@ -81,12 +81,12 @@ class HistoryFragment : Fragment(), HistoryViewInterface.HistoryView,
         super.onStart()
         mHistoryViewPresenter.bindView(this)
 
-        if(initialLaunch){
+        if (initialLaunch) {
             userData = mHistoryViewPresenter.getSignedInUser()!!
 
             mHistoryViewPresenter.getHistoryData(context!!, userData.uid)
         }
-        initialLaunch=false
+        initialLaunch = false
     }
 
     override fun onStop() {

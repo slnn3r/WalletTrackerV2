@@ -94,7 +94,7 @@ class LoginViewModel : LoginModelInterface.LoginViewModel {
                                        walletAccountList: ArrayList<AccountFirebase>) {
 
         try {
-            var realm: Realm? = null
+            val realm: Realm?
             Realm.init(mainContext)
 
             val config = RealmConfiguration.Builder()
@@ -136,7 +136,7 @@ class LoginViewModel : LoginModelInterface.LoginViewModel {
 
         try {
 
-            var realm: Realm? = null
+            val realm: Realm?
             Realm.init(mainContext)
 
             val config = RealmConfiguration.Builder()
@@ -178,7 +178,7 @@ class LoginViewModel : LoginModelInterface.LoginViewModel {
 
         try {
 
-            var realm: Realm? = null
+            val realm: Realm?
             Realm.init(mainContext)
 
             val config = RealmConfiguration.Builder()

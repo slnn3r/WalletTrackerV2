@@ -87,8 +87,7 @@ class LoginActivity : AppCompatActivity(), LoginViewInterface.LoginView {
     fun loadFailed(message: String) {
         Log.e(Constant.LoggingTag.LOGIN_LOGGING, message)
         mCustomErrorDialog.errorMessageDialog(this, message).show()
-
-        // Logout here
-        return
+        mLoginViewPresenter.forceSignOut(mGoogleSignInClient)
+        finish()
     }
 }

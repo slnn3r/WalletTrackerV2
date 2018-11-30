@@ -64,7 +64,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onStart()
         mMenuPresenter.bindView(this)
 
-        if(initialLaunch){
+        if (initialLaunch) {
             mGoogleSignInClient = mMenuPresenter.getGoogleSignInClient(this)
             userData = mMenuPresenter.getSignedInUser()!!
 
@@ -156,7 +156,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 getString(R.string.sign_out_dialog_message),
                 resources.getDrawable(android.R.drawable.ic_dialog_alert),
                 DialogInterface.OnClickListener { _, _ ->
-                    dashboardAdapterClickCount+=1
+                    dashboardAdapterClickCount += 1
                     mMenuPresenter.stopBackupDataPeriodically(this)
                     mMenuPresenter.executeGoogleSignOut(mGoogleSignInClient)
                 }).show()
@@ -183,7 +183,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val menu = navigationView.menu
         val navSyncData = menu.findItem(R.id.navDrawer_section_2)
 
-        navSyncData.title = "Backup at - "+backupDateTime
+        navSyncData.title = getString(R.string.backup_drawerDateTime, backupDateTime)
     }
 
 
@@ -193,14 +193,14 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun backupOnBackgroundStart() {
         Snackbar.make(findViewById<View>(android.R.id.content),
-                "Backup Data on Background...", Snackbar.LENGTH_SHORT)
+                getString(R.string.manualBackup_start_message), Snackbar.LENGTH_SHORT)
                 .show()
     }
 
     override fun backupPeriodicallyStart() {
         Handler().postDelayed({
             Snackbar.make(findViewById<View>(android.R.id.content),
-                    "Auto-Backup every 15 minutes", Snackbar.LENGTH_SHORT)
+                    getString(R.string.autoBackup_start_message), Snackbar.LENGTH_SHORT)
                     .show()
         }, 2000)
     }

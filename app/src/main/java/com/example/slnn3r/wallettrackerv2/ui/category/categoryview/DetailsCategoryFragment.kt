@@ -55,13 +55,13 @@ class DetailsCategoryFragment : Fragment(), CategoryViewInterface.DetailsCategor
         super.onStart()
         mDetailsCategoryViewPresenter.bindView(this)
 
-        if(initialLaunch){
+        if (initialLaunch) {
             userData = mDetailsCategoryViewPresenter.getSignedInUser()!!
 
             mDetailsCategoryViewPresenter.checkSelectedCategoryType(categoryArgData.categoryType)
             mDetailsCategoryViewPresenter.checkCategoryStatus(categoryArgData.categoryStatus)
         }
-        initialLaunch=false
+        initialLaunch = false
     }
 
     override fun onStop() {

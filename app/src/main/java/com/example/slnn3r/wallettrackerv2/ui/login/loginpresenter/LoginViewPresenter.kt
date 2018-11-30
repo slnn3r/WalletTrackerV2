@@ -11,6 +11,7 @@ import com.example.slnn3r.wallettrackerv2.ui.login.loginmodel.LoginViewModel
 import com.example.slnn3r.wallettrackerv2.ui.login.loginview.LoginViewInterface
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -76,7 +77,27 @@ class LoginViewPresenter : LoginPresenterInterface.LoginViewPresenter,
     }
 
     override fun retrieveData(mContext: Context, userUid: String) {
-        getView()!!.showLoadingDialog("Sync-ing Data...")
+        getView()!!.showLoadingDialog(mContext.getString(R.string.sync_loading_message))
         mLoginViewModel.retrieveDataFirebase(mContext, userUid)
+    }
+
+    override fun forceSignOut(mGoogleSignInClient: GoogleSignInClient) {
+        try {
+            FirebaseAuth.getInstance().signOut()
+        } catch (error: Exception) {
+            getView()!!.onError(error.toString())
+        }
+
+        mGoogleSignInClient.revokeAccess()
+                .addOnFailureListener {
+                    getView()!!.onError(it.message.toString())
+                    return@addOnFailureListener
+                }
+
+        mGoogleSignInClient.signOut()
+                .addOnFailureListener {
+                    getView()!!.onError(it.message.toString())
+                    return@addOnFailureListener
+                }
     }
 }

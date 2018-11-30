@@ -19,10 +19,10 @@
     <string name="navSection1_item2_title">Transaction Category</string>
     <string name="navSection1_item3_title">Transaction History</string>
     <string name="navSection1_item4_title">Transaction Report</string>
-    <string name="navSection2_title">Wallet Backup</string>
+    <string name="navSection2_title">Data Never Backup Before</string>
     <string name="navSection2_item1_title">Backup Data</string>
-    <string name="navSection3_title">Account</string>
-    <string name="navSection3_item1_title">Sign Out</string>
+    <string name="navSection2_item2_title">App Setting</string>
+    <string name="navSection2_item3_title">Sign Out</string>
 
     <!-- CustomAlertDialog-->
     <string name="confirmation_dialog_positive_title">Confirm</string>
@@ -42,6 +42,8 @@
     <string name="title_activity_menu">MenuActivity</string>
     <string name="welcome_message">Welcome, %s</string>
     <string name="doubleTabExit_label">Tab Back Again to Exit</string>
+    <string name="formatDisplayDateTime">%s (%s)</string>
+
 
     <!-- ViewAccountFragment -->
     <string name="ab_viewAcc_title">Account List</string>
@@ -187,4 +189,5 @@
     <string name="tv_historyFilter_dateOption_title">Date Filter Option</string>
     <string name="tl_historyFilter_startDate_title">From</string>
     <string name="tl_historyFilter_endDate_title">To</string>
+
 </resources>

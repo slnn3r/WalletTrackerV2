@@ -7,5 +7,6 @@ interface LoginPresenterInterface {
 
     interface LoginViewPresenter {
         fun executeGoogleSignIn(mContext: Context, requestCode: Int, resultCode: Int, data: Intent)
+        fun retrieveData(mContext: Context, userUid: String)
     }
 }

@@ -23,6 +23,8 @@ class Constant {
         const val HISTORY_DIALOG_LOGGING = "HIS DIALOG ERROR"
 
         const val REPORT_VIEW_LOGGING = "REPORT VIEW ERROR"
+
+        const val SETTING_VIEW_LOGGING = "SETTING VIEW ERROR"
     }
 
     object GoogleLoginApi {
@@ -72,6 +74,9 @@ class Constant {
         const val FILTER_INPUT_YEAR = "filterYear"
         const val FILTER_INPUT_STARTDATE = "filterStartDate"
         const val FILTER_INPUT_ENDDATE = "filterEndDate"
+
+        const val JOBSERVICE_USERID_KEY = "jobServiceUserUid"
+        const val JOBSERVICE_ID_KEY = 123
     }
 
     object NavigationKey {
@@ -95,6 +100,12 @@ class Constant {
         const val TRANSACTION_DATETIME_VARIABLE = "transactionDateTime"
         const val TRANSACTION_ID_VARIABLE = "transactionId"
         const val TRANSACTION_REMARK_VARIABLE = "transactionRemark"
+    }
+
+    object FirebasePushKey {
+        const val CATEGORY_FIREBASE_KEY = "category"
+        const val ACCOUNT_FIREBASE_KEY = "account"
+        const val TRANSACTION_FIREBASE_KEY = "transaction"
     }
 
     object RegularExpression {
@@ -140,6 +151,7 @@ class Constant {
         const val DAY_FORMAT = "EEE"
 
         const val TIME_12HOURS_FORMAT = "hh:mm:ss a"
+        const val TIME_24HOURS_FORMAT ="HH:mm:ss"
         const val DECIMAL_FORMAT = "#.##"
     }
 

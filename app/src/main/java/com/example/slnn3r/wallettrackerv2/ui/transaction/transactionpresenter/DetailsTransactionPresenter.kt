@@ -58,7 +58,7 @@ class DetailsTransactionPresenter : TransactionPresenterInterface.DetailsTransac
         val spinnerPosition = dataAdapter.getPosition(tempCategoryRef)
         val categoryItemSize = categoryNameList.size
 
-        if (spinnerPosition < 0 && !initialLaunch) {
+        if (spinnerPosition < 0 && initialLaunch) {
             categoryNameList[categoryItemSize - 1] =
                     categoryNameSelection.categoryName + categoryNameList[categoryItemSize - 1]
             getView()!!.selectDeletedCategorySpinnerData(categoryItemSize - 1)

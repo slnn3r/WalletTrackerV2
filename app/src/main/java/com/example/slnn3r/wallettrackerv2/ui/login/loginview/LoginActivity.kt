@@ -45,9 +45,9 @@ class LoginActivity : AppCompatActivity(), LoginViewInterface.LoginView {
         return
     }
 
-    override fun showLoadingDialog() {
+    override fun showLoadingDialog(loadingMessage: String) {
         progressDialog = ProgressDialog.show(this, null
-                , getString(R.string.sign_in_loading_message))
+                , loadingMessage)
     }
 
     override fun dismissLoadingDialog() {
@@ -55,9 +55,10 @@ class LoginActivity : AppCompatActivity(), LoginViewInterface.LoginView {
     }
 
     override fun signInSuccess() {
-        val intent = Intent(applicationContext, MenuActivity::class.java)
-        startActivity(intent)
-        finish()
+
+        val userData = mLoginViewPresenter.getSignedInUser()!!
+        mLoginViewPresenter.retrieveData(this, userData.uid) //Sync now
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -74,5 +75,20 @@ class LoginActivity : AppCompatActivity(), LoginViewInterface.LoginView {
     private fun launchGoogleLoginDialog() {
         val signInIntent = mGoogleSignInClient.signInIntent
         startActivityForResult(signInIntent, Constant.GoogleLoginApi.REQUEST_CODE)
+    }
+
+    fun finishLoad() {
+        progressDialog.dismiss()
+        val intent = Intent(applicationContext, MenuActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    fun loadFailed(message: String) {
+        Log.e(Constant.LoggingTag.LOGIN_LOGGING, message)
+        mCustomErrorDialog.errorMessageDialog(this, message).show()
+
+        // Logout here
+        return
     }
 }

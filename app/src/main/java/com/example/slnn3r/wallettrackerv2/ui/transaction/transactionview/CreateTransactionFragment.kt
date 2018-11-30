@@ -51,6 +51,8 @@ class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTra
     private lateinit var loadedCategoryList: ArrayList<Category>
     private lateinit var loadedAccountList: ArrayList<Account>
 
+    private var initialLaunch = true
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         simpleDateFormat = SimpleDateFormat((Constant.Format.DATE_FORMAT), Locale.US)
@@ -77,11 +79,14 @@ class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTra
         super.onStart()
         mCreateTransactionViewPresenter.bindView(this)
 
-        userData = mCreateTransactionViewPresenter.getSignedInUser()!!
+        if(initialLaunch){
+            userData = mCreateTransactionViewPresenter.getSignedInUser()!!
 
-        mCreateTransactionViewPresenter.getAccountList(context!!, userData.uid)
-        mCreateTransactionViewPresenter.getCategoryList(context!!, userData.uid,
-                tv_createTrans_catType_selection.text.toString())
+            mCreateTransactionViewPresenter.getAccountList(context!!, userData.uid)
+            mCreateTransactionViewPresenter.getCategoryList(context!!, userData.uid,
+                    tv_createTrans_catType_selection.text.toString())
+        }
+        initialLaunch= false
     }
 
     override fun onStop() {

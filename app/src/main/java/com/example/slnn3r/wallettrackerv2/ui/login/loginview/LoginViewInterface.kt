@@ -6,7 +6,7 @@ interface LoginViewInterface {
 
     interface LoginView : BaseView.Universal {
         fun signInSuccess()
-        fun showLoadingDialog()
+        fun showLoadingDialog(loadingMessage: String)
         fun dismissLoadingDialog()
     }
 }

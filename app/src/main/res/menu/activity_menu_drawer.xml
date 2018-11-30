@@ -36,18 +36,15 @@
                 android:id="@+id/nav_backup"
                 android:icon="@drawable/ic_backup"
                 android:title="@string/navSection2_item1_title" />
-        </menu>
-    </item>
+            <item
+                android:id="@+id/nav_setting"
+                android:icon="@drawable/ic_setting"
+                android:title="@string/navSection2_item2_title" />
 
-    <item
-        android:id="@+id/navDrawer_section_3"
-        android:title="@string/navSection3_title">
-        <menu>
             <item
                 android:id="@+id/nav_sign_out"
                 android:icon="@android:drawable/ic_menu_set_as"
-                android:title="@string/navSection3_item1_title" />
+                android:title="@string/navSection2_item3_title" />
         </menu>
     </item>
-
 </menu>

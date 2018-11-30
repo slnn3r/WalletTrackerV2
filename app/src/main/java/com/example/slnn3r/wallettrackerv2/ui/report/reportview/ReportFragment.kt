@@ -92,13 +92,15 @@ class ReportFragment : Fragment(), ReportViewInterface.ReportView {
 
         mReportViewPresenter.bindView(this)
 
-        userData = mReportViewPresenter.getSignedInUser()!!
+        if(initialLaunch){
+            userData = mReportViewPresenter.getSignedInUser()!!
 
-        mReportViewPresenter.getAccountList(context!!, userData.uid)
+            mReportViewPresenter.getAccountList(context!!, userData.uid)
 
-        mReportViewPresenter.getReportData(context!!, userData.uid,
-                sp_report_selectedAcc.selectedItem.toString(), loadedAccountList,
-                sp_report_monthSelection.selectedItem.toString(), sp_report_yearSelection.selectedItem.toString())
+            mReportViewPresenter.getReportData(context!!, userData.uid,
+                    sp_report_selectedAcc.selectedItem.toString(), loadedAccountList,
+                    sp_report_monthSelection.selectedItem.toString(), sp_report_yearSelection.selectedItem.toString())
+        }
     }
 
     override fun onStop() {

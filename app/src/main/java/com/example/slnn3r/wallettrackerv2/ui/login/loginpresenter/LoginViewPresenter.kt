@@ -7,6 +7,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.base.BasePresenter
+import com.example.slnn3r.wallettrackerv2.ui.login.loginmodel.LoginViewModel
 import com.example.slnn3r.wallettrackerv2.ui.login.loginview.LoginViewInterface
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -18,11 +19,13 @@ import com.google.firebase.auth.GoogleAuthProvider
 class LoginViewPresenter : LoginPresenterInterface.LoginViewPresenter,
         BasePresenter<LoginViewInterface.LoginView>() {
 
+    private val mLoginViewModel: LoginViewModel = LoginViewModel()
+
     override fun executeGoogleSignIn(mContext: Context, requestCode: Int,
                                      resultCode: Int, data: Intent) {
         if (resultCode != 0) { // Close the Google Sign In Dialog Manually or Unexpectedly will NOT return 0
             if (requestCode == 1) {
-                getView()!!.showLoadingDialog()
+                getView()!!.showLoadingDialog(mContext.getString(R.string.sign_in_loading_message))
                 val task = GoogleSignIn.getSignedInAccountFromIntent(data)
                 val accountGoogle = handleSignInResult(task)
                 firebaseAuthentication(mContext, accountGoogle)
@@ -70,5 +73,10 @@ class LoginViewPresenter : LoginPresenterInterface.LoginViewPresenter,
                     getView()!!.dismissLoadingDialog()
                     getView()!!.onError(it.message.toString())
                 }
+    }
+
+    override fun retrieveData(mContext: Context, userUid: String) {
+        getView()!!.showLoadingDialog("Sync-ing Data...")
+        mLoginViewModel.retrieveDataFirebase(mContext, userUid)
     }
 }

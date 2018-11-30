@@ -21,6 +21,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.constant.Constant
+import com.example.slnn3r.wallettrackerv2.ui.dashboard.dashboardadapter.dashboardAdapterClickCount
 import com.example.slnn3r.wallettrackerv2.ui.login.loginview.LoginActivity
 import com.example.slnn3r.wallettrackerv2.ui.menu.menupresenter.MenuViewPresenter
 import com.example.slnn3r.wallettrackerv2.util.CustomAlertDialog
@@ -49,6 +50,8 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private lateinit var toggle: ActionBarDrawerToggle
 
+    private var initialLaunch = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
@@ -60,13 +63,18 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onStart() {
         super.onStart()
         mMenuPresenter.bindView(this)
-        mGoogleSignInClient = mMenuPresenter.getGoogleSignInClient(this)
-        userData = mMenuPresenter.getSignedInUser()!!
 
-        navigationView = findViewById<View>(R.id.nav_view) as NavigationView
+        if(initialLaunch){
+            mGoogleSignInClient = mMenuPresenter.getGoogleSignInClient(this)
+            userData = mMenuPresenter.getSignedInUser()!!
 
-        displayUserDataToNavDrawer()
-        displayWelcomeMessage()
+            navigationView = findViewById<View>(R.id.nav_view) as NavigationView
+
+            displayUserDataToNavDrawer()
+            displayWelcomeMessage()
+            mMenuPresenter.checkBackupSetting(this, userData.uid)
+        }
+        initialLaunch = false
     }
 
     override fun onStop() {
@@ -132,12 +140,24 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 .navigate(R.id.action_dashboardFragment_to_reportFragment)
     }
 
+    override fun executeBackupOnBackground() {
+        mMenuPresenter.backupDataManually(this, userData.uid)
+    }
+
+    override fun proceedToSettingScreen() {
+        setupNavigationMode()
+        Navigation.findNavController(this, R.id.navMenu)
+                .navigate(R.id.action_dashboardFragment_to_settingFragment)
+    }
+
     override fun proceedToSignOut() {
         mCustomConfirmationDialog.confirmationDialog(this,
                 getString(R.string.sign_out_dialog_title),
                 getString(R.string.sign_out_dialog_message),
                 resources.getDrawable(android.R.drawable.ic_dialog_alert),
                 DialogInterface.OnClickListener { _, _ ->
+                    dashboardAdapterClickCount+=1
+                    mMenuPresenter.stopBackupDataPeriodically(this)
                     mMenuPresenter.executeGoogleSignOut(mGoogleSignInClient)
                 }).show()
     }
@@ -159,6 +179,32 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
     }
 
+    override fun updateDrawerBackupDateTime(backupDateTime: String) {
+        val menu = navigationView.menu
+        val navSyncData = menu.findItem(R.id.navDrawer_section_2)
+
+        navSyncData.title = "Backup at - "+backupDateTime
+    }
+
+
+    override fun executePeriodicalBackup() {
+        mMenuPresenter.backupDataPeriodically(this, userData.uid)
+    }
+
+    override fun backupOnBackgroundStart() {
+        Snackbar.make(findViewById<View>(android.R.id.content),
+                "Backup Data on Background...", Snackbar.LENGTH_SHORT)
+                .show()
+    }
+
+    override fun backupPeriodicallyStart() {
+        Handler().postDelayed({
+            Snackbar.make(findViewById<View>(android.R.id.content),
+                    "Auto-Backup every 15 minutes", Snackbar.LENGTH_SHORT)
+                    .show()
+        }, 2000)
+    }
+
     override fun superOnPressBack() {
         super.onBackPressed()
     }
@@ -173,6 +219,15 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+
+        drawer_layout.addDrawerListener(object : DrawerLayout.SimpleDrawerListener() {
+            override fun onDrawerOpened(drawerView: View) {
+                super.onDrawerOpened(drawerView)
+                mMenuPresenter.checkBackupDateTime(applicationContext, userData.uid)
+
+            }
+        })
+
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 

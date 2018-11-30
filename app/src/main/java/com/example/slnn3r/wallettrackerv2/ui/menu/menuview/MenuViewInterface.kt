@@ -16,10 +16,20 @@ interface MenuViewInterface {
         fun proceedToHistoryScreen()
         fun proceedToReportScreen()
 
+        fun executeBackupOnBackground()
+
+        fun proceedToSettingScreen()
         fun proceedToSignOut()
         fun signOutSuccess()
 
         fun displayDoubleTabExitMessage()
         fun superOnPressBack()
+
+        fun updateDrawerBackupDateTime(backupDateTime: String)
+
+        fun executePeriodicalBackup()
+
+        fun backupOnBackgroundStart()
+        fun backupPeriodicallyStart()
     }
 }

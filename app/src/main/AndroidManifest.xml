@@ -3,6 +3,7 @@
     package="com.example.slnn3r.wallettrackerv2">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> <!-- Backup JobService -->
 
     <application
         android:allowBackup="true"
@@ -22,6 +23,17 @@
         </activity>
         <activity android:name=".ui.login.loginview.LoginActivity"
             android:screenOrientation="portrait" />
+
+        <!-- Backup JobService -->
+        <service android:name=".service.BackupService.DataBackupJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            />
+
+        <!-- Stop Backup Service -->
+        <receiver android:name=".service.BackupService.StopBackupJobService" />
+
+        <!-- Stop Reminder Service -->
+        <receiver android:name=".service.ReminderService.ReminderService"/>
 
         <!-- Crashlytics -->
         <meta-data

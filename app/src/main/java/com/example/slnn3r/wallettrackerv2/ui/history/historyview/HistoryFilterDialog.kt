@@ -76,6 +76,12 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
         setupDateOptionSwitchButton()
     }
 
+    override fun onPause() {
+        super.onPause()
+        onFilterTriggerDialog.filterInputCancel()
+        dialog.dismiss()
+    }
+
     private fun setupDateOptionSwitchButton() {
         sb_historyFilter_dateOption.setOnCheckedChangeListener { _: CompoundButton, _: Boolean ->
             setupCurrentSpecificDate()

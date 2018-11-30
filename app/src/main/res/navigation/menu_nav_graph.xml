@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_dashboardFragment_to_reportFragment"
             app:destination="@id/reportFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailsTransactionFragment"
@@ -109,4 +112,9 @@
         android:name="com.example.slnn3r.wallettrackerv2.ui.report.reportview.ReportFragment"
         android:label="fragment_report"
         tools:layout="@layout/fragment_report" />
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.example.slnn3r.wallettrackerv2.ui.setting.settingview.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" />
 </navigation>

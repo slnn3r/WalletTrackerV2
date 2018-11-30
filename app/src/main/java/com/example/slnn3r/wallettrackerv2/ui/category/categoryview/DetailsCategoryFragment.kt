@@ -34,6 +34,8 @@ class DetailsCategoryFragment : Fragment(), CategoryViewInterface.DetailsCategor
     private lateinit var userData: FirebaseUser
     private lateinit var categoryArgData: Category
 
+    private var initialLaunch = true
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         (activity as? AppCompatActivity)?.supportActionBar?.title =
@@ -52,10 +54,14 @@ class DetailsCategoryFragment : Fragment(), CategoryViewInterface.DetailsCategor
     override fun onStart() {
         super.onStart()
         mDetailsCategoryViewPresenter.bindView(this)
-        userData = mDetailsCategoryViewPresenter.getSignedInUser()!!
 
-        mDetailsCategoryViewPresenter.checkSelectedCategoryType(categoryArgData.categoryType)
-        mDetailsCategoryViewPresenter.checkCategoryStatus(categoryArgData.categoryStatus)
+        if(initialLaunch){
+            userData = mDetailsCategoryViewPresenter.getSignedInUser()!!
+
+            mDetailsCategoryViewPresenter.checkSelectedCategoryType(categoryArgData.categoryType)
+            mDetailsCategoryViewPresenter.checkCategoryStatus(categoryArgData.categoryStatus)
+        }
+        initialLaunch=false
     }
 
     override fun onStop() {

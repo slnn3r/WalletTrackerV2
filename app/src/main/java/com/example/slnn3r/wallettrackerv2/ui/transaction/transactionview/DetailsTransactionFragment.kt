@@ -53,7 +53,7 @@ class DetailsTransactionFragment : Fragment(), TransactionViewInterface.DetailsT
     private lateinit var userData: FirebaseUser
     private lateinit var transactionArgData: Transaction
 
-    private var initialLaunch = false
+    private var initialLaunch = true
 
     private lateinit var loadedCategoryList: ArrayList<Category>
     private lateinit var loadedAccountList: ArrayList<Account>
@@ -85,10 +85,13 @@ class DetailsTransactionFragment : Fragment(), TransactionViewInterface.DetailsT
     override fun onStart() {
         super.onStart()
         mDetailsTransactionViewPresenter.bindView(this)
-        userData = mDetailsTransactionViewPresenter.getSignedInUser()!!
 
-        mDetailsTransactionViewPresenter.getAccountList(context!!, userData.uid)
-        mDetailsTransactionViewPresenter.checkSelectedCategoryType(transactionArgData.category.categoryType)
+        if(initialLaunch){
+            userData = mDetailsTransactionViewPresenter.getSignedInUser()!!
+
+            mDetailsTransactionViewPresenter.getAccountList(context!!, userData.uid)
+            mDetailsTransactionViewPresenter.checkSelectedCategoryType(transactionArgData.category.categoryType)
+        }
     }
 
     override fun onStop() {
@@ -178,7 +181,7 @@ class DetailsTransactionFragment : Fragment(), TransactionViewInterface.DetailsT
         mDetailsTransactionViewPresenter.checkCategoryData(categoryList, transactionArgData,
                 dataAdapter, categoryNameList, initialLaunch)
 
-        initialLaunch = true
+        initialLaunch = false
     }
 
     override fun editTransactionPrompt() {

@@ -57,7 +57,7 @@ open class BasePresenter<V : BaseView.Universal> {
     }
 
     fun clearSelectedAccountSharePreference(mContext: Context, userUid: String) {
-        baseModel.removeSelectedAccountSharePreference(mContext, userUid)
+        baseModel.removeUniversalSharePreference(mContext, userUid)
     }
 
     fun clearFilterInputSharePreference(mContext: Context) {

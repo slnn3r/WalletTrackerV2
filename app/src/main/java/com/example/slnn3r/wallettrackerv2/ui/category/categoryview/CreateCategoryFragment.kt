@@ -31,6 +31,8 @@ class CreateCategoryFragment : Fragment(), CategoryViewInterface.CreateCategoryV
 
     private lateinit var userData: FirebaseUser
 
+    private var initialLaunch = true
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         (activity as? AppCompatActivity)?.supportActionBar?.title =
@@ -52,9 +54,12 @@ class CreateCategoryFragment : Fragment(), CategoryViewInterface.CreateCategoryV
         mCreateCategoryViewPresenter.bindView(this)
         userData = mCreateCategoryViewPresenter.getSignedInUser()!!
 
-        // Receive Selected Category Type Argument from View screen
-        val selectedCategoryType = arguments?.getString(Constant.KeyId.CATEGORY_CREATE_ARG)
-        mCreateCategoryViewPresenter.checkSelectedCategoryType(selectedCategoryType!!)
+        if(initialLaunch){
+            // Receive Selected Category Type Argument from View screen
+            val selectedCategoryType = arguments?.getString(Constant.KeyId.CATEGORY_CREATE_ARG)
+            mCreateCategoryViewPresenter.checkSelectedCategoryType(selectedCategoryType!!)
+        }
+       initialLaunch=false
     }
 
     override fun onStop() {

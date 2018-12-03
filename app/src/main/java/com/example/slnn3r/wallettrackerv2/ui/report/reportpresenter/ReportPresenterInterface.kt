@@ -5,7 +5,7 @@ import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
 
 interface ReportPresenterInterface {
 
-    interface ReportViewPresenter{
+    interface ReportViewPresenter {
         fun getAccountList(mContext: Context, userUid: String)
         fun checkDateFilter(yearSelection: String, monthSelection: String)
         fun getReportData(mContext: Context, userUid: String,

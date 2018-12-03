@@ -19,14 +19,16 @@ android {
         applicationId "com.example.slnn3r.wallettrackerv2"
         minSdkVersion 23
         targetSdkVersion 28
+        resConfigs "en" // it said that enable to reduce apps size
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true // 'true' to make apps size smaller
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            shrinkResources true // 'true' to make apps size smaller
         }
     }
 }
@@ -62,5 +64,5 @@ dependencies {
     def nav_version = "1.0.0-alpha06"
     implementation "android.arch.navigation:navigation-fragment-ktx:$nav_version"
     implementation "android.arch.navigation:navigation-ui-ktx:$nav_version"
-    implementation 'android.arch.navigation:navigation-fragment:1.0.0-alpha06'
+    implementation "android.arch.navigation:navigation-fragment:$nav_version"
 }

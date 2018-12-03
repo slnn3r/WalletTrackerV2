@@ -329,58 +329,46 @@ class DetailsTransactionFragment : Fragment(), TransactionViewInterface.DetailsT
         val dateDialog =
                 DatePickerDialog(context!!,
                         DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-                            if (view != null) {
-                                enableAllUiComponent()
-                                (context as MenuActivity).setupNavigationMode()
-                                myCalendar.set(Calendar.YEAR, year)
-                                myCalendar.set(Calendar.MONTH, monthOfYear)
-                                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                                et_detailsTrans_date.setText(simpleDateFormat.format(myCalendar.time))
-                            }
+                            enableAllUiComponent()
+                            (context as MenuActivity).setupNavigationMode()
+                            myCalendar.set(Calendar.YEAR, year)
+                            myCalendar.set(Calendar.MONTH, monthOfYear)
+                            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                            et_detailsTrans_date.setText(simpleDateFormat.format(myCalendar.time))
                         }, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH))
 
         dateDialog.setOnCancelListener {
-            if (view != null) {
-                enableAllUiComponent()
-                (context as MenuActivity).setupNavigationMode()
-            }
+            enableAllUiComponent()
+            (context as MenuActivity).setupNavigationMode()
         }
 
         et_detailsTrans_date.setOnClickListener {
-            if (view != null) {
-                disableAllUiComponent()
-                (context as MenuActivity).setupToDisable()
-                dateDialog.show()
-            }
+            disableAllUiComponent()
+            (context as MenuActivity).setupToDisable()
+            dateDialog.show()
         }
     }
 
     private fun setupTimePicker() {
         val timeDialog = TimePickerDialog(context,
                 TimePickerDialog.OnTimeSetListener { _, selectedHour, selectedMinute ->
-                    if (view != null) {
-                        enableAllUiComponent()
-                        (context as MenuActivity).setupNavigationMode()
-                        val time = Time(selectedHour, selectedMinute, 0)
-                        val formattedTime = simpleTimeFormat.format(time)
-                        et_detailsTrans_time.setText(formattedTime)
-                    }
+                    enableAllUiComponent()
+                    (context as MenuActivity).setupNavigationMode()
+                    val time = Time(selectedHour, selectedMinute, 0)
+                    val formattedTime = simpleTimeFormat.format(time)
+                    et_detailsTrans_time.setText(formattedTime)
                 }, hour, minute, false)
 
         timeDialog.setOnCancelListener {
-            if (view != null) {
-                enableAllUiComponent()
-                (context as MenuActivity).setupNavigationMode()
-            }
+            enableAllUiComponent()
+            (context as MenuActivity).setupNavigationMode()
         }
 
         et_detailsTrans_time.setOnClickListener {
-            if (view != null) {
-                disableAllUiComponent()
-                (context as MenuActivity).setupToDisable()
-                timeDialog.show()
-            }
+            disableAllUiComponent()
+            (context as MenuActivity).setupToDisable()
+            timeDialog.show()
         }
     }
 

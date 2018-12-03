@@ -13,7 +13,6 @@ import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
 import com.example.slnn3r.wallettrackerv2.ui.account.accountadapter.AccountListAdapter
-import com.example.slnn3r.wallettrackerv2.ui.account.accountadapter.accAdapterClickCount
 import com.example.slnn3r.wallettrackerv2.ui.account.accountpresenter.ViewAccountPresenter
 import com.example.slnn3r.wallettrackerv2.util.CustomAlertDialog
 import com.google.firebase.auth.FirebaseUser
@@ -65,15 +64,10 @@ class ViewAccountFragment : Fragment(), AccountViewInterface.ViewAccountView {
 
     private fun setupCreateButton() {
         fb_viewAcc_createAcc.setOnClickListener {
-            if (accAdapterClickCount > 0) {
-                return@setOnClickListener
-            }
-
             val navController = view!!.findNavController()
             navController.navigate(R.id.action_viewAccountFragment_to_createAccountFragment)
 
             fb_viewAcc_createAcc.isEnabled = false
-            accAdapterClickCount += 1
         }
     }
 }

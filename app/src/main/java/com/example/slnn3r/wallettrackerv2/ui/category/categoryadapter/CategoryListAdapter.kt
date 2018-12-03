@@ -13,15 +13,8 @@ import com.example.slnn3r.wallettrackerv2.data.objectclass.Category
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.list_row_category.view.*
 
-var catAdapterClickCount = 0
-
 class CategoryListAdapter(private val categoryList: ArrayList<Category>) :
         RecyclerView.Adapter<CategoryViewHolder>() {
-
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        super.onAttachedToRecyclerView(recyclerView)
-        catAdapterClickCount = 0
-    }
 
     override fun getItemCount(): Int {
         return categoryList.count() + 1
@@ -75,7 +68,7 @@ class CategoryViewHolder(val view: View, var passData: Category? = null) :
         RecyclerView.ViewHolder(view) {
     init {
         view.setOnClickListener {
-            if (passData != null && catAdapterClickCount < 1) {
+            if (passData != null) {
                 val gson = Gson()
                 val categoryData = Category(passData!!.categoryId,
                         passData!!.categoryName, passData!!.categoryType,
@@ -89,8 +82,6 @@ class CategoryViewHolder(val view: View, var passData: Category? = null) :
                 bundle.putString(Constant.KeyId.CATEGORY_DETAILS_ARG, json)
                 navController
                         .navigate(R.id.action_viewCategoryFragment_to_detailsCategoryFragment, bundle)
-
-                catAdapterClickCount += 1
             }
         }
     }

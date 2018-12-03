@@ -12,7 +12,6 @@ import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Transaction
 import com.example.slnn3r.wallettrackerv2.ui.history.historyadapter.HistoryListAdapter
-import com.example.slnn3r.wallettrackerv2.ui.history.historyadapter.historyAdapterClickCount
 import com.example.slnn3r.wallettrackerv2.ui.history.historypresenter.HistoryViewPresenter
 import com.example.slnn3r.wallettrackerv2.ui.menu.menuview.MenuActivity
 import com.example.slnn3r.wallettrackerv2.util.CustomAlertDialog
@@ -50,10 +49,6 @@ class HistoryFragment : Fragment(), HistoryViewInterface.HistoryView,
 
     private fun setupFloatingButton() {
         fb_historyTrans_filterOption.setOnClickListener {
-            if (historyAdapterClickCount > 0) {
-                return@setOnClickListener
-            }
-
             disableAllUiComponent()
 
             val calCustomDialog = HistoryFilterDialog()
@@ -66,13 +61,11 @@ class HistoryFragment : Fragment(), HistoryViewInterface.HistoryView,
     private fun enableAllUiComponent() {
         (context as MenuActivity).setupNavigationMode()
         fb_historyTrans_filterOption.show()
-        historyAdapterClickCount = 0
     }
 
     private fun disableAllUiComponent() {
         (context as MenuActivity).setupToDisable()
         fb_historyTrans_filterOption.hide()
-        historyAdapterClickCount += 1
     }
 
     override fun onStart() {

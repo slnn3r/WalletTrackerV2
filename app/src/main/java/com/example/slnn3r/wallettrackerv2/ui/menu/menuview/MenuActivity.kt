@@ -21,13 +21,9 @@ import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.constant.Constant
-import com.example.slnn3r.wallettrackerv2.ui.account.accountadapter.accAdapterClickCount
-import com.example.slnn3r.wallettrackerv2.ui.category.categoryadapter.catAdapterClickCount
 import com.example.slnn3r.wallettrackerv2.ui.dashboard.dashboardadapter.dashboardAdapterClickCount
-import com.example.slnn3r.wallettrackerv2.ui.history.historyadapter.historyAdapterClickCount
 import com.example.slnn3r.wallettrackerv2.ui.login.loginview.LoginActivity
 import com.example.slnn3r.wallettrackerv2.ui.menu.menupresenter.MenuViewPresenter
-import com.example.slnn3r.wallettrackerv2.ui.report.reportadapter.reportAdapterClickCount
 import com.example.slnn3r.wallettrackerv2.util.CustomAlertDialog
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseUser
@@ -87,11 +83,6 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onBackPressed() {
-        reportAdapterClickCount += 1
-        historyAdapterClickCount += 1
-        accAdapterClickCount += 1
-        catAdapterClickCount += 1
-
         val currentScreen = findNavController(R.id.navMenu).currentDestination!!.id
         mMenuPresenter.checkNavigationStatus(isNavigated, true, currentScreen,
                 drawer_layout.isDrawerOpen(GravityCompat.START), doubleBackToExitPressedOnce)
@@ -165,7 +156,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 getString(R.string.sign_out_dialog_message),
                 resources.getDrawable(android.R.drawable.ic_dialog_alert),
                 DialogInterface.OnClickListener { _, _ ->
-                    dashboardAdapterClickCount += 1
+                    dashboardAdapterClickCount += 1 // just for prevent crash during click sign out then spam the Recent Transaction List
                     mMenuPresenter.stopBackupDataPeriodically(this)
                     mMenuPresenter.executeGoogleSignOut(mGoogleSignInClient)
                 }).show()
@@ -241,11 +232,6 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // Setup Custom Navigation Drawer Button Listener
         toolbar.setNavigationOnClickListener {
-            reportAdapterClickCount += 1
-            historyAdapterClickCount += 1
-            accAdapterClickCount += 1
-            catAdapterClickCount += 1
-
             mMenuPresenter.checkNavigationStatus(isNavigated, false,
                     null, false, doubleBackToExitPressedOnce)
         }

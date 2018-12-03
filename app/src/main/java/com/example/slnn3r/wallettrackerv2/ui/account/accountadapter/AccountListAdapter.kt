@@ -12,15 +12,8 @@ import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.list_row_account.view.*
 
-var accAdapterClickCount = 0
-
 class AccountListAdapter(private val accountList: ArrayList<Account>) :
         RecyclerView.Adapter<AccountViewHolder>() {
-
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        super.onAttachedToRecyclerView(recyclerView)
-        accAdapterClickCount = 0
-    }
 
     override fun getItemCount(): Int {
         // +1 in order to create a empty list to resolve avoid floating button blocking issue
@@ -65,7 +58,7 @@ class AccountViewHolder(val view: View, var passData: Account? = null) :
         RecyclerView.ViewHolder(view) {
     init {
         view.setOnClickListener {
-            if (passData != null && accAdapterClickCount < 1) {
+            if (passData != null) {
                 val gson = Gson()
                 val accountData = Account(passData!!.accountId, passData!!.accountName,
                         passData!!.accountDesc, passData!!.userUid,
@@ -79,8 +72,6 @@ class AccountViewHolder(val view: View, var passData: Account? = null) :
                 bundle.putString(Constant.KeyId.ACCOUNT_DETAILS_ARG, json)
                 navController
                         .navigate(R.id.action_viewAccountFragment_to_detailsAccountFragment, bundle)
-
-                accAdapterClickCount += 1
             }
         }
     }

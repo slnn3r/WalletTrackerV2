@@ -42,7 +42,7 @@ class LoginViewModel : LoginModelInterface.LoginViewModel {
                     }
 
                     override fun onCancelled(databaseError: DatabaseError) {
-                        (mContext as LoginActivity).loadFailed(databaseError.message.toString())
+                        (mContext as LoginActivity).loadFailed(databaseError.message)
                     }
                 })
 
@@ -64,7 +64,7 @@ class LoginViewModel : LoginModelInterface.LoginViewModel {
                     }
 
                     override fun onCancelled(databaseError: DatabaseError) {
-                        (mContext as LoginActivity).loadFailed(databaseError.message.toString())
+                        (mContext as LoginActivity).loadFailed(databaseError.message)
                     }
                 })
 
@@ -85,7 +85,7 @@ class LoginViewModel : LoginModelInterface.LoginViewModel {
                     }
 
                     override fun onCancelled(databaseError: DatabaseError) {
-                        (mContext as LoginActivity).loadFailed(databaseError.message.toString())
+                        (mContext as LoginActivity).loadFailed(databaseError.message)
                     }
                 })
     }

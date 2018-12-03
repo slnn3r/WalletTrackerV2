@@ -18,7 +18,6 @@ import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Transaction
 import com.example.slnn3r.wallettrackerv2.ui.dashboard.dashboardadapter.TransactionListAdapter
-import com.example.slnn3r.wallettrackerv2.ui.dashboard.dashboardadapter.dashboardAdapterClickCount
 import com.example.slnn3r.wallettrackerv2.ui.dashboard.dashboardpresenter.DashboardViewPresenter
 import com.example.slnn3r.wallettrackerv2.ui.menu.menuview.MenuActivity
 import com.example.slnn3r.wallettrackerv2.util.CustomAlertDialog
@@ -69,7 +68,6 @@ class DashboardFragment : Fragment(), DashboardViewInterface.DashboardView {
     override fun onStop() {
         super.onStop()
         mDashboardViewPresenter.unbindView()
-        dashboardAdapterClickCount = 0 // reset click count
     }
 
     override fun populateAccountSpinner(accountList: ArrayList<Account>) {
@@ -180,10 +178,6 @@ class DashboardFragment : Fragment(), DashboardViewInterface.DashboardView {
 
     private fun setupCreateButton() {
         fb_dashboard_createTrans.setOnClickListener {
-            if (dashboardAdapterClickCount > 0) {
-                return@setOnClickListener
-            }
-
             (activity as MenuActivity).setupNavigationMode()
 
             val navController = view!!.findNavController()
@@ -191,7 +185,6 @@ class DashboardFragment : Fragment(), DashboardViewInterface.DashboardView {
 
             // Used to Prevent navController unknown destination error (trigger when receive multiple time same request in other screen)
             fb_dashboard_createTrans.isEnabled = false
-            dashboardAdapterClickCount += 1
         }
     }
 

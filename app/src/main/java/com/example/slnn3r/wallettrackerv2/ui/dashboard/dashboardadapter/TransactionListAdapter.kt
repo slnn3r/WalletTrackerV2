@@ -118,7 +118,7 @@ class TransactionViewHolder(val view: View, var passData: Transaction? = null) :
                 navController
                         .navigate(R.id.action_dashboardFragment_to_detailsTransactionFragment, bundle)
 
-                dashboardAdapterClickCount += 1
+                dashboardAdapterClickCount += 1 // just for prevent crash during click sign out then spam the Recent Transaction List
             }
         }
     }

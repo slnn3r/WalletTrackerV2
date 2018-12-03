@@ -15,15 +15,8 @@ import kotlinx.android.synthetic.main.list_row_transaction.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-var historyAdapterClickCount = 0
-
 class HistoryListAdapter(private val transactionList: ArrayList<Transaction>) :
         RecyclerView.Adapter<TransactionViewHolder>() {
-
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        super.onAttachedToRecyclerView(recyclerView)
-        historyAdapterClickCount = 0
-    }
 
     override fun getItemCount(): Int {
         return transactionList.count() + 1
@@ -101,7 +94,7 @@ class TransactionViewHolder(val view: View, var passData: Transaction? = null) :
         RecyclerView.ViewHolder(view) {
     init {
         view.setOnClickListener {
-            if (passData != null && historyAdapterClickCount < 1) {
+            if (passData != null) {
                 val gson = Gson()
 
                 val transactionData = Transaction(passData!!.transactionId,
@@ -117,8 +110,6 @@ class TransactionViewHolder(val view: View, var passData: Transaction? = null) :
                 bundle.putString(Constant.KeyId.TRANSACTION_DETAILS_ARG, json)
                 navController
                         .navigate(R.id.action_historyFragment_to_detailsTransactionFragment, bundle)
-
-                historyAdapterClickCount += 1
             }
         }
     }

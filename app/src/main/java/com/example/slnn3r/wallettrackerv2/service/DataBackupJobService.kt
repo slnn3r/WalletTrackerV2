@@ -4,7 +4,6 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.job.JobParameters
-import android.app.job.JobScheduler
 import android.app.job.JobService
 import android.content.Context
 import android.content.Intent
@@ -12,7 +11,6 @@ import android.os.Build
 import android.os.Handler
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.base.BaseModel
@@ -219,10 +217,6 @@ class DataBackupJobService : JobService() {
                 // notificationId is a unique int for each notification that you must define
                 notify(Constant.KeyId.NOTIFICATION_ID, mBuilder.build())
             }
-        } else { // might no need as setting already stop it
-            val scheduler: JobScheduler = applicationContext
-                    .getSystemService(AppCompatActivity.JOB_SCHEDULER_SERVICE) as JobScheduler
-            scheduler.cancel(Constant.KeyId.JOBSERVICE_ID_KEY)
         }
     }
 }

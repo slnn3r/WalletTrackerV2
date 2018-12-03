@@ -81,7 +81,6 @@ class HistoryViewPresenter : HistoryPresenterInterface.HistoryViewPresenter,
 
                     val date = Date(endAllDate)
                     endDateCalendar.time = date
-                    endDateCalendar.add(Calendar.DAY_OF_MONTH, 1)
 
                     endDate = Date.parse(endDateCalendar.time.toString())
 

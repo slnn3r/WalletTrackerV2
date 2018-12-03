@@ -119,7 +119,7 @@
     <string name="mp_barChart_balance_title">Balance</string>
     <string name="tv_dateSelection_title">Date Selection</string>
     <string name="tv_report_summaryTitle">Summary Report</string>
-    <string name="tv_report_transactionTitle">Summary Transaction</string>
+    <string name="tv_report_transactionTitle">Total Transactions: %d</string>
 
     <!-- SettingFragment-->
     <string name="ab_setting_title">Application Setting</string>

@@ -16,5 +16,6 @@ interface ReportViewInterface {
                                       transactionList: ArrayList<Transaction>)
 
         fun populateSummaryGraph(entryList: ArrayList<BarEntry>, yAxisList: ArrayList<String>)
+        fun setTotalTransactionLabel(transactionCount: Int)
     }
 }

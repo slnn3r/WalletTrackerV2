@@ -182,6 +182,10 @@ class ReportFragment : Fragment(), ReportViewInterface.ReportView {
         mp_report_summaryChart.markerView = mv
     }
 
+    override fun setTotalTransactionLabel(transactionCount: Int) {
+        tv_report_transaction_title.text =
+                getString(R.string.tv_report_transactionTitle, transactionCount)
+    }
 
     // Format the X Axis Value to Display Desired String Value
     inner class MyXAxisValueFormatter(private val mValues: ArrayList<String>) : IAxisValueFormatter {

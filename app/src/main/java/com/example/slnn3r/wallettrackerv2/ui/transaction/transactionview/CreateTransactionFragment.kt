@@ -216,6 +216,7 @@ class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTra
             calCustomDialog.setTargetFragment(this, 1)
             calCustomDialog.show(this.fragmentManager, "")
         }
+
     }
 
     private fun setupRemarkAutoComplete() {
@@ -235,24 +236,30 @@ class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTra
         val dateDialog =
                 DatePickerDialog(context!!,
                         DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-                            enableAllUiComponent()
-                            (context as MenuActivity).setupNavigationMode()
-                            myCalendar.set(Calendar.YEAR, year)
-                            myCalendar.set(Calendar.MONTH, monthOfYear)
-                            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                            et_createTrans_date.setText(simpleDateFormat.format(myCalendar.time))
+                            if (view != null) {
+                                enableAllUiComponent()
+                                (context as MenuActivity).setupNavigationMode()
+                                myCalendar.set(Calendar.YEAR, year)
+                                myCalendar.set(Calendar.MONTH, monthOfYear)
+                                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                                et_createTrans_date.setText(simpleDateFormat.format(myCalendar.time))
+                            }
                         }, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH))
 
         dateDialog.setOnCancelListener {
-            enableAllUiComponent()
-            (context as MenuActivity).setupNavigationMode()
+            if (view != null) {
+                enableAllUiComponent()
+                (context as MenuActivity).setupNavigationMode()
+            }
         }
 
         et_createTrans_date.setOnClickListener {
-            disableAllUiComponent()
-            (context as MenuActivity).setupToDisable()
-            dateDialog.show()
+            if (view != null) {
+                disableAllUiComponent()
+                (context as MenuActivity).setupToDisable()
+                dateDialog.show()
+            }
         }
 
         // Initial Date
@@ -262,22 +269,28 @@ class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTra
     private fun setupTimePicker() {
         val timeDialog = TimePickerDialog(context,
                 TimePickerDialog.OnTimeSetListener { _, selectedHour, selectedMinute ->
-                    enableAllUiComponent()
-                    (context as MenuActivity).setupNavigationMode()
-                    val time = Time(selectedHour, selectedMinute, 0)
-                    val formattedTime = simpleTimeFormat.format(time)
-                    et_createTrans_time.setText(formattedTime)
+                    if (view != null) {
+                        enableAllUiComponent()
+                        (context as MenuActivity).setupNavigationMode()
+                        val time = Time(selectedHour, selectedMinute, 0)
+                        val formattedTime = simpleTimeFormat.format(time)
+                        et_createTrans_time.setText(formattedTime)
+                    }
                 }, hour, minute, false)
 
         timeDialog.setOnCancelListener {
-            enableAllUiComponent()
-            (context as MenuActivity).setupNavigationMode()
+            if (view != null) {
+                enableAllUiComponent()
+                (context as MenuActivity).setupNavigationMode()
+            }
         }
 
         et_createTrans_time.setOnClickListener {
-            disableAllUiComponent()
-            (context as MenuActivity).setupToDisable()
-            timeDialog.show()
+            if (view != null) {
+                disableAllUiComponent()
+                (context as MenuActivity).setupToDisable()
+                timeDialog.show()
+            }
         }
 
         // Initial Time

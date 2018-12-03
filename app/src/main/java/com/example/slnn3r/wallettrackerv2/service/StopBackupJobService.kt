@@ -20,7 +20,7 @@ class StopBackupJobService : BroadcastReceiver() {
         context.sendBroadcast(it)
 
         // remove notification from notification tray
-        NotificationManagerCompat.from(context).cancel(1)
+        NotificationManagerCompat.from(context).cancel(Constant.KeyId.NOTIFICATION_ID)
 
     }
 }

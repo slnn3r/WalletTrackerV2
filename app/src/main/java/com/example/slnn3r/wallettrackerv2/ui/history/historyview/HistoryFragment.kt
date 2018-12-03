@@ -28,8 +28,6 @@ class HistoryFragment : Fragment(), HistoryViewInterface.HistoryView,
 
     private lateinit var userData: FirebaseUser
 
-    private var initialLaunch = true
-
     override fun filterInputSubmit() {
         enableAllUiComponent()
         mHistoryViewPresenter.getHistoryData(context!!, userData.uid)
@@ -81,12 +79,10 @@ class HistoryFragment : Fragment(), HistoryViewInterface.HistoryView,
         super.onStart()
         mHistoryViewPresenter.bindView(this)
 
-        if (initialLaunch) {
-            userData = mHistoryViewPresenter.getSignedInUser()!!
+        userData = mHistoryViewPresenter.getSignedInUser()!!
 
-            mHistoryViewPresenter.getHistoryData(context!!, userData.uid)
-        }
-        initialLaunch = false
+        mHistoryViewPresenter.getHistoryData(context!!, userData.uid)
+
     }
 
     override fun onStop() {

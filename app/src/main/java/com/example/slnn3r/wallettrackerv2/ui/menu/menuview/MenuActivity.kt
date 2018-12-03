@@ -21,9 +21,13 @@ import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.constant.Constant
+import com.example.slnn3r.wallettrackerv2.ui.account.accountadapter.accAdapterClickCount
+import com.example.slnn3r.wallettrackerv2.ui.category.categoryadapter.catAdapterClickCount
 import com.example.slnn3r.wallettrackerv2.ui.dashboard.dashboardadapter.dashboardAdapterClickCount
+import com.example.slnn3r.wallettrackerv2.ui.history.historyadapter.historyAdapterClickCount
 import com.example.slnn3r.wallettrackerv2.ui.login.loginview.LoginActivity
 import com.example.slnn3r.wallettrackerv2.ui.menu.menupresenter.MenuViewPresenter
+import com.example.slnn3r.wallettrackerv2.ui.report.reportadapter.reportAdapterClickCount
 import com.example.slnn3r.wallettrackerv2.util.CustomAlertDialog
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseUser
@@ -83,6 +87,11 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onBackPressed() {
+        reportAdapterClickCount += 1
+        historyAdapterClickCount += 1
+        accAdapterClickCount += 1
+        catAdapterClickCount += 1
+
         val currentScreen = findNavController(R.id.navMenu).currentDestination!!.id
         mMenuPresenter.checkNavigationStatus(isNavigated, true, currentScreen,
                 drawer_layout.isDrawerOpen(GravityCompat.START), doubleBackToExitPressedOnce)
@@ -224,7 +233,6 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             override fun onDrawerOpened(drawerView: View) {
                 super.onDrawerOpened(drawerView)
                 mMenuPresenter.checkBackupDateTime(applicationContext, userData.uid)
-
             }
         })
 
@@ -233,6 +241,11 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // Setup Custom Navigation Drawer Button Listener
         toolbar.setNavigationOnClickListener {
+            reportAdapterClickCount += 1
+            historyAdapterClickCount += 1
+            accAdapterClickCount += 1
+            catAdapterClickCount += 1
+
             mMenuPresenter.checkNavigationStatus(isNavigated, false,
                     null, false, doubleBackToExitPressedOnce)
         }

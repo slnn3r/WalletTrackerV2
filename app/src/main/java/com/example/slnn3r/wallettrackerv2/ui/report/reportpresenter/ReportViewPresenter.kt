@@ -123,6 +123,7 @@ class ReportViewPresenter : ReportPresenterInterface.ReportViewPresenter,
             yAxisLabel.add(mContext.getString(R.string.mp_barChart_expense_title))
             yAxisLabel.add(mContext.getString(R.string.mp_barChart_income_title))
 
+            getView()!!.setTotalTransactionLabel(transactionList.size)
             getView()!!.populateSummaryGraph(entries, yAxisLabel)
             getView()!!.populateReportRecycleView(transactionSummaryList, transactionList)
 

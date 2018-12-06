@@ -107,7 +107,11 @@ class CalculatorDialog : BottomSheetDialogFragment() {
                     || tv_calCustomDialog_amount.text.toString() == "") {
                 inputSelection.calculatorNoInput()
             } else {
-                inputSelection.calculatorInput(tv_calCustomDialog_amount.text.toString())
+                if (tv_calCustomDialog_amount.text.toString().toDouble() > 0) {
+                    inputSelection.calculatorInput(tv_calCustomDialog_amount.text.toString())
+                } else {
+                    inputSelection.calculatorNoInput()
+                }
             }
 
             dialog.dismiss()

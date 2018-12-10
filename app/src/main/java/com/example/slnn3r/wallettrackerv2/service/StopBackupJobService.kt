@@ -4,8 +4,8 @@ import android.app.job.JobScheduler
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.support.v4.app.NotificationManagerCompat
-import android.support.v7.app.AppCompatActivity
+import androidx.core.app.NotificationManagerCompat
+import androidx.appcompat.app.AppCompatActivity
 import com.example.slnn3r.wallettrackerv2.constant.Constant
 
 class StopBackupJobService : BroadcastReceiver() {

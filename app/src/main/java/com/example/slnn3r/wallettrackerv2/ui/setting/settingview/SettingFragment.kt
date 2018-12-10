@@ -3,18 +3,18 @@ package com.example.slnn3r.wallettrackerv2.ui.setting.settingview
 import android.app.Activity
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.example.slnn3r.wallettrackerv2.ui.setting.settingpresenter.SettingViewPresenter
 import com.example.slnn3r.wallettrackerv2.util.CustomAlertDialog
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.fragment_setting.*
 

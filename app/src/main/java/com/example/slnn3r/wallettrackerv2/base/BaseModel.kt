@@ -1,7 +1,7 @@
 package com.example.slnn3r.wallettrackerv2.base
 
 import android.content.Context
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Category

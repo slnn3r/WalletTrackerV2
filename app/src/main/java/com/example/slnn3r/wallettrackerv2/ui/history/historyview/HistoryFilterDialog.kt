@@ -4,9 +4,6 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.support.design.widget.BottomSheetBehavior
-import android.support.design.widget.BottomSheetDialog
-import android.support.design.widget.BottomSheetDialogFragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +19,9 @@ import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Category
 import com.example.slnn3r.wallettrackerv2.ui.history.historypresenter.HistoryFilterDialogPresenter
 import com.example.slnn3r.wallettrackerv2.util.CustomAlertDialog
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.dialog_history_filter.*
 import java.text.SimpleDateFormat
@@ -79,7 +79,7 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
     override fun onPause() {
         super.onPause()
         onFilterTriggerDialog.filterInputCancel()
-        dialog.dismiss()
+        dialog!!.dismiss()
     }
 
     private fun setupDateOptionSwitchButton() {
@@ -336,23 +336,23 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
 
             if (tv_historyFilter_dateOption.text == Constant.ConditionalKeyword.SPECIFIC_DATE) {
                 onFilterTriggerDialog.filterInputSubmit()
-                dialog.dismiss()
+                dialog!!.dismiss()
             } else {
                 onFilterTriggerDialog.filterInputSubmit()
-                dialog.dismiss()
+                dialog!!.dismiss()
             }
         }
 
         btn_historyFilter_cancel.setOnClickListener {
             onFilterTriggerDialog.filterInputCancel()
-            dialog.dismiss()
+            dialog!!.dismiss()
         }
     }
 
     private fun setupDialogInitialUi() {
         view!!.viewTreeObserver.addOnGlobalLayoutListener {
             val dialog = dialog as BottomSheetDialog
-            val bottomSheet = dialog.findViewById<View>(android.support.design.R.id.design_bottom_sheet) as FrameLayout?
+            val bottomSheet = dialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout?
             val behavior = BottomSheetBehavior.from(bottomSheet!!)
 
             dialog.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
@@ -403,7 +403,7 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
         sp_historyFilter_specificMonth.adapter = monthAdapter
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
 
         try {

@@ -5,9 +5,6 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +12,8 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.CompoundButton
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
@@ -24,6 +23,7 @@ import com.example.slnn3r.wallettrackerv2.ui.menu.menuview.MenuActivity
 import com.example.slnn3r.wallettrackerv2.ui.transaction.transactiondialog.CalculatorDialog
 import com.example.slnn3r.wallettrackerv2.ui.transaction.transactionpresenter.CreateTransactionPresenter
 import com.example.slnn3r.wallettrackerv2.util.CustomAlertDialog
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.fragment_create_transaction.*
 import java.sql.Time
@@ -214,7 +214,7 @@ class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTra
             calCustomDialog.arguments = args
             calCustomDialog.isCancelable = false
             calCustomDialog.setTargetFragment(this, 1)
-            calCustomDialog.show(this.fragmentManager, "")
+            calCustomDialog.show(this.fragmentManager!!, "")
         }
 
     }

@@ -6,9 +6,6 @@ import android.app.TimePickerDialog
 import android.content.DialogInterface
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +13,8 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.CompoundButton
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
@@ -25,6 +24,7 @@ import com.example.slnn3r.wallettrackerv2.ui.menu.menuview.MenuActivity
 import com.example.slnn3r.wallettrackerv2.ui.transaction.transactiondialog.CalculatorDialog
 import com.example.slnn3r.wallettrackerv2.ui.transaction.transactionpresenter.DetailsTransactionPresenter
 import com.example.slnn3r.wallettrackerv2.util.CustomAlertDialog
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseUser
 import com.google.gson.Gson
 import com.leinardi.android.speeddial.SpeedDialActionItem
@@ -308,7 +308,7 @@ class DetailsTransactionFragment : Fragment(), TransactionViewInterface.DetailsT
             calCustomDialog.arguments = args
             calCustomDialog.isCancelable = false
             calCustomDialog.setTargetFragment(this, 1)
-            calCustomDialog.show(this.fragmentManager, "")
+            calCustomDialog.show(this.fragmentManager!!, "")
         }
     }
 

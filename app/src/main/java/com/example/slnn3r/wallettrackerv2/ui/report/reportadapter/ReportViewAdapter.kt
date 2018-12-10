@@ -1,11 +1,11 @@
 package com.example.slnn3r.wallettrackerv2.ui.report.reportadapter
 
 import android.content.res.ColorStateList
-import android.support.v4.app.Fragment
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Transaction
@@ -96,7 +96,7 @@ class TransactionViewHolder(val view: View, var passTransactionSummaryData: Tran
                 calCustomDialog.setTransactionData(filterList)
                 calCustomDialog.setTransactionSummaryData(passTransactionSummaryData!!)
                 calCustomDialog.setTargetFragment(passFragment!!, 1)
-                calCustomDialog.show(passFragment!!.fragmentManager, "")
+                calCustomDialog.show(passFragment!!.fragmentManager!!, "")
 
                 reportAdapterClickCount += 1
             }

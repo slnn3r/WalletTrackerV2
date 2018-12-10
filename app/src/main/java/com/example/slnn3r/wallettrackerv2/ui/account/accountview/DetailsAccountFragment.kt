@@ -3,9 +3,6 @@ package com.example.slnn3r.wallettrackerv2.ui.account.accountview
 import android.app.Activity
 import android.content.DialogInterface
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
@@ -14,11 +11,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
 import com.example.slnn3r.wallettrackerv2.ui.account.accountpresenter.DetailsAccountPresenter
 import com.example.slnn3r.wallettrackerv2.util.CustomAlertDialog
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseUser
 import com.google.gson.Gson
 import com.leinardi.android.speeddial.SpeedDialActionItem

@@ -1,10 +1,10 @@
 package com.example.slnn3r.wallettrackerv2.ui.report.reportadapter
 
 import android.content.res.ColorStateList
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Transaction

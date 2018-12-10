@@ -1,13 +1,13 @@
 package com.example.slnn3r.wallettrackerv2.ui.history.historyview
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Transaction
@@ -59,7 +59,7 @@ class HistoryFragment : Fragment(), HistoryViewInterface.HistoryView,
             val calCustomDialog = HistoryFilterDialog()
             calCustomDialog.isCancelable = false
             calCustomDialog.setTargetFragment(this, 1)
-            calCustomDialog.show(this.fragmentManager, "")
+            calCustomDialog.show(this.fragmentManager!!, "")
         }
     }
 

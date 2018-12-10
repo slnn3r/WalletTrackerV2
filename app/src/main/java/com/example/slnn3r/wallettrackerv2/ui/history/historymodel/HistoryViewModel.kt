@@ -2,7 +2,7 @@ package com.example.slnn3r.wallettrackerv2.ui.history.historymodel
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Category

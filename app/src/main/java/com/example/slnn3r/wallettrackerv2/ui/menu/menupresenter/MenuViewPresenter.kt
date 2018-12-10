@@ -6,7 +6,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.os.Handler
 import android.os.PersistableBundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
 import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.base.BaseModel

@@ -3,9 +3,6 @@ package com.example.slnn3r.wallettrackerv2.ui.transaction.transactiondialog
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
-import android.support.design.widget.BottomSheetBehavior
-import android.support.design.widget.BottomSheetDialog
-import android.support.design.widget.BottomSheetDialogFragment
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -15,6 +12,9 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.constant.Constant
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.dialog_calculator.*
 import java.text.DecimalFormat
 
@@ -57,7 +57,7 @@ class CalculatorDialog : BottomSheetDialogFragment() {
         view.viewTreeObserver.addOnGlobalLayoutListener {
             val dialog = dialog as BottomSheetDialog
             val bottomSheet = dialog
-                    .findViewById<View>(android.support.design.R.id.design_bottom_sheet) as FrameLayout?
+                    .findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout?
             val behavior = BottomSheetBehavior.from(bottomSheet!!)
 
             behavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
@@ -114,16 +114,16 @@ class CalculatorDialog : BottomSheetDialogFragment() {
                 }
             }
 
-            dialog.dismiss()
+            dialog!!.dismiss()
         }
 
         btn_cancel_calCustomDialog.setOnClickListener {
             if (myValue.toDoubleOrNull() != null) {
                 inputSelection.calculatorInput(myValue)
-                dialog.dismiss()
+                dialog!!.dismiss()
             } else {
                 inputSelection.calculatorNoInput()
-                dialog.dismiss()
+                dialog!!.dismiss()
             }
         }
 
@@ -385,7 +385,7 @@ class CalculatorDialog : BottomSheetDialogFragment() {
         }
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
 
         try {

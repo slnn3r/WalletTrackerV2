@@ -1,20 +1,20 @@
 package com.example.slnn3r.wallettrackerv2.ui.report.reportdialog
 
 import android.os.Bundle
-import android.support.design.widget.BottomSheetBehavior
-import android.support.design.widget.BottomSheetDialog
-import android.support.design.widget.BottomSheetDialogFragment
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Transaction
 import com.example.slnn3r.wallettrackerv2.data.objectclass.TransactionSummary
 import com.example.slnn3r.wallettrackerv2.ui.menu.menuview.MenuActivity
 import com.example.slnn3r.wallettrackerv2.ui.report.reportadapter.ReportTransListAdapter
 import com.example.slnn3r.wallettrackerv2.ui.report.reportadapter.reportAdapterClickCount
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.dialog_report_transaction_list.*
 
 class ReportTransListDialog : BottomSheetDialogFragment() {
@@ -41,7 +41,7 @@ class ReportTransListDialog : BottomSheetDialogFragment() {
         view.viewTreeObserver.addOnGlobalLayoutListener {
             val dialog = dialog as BottomSheetDialog
             val bottomSheet = dialog
-                    .findViewById<View>(android.support.design.R.id.design_bottom_sheet) as FrameLayout?
+                    .findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout?
             val behavior = BottomSheetBehavior.from(bottomSheet!!)
 
             behavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
@@ -60,7 +60,7 @@ class ReportTransListDialog : BottomSheetDialogFragment() {
 
         btn_reportTrans_close.setOnClickListener {
             (context as MenuActivity).setupNavigationMode()
-            dialog.dismiss()
+            dialog!!.dismiss()
             reportAdapterClickCount = 0
         }
 

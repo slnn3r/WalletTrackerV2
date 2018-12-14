@@ -90,7 +90,7 @@ class DetailsTransactionFragment : Fragment(), TransactionViewInterface.DetailsT
             userData = mDetailsTransactionViewPresenter.getSignedInUser()!!
 
             mDetailsTransactionViewPresenter.getAccountList(context!!, userData.uid)
-            mDetailsTransactionViewPresenter.checkSelectedCategoryType(transactionArgData.category.categoryType)
+            mDetailsTransactionViewPresenter.checkSelectedCategoryType(transactionArgData.category?.categoryType)
         }
     }
 
@@ -137,7 +137,7 @@ class DetailsTransactionFragment : Fragment(), TransactionViewInterface.DetailsT
     override fun populateAccountSpinner(accountList: ArrayList<Account>) {
         loadedAccountList = accountList // store to global for edit/delete usage later
 
-        val accountNameList = ArrayList<String>()
+        val accountNameList = ArrayList<String?>()
 
         accountList.forEach { data ->
             accountNameList.add(data.accountName)
@@ -161,7 +161,7 @@ class DetailsTransactionFragment : Fragment(), TransactionViewInterface.DetailsT
     override fun populateCategorySpinner(categoryList: ArrayList<Category>) {
         loadedCategoryList = categoryList // store to global for edit/delete usage later
 
-        val categoryNameList = ArrayList<String>()
+        val categoryNameList = ArrayList<String?>()
 
         categoryList.forEach { data ->
             categoryNameList.add(data.categoryName)

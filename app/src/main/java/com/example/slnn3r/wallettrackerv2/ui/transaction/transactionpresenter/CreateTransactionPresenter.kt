@@ -18,32 +18,32 @@ class CreateTransactionPresenter : TransactionPresenterInterface.CreateTransacti
 
     override fun checkSwitchButton(isChecked: Boolean) {
         if (isChecked) {
-            getView()!!.switchButtonExpenseMode()
+            getView()?.switchButtonExpenseMode()
         } else {
-            getView()!!.switchButtonIncomeMode()
+            getView()?.switchButtonIncomeMode()
         }
     }
 
-    override fun getAccountList(mContext: Context, userUid: String) {
+    override fun getAccountList(mContext: Context, userUid: String?) {
         try {
             val dataList = baseModel.getAccListByUserUidSync(mContext, userUid)
-            getView()!!.populateAccountSpinner(dataList)
+            getView()?.populateAccountSpinner(dataList)
         } catch (e: Exception) {
-            getView()!!.onError(e.message.toString())
+            getView()?.onError(e.message.toString())
         }
     }
 
-    override fun getCategoryList(mContext: Context, userUid: String, filterType: String) {
+    override fun getCategoryList(mContext: Context, userUid: String?, filterType: String) {
         try {
             val categoryList = baseModel.getCatListByUserUidWithFilterSync(
                     mContext, userUid, filterType)
-            getView()!!.populateCategorySpinner(categoryList)
+            getView()?.populateCategorySpinner(categoryList)
         } catch (e: Exception) {
-            getView()!!.onError(e.message.toString())
+            getView()?.onError(e.message.toString())
         }
     }
 
-    override fun createTransaction(mContext: Context, transactionData: Transaction, userUid: String,
+    override fun createTransaction(mContext: Context, transactionData: Transaction, userUid: String?,
                                    selectedAccount: String, selectedCategory: String,
                                    accountList: ArrayList<Account>,
                                    categoryList: ArrayList<Category>) {
@@ -77,9 +77,9 @@ class CreateTransactionPresenter : TransactionPresenterInterface.CreateTransacti
             )
 
             mCreateTransactionModel.createTransactionRealm(mContext, finalizedTransactionData)
-            getView()!!.createTransactionSuccess()
+            getView()?.createTransactionSuccess()
         } catch (e: Exception) {
-            getView()!!.onError(e.message.toString())
+            getView()?.onError(e.message.toString())
         }
     }
 }

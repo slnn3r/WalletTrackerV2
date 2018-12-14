@@ -17,7 +17,7 @@ class HistoryViewPresenter : HistoryPresenterInterface.HistoryViewPresenter,
     private val baseModel: BaseModel = BaseModel()
     private val mHistoryViewModel: HistoryViewModel = HistoryViewModel()
 
-    override fun getHistoryData(mContext: Context, userUid: String) {
+    override fun getHistoryData(mContext: Context, userUid: String?) {
         val simpleDateFormat = SimpleDateFormat((Constant.Format.DATE_FORMAT), Locale.US)
         val simpleMonthFormat = SimpleDateFormat((Constant.Format.MONTH_FORMAT), Locale.US)
 
@@ -50,7 +50,7 @@ class HistoryViewPresenter : HistoryPresenterInterface.HistoryViewPresenter,
             val filterEndDate =
                     filterInput.getString(Constant.KeyId.FILTER_INPUT_ENDDATE, "")
 
-            lateinit var selectedAccountId: String
+            var selectedAccountId: String? = null
             val accountList = baseModel.getAccListByUserUidSync(mContext, userUid)
             accountList.forEach { data ->
                 if (data.accountName == filterAccount) {
@@ -137,7 +137,7 @@ class HistoryViewPresenter : HistoryPresenterInterface.HistoryViewPresenter,
             }
 
             historyDataList = mHistoryViewModel.getTransactionDataRealm(mContext, userUid,
-                    selectedAccountId, startDate, endDate, filterRemark!!)
+                    selectedAccountId, startDate, endDate, filterRemark)
 
             historyDataList.forEach { data ->
                 if (filterCatType == Constant.ConditionalKeyword.All_TYPE_STATUS) {
@@ -145,21 +145,21 @@ class HistoryViewPresenter : HistoryPresenterInterface.HistoryViewPresenter,
                         filteredData.add(data)
 
                     } else if (filterCategory != Constant.ConditionalKeyword.ALL_CATEGORY_STATUS &&
-                            data.category.categoryName == filterCategory) {
+                            data.category?.categoryName == filterCategory) {
                         filteredData.add(data)
                     }
                 } else if (filterCatType != Constant.ConditionalKeyword.All_TYPE_STATUS) {
                     if (filterCategory == Constant.ConditionalKeyword.ALL_CATEGORY_STATUS &&
-                            data.category.categoryType == filterCatType) {
+                            data.category?.categoryType == filterCatType) {
                         filteredData.add(data)
                     } else if (filterCategory != Constant.ConditionalKeyword.ALL_CATEGORY_STATUS &&
-                            data.category.categoryName == filterCategory &&
-                            data.category.categoryType == filterCatType) {
+                            data.category?.categoryName == filterCategory &&
+                            data.category?.categoryType == filterCatType) {
                         filteredData.add(data)
                     }
                 }
             }
-            getView()!!.populateHistoryData(filteredData)
+            getView()?.populateHistoryData(filteredData)
 
         } else {
             val tempCalender = Calendar.getInstance()
@@ -177,7 +177,7 @@ class HistoryViewPresenter : HistoryPresenterInterface.HistoryViewPresenter,
 
             val accountList = baseModel.getAccListByUserUidSync(mContext, userUid)
             val selectedAccount = baseModel.getSelectedAccountSharePreference(mContext, userUid)
-            var selectedAccountId = ""
+            var selectedAccountId:String? = null
 
             accountList.forEach { data ->
                 if (selectedAccount.equals(data.accountName, ignoreCase = false)) {
@@ -189,7 +189,7 @@ class HistoryViewPresenter : HistoryPresenterInterface.HistoryViewPresenter,
                     selectedAccountId, Date.parse(startDate),
                     Date.parse(endDateCalendar.time.toString()), "")
 
-            getView()!!.populateHistoryData(historyDataList)
+            getView()?.populateHistoryData(historyDataList)
         }
     }
 
@@ -202,18 +202,18 @@ class HistoryViewPresenter : HistoryPresenterInterface.HistoryViewPresenter,
         val totalBalance: Double
 
         transactionList.forEach { data ->
-            if (data.category.categoryType == Constant.ConditionalKeyword.EXPENSE_STATUS) {
-                expTotal += data.transactionAmount
+            if (data.category?.categoryType == Constant.ConditionalKeyword.EXPENSE_STATUS) {
+                expTotal += data.transactionAmount!!
                 expCount += 1
             } else {
-                incTotal += data.transactionAmount
+                incTotal += data.transactionAmount!!
                 incCount += 1
             }
         }
 
         totalBalance = incTotal - expTotal
 
-        getView()!!.populateSummaryHistoryData(totalCount, expCount, expTotal,
+        getView()?.populateSummaryHistoryData(totalCount, expCount, expTotal,
                 incCount, incTotal, totalBalance)
     }
 }

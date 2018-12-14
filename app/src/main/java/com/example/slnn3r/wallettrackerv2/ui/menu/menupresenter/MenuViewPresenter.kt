@@ -27,56 +27,56 @@ class MenuViewPresenter : MenuPresenterInterface.MenuViewPresenter,
         try {
             FirebaseAuth.getInstance().signOut()
         } catch (error: Exception) {
-            getView()!!.onError(error.toString())
+            getView()?.onError(error.toString())
         }
 
         mGoogleSignInClient.revokeAccess()
                 .addOnFailureListener {
-                    getView()!!.onError(it.message.toString())
+                    getView()?.onError(it.message.toString())
                     return@addOnFailureListener
                 }
 
         mGoogleSignInClient.signOut()
                 .addOnFailureListener {
-                    getView()!!.onError(it.message.toString())
+                    getView()?.onError(it.message.toString())
                     return@addOnFailureListener
                 }
 
-        getView()!!.signOutSuccess()
+        getView()?.signOutSuccess()
     }
 
     override fun navigationDrawerSelection(item: MenuItem) {
 
-        getView()!!.closeDrawer()
+        getView()?.closeDrawer()
 
         Handler().postDelayed({
             when (item.itemId) {
                 R.id.nav_account -> {
-                    getView()!!.proceedToAccountScreen()
+                    getView()?.proceedToAccountScreen()
                 }
 
                 R.id.nav_category -> {
-                    getView()!!.proceedToCategoryScreen()
+                    getView()?.proceedToCategoryScreen()
                 }
 
                 R.id.nav_history -> {
-                    getView()!!.proceedToHistoryScreen()
+                    getView()?.proceedToHistoryScreen()
                 }
 
                 R.id.nav_report -> {
-                    getView()!!.proceedToReportScreen()
+                    getView()?.proceedToReportScreen()
                 }
 
                 R.id.nav_backup -> {
-                    getView()!!.executeBackupOnBackground()
+                    getView()?.executeBackupOnBackground()
                 }
 
                 R.id.nav_setting -> {
-                    getView()!!.proceedToSettingScreen()
+                    getView()?.proceedToSettingScreen()
                 }
 
                 R.id.nav_sign_out -> {
-                    getView()!!.proceedToSignOut()
+                    getView()?.proceedToSignOut()
                 }
             }
         }, 300)
@@ -86,42 +86,42 @@ class MenuViewPresenter : MenuPresenterInterface.MenuViewPresenter,
                                        isOpenDrawer: Boolean, doubleBackToExitPressedOnce: Boolean) {
         // Check if Screen is navigated or not
         if (isNavigated == Constant.NavigationKey.NAV_MENU) {
-            getView()!!.setupNavigationFlow()
+            getView()?.setupNavigationFlow()
         } else if (isNavigated == Constant.NavigationKey.NAV_DISABLE) {
             // Do Nothing for the ToolBar at Dialogfragment Display
         } else {
             if (isBackButton) {
                 if (isOpenDrawer) {
-                    getView()!!.closeDrawer()
+                    getView()?.closeDrawer()
                 } else if (currentScreen == R.id.dashboardFragment) {
                     if (doubleBackToExitPressedOnce) {
-                        getView()!!.superOnPressBack()
+                        getView()?.superOnPressBack()
                     } else {
-                        getView()!!.displayDoubleTabExitMessage()
+                        getView()?.displayDoubleTabExitMessage()
                     }
                 } else {
-                    getView()!!.superOnPressBack() // not sure when will hit this?
+                    getView()?.superOnPressBack() // not sure when will hit this?
                 }
             } else {
-                getView()!!.openDrawer()
+                getView()?.openDrawer()
             }
         }
     }
 
-    override fun checkBackupSetting(mContext: Context, userUid: String) {
+    override fun checkBackupSetting(mContext: Context, userUid: String?) {
         if (baseModel.getBackupSettingSharePreference(mContext, userUid)) {
-            getView()!!.executePeriodicalBackup()
+            getView()?.executePeriodicalBackup()
         }
     }
 
-    override fun checkBackupDateTime(mContext: Context, userUid: String) {
+    override fun checkBackupDateTime(mContext: Context, userUid: String?) {
         val backupDateTime = baseModel.getBackupDateTimeSharePreference(mContext, userUid)
         if (backupDateTime != "") {
-            getView()!!.updateDrawerBackupDateTime(backupDateTime)
+            getView()?.updateDrawerBackupDateTime(backupDateTime)
         }
     }
 
-    override fun backupDataManually(mContext: Context, userUid: String) {
+    override fun backupDataManually(mContext: Context, userUid: String?) {
 
         val bundle = PersistableBundle()
         bundle.putString(Constant.KeyId.JOBSERVICE_USERID_KEY, userUid)
@@ -140,13 +140,13 @@ class MenuViewPresenter : MenuPresenterInterface.MenuViewPresenter,
         val resultCode = scheduler.schedule(info)
 
         if (resultCode == JobScheduler.RESULT_SUCCESS) {
-            getView()!!.backupOnBackgroundStart()
+            getView()?.backupOnBackgroundStart()
         } else {
-            getView()!!.onError(mContext.getString(R.string.autoBackupFailedMessage))
+            getView()?.onError(mContext.getString(R.string.autoBackupFailedMessage))
         }
     }
 
-    override fun backupDataPeriodically(mContext: Context, userUid: String) {
+    override fun backupDataPeriodically(mContext: Context, userUid: String?) {
 
         val bundle = PersistableBundle()
         bundle.putString(Constant.KeyId.JOBSERVICE_USERID_KEY, userUid)
@@ -166,9 +166,9 @@ class MenuViewPresenter : MenuPresenterInterface.MenuViewPresenter,
         val resultCode = scheduler.schedule(info)
 
         if (resultCode == JobScheduler.RESULT_SUCCESS) {
-            getView()!!.backupPeriodicallyStart()
+            getView()?.backupPeriodicallyStart()
         } else {
-            getView()!!.onError(mContext.getString(R.string.autoBackupFailedMessage))
+            getView()?.onError(mContext.getString(R.string.autoBackupFailedMessage))
         }
     }
 

@@ -18,32 +18,32 @@ class DetailsCategoryPresenter : CategoryPresenterInterface.DetailsCategoryPrese
     private val mDetailsAccountModel: DetailsCategoryViewModel = DetailsCategoryViewModel()
     private val validation = InputValidation()
 
-    override fun checkCategoryStatus(categoryStatus: String) {
+    override fun checkCategoryStatus(categoryStatus: String?) {
         if (categoryStatus == Constant.ConditionalKeyword.DEFAULT_STATUS) {
-            getView()!!.setupFloatingDefaultButton()
+            getView()?.setupFloatingDefaultButton()
         } else {
-            getView()!!.setupFloatingActionButton()
+            getView()?.setupFloatingActionButton()
         }
     }
 
-    override fun checkSelectedCategoryType(filterType: String) {
+    override fun checkSelectedCategoryType(filterType: String?) {
         if (filterType.equals(Constant.ConditionalKeyword.EXPENSE_STATUS, ignoreCase = true)) {
-            getView()!!.switchButtonExpenseMode()
+            getView()?.switchButtonExpenseMode()
         } else {
-            getView()!!.switchButtonToggle()
-            getView()!!.switchButtonIncomeMode()
+            getView()?.switchButtonToggle()
+            getView()?.switchButtonIncomeMode()
         }
     }
 
     override fun checkSwitchButton(isChecked: Boolean) {
         if (isChecked) {
-            getView()!!.switchButtonExpenseMode()
+            getView()?.switchButtonExpenseMode()
         } else {
-            getView()!!.switchButtonIncomeMode()
+            getView()?.switchButtonIncomeMode()
         }
     }
 
-    override fun validateCategoryNameInput(mContext: Context, userUid: String,
+    override fun validateCategoryNameInput(mContext: Context, userUid: String?,
                                            categoryNameInput: String, updateCategoryId: String?,
                                            filterType: String) {
         val categoryList = baseModel.getCatListByUserUidWithFilterSync(mContext, userUid, filterType)
@@ -51,21 +51,21 @@ class DetailsCategoryPresenter : CategoryPresenterInterface.DetailsCategoryPrese
                 categoryList, updateCategoryId)
 
         if (errorMessage != null) {
-            getView()!!.invalidCategoryNameInput(errorMessage)
-            getView()!!.hideFloatingButton()
+            getView()?.invalidCategoryNameInput(errorMessage)
+            getView()?.hideFloatingButton()
         } else {
-            getView()!!.validCategoryNameInput()
-            getView()!!.showFloatingButton()
+            getView()?.validCategoryNameInput()
+            getView()?.showFloatingButton()
         }
     }
 
     override fun actionCheck(menuItem: SpeedDialActionItem) {
         when (menuItem.id) {
             R.id.fb_action_edit -> {
-                getView()!!.editCategoryPrompt()
+                getView()?.editCategoryPrompt()
             }
             R.id.fb_action_delete -> {
-                getView()!!.deleteCategoryPrompt()
+                getView()?.deleteCategoryPrompt()
             }
         }
     }
@@ -73,18 +73,18 @@ class DetailsCategoryPresenter : CategoryPresenterInterface.DetailsCategoryPrese
     override fun editAccount(mContext: Context, categoryData: Category) {
         try {
             mDetailsAccountModel.editCategoryRealm(mContext, categoryData)
-            getView()!!.editCategorySuccess()
+            getView()?.editCategorySuccess()
         } catch (e: Exception) {
-            getView()!!.onError(e.message.toString())
+            getView()?.onError(e.message.toString())
         }
     }
 
-    override fun deleteAccount(mContext: Context, categoryId: String) {
+    override fun deleteAccount(mContext: Context, categoryId: String?) {
         try {
             mDetailsAccountModel.deleteCategoryRealm(mContext, categoryId)
-            getView()!!.deleteCategorySuccess()
+            getView()?.deleteCategorySuccess()
         } catch (e: Exception) {
-            getView()!!.onError(e.message.toString())
+            getView()?.onError(e.message.toString())
         }
     }
 }

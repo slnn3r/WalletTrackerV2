@@ -11,6 +11,6 @@ interface CategoryModelInterface {
 
     interface DetailsCategoryViewModel {
         fun editCategoryRealm(mContext: Context, categoryData: Category)
-        fun deleteCategoryRealm(mContext: Context, categoryId: String)
+        fun deleteCategoryRealm(mContext: Context, categoryId: String?)
     }
 }

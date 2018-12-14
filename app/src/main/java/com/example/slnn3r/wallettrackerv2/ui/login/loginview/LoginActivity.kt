@@ -55,15 +55,13 @@ class LoginActivity : AppCompatActivity(), LoginViewInterface.LoginView {
     }
 
     override fun signInSuccess() {
-
-        val userData = mLoginViewPresenter.getSignedInUser()!!
-        mLoginViewPresenter.retrieveData(this, userData.uid) //Sync now
-
+        val userData = mLoginViewPresenter.getSignedInUser()
+        mLoginViewPresenter.retrieveData(this, userData?.uid) //Sync now
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        mLoginViewPresenter.executeGoogleSignIn(this, requestCode, resultCode, data!!)
+        mLoginViewPresenter.executeGoogleSignIn(this, requestCode, resultCode, data)
     }
 
     private fun setupSignInButton() {

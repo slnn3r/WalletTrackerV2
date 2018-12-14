@@ -18,7 +18,7 @@ class CustomMarkerAdapter(context: Context, layoutResource: Int) : MarkerView(co
     // callbacks everytime the MarkerView is redrawn, can be used to update the
     // content (user-interface)
     override fun refreshContent(e: Entry?, highlight: Highlight?) {
-        tvContent.text = context.getString(R.string.mp_amount_labelFormat, e!!.y)
+        tvContent.text = context.getString(R.string.mp_amount_labelFormat, e?.y)
 
         // this will perform necessary layouting
         super.refreshContent(e, highlight)

@@ -22,26 +22,26 @@ class DetailsTransactionPresenter : TransactionPresenterInterface.DetailsTransac
 
     override fun checkSwitchButton(isChecked: Boolean) {
         if (isChecked) {
-            getView()!!.switchButtonExpenseMode()
+            getView()?.switchButtonExpenseMode()
         } else {
-            getView()!!.switchButtonIncomeMode()
+            getView()?.switchButtonIncomeMode()
         }
     }
 
-    override fun checkSelectedCategoryType(filterType: String) {
+    override fun checkSelectedCategoryType(filterType: String?) {
         if (filterType.equals(Constant.ConditionalKeyword.EXPENSE_STATUS, ignoreCase = true)) {
-            getView()!!.switchButtonExpenseMode()
-            getView()!!.initialExpenseMode()
+            getView()?.switchButtonExpenseMode()
+            getView()?.initialExpenseMode()
         } else {
-            getView()!!.switchButtonToggle()
-            getView()!!.switchButtonIncomeMode()
+            getView()?.switchButtonToggle()
+            getView()?.switchButtonIncomeMode()
         }
     }
 
     override fun checkCategoryData(categoryList: ArrayList<Category>,
                                    transactionArgData: Transaction,
-                                   dataAdapter: ArrayAdapter<String>,
-                                   categoryNameList: ArrayList<String>, initialLaunch: Boolean) {
+                                   dataAdapter: ArrayAdapter<String?>,
+                                   categoryNameList: ArrayList<String?>, initialLaunch: Boolean) {
         // Detect Category Name if Deleted or not, then make spinner select the Category Name
         // Check if the ID exist or not, If Exist spinner item will refer to it, else, add this selection indicated Deleted
         var tempCategoryRef = ""
@@ -49,8 +49,8 @@ class DetailsTransactionPresenter : TransactionPresenterInterface.DetailsTransac
 
         // if category object is exist overwrite data to Category Name
         categoryList.forEach { data ->
-            if (categoryNameSelection.categoryId == data.categoryId) {
-                tempCategoryRef = data.categoryName
+            if (categoryNameSelection?.categoryId == data.categoryId) {
+                tempCategoryRef = data.categoryName!!
             }
         }
 
@@ -60,21 +60,21 @@ class DetailsTransactionPresenter : TransactionPresenterInterface.DetailsTransac
 
         if (spinnerPosition < 0 && initialLaunch) {
             categoryNameList[categoryItemSize - 1] =
-                    categoryNameSelection.categoryName + categoryNameList[categoryItemSize - 1]
-            getView()!!.selectDeletedCategorySpinnerData(categoryItemSize - 1)
+                    categoryNameSelection?.categoryName + categoryNameList[categoryItemSize - 1]
+            getView()?.selectDeletedCategorySpinnerData(categoryItemSize - 1)
         } else {
             categoryNameList.removeAt(categoryItemSize - 1) // filter out (Deleted Item) selection as category object is existed
-            getView()!!.selectCategorySpinnerData(spinnerPosition)
+            getView()?.selectCategorySpinnerData(spinnerPosition)
         }
     }
 
     override fun actionCheck(menuItem: SpeedDialActionItem) {
         when (menuItem.id) {
             R.id.fb_action_edit -> {
-                getView()!!.editTransactionPrompt()
+                getView()?.editTransactionPrompt()
             }
             R.id.fb_action_delete -> {
-                getView()!!.deleteTransactionPrompt()
+                getView()?.deleteTransactionPrompt()
             }
         }
     }
@@ -82,9 +82,9 @@ class DetailsTransactionPresenter : TransactionPresenterInterface.DetailsTransac
     override fun getAccountList(mContext: Context, userUid: String) {
         try {
             val dataList = baseModel.getAccListByUserUidSync(mContext, userUid)
-            getView()!!.populateAccountSpinner(dataList)
+            getView()?.populateAccountSpinner(dataList)
         } catch (e: Exception) {
-            getView()!!.onError(e.message.toString())
+            getView()?.onError(e.message.toString())
         }
     }
 
@@ -92,9 +92,9 @@ class DetailsTransactionPresenter : TransactionPresenterInterface.DetailsTransac
         try {
             val categoryList = baseModel.getCatListByUserUidWithFilterSync(
                     mContext, userUid, filterType)
-            getView()!!.populateCategorySpinner(categoryList)
+            getView()?.populateCategorySpinner(categoryList)
         } catch (e: Exception) {
-            getView()!!.onError(e.message.toString())
+            getView()?.onError(e.message.toString())
         }
     }
 
@@ -103,8 +103,8 @@ class DetailsTransactionPresenter : TransactionPresenterInterface.DetailsTransac
                                  accountList: ArrayList<Account>, categoryList: ArrayList<Category>,
                                  initialTransactionData: Transaction) {
         try {
-            var accountData: Account = initialTransactionData.account
-            var categoryData: Category = initialTransactionData.category
+            var accountData: Account? = initialTransactionData.account
+            var categoryData: Category? = initialTransactionData.category
 
             // Detect the newly Selected Account/Category and Overwrite the initial data to the updated(newly selected) one
             accountList.forEach { data ->
@@ -130,20 +130,20 @@ class DetailsTransactionPresenter : TransactionPresenterInterface.DetailsTransac
                             accountData
                     )
 
-            mDetailsTransactionModel.editCategoryRealm(mContext, finalizedTransactionData)
-            getView()!!.editTransactionSuccess()
+            mDetailsTransactionModel.editTransactionRealm(mContext, finalizedTransactionData)
+            getView()?.editTransactionSuccess()
 
         } catch (e: Exception) {
-            getView()!!.onError(e.message.toString())
+            getView()?.onError(e.message.toString())
         }
     }
 
-    override fun deleteTransaction(mContext: Context, transactionId: String) {
+    override fun deleteTransaction(mContext: Context, transactionId: String?) {
         try {
-            mDetailsTransactionModel.deleteCategoryRealm(mContext, transactionId)
-            getView()!!.deleteTransactionSuccess()
+            mDetailsTransactionModel.deleteTransactionRealm(mContext, transactionId)
+            getView()?.deleteTransactionSuccess()
         } catch (e: Exception) {
-            getView()!!.onError(e.message.toString())
+            getView()?.onError(e.message.toString())
         }
     }
 }

@@ -15,8 +15,8 @@ import io.realm.Sort
 
 class DataBackupModel {
 
-    fun getAllAccountDataByUserUid(mContext: Context, userUid: String): ArrayList<Account> {
-        val realm: Realm?
+    fun getAllAccountDataByUserUid(mContext: Context, userUid: String?): ArrayList<Account> {
+        val realm: Realm
         val accountList = ArrayList<Account>()
 
         Realm.init(mContext)
@@ -27,7 +27,7 @@ class DataBackupModel {
 
         realm = Realm.getInstance(config)
 
-        realm!!.executeTransaction {
+        realm.executeTransaction {
             val accountRealm = realm.where(AccountRealm::class.java)
                     .equalTo(Constant.RealmVariableName.USER_UID_VARIABLE, userUid)
                     .findAll()
@@ -35,11 +35,11 @@ class DataBackupModel {
             accountRealm.forEach { accountRealmData ->
                 accountList.add(
                         Account(
-                                accountRealmData.accountId!!,
-                                accountRealmData.accountName!!,
-                                accountRealmData.accountDesc!!,
-                                accountRealmData.userUid!!,
-                                accountRealmData.accountStatus!!
+                                accountRealmData.accountId,
+                                accountRealmData.accountName,
+                                accountRealmData.accountDesc,
+                                accountRealmData.userUid,
+                                accountRealmData.accountStatus
                         )
                 )
             }
@@ -48,8 +48,8 @@ class DataBackupModel {
         return accountList
     }
 
-    fun getAllCategoryDataByUserUid(mContext: Context, userUid: String): ArrayList<Category> {
-        val realm: Realm?
+    fun getAllCategoryDataByUserUid(mContext: Context, userUid: String?): ArrayList<Category> {
+        val realm: Realm
         val categoryList = ArrayList<Category>()
 
         Realm.init(mContext)
@@ -60,7 +60,7 @@ class DataBackupModel {
 
         realm = Realm.getInstance(config)
 
-        realm!!.executeTransaction {
+        realm.executeTransaction {
             val categoryRealm = realm.where(CategoryRealm::class.java)
                     .equalTo(Constant.RealmVariableName.USER_UID_VARIABLE, userUid)
                     .findAll()
@@ -68,10 +68,10 @@ class DataBackupModel {
             categoryRealm.forEach { categoryRealmData ->
                 categoryList.add(
                         Category(
-                                categoryRealmData.categoryId!!,
-                                categoryRealmData.categoryName!!,
-                                categoryRealmData.categoryType!!,
-                                categoryRealmData.categoryStatus!!,
+                                categoryRealmData.categoryId,
+                                categoryRealmData.categoryName,
+                                categoryRealmData.categoryType,
+                                categoryRealmData.categoryStatus,
                                 userUid
                         )
                 )
@@ -81,8 +81,8 @@ class DataBackupModel {
         return categoryList
     }
 
-    fun getAllTransactionDataByUserUid(mContext: Context, userUid: String): ArrayList<Transaction> {
-        val realm: Realm?
+    fun getAllTransactionDataByUserUid(mContext: Context, userUid: String?): ArrayList<Transaction> {
+        val realm: Realm
         val transactionList = ArrayList<Transaction>()
 
         Realm.init(mContext)
@@ -93,7 +93,7 @@ class DataBackupModel {
 
         realm = Realm.getInstance(config)
 
-        realm!!.executeTransaction {
+        realm.executeTransaction {
             val transactionRealm = realm.where(TransactionRealm::class.java)
                     .sort(Constant.RealmVariableName.TRANSACTION_DATETIME_VARIABLE, Sort.DESCENDING)
                     .findAll()
@@ -110,10 +110,10 @@ class DataBackupModel {
                 if (accountData.userUid == userUid) {
                     transactionList.add(
                             Transaction(
-                                    transactionRealmData.transactionId!!,
-                                    transactionRealmData.transactionDateTime!!,
+                                    transactionRealmData.transactionId,
+                                    transactionRealmData.transactionDateTime,
                                     transactionRealmData.transactionAmount,
-                                    transactionRealmData.transactionRemark!!,
+                                    transactionRealmData.transactionRemark,
                                     categoryData,
                                     accountData
                             )

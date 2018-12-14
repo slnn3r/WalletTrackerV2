@@ -46,7 +46,7 @@ class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTra
             CreateTransactionPresenter()
     private val mCustomErrorDialog: CustomAlertDialog = CustomAlertDialog()
 
-    private lateinit var userData: FirebaseUser
+    private var userData: FirebaseUser? = null
 
     private lateinit var loadedCategoryList: ArrayList<Category>
     private lateinit var loadedAccountList: ArrayList<Account>
@@ -82,8 +82,8 @@ class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTra
         if (initialLaunch) {
             userData = mCreateTransactionViewPresenter.getSignedInUser()!!
 
-            mCreateTransactionViewPresenter.getAccountList(context!!, userData.uid)
-            mCreateTransactionViewPresenter.getCategoryList(context!!, userData.uid,
+            mCreateTransactionViewPresenter.getAccountList(context!!, userData?.uid)
+            mCreateTransactionViewPresenter.getCategoryList(context!!, userData?.uid,
                     tv_createTrans_catType_selection.text.toString())
         }
         initialLaunch = false
@@ -113,7 +113,7 @@ class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTra
     override fun populateAccountSpinner(accountList: ArrayList<Account>) {
         loadedAccountList = accountList // store to global for create usage later
 
-        val accountNameList = ArrayList<String>()
+        val accountNameList = ArrayList<String?>()
 
         accountList.forEach { data ->
             accountNameList.add(data.accountName)
@@ -129,7 +129,7 @@ class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTra
 
         // Get SharedPreference saved Selection and Set to Spinner Selection
         val selectedAccountSharePref =
-                mCreateTransactionViewPresenter.getSelectedAccount(context!!, userData.uid)
+                mCreateTransactionViewPresenter.getSelectedAccount(context!!, userData?.uid)
         val spinnerPosition = dataAdapter.getPosition(selectedAccountSharePref)
         sp_createTrans_selectedAcc_selection.setSelection(spinnerPosition)
     }
@@ -137,7 +137,7 @@ class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTra
     override fun populateCategorySpinner(categoryList: ArrayList<Category>) {
         loadedCategoryList = categoryList // store to global for create usage later
 
-        val categoryNameList = ArrayList<String>()
+        val categoryNameList = ArrayList<String?>()
 
         categoryList.forEach { data ->
             categoryNameList.add(data.categoryName)
@@ -195,7 +195,7 @@ class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTra
     private fun setupSwitchButton() {
         sb_createTrans_catType.setOnCheckedChangeListener { _: CompoundButton, _: Boolean ->
             mCreateTransactionViewPresenter.checkSwitchButton(sb_createTrans_catType.isChecked)
-            mCreateTransactionViewPresenter.getCategoryList(context!!, userData.uid,
+            mCreateTransactionViewPresenter.getCategoryList(context!!, userData?.uid,
                     tv_createTrans_catType_selection.text.toString())
         }
     }
@@ -315,7 +315,7 @@ class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTra
                     ac_createTrans_remarks.text.toString())
 
             mCreateTransactionViewPresenter.createTransaction(context!!, transactionInput,
-                    userData.uid, sp_createTrans_selectedAcc_selection.selectedItem.toString(),
+                    userData?.uid, sp_createTrans_selectedAcc_selection.selectedItem.toString(),
                     sp_createTrans_selectedCat_selection.selectedItem.toString(),
                     loadedAccountList, loadedCategoryList)
         }

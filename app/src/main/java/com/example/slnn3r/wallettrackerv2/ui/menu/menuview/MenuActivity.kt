@@ -8,6 +8,7 @@ import android.os.Handler
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
 import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import android.widget.TextView
@@ -41,7 +42,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var navigationView: NavigationView
 
     private lateinit var mGoogleSignInClient: GoogleSignInClient
-    private lateinit var userData: FirebaseUser
+    private var userData: FirebaseUser? = null
 
     private val initialScreen: Int = R.id.dashboardFragment
     private var isNavigated: String = Constant.NavigationKey.NAV_DRAWER // Set Initial Navigation Status to false
@@ -60,19 +61,31 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setupNavigation()
     }
 
+    override fun onPause() {
+        super.onPause()
+        // show blank screen when User go to Recent Apps Screen, to avoid sensitive transaction data being reveal
+        window.setFlags(WindowManager.LayoutParams.FLAG_SECURE,WindowManager.LayoutParams.FLAG_SECURE)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // when resume clear the blank screen setting as it may disable screenshot feature
+        window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
+    }
+
     override fun onStart() {
         super.onStart()
         mMenuPresenter.bindView(this)
 
         if (initialLaunch) {
             mGoogleSignInClient = mMenuPresenter.getGoogleSignInClient(this)
-            userData = mMenuPresenter.getSignedInUser()!!
+            userData = mMenuPresenter.getSignedInUser()
 
             navigationView = findViewById<View>(R.id.nav_view) as NavigationView
 
             displayUserDataToNavDrawer()
             displayWelcomeMessage()
-            mMenuPresenter.checkBackupSetting(this, userData.uid)
+            mMenuPresenter.checkBackupSetting(this, userData?.uid)
         }
         initialLaunch = false
     }
@@ -83,7 +96,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onBackPressed() {
-        val currentScreen = findNavController(R.id.navMenu).currentDestination!!.id
+        val currentScreen = findNavController(R.id.navMenu).currentDestination?.id
         mMenuPresenter.checkNavigationStatus(isNavigated, true, currentScreen,
                 drawer_layout.isDrawerOpen(GravityCompat.START), doubleBackToExitPressedOnce)
     }
@@ -101,7 +114,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         onSupportNavigateUp() // call the back function (auto navigate to previous screen) of the navigation graph
 
-        val currentScreen = findNavController(R.id.navMenu).currentDestination!!.id
+        val currentScreen = findNavController(R.id.navMenu).currentDestination?.id
 
         if (currentScreen == initialScreen) { // if Current screen is initial screen (Dashboard), switch Navigation Up button back to Drawer function
             setupDrawerMode()
@@ -141,7 +154,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun executeBackupOnBackground() {
-        mMenuPresenter.backupDataManually(this, userData.uid)
+        mMenuPresenter.backupDataManually(this, userData?.uid)
     }
 
     override fun proceedToSettingScreen() {
@@ -163,7 +176,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun signOutSuccess() {
-        mMenuPresenter.clearSelectedAccountSharePreference(this, userData.uid) // remove sharePreference
+        mMenuPresenter.clearSelectedAccountSharePreference(this, userData?.uid) // remove sharePreference
 
         val intent = Intent(applicationContext, LoginActivity::class.java)
         startActivity(intent)
@@ -179,7 +192,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
     }
 
-    override fun updateDrawerBackupDateTime(backupDateTime: String) {
+    override fun updateDrawerBackupDateTime(backupDateTime: String?) {
         val menu = navigationView.menu
         val navSyncData = menu.findItem(R.id.navDrawer_section_2)
 
@@ -188,7 +201,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
     override fun executePeriodicalBackup() {
-        mMenuPresenter.backupDataPeriodically(this, userData.uid)
+        mMenuPresenter.backupDataPeriodically(this, userData?.uid)
     }
 
     override fun backupOnBackgroundStart() {
@@ -223,7 +236,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawer_layout.addDrawerListener(object : DrawerLayout.SimpleDrawerListener() {
             override fun onDrawerOpened(drawerView: View) {
                 super.onDrawerOpened(drawerView)
-                mMenuPresenter.checkBackupDateTime(applicationContext, userData.uid)
+                mMenuPresenter.checkBackupDateTime(applicationContext, userData?.uid)
             }
         })
 
@@ -246,14 +259,14 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val navHeaderUserEmail = headerView.findViewById(R.id.tv_navHeader_user_email) as TextView
         val navHeaderUserPicture = headerView.findViewById(R.id.iv_navHeader_user_image) as ImageView
 
-        navHeaderUserName.text = userData.displayName
-        navHeaderUserEmail.text = userData.email
-        Picasso.get().load(userData.photoUrl).into(navHeaderUserPicture)
+        navHeaderUserName.text = userData?.displayName
+        navHeaderUserEmail.text = userData?.email
+        Picasso.get().load(userData?.photoUrl).into(navHeaderUserPicture)
     }
 
     private fun displayWelcomeMessage() {
         Snackbar.make(findViewById<View>(android.R.id.content),
-                getString(R.string.welcome_message, userData.displayName), Snackbar.LENGTH_SHORT)
+                getString(R.string.welcome_message, userData?.displayName), Snackbar.LENGTH_SHORT)
                 .show()
     }
 

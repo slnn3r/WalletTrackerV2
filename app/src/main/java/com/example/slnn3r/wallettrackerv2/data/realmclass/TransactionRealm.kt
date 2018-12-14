@@ -10,7 +10,7 @@ open class TransactionRealm : RealmObject() {
     @PrimaryKey
     var transactionId: String? = null
     var transactionDateTime: Long? = null
-    var transactionAmount: Double = 0.0
+    var transactionAmount: Double? = 0.0
     var transactionRemark: String? = null
     var category: String? = null
     var account: String? = null

@@ -48,15 +48,15 @@ open class BasePresenter<V : BaseView.Universal> {
                 activity.currentFocus?.windowToken, 0)
     }
 
-    fun getSelectedAccount(mContext: Context, userUid: String): String {
+    fun getSelectedAccount(mContext: Context, userUid: String?): String? {
         return baseModel.getSelectedAccountSharePreference(mContext, userUid)
     }
 
-    fun saveSelectedAccount(mContext: Context, selectedAccount: String, userUid: String) {
+    fun saveSelectedAccount(mContext: Context, selectedAccount: String?, userUid: String?) {
         baseModel.saveSelectedAccountSharePreference(mContext, selectedAccount, userUid)
     }
 
-    fun clearSelectedAccountSharePreference(mContext: Context, userUid: String) {
+    fun clearSelectedAccountSharePreference(mContext: Context, userUid: String?) {
         baseModel.removeUniversalSharePreference(mContext, userUid)
     }
 
@@ -71,10 +71,10 @@ open class BasePresenter<V : BaseView.Universal> {
             val previousRemarkList = baseModel.getRemarkRealm(mContext)
 
             previousRemarkList.forEach { data ->
-                stringList.add(data.remarkString)
+                stringList.add(data.remarkString!!)
             }
         } catch (e: Exception) {
-            getView()!!.onError(e.message.toString())
+            getView()?.onError(e.message.toString())
         }
         return stringList
     }
@@ -98,7 +98,7 @@ open class BasePresenter<V : BaseView.Universal> {
                 baseModel.saveRemarkRealm(mContext, remarkString)
             }
         } catch (e: Exception) {
-            getView()!!.onError(e.message.toString())
+            getView()?.onError(e.message.toString())
         }
     }
 }

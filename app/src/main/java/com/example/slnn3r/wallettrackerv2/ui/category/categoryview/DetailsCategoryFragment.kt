@@ -31,7 +31,7 @@ class DetailsCategoryFragment : Fragment(), CategoryViewInterface.DetailsCategor
     private val mCustomConfirmationDialog: CustomAlertDialog = CustomAlertDialog()
     private val mCustomErrorDialog: CustomAlertDialog = CustomAlertDialog()
 
-    private lateinit var userData: FirebaseUser
+    private var userData: FirebaseUser? = null
     private lateinit var categoryArgData: Category
 
     private var initialLaunch = true
@@ -56,7 +56,7 @@ class DetailsCategoryFragment : Fragment(), CategoryViewInterface.DetailsCategor
         mDetailsCategoryViewPresenter.bindView(this)
 
         if (initialLaunch) {
-            userData = mDetailsCategoryViewPresenter.getSignedInUser()!!
+            userData = mDetailsCategoryViewPresenter.getSignedInUser()
 
             mDetailsCategoryViewPresenter.checkSelectedCategoryType(categoryArgData.categoryType)
             mDetailsCategoryViewPresenter.checkCategoryStatus(categoryArgData.categoryStatus)
@@ -231,7 +231,7 @@ class DetailsCategoryFragment : Fragment(), CategoryViewInterface.DetailsCategor
         sb_detailsCat_catType.setOnCheckedChangeListener { _: CompoundButton, _: Boolean ->
             mDetailsCategoryViewPresenter.checkSwitchButton(sb_detailsCat_catType.isChecked)
             mDetailsCategoryViewPresenter.validateCategoryNameInput(
-                    context!!, userData.uid,
+                    context!!, userData?.uid,
                     et_detailsCat_catName.text.toString(), categoryArgData.categoryId,
                     tv_detailsCat_catType_selection.text.toString())
         }
@@ -245,7 +245,7 @@ class DetailsCategoryFragment : Fragment(), CategoryViewInterface.DetailsCategor
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 mDetailsCategoryViewPresenter.validateCategoryNameInput(
-                        context!!, userData.uid,
+                        context!!, userData?.uid,
                         et_detailsCat_catName.text.toString(), categoryArgData.categoryId,
                         tv_detailsCat_catType_selection.text.toString())
             }

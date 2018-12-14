@@ -23,8 +23,8 @@ class BaseModel {
     }
 
     // Synchronous
-    fun getAccListByUserUidSync(mContext: Context, userUid: String): ArrayList<Account> {
-        val realm: Realm?
+    fun getAccListByUserUidSync(mContext: Context, userUid: String?): ArrayList<Account> {
+        val realm: Realm
         val accountList = ArrayList<Account>()
 
         Realm.init(mContext)
@@ -35,7 +35,7 @@ class BaseModel {
 
         realm = Realm.getInstance(config)
 
-        realm!!.executeTransaction {
+        realm.executeTransaction {
             val accountRealm = realm.where(AccountRealm::class.java)
                     .equalTo(Constant.RealmVariableName.USER_UID_VARIABLE, userUid)
                     .findAll()
@@ -43,11 +43,11 @@ class BaseModel {
             accountRealm.forEach { accountRealmData ->
                 accountList.add(
                         Account(
-                                accountRealmData.accountId!!,
-                                accountRealmData.accountName!!,
-                                accountRealmData.accountDesc!!,
-                                accountRealmData.userUid!!,
-                                accountRealmData.accountStatus!!
+                                accountRealmData.accountId,
+                                accountRealmData.accountName,
+                                accountRealmData.accountDesc,
+                                accountRealmData.userUid,
+                                accountRealmData.accountStatus
                         )
                 )
             }
@@ -56,12 +56,12 @@ class BaseModel {
         return accountList
     }
 
-    fun getCatListByUserUidWithFilterSync(mContext: Context, userUid: String,
+    fun getCatListByUserUidWithFilterSync(mContext: Context, userUid: String?,
                                           filterType: String): ArrayList<Category> {
         val userUidRef = Constant.RealmVariableName.USER_UID_VARIABLE
         val categoryTypeRef = Constant.RealmVariableName.CATEGORY_TYPE_VARIABLE
 
-        val realm: Realm?
+        val realm: Realm
         val categoryList = ArrayList<Category>()
 
         Realm.init(mContext)
@@ -72,8 +72,8 @@ class BaseModel {
 
         realm = Realm.getInstance(config)
 
-        realm!!.executeTransaction {
-            val categoryRealm: RealmResults<CategoryRealm>?
+        realm.executeTransaction {
+            val categoryRealm: RealmResults<CategoryRealm>
             val incomeType = Constant.ConditionalKeyword.INCOME_STATUS
             val expenseType = Constant.ConditionalKeyword.EXPENSE_STATUS
 
@@ -101,10 +101,10 @@ class BaseModel {
             categoryRealm.forEach { categoryRealmData ->
                 categoryList.add(
                         Category(
-                                categoryRealmData.categoryId!!,
-                                categoryRealmData.categoryName!!,
-                                categoryRealmData.categoryType!!,
-                                categoryRealmData.categoryStatus!!,
+                                categoryRealmData.categoryId,
+                                categoryRealmData.categoryName,
+                                categoryRealmData.categoryType,
+                                categoryRealmData.categoryStatus,
                                 userUid
                         )
                 )
@@ -115,7 +115,7 @@ class BaseModel {
     }
 
     fun getRemarkRealm(mContext: Context): ArrayList<PreviousRemark> {
-        val realm: Realm?
+        val realm: Realm
         val previousRemarkList = ArrayList<PreviousRemark>()
 
         Realm.init(mContext)
@@ -126,12 +126,12 @@ class BaseModel {
 
         realm = Realm.getInstance(config)
 
-        realm!!.executeTransaction {
+        realm.executeTransaction {
             val previousRemarkRealm = realm.where(PreviousRemarkRealm::class.java)
                     .findAll()
 
             previousRemarkRealm.forEach { previousRemarkRealmData ->
-                previousRemarkList.add(PreviousRemark(previousRemarkRealmData.remarkString!!))
+                previousRemarkList.add(PreviousRemark(previousRemarkRealmData.remarkString))
             }
         }
         realm.close()
@@ -139,7 +139,7 @@ class BaseModel {
     }
 
     fun saveRemarkRealm(mContext: Context, remarkString: String) {
-        val realm: Realm?
+        val realm: Realm
         Realm.init(mContext)
 
         val config = RealmConfiguration.Builder()
@@ -148,7 +148,7 @@ class BaseModel {
 
         realm = Realm.getInstance(config)
 
-        realm!!.executeTransaction {
+        realm.executeTransaction {
             val creating = realm.createObject(PreviousRemarkRealm::class.java)
             creating.remarkString = remarkString
         }
@@ -156,13 +156,13 @@ class BaseModel {
     }
 
     // SharePreference
-    fun getSelectedAccountSharePreference(mContext: Context, userUid: String): String {
+    fun getSelectedAccountSharePreference(mContext: Context, userUid: String?): String? {
         val editor = mContext.getSharedPreferences(Constant.KeyId.SHARE_PREF + userUid,
                 AppCompatActivity.MODE_PRIVATE)
-        return editor.getString(Constant.KeyId.SELECTED_ACCOUNT_KEY, "")!!
+        return editor.getString(Constant.KeyId.SELECTED_ACCOUNT_KEY, "")
     }
 
-    fun saveSelectedAccountSharePreference(mContext: Context, selectedAccount: String, userUid: String) {
+    fun saveSelectedAccountSharePreference(mContext: Context, selectedAccount: String?, userUid: String?) {
         val editor = mContext.getSharedPreferences(Constant.KeyId.SHARE_PREF + userUid,
                 AppCompatActivity.MODE_PRIVATE).edit()
         editor.putString(Constant.KeyId.SELECTED_ACCOUNT_KEY, selectedAccount)
@@ -170,13 +170,13 @@ class BaseModel {
         editor.commit()
     }
 
-    fun getBackupSettingSharePreference(mContext: Context, userUid: String): Boolean {
+    fun getBackupSettingSharePreference(mContext: Context, userUid: String?): Boolean {
         val editor = mContext.getSharedPreferences(Constant.KeyId.SHARE_PREF + userUid,
                 AppCompatActivity.MODE_PRIVATE)
         return editor.getBoolean(Constant.KeyId.BACKUP_SETTING_KEY, true)
     }
 
-    fun saveBackupSettingSharePreference(mContext: Context, userUid: String, backupSetting: Boolean) {
+    fun saveBackupSettingSharePreference(mContext: Context, userUid: String?, backupSetting: Boolean) {
         val editor = mContext.getSharedPreferences(Constant.KeyId.SHARE_PREF + userUid,
                 AppCompatActivity.MODE_PRIVATE).edit()
         editor.putBoolean(Constant.KeyId.BACKUP_SETTING_KEY, backupSetting)
@@ -184,13 +184,13 @@ class BaseModel {
         editor.commit()
     }
 
-    fun getBackupTypeSharePreference(mContext: Context, userUid: String): String {
+    fun getBackupTypeSharePreference(mContext: Context, userUid: String?): String? {
         val editor = mContext.getSharedPreferences(Constant.KeyId.SHARE_PREF + userUid,
                 AppCompatActivity.MODE_PRIVATE)
-        return editor.getString(Constant.KeyId.BACKUP_TYPE_KEY, "")!!
+        return editor.getString(Constant.KeyId.BACKUP_TYPE_KEY, "")
     }
 
-    fun saveBackTypeSharePreference(mContext: Context, userUid: String, backupType: String) {
+    fun saveBackTypeSharePreference(mContext: Context, userUid: String?, backupType: String) {
         val editor = mContext.getSharedPreferences(Constant.KeyId.SHARE_PREF + userUid,
                 AppCompatActivity.MODE_PRIVATE).edit()
         editor.putString(Constant.KeyId.BACKUP_TYPE_KEY, backupType)
@@ -198,13 +198,13 @@ class BaseModel {
         editor.commit()
     }
 
-    fun getBackupDateTimeSharePreference(mContext: Context, userUid: String): String {
+    fun getBackupDateTimeSharePreference(mContext: Context, userUid: String?): String? {
         val editor = mContext.getSharedPreferences(Constant.KeyId.SHARE_PREF + userUid,
                 AppCompatActivity.MODE_PRIVATE)
-        return editor.getString(Constant.KeyId.BACKUP_DATETIME_KEY, "")!!
+        return editor.getString(Constant.KeyId.BACKUP_DATETIME_KEY, "")
     }
 
-    fun saveBackupDateTimeSharePreference(mContext: Context, userUid: String, backupDateTime: String) {
+    fun saveBackupDateTimeSharePreference(mContext: Context, userUid: String?, backupDateTime: String) {
         val editor = mContext.getSharedPreferences(Constant.KeyId.SHARE_PREF + userUid,
                 AppCompatActivity.MODE_PRIVATE).edit()
         editor.putString(Constant.KeyId.BACKUP_DATETIME_KEY, backupDateTime)
@@ -212,7 +212,7 @@ class BaseModel {
         editor.commit()
     }
 
-    fun removeUniversalSharePreference(mContext: Context, userUid: String) {
+    fun removeUniversalSharePreference(mContext: Context, userUid: String?) {
         val sharePrefEditor = mContext.getSharedPreferences(Constant.KeyId.SHARE_PREF + userUid,
                 AppCompatActivity.MODE_PRIVATE).edit()
         sharePrefEditor.clear()

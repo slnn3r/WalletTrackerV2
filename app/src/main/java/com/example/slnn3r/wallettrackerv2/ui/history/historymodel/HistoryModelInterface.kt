@@ -9,9 +9,9 @@ interface HistoryModelInterface {
     interface HistoryViewModel {
         fun getFilterInputSharePreference(mContext: Context): SharedPreferences
 
-        fun getTransactionDataRealm(mContext: Context, userUid: String,
-                                    accountId: String, startDate: Long,
-                                    endDate: Long, remark: String): ArrayList<Transaction>
+        fun getTransactionDataRealm(mContext: Context, userUid: String?,
+                                    accountId: String?, startDate: Long,
+                                    endDate: Long, remark: String?): ArrayList<Transaction>
     }
 
     interface HistoryFilterDialogModel {

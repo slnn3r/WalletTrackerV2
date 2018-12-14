@@ -11,7 +11,7 @@ import io.realm.RealmConfiguration
 class CreateTransactionViewModel : TransactionModelInterface.CreateTransactionViewModel {
 
     override fun createTransactionRealm(mContext: Context, transactionData: Transaction) {
-        val realm: Realm?
+        val realm: Realm
         Realm.init(mContext)
 
         val config = RealmConfiguration.Builder()
@@ -20,7 +20,7 @@ class CreateTransactionViewModel : TransactionModelInterface.CreateTransactionVi
 
         realm = Realm.getInstance(config)
 
-        realm!!.executeTransaction {
+        realm.executeTransaction {
             val creating = realm.createObject(TransactionRealm::class.java, transactionData.transactionId)
 
             val gson = Gson()

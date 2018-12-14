@@ -19,26 +19,26 @@ class SettingViewPresenter : SettingPresenterInterface.SettingViewPresenter,
 
     private val baseModel: BaseModel = BaseModel()
 
-    override fun checkBackupSetting(mContext: Context, userUid: String) {
+    override fun checkBackupSetting(mContext: Context, userUid: String?) {
         if (!baseModel.getBackupSettingSharePreference(mContext, userUid)) {
-            getView()!!.backupSettingToggle()
+            getView()?.backupSettingToggle()
         }
     }
 
     override fun checkBackupSwitchButton(isChecked: Boolean) {
         if (isChecked) {
-            getView()!!.setBackupSettingEnable()
+            getView()?.setBackupSettingEnable()
         } else {
-            getView()!!.setBackupSettingDisable()
+            getView()?.setBackupSettingDisable()
         }
     }
 
 
-    override fun saveSetting(mContext: Context, userUid: String, backupSetting: Boolean) {
+    override fun saveSetting(mContext: Context, userUid: String?, backupSetting: Boolean) {
 
         baseModel.saveBackupSettingSharePreference(mContext, userUid, backupSetting)
 
-        getView()!!.saveSettingSuccess()
+        getView()?.saveSettingSuccess()
 
         if (backupSetting) {
             startPeriodicallyBackup(mContext, userUid)
@@ -47,7 +47,7 @@ class SettingViewPresenter : SettingPresenterInterface.SettingViewPresenter,
         }
     }
 
-    private fun startPeriodicallyBackup(mContext: Context, userUid: String) {
+    private fun startPeriodicallyBackup(mContext: Context, userUid: String?) {
         val bundle = PersistableBundle()
         bundle.putString(Constant.KeyId.JOBSERVICE_USERID_KEY, userUid)
 
@@ -65,7 +65,7 @@ class SettingViewPresenter : SettingPresenterInterface.SettingViewPresenter,
         val resultCode = scheduler.schedule(info)
 
         if (resultCode != JobScheduler.RESULT_SUCCESS) {
-            getView()!!.onError(mContext.getString(R.string.autoBackupFailedMessage))
+            getView()?.onError(mContext.getString(R.string.autoBackupFailedMessage))
         }
     }
 

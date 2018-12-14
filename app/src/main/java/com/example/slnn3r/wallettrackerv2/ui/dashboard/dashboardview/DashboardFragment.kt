@@ -38,7 +38,7 @@ class DashboardFragment : Fragment(), DashboardViewInterface.DashboardView {
     private val mDashboardViewPresenter: DashboardViewPresenter = DashboardViewPresenter()
     private val mCustomErrorDialog: CustomAlertDialog = CustomAlertDialog()
 
-    private lateinit var userData: FirebaseUser
+    private var userData: FirebaseUser? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -60,9 +60,9 @@ class DashboardFragment : Fragment(), DashboardViewInterface.DashboardView {
     override fun onStart() {
         super.onStart()
         mDashboardViewPresenter.bindView(this)
-        userData = mDashboardViewPresenter.getSignedInUser()!!
+        userData = mDashboardViewPresenter.getSignedInUser()
 
-        mDashboardViewPresenter.getAllAccountData(context!!, userData.uid)
+        mDashboardViewPresenter.getAllAccountData(context!!, userData?.uid)
     }
 
     override fun onStop() {
@@ -71,7 +71,7 @@ class DashboardFragment : Fragment(), DashboardViewInterface.DashboardView {
     }
 
     override fun populateAccountSpinner(accountList: ArrayList<Account>) {
-        val accountNameList = ArrayList<String>()
+        val accountNameList = ArrayList<String?>()
 
         accountList.forEach { data ->
             accountNameList.add(data.accountName)
@@ -89,7 +89,7 @@ class DashboardFragment : Fragment(), DashboardViewInterface.DashboardView {
         // Get SharedPreference saved Selection and Set to Spinner Selection
         // If initial setup or just login, will return empty string, spinner position will return -1 yet spinner will select 0 position
         val selectedAccountSharePref =
-                mDashboardViewPresenter.getSelectedAccount(context!!, userData.uid)
+                mDashboardViewPresenter.getSelectedAccount(context!!, userData?.uid)
         val spinnerPosition = dataAdapter.getPosition(selectedAccountSharePref)
         sp_dashboard_selectedAcc_selection.setSelection(spinnerPosition)
 
@@ -107,19 +107,19 @@ class DashboardFragment : Fragment(), DashboardViewInterface.DashboardView {
                         mDashboardViewPresenter.saveSelectedAccount(context!!,
                                 accountList[sp_dashboard_selectedAcc_selection
                                         .selectedItemPosition].accountName,
-                                userData.uid) //Save Select Account in SharedPreference for future use
+                                userData?.uid) //Save Select Account in SharedPreference for future use
 
                         Handler().postDelayed({
                             if (getView() != null) {
                                 mDashboardViewPresenter.getTransactionData(context!!, // get RecycleView Data
-                                        userData.uid,
+                                        userData?.uid,
                                         accountList[sp_dashboard_selectedAcc_selection
                                                 .selectedItemPosition].accountId)
                             }
                         }, 1000)
 
                         mDashboardViewPresenter.getRecentExpenseTransaction(context!!, // get graph Data
-                                userData.uid,
+                                userData?.uid,
                                 accountList[sp_dashboard_selectedAcc_selection
                                         .selectedItemPosition].accountId)
                     }
@@ -159,11 +159,11 @@ class DashboardFragment : Fragment(), DashboardViewInterface.DashboardView {
     }
 
     override fun proceedToFirstTimeSetup() {
-        mDashboardViewPresenter.firstTimeSetup(context!!, userData.uid)
+        mDashboardViewPresenter.firstTimeSetup(context!!, userData?.uid)
     }
 
     override fun firstTimeSetupSuccess() {
-        mDashboardViewPresenter.getAllAccountData(context!!, userData.uid)
+        mDashboardViewPresenter.getAllAccountData(context!!, userData?.uid)
     }
 
     override fun onError(message: String) {

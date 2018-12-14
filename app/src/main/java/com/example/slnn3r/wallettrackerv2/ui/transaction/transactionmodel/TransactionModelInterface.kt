@@ -10,7 +10,7 @@ interface TransactionModelInterface {
     }
 
     interface DetailsTransactionViewModel {
-        fun editCategoryRealm(mContext: Context, transactionData: Transaction)
-        fun deleteCategoryRealm(mContext: Context, transactionId: String)
+        fun editTransactionRealm(mContext: Context, transactionData: Transaction)
+        fun deleteTransactionRealm(mContext: Context, transactionId: String?)
     }
 }

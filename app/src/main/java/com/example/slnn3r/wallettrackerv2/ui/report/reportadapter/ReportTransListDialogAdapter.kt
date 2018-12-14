@@ -50,7 +50,7 @@ class ReportTransListAdapter(private val transactionList: ArrayList<Transaction>
             val d = Date.parse(dateOnly)
             val dayOfTheWeek = sdf.format(d)
 
-            if (transactionData.category.categoryType.equals(
+            if (transactionData.category?.categoryType.equals(
                             Constant.ConditionalKeyword.EXPENSE_STATUS, ignoreCase = true)) {
                 holder.view.tv_transList_amount_label.text =
                         viewContext.getString(R.string.tv_transList_amount_labelFormat,
@@ -74,11 +74,11 @@ class ReportTransListAdapter(private val transactionList: ArrayList<Transaction>
             if (transactionData.transactionRemark!!.isEmpty()) {
                 holder.view.tv_transList_category_label.text =
                         viewContext.getString(R.string.tv_transList_categoryOnly_labelFormat,
-                                transactionData.category.categoryName)
+                                transactionData.category?.categoryName)
             } else {
                 holder.view.tv_transList_category_label.text =
                         viewContext.getString(R.string.tv_transList_categoryRemark_labelFormat,
-                                transactionData.category.categoryName,
+                                transactionData.category?.categoryName,
                                 transactionData.transactionRemark)
             }
         }

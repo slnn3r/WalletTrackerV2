@@ -12,7 +12,7 @@ import io.realm.RealmConfiguration
 class DetailsAccountViewModel : AccountModelInterface.DetailsAccountViewModel {
 
     override fun editAccountRealm(mContext: Context, accountData: Account) {
-        val realm: Realm?
+        val realm: Realm
         Realm.init(mContext)
 
         val config = RealmConfiguration.Builder()
@@ -21,7 +21,7 @@ class DetailsAccountViewModel : AccountModelInterface.DetailsAccountViewModel {
 
         realm = Realm.getInstance(config)
 
-        realm!!.executeTransaction {
+        realm.executeTransaction {
             val accountRealm =
                     realm.where(AccountRealm::class.java)
                             .equalTo(Constant.RealmVariableName.ACCOUNT_ID_VARIABLE,
@@ -35,8 +35,8 @@ class DetailsAccountViewModel : AccountModelInterface.DetailsAccountViewModel {
         realm.close()
     }
 
-    override fun deleteAccountRealm(mContext: Context, accountId: String) {
-        val realm: Realm?
+    override fun deleteAccountRealm(mContext: Context, accountId: String?) {
+        val realm: Realm
         Realm.init(mContext)
 
         val config = RealmConfiguration.Builder()
@@ -45,7 +45,7 @@ class DetailsAccountViewModel : AccountModelInterface.DetailsAccountViewModel {
 
         realm = Realm.getInstance(config)
 
-        realm!!.executeTransaction {
+        realm.executeTransaction {
             val accountRealm =
                     realm.where(AccountRealm::class.java)
                             .equalTo(Constant.RealmVariableName.ACCOUNT_ID_VARIABLE,
@@ -60,8 +60,8 @@ class DetailsAccountViewModel : AccountModelInterface.DetailsAccountViewModel {
         deleteAccountTransaction(mContext, accountId)
     }
 
-    private fun deleteAccountTransaction(mContext: Context, accountId: String) {
-        val realm: Realm?
+    private fun deleteAccountTransaction(mContext: Context, accountId: String?) {
+        val realm: Realm
         Realm.init(mContext)
 
         val config = RealmConfiguration.Builder()
@@ -70,7 +70,7 @@ class DetailsAccountViewModel : AccountModelInterface.DetailsAccountViewModel {
 
         realm = Realm.getInstance(config)
 
-        realm!!.executeTransaction {
+        realm.executeTransaction {
             val transactionRealm =
                     realm.where(TransactionRealm::class.java).findAll()
 

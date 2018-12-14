@@ -22,49 +22,49 @@ class DashboardViewPresenter : DashboardPresenterInterface.DashboardViewInterfac
     private val baseModel: BaseModel = BaseModel()
     private val mDashboardViewModel: DashboardViewModel = DashboardViewModel()
 
-    override fun getAllAccountData(mContext: Context, userUid: String) {
+    override fun getAllAccountData(mContext: Context, userUid: String?) {
         try {
             val dataList = baseModel.getAccListByUserUidSync(mContext, userUid)
 
             if (dataList.size < 1 && getView() != null) {
-                getView()!!.proceedToFirstTimeSetup()
+                getView()?.proceedToFirstTimeSetup()
             } else {
-                getView()!!.populateAccountSpinner(dataList)
+                getView()?.populateAccountSpinner(dataList)
             }
         } catch (e: Exception) {
             if (getView() != null) {
-                getView()!!.onError(e.message.toString())
+                getView()?.onError(e.message.toString())
             }
         }
     }
 
-    override fun firstTimeSetup(mContext: Context, userUid: String) {
+    override fun firstTimeSetup(mContext: Context, userUid: String?) {
         try {
             mDashboardViewModel.firstTimeSetupRealm(mContext, userUid)
             if (getView() != null) {
-                getView()!!.firstTimeSetupSuccess()
+                getView()?.firstTimeSetupSuccess()
             }
         } catch (e: Exception) {
             if (getView() != null) {
-                getView()!!.onError(e.message.toString())
+                getView()?.onError(e.message.toString())
             }
         }
     }
 
-    override fun getTransactionData(mContext: Context, userUid: String, accountId: String) {
+    override fun getTransactionData(mContext: Context, userUid: String?, accountId: String?) {
         try {
             if (getView() != null) {
-                getView()!!.populateTransactionRecycleView(
+                getView()?.populateTransactionRecycleView(
                         mDashboardViewModel.getTransactionRealm(mContext, userUid, accountId))
             }
         } catch (e: Exception) {
             if (getView() != null) {
-                getView()!!.onError(e.message.toString())
+                getView()?.onError(e.message.toString())
             }
         }
     }
 
-    override fun getRecentExpenseTransaction(mContext: Context, userUid: String, accountId: String) {
+    override fun getRecentExpenseTransaction(mContext: Context, userUid: String?, accountId: String?) {
         mDashboardViewModel.getRecentMonthTransactionRealm(mContext, userUid, accountId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -93,21 +93,21 @@ class DashboardViewPresenter : DashboardPresenterInterface.DashboardViewInterfac
 
                             dataList.forEach { data ->
                                 if (sdf.format(data.transactionDateTime) == compareDate &&
-                                        data.category.categoryType == Constant.ConditionalKeyword.EXPENSE_STATUS) {
-                                    expense += data.transactionAmount
+                                        data.category?.categoryType == Constant.ConditionalKeyword.EXPENSE_STATUS) {
+                                    expense += data.transactionAmount!!
                                 }
                             }
                             entries.add(BarEntry(a.toFloat(), expense.toFloat()))
                         }
 
                         if (getView() != null) {
-                            getView()!!.populateExpenseGraph(entries, xAxisLabel)
+                            getView()?.populateExpenseGraph(entries, xAxisLabel)
                         }
                     }
 
                     override fun onError(e: Throwable) {
                         if (getView() != null) {
-                            getView()!!.onError(e.message.toString())
+                            getView()?.onError(e.message.toString())
                         }
                     }
 

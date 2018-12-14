@@ -26,11 +26,11 @@ class HistoryFragment : Fragment(), HistoryViewInterface.HistoryView,
             HistoryViewPresenter()
     private val mCustomErrorDialog: CustomAlertDialog = CustomAlertDialog()
 
-    private lateinit var userData: FirebaseUser
+    private var userData: FirebaseUser? = null
 
     override fun filterInputSubmit() {
         enableAllUiComponent()
-        mHistoryViewPresenter.getHistoryData(context!!, userData.uid)
+        mHistoryViewPresenter.getHistoryData(context!!, userData?.uid)
     }
 
     override fun filterInputCancel() {
@@ -81,7 +81,7 @@ class HistoryFragment : Fragment(), HistoryViewInterface.HistoryView,
 
         userData = mHistoryViewPresenter.getSignedInUser()!!
 
-        mHistoryViewPresenter.getHistoryData(context!!, userData.uid)
+        mHistoryViewPresenter.getHistoryData(context!!, userData?.uid)
 
     }
 

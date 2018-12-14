@@ -7,11 +7,11 @@ import io.reactivex.Observable
 interface DashboardModelInterface {
 
     interface DashboardViewModel {
-        fun firstTimeSetupRealm(mContext: Context, userUid: String)
-        fun getTransactionRealm(mContext: Context, userUid: String, accountId: String):
+        fun firstTimeSetupRealm(mContext: Context, userUid: String?)
+        fun getTransactionRealm(mContext: Context, userUid: String?, accountId: String?):
                 ArrayList<Transaction>
 
-        fun getRecentMonthTransactionRealm(mContext: Context, userUid: String, accountId: String):
+        fun getRecentMonthTransactionRealm(mContext: Context, userUid: String?, accountId: String?):
                 Observable<ArrayList<Transaction>>
     }
 }

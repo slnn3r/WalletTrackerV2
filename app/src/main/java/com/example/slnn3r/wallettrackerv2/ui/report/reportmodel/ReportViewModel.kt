@@ -14,10 +14,10 @@ import io.realm.Sort
 
 class ReportViewModel : ReportModelInterface.ReportViewModel {
 
-    override fun getReportDataRealm(mContext: Context, userUid: String, accountId: String,
+    override fun getReportDataRealm(mContext: Context, userUid: String, accountId: String?,
                                     startDate: Long, endDate: Long,
                                     isAllYear: Boolean): ArrayList<Transaction> {
-        val realm: Realm?
+        val realm: Realm
         val transactionList = ArrayList<Transaction>()
 
         Realm.init(mContext)
@@ -28,7 +28,7 @@ class ReportViewModel : ReportModelInterface.ReportViewModel {
 
         realm = Realm.getInstance(config)
 
-        realm!!.executeTransaction {
+        realm.executeTransaction {
             val transactionRealm: RealmResults<TransactionRealm> = if (!isAllYear) {
                 realm.where(TransactionRealm::class.java)
                         .sort(Constant.RealmVariableName.TRANSACTION_DATETIME_VARIABLE, Sort.DESCENDING)
@@ -55,10 +55,10 @@ class ReportViewModel : ReportModelInterface.ReportViewModel {
                 if (accountData.accountId == accountId && accountData.userUid == userUid) {
                     transactionList.add(
                             Transaction(
-                                    transactionRealmData.transactionId!!,
-                                    transactionRealmData.transactionDateTime!!,
+                                    transactionRealmData.transactionId,
+                                    transactionRealmData.transactionDateTime,
                                     transactionRealmData.transactionAmount,
-                                    transactionRealmData.transactionRemark!!,
+                                    transactionRealmData.transactionRemark,
                                     categoryData,
                                     accountData
                             )

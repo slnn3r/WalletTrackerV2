@@ -23,10 +23,10 @@ class LoginViewPresenter : LoginPresenterInterface.LoginViewPresenter,
     private val mLoginViewModel: LoginViewModel = LoginViewModel()
 
     override fun executeGoogleSignIn(mContext: Context, requestCode: Int,
-                                     resultCode: Int, data: Intent) {
+                                     resultCode: Int, data: Intent?) {
         if (resultCode != 0) { // Close the Google Sign In Dialog Manually or Unexpectedly will NOT return 0
             if (requestCode == 1) {
-                getView()!!.showLoadingDialog(mContext.getString(R.string.sign_in_loading_message))
+                getView()?.showLoadingDialog(mContext.getString(R.string.sign_in_loading_message))
                 val task = GoogleSignIn.getSignedInAccountFromIntent(data)
                 val accountGoogle = handleSignInResult(task)
                 firebaseAuthentication(mContext, accountGoogle)
@@ -37,7 +37,7 @@ class LoginViewPresenter : LoginPresenterInterface.LoginViewPresenter,
             val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
 
             if (!isConnected) {
-                getView()!!.onError(mContext.getString(R.string.no_internet_message))
+                getView()?.onError(mContext.getString(R.string.no_internet_message))
             }
         }
     }
@@ -48,8 +48,8 @@ class LoginViewPresenter : LoginPresenterInterface.LoginViewPresenter,
         try {
             account = completedTask.getResult(ApiException::class.java)
         } catch (e: ApiException) {
-            getView()!!.dismissLoadingDialog()
-            getView()!!.onError(e.message.toString())
+            getView()?.dismissLoadingDialog()
+            getView()?.onError(e.message.toString())
         }
 
         return account
@@ -63,21 +63,21 @@ class LoginViewPresenter : LoginPresenterInterface.LoginViewPresenter,
         val mAuth = FirebaseAuth.getInstance()
 
         val credential = GoogleAuthProvider.getCredential(accountGoogle.idToken, null)
-        mAuth!!.signInWithCredential(credential)
+        mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(mContext as Activity) { task ->
                     if (task.isSuccessful) {
-                        getView()!!.dismissLoadingDialog()
-                        getView()!!.signInSuccess()
+                        getView()?.dismissLoadingDialog()
+                        getView()?.signInSuccess()
                     }
                 }
                 .addOnFailureListener {
-                    getView()!!.dismissLoadingDialog()
-                    getView()!!.onError(it.message.toString())
+                    getView()?.dismissLoadingDialog()
+                    getView()?.onError(it.message.toString())
                 }
     }
 
-    override fun retrieveData(mContext: Context, userUid: String) {
-        getView()!!.showLoadingDialog(mContext.getString(R.string.sync_loading_message))
+    override fun retrieveData(mContext: Context, userUid: String?) {
+        getView()?.showLoadingDialog(mContext.getString(R.string.sync_loading_message))
         mLoginViewModel.retrieveDataFirebase(mContext, userUid)
     }
 
@@ -85,18 +85,18 @@ class LoginViewPresenter : LoginPresenterInterface.LoginViewPresenter,
         try {
             FirebaseAuth.getInstance().signOut()
         } catch (error: Exception) {
-            getView()!!.onError(error.toString())
+            getView()?.onError(error.toString())
         }
 
         mGoogleSignInClient.revokeAccess()
                 .addOnFailureListener {
-                    getView()!!.onError(it.message.toString())
+                    getView()?.onError(it.message.toString())
                     return@addOnFailureListener
                 }
 
         mGoogleSignInClient.signOut()
                 .addOnFailureListener {
-                    getView()!!.onError(it.message.toString())
+                    getView()?.onError(it.message.toString())
                     return@addOnFailureListener
                 }
     }

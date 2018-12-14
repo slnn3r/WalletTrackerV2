@@ -25,7 +25,7 @@ interface MenuViewInterface {
         fun displayDoubleTabExitMessage()
         fun superOnPressBack()
 
-        fun updateDrawerBackupDateTime(backupDateTime: String)
+        fun updateDrawerBackupDateTime(backupDateTime: String?)
 
         fun executePeriodicalBackup()
 

@@ -31,7 +31,7 @@ class DetailsAccountFragment : Fragment(), AccountViewInterface.DetailsAccountVi
     private val mCustomConfirmationDialog: CustomAlertDialog = CustomAlertDialog()
     private val mCustomErrorDialog: CustomAlertDialog = CustomAlertDialog()
 
-    private lateinit var userData: FirebaseUser
+    private var userData: FirebaseUser? = null
     private lateinit var accountArgData: Account
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -52,7 +52,7 @@ class DetailsAccountFragment : Fragment(), AccountViewInterface.DetailsAccountVi
     override fun onStart() {
         super.onStart()
         mDetailsAccountViewPresenter.bindView(this)
-        userData = mDetailsAccountViewPresenter.getSignedInUser()!!
+        userData = mDetailsAccountViewPresenter.getSignedInUser()
         mDetailsAccountViewPresenter.checkAccountStatus(accountArgData.accountStatus)
     }
 
@@ -223,7 +223,7 @@ class DetailsAccountFragment : Fragment(), AccountViewInterface.DetailsAccountVi
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                mDetailsAccountViewPresenter.validateAccountNameInput(context!!, userData.uid,
+                mDetailsAccountViewPresenter.validateAccountNameInput(context!!, userData?.uid,
                         et_detailsAcc_AccName.text.toString(), accountArgData.accountId)
             }
 

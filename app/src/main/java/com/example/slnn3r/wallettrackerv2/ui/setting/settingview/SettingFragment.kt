@@ -23,7 +23,7 @@ class SettingFragment : Fragment(), SettingViewInterface.SettingView {
     private val mSettingPresenter: SettingViewPresenter = SettingViewPresenter()
     private val mCustomErrorDialog: CustomAlertDialog = CustomAlertDialog()
 
-    private lateinit var userData: FirebaseUser
+    private var userData: FirebaseUser? = null
 
     private var initialLaunch = true
 
@@ -40,7 +40,7 @@ class SettingFragment : Fragment(), SettingViewInterface.SettingView {
         setupBackupSettingSwitchButton()
 
         fb_setting_save.setOnClickListener {
-            mSettingPresenter.saveSetting(context!!, userData.uid,
+            mSettingPresenter.saveSetting(context!!, userData?.uid,
                     sb_setting_backupSetting.isChecked)
         }
     }
@@ -50,9 +50,9 @@ class SettingFragment : Fragment(), SettingViewInterface.SettingView {
         mSettingPresenter.bindView(this)
 
         if (initialLaunch) {
-            userData = mSettingPresenter.getSignedInUser()!!
+            userData = mSettingPresenter.getSignedInUser()
 
-            mSettingPresenter.checkBackupSetting(context!!, userData.uid)
+            mSettingPresenter.checkBackupSetting(context!!, userData?.uid)
         }
         initialLaunch = false
     }

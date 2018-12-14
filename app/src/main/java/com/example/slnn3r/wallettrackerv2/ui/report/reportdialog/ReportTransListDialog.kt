@@ -20,13 +20,13 @@ import kotlinx.android.synthetic.main.dialog_report_transaction_list.*
 class ReportTransListDialog : BottomSheetDialogFragment() {
 
     private lateinit var transactionData: ArrayList<Transaction>
-    private lateinit var transactionSummaryData: TransactionSummary
+    private var transactionSummaryData: TransactionSummary? = null
 
     fun setTransactionData(passData: ArrayList<Transaction>) {
         transactionData = passData
     }
 
-    fun setTransactionSummaryData(passData: TransactionSummary) {
+    fun setTransactionSummaryData(passData: TransactionSummary?) {
         transactionSummaryData = passData
     }
 
@@ -42,7 +42,7 @@ class ReportTransListDialog : BottomSheetDialogFragment() {
             val dialog = dialog as BottomSheetDialog
             val bottomSheet = dialog
                     .findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout?
-            val behavior = BottomSheetBehavior.from(bottomSheet!!)
+            val behavior = BottomSheetBehavior.from(bottomSheet)
 
             behavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -60,14 +60,14 @@ class ReportTransListDialog : BottomSheetDialogFragment() {
 
         btn_reportTrans_close.setOnClickListener {
             (context as MenuActivity).setupNavigationMode()
-            dialog!!.dismiss()
+            dialog?.dismiss()
             reportAdapterClickCount = 0
         }
 
         tv_reportTrans_catTitle.text = getString(R.string.tv_reportDialog_title,
-                transactionSummaryData.transactionSummaryCategory)
-        tv_reportTrans_amountTitle.text = transactionSummaryData.transactionSummaryTotal
-        tv_reportTrans_countTitle.text = transactionSummaryData.transactionSummaryCount
+                transactionSummaryData?.transactionSummaryCategory)
+        tv_reportTrans_amountTitle.text = transactionSummaryData?.transactionSummaryTotal
+        tv_reportTrans_countTitle.text = transactionSummaryData?.transactionSummaryCount
 
         rv_reportTrans_transList.isNestedScrollingEnabled = false
         rv_reportTrans_transList.layoutManager = LinearLayoutManager(context)

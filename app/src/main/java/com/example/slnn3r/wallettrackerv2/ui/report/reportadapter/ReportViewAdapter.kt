@@ -82,11 +82,11 @@ class TransactionViewHolder(val view: View, var passTransactionSummaryData: Tran
             if (passTransactionSummaryData != null && reportAdapterClickCount < 1) {
                 val filterList = ArrayList<Transaction>()
 
-                passTransactionData!!.forEach { data ->
-                    if (data.category.categoryName ==
-                            passTransactionSummaryData!!.transactionSummaryCategory &&
-                            data.category.categoryType ==
-                            passTransactionSummaryData!!.transactionSummaryType) {
+                passTransactionData?.forEach { data ->
+                    if (data.category?.categoryName ==
+                            passTransactionSummaryData?.transactionSummaryCategory &&
+                            data.category?.categoryType ==
+                            passTransactionSummaryData?.transactionSummaryType) {
                         filterList.add(data)
                     }
                 }
@@ -94,7 +94,7 @@ class TransactionViewHolder(val view: View, var passTransactionSummaryData: Tran
                 val calCustomDialog = ReportTransListDialog()
                 calCustomDialog.isCancelable = false
                 calCustomDialog.setTransactionData(filterList)
-                calCustomDialog.setTransactionSummaryData(passTransactionSummaryData!!)
+                calCustomDialog.setTransactionSummaryData(passTransactionSummaryData)
                 calCustomDialog.setTargetFragment(passFragment!!, 1)
                 calCustomDialog.show(passFragment!!.fragmentManager!!, "")
 

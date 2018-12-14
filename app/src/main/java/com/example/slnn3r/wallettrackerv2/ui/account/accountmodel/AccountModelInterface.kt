@@ -11,6 +11,6 @@ interface AccountModelInterface {
 
     interface DetailsAccountViewModel {
         fun editAccountRealm(mContext: Context, accountData: Account)
-        fun deleteAccountRealm(mContext: Context, accountId: String)
+        fun deleteAccountRealm(mContext: Context, accountId: String?)
     }
 }

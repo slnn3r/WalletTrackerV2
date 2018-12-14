@@ -12,10 +12,10 @@ import com.google.gson.Gson
 import io.realm.*
 
 class HistoryViewModel : HistoryModelInterface.HistoryViewModel {
-    override fun getTransactionDataRealm(mContext: Context, userUid: String,
-                                         accountId: String, startDate: Long, endDate: Long,
-                                         remark: String): ArrayList<Transaction> {
-        val realm: Realm?
+    override fun getTransactionDataRealm(mContext: Context, userUid: String?,
+                                         accountId: String?, startDate: Long, endDate: Long,
+                                         remark: String?): ArrayList<Transaction> {
+        val realm: Realm
         val transactionList = ArrayList<Transaction>()
 
         Realm.init(mContext)
@@ -26,7 +26,7 @@ class HistoryViewModel : HistoryModelInterface.HistoryViewModel {
 
         realm = Realm.getInstance(config)
 
-        realm!!.executeTransaction {
+        realm.executeTransaction {
             val transactionRealm: RealmResults<TransactionRealm>
 
             if (remark != "" && remark != Constant.ConditionalKeyword.All_YEAR_STATUS) {
@@ -37,7 +37,7 @@ class HistoryViewModel : HistoryModelInterface.HistoryViewModel {
                         .lessThan(Constant.RealmVariableName.TRANSACTION_DATETIME_VARIABLE,
                                 endDate)
                         .contains(Constant.RealmVariableName.TRANSACTION_REMARK_VARIABLE,
-                                remark, Case.INSENSITIVE)
+                                remark!!, Case.INSENSITIVE)
                         .findAll()
             } else if (remark == Constant.ConditionalKeyword.All_YEAR_STATUS) {
                 transactionRealm = realm.where(TransactionRealm::class.java)
@@ -65,10 +65,10 @@ class HistoryViewModel : HistoryModelInterface.HistoryViewModel {
                 if (accountData.accountId == accountId && accountData.userUid == userUid) {
                     transactionList.add(
                             Transaction(
-                                    transactionRealmData.transactionId!!,
-                                    transactionRealmData.transactionDateTime!!,
+                                    transactionRealmData.transactionId,
+                                    transactionRealmData.transactionDateTime,
                                     transactionRealmData.transactionAmount,
-                                    transactionRealmData.transactionRemark!!,
+                                    transactionRealmData.transactionRemark,
                                     categoryData,
                                     accountData
                             )

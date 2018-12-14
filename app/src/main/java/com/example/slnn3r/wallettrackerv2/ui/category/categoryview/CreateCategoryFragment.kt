@@ -29,7 +29,7 @@ class CreateCategoryFragment : Fragment(), CategoryViewInterface.CreateCategoryV
     private val mCustomConfirmationDialog: CustomAlertDialog = CustomAlertDialog()
     private val mCustomErrorDialog: CustomAlertDialog = CustomAlertDialog()
 
-    private lateinit var userData: FirebaseUser
+    private var userData: FirebaseUser? = null
 
     private var initialLaunch = true
 
@@ -52,12 +52,12 @@ class CreateCategoryFragment : Fragment(), CategoryViewInterface.CreateCategoryV
     override fun onStart() {
         super.onStart()
         mCreateCategoryViewPresenter.bindView(this)
-        userData = mCreateCategoryViewPresenter.getSignedInUser()!!
+        userData = mCreateCategoryViewPresenter.getSignedInUser()
 
         if (initialLaunch) {
             // Receive Selected Category Type Argument from View screen
             val selectedCategoryType = arguments?.getString(Constant.KeyId.CATEGORY_CREATE_ARG)
-            mCreateCategoryViewPresenter.checkSelectedCategoryType(selectedCategoryType!!)
+            mCreateCategoryViewPresenter.checkSelectedCategoryType(selectedCategoryType)
         }
         initialLaunch = false
     }
@@ -128,7 +128,7 @@ class CreateCategoryFragment : Fragment(), CategoryViewInterface.CreateCategoryV
         sb_createCat_catType.setOnCheckedChangeListener { _: CompoundButton, _: Boolean ->
             mCreateCategoryViewPresenter.checkSwitchButton(sb_createCat_catType.isChecked)
             mCreateCategoryViewPresenter.validateCategoryNameInput(
-                    context!!, userData.uid,
+                    context!!, userData?.uid,
                     et_createCat_catName.text.toString(), null,
                     tv_createCat_catType_selection.text.toString())
         }
@@ -142,7 +142,7 @@ class CreateCategoryFragment : Fragment(), CategoryViewInterface.CreateCategoryV
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 mCreateCategoryViewPresenter.validateCategoryNameInput(
-                        context!!, userData.uid,
+                        context!!, userData?.uid,
                         et_createCat_catName.text.toString(), null,
                         tv_createCat_catType_selection.text.toString())
             }
@@ -164,7 +164,7 @@ class CreateCategoryFragment : Fragment(), CategoryViewInterface.CreateCategoryV
                     val categoryInput =
                             Category(uniqueID, et_createCat_catName.text.toString(),
                                     tv_createCat_catType_selection.text.toString(),
-                                    Constant.ConditionalKeyword.NON_DEFAULT_STATUS, userData.uid)
+                                    Constant.ConditionalKeyword.NON_DEFAULT_STATUS, userData?.uid)
 
                     mCreateCategoryViewPresenter.createCategory(context!!, categoryInput)
                 }).show()

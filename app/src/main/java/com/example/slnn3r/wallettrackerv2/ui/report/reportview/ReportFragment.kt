@@ -111,7 +111,7 @@ class ReportFragment : Fragment(), ReportViewInterface.ReportView {
     override fun populateAccountSpinner(accountList: ArrayList<Account>) {
         loadedAccountList = accountList // store to global for create usage later
 
-        val accountNameList = ArrayList<String>()
+        val accountNameList = ArrayList<String?>()
 
         accountList.forEach { data ->
             accountNameList.add(data.accountName)

@@ -10,7 +10,7 @@ import io.realm.RealmConfiguration
 class CreateCategoryViewModel : CategoryModelInterface.CreateCategoryViewModel {
 
     override fun createCategoryRealm(mContext: Context, categoryData: Category) {
-        val realm: Realm?
+        val realm: Realm
         Realm.init(mContext)
 
         val config = RealmConfiguration.Builder()
@@ -19,7 +19,7 @@ class CreateCategoryViewModel : CategoryModelInterface.CreateCategoryViewModel {
 
         realm = Realm.getInstance(config)
 
-        realm!!.executeTransaction {
+        realm.executeTransaction {
             val categoryRealm = realm.createObject(CategoryRealm::class.java, categoryData.categoryId)
 
             categoryRealm.categoryName = categoryData.categoryName

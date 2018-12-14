@@ -13,11 +13,11 @@ interface MenuPresenterInterface {
         fun checkNavigationStatus(isNavigated: String, isBackButton: Boolean, currentScreen: Int?,
                                   isOpenDrawer: Boolean, doubleBackToExitPressedOnce: Boolean)
 
-        fun checkBackupSetting(mContext: Context, userUid: String)
-        fun checkBackupDateTime(mContext: Context, userUid: String)
+        fun checkBackupSetting(mContext: Context, userUid: String?)
+        fun checkBackupDateTime(mContext: Context, userUid: String?)
 
-        fun backupDataManually(mContext: Context, userUid: String)
-        fun backupDataPeriodically(mContext: Context, userUid: String)
+        fun backupDataManually(mContext: Context, userUid: String?)
+        fun backupDataPeriodically(mContext: Context, userUid: String?)
 
         fun stopBackupDataPeriodically(mContext: Context)
     }

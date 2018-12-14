@@ -18,7 +18,7 @@ class SplashViewPresenter : SplashPresenterInterface.SplashViewPresenter,
             Fabric.with(fabric)
 
         } catch (error: Exception) {
-            getView()!!.onError(error.toString())
+            getView()?.onError(error.toString())
         }
     }
 
@@ -27,13 +27,13 @@ class SplashViewPresenter : SplashPresenterInterface.SplashViewPresenter,
             val signedInUser = getSignedInUser()
 
             if (signedInUser == null) {
-                getView()!!.navigateToLogin()
+                getView()?.navigateToLogin()
             } else {
-                getView()!!.navigateToDashboard()
+                getView()?.navigateToDashboard()
             }
 
         } catch (error: Exception) {
-            getView()!!.onError(error.toString())
+            getView()?.onError(error.toString())
         }
     }
 }

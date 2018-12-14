@@ -42,7 +42,7 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
             HistoryFilterDialogPresenter()
     private val mCustomErrorDialog: CustomAlertDialog = CustomAlertDialog()
 
-    private lateinit var userData: FirebaseUser
+    private var userData: FirebaseUser? = null
 
     private lateinit var loadedCategoryList: ArrayList<Category>
     private lateinit var loadedAccountList: ArrayList<Account>
@@ -79,7 +79,7 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
     override fun onPause() {
         super.onPause()
         onFilterTriggerDialog.filterInputCancel()
-        dialog!!.dismiss()
+        dialog?.dismiss()
     }
 
     private fun setupDateOptionSwitchButton() {
@@ -97,11 +97,11 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
                     when {
                         sp_historyFilter_transType.selectedItem ==
                                 Constant.ConditionalKeyword.EXPENSE_STATUS ->
-                            mHistoryFilterDialogPresenter.getCategoryList(context!!, userData.uid,
+                            mHistoryFilterDialogPresenter.getCategoryList(context!!, userData?.uid,
                                     sp_historyFilter_transType.selectedItem.toString())
                         sp_historyFilter_transType.selectedItem
                                 == Constant.ConditionalKeyword.INCOME_STATUS ->
-                            mHistoryFilterDialogPresenter.getCategoryList(context!!, userData.uid,
+                            mHistoryFilterDialogPresenter.getCategoryList(context!!, userData?.uid,
                                     sp_historyFilter_transType.selectedItem.toString())
                         else -> {
                             val spinnerItem = ArrayList<String>()
@@ -167,7 +167,7 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
 
         userData = mHistoryFilterDialogPresenter.getSignedInUser()!!
 
-        mHistoryFilterDialogPresenter.getAccountList(context!!, userData.uid)
+        mHistoryFilterDialogPresenter.getAccountList(context!!, userData?.uid)
 
         populateYears(myCalendar.get(Calendar.YEAR) - 5, myCalendar.get(Calendar.YEAR))
 
@@ -196,7 +196,7 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
         val filterStartDate = editor.getString(Constant.KeyId.FILTER_INPUT_STARTDATE, "")
         val filterEndDate = editor.getString(Constant.KeyId.FILTER_INPUT_ENDDATE, "")
 
-        val accountNameList = ArrayList<String>()
+        val accountNameList = ArrayList<String?>()
         loadedAccountList.forEach { data ->
             accountNameList.add(data.accountName)
         }
@@ -206,12 +206,12 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
 
         when (filterCatType) {
             Constant.ConditionalKeyword.EXPENSE_STATUS -> {
-                mHistoryFilterDialogPresenter.getCategoryList(context!!, userData.uid,
+                mHistoryFilterDialogPresenter.getCategoryList(context!!, userData?.uid,
                         Constant.ConditionalKeyword.EXPENSE_STATUS)
                 sp_historyFilter_transType.setSelection(1)
             }
             Constant.ConditionalKeyword.INCOME_STATUS -> {
-                mHistoryFilterDialogPresenter.getCategoryList(context!!, userData.uid,
+                mHistoryFilterDialogPresenter.getCategoryList(context!!, userData?.uid,
                         Constant.ConditionalKeyword.INCOME_STATUS)
                 sp_historyFilter_transType.setSelection(2)
             }
@@ -231,7 +231,7 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
         }
 
         if (filterCategory != Constant.ConditionalKeyword.ALL_CATEGORY_STATUS) {
-            val categoryNameList = ArrayList<String>()
+            val categoryNameList = ArrayList<String?>()
             loadedCategoryList.forEach { data ->
                 categoryNameList.add(data.categoryName)
             }
@@ -279,7 +279,7 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
     override fun populateAccountSpinner(accountList: ArrayList<Account>) {
         loadedAccountList = accountList // store to global for create usage later
 
-        val accountNameList = ArrayList<String>()
+        val accountNameList = ArrayList<String?>()
 
         accountList.forEach { data ->
             accountNameList.add(data.accountName)
@@ -293,7 +293,7 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
 
         // Get SharedPreference saved Selection and Set to Spinner Selection
         val selectedAccountSharePref =
-                mHistoryFilterDialogPresenter.getSelectedAccount(context!!, userData.uid)
+                mHistoryFilterDialogPresenter.getSelectedAccount(context!!, userData?.uid)
         val spinnerPosition = dataAdapter.getPosition(selectedAccountSharePref)
         sp_historyFilter_selectedAcc.setSelection(spinnerPosition)
     }
@@ -301,7 +301,7 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
     override fun populateCategorySpinner(categoryList: ArrayList<Category>) {
         loadedCategoryList = categoryList // store to global for create usage later
 
-        val categoryNameList = ArrayList<String>()
+        val categoryNameList = ArrayList<String?>()
 
         categoryNameList.add(Constant.ConditionalKeyword.ALL_CATEGORY_STATUS)
 
@@ -336,26 +336,26 @@ class HistoryFilterDialog : BottomSheetDialogFragment(), HistoryViewInterface.Hi
 
             if (tv_historyFilter_dateOption.text == Constant.ConditionalKeyword.SPECIFIC_DATE) {
                 onFilterTriggerDialog.filterInputSubmit()
-                dialog!!.dismiss()
+                dialog?.dismiss()
             } else {
                 onFilterTriggerDialog.filterInputSubmit()
-                dialog!!.dismiss()
+                dialog?.dismiss()
             }
         }
 
         btn_historyFilter_cancel.setOnClickListener {
             onFilterTriggerDialog.filterInputCancel()
-            dialog!!.dismiss()
+            dialog?.dismiss()
         }
     }
 
     private fun setupDialogInitialUi() {
-        view!!.viewTreeObserver.addOnGlobalLayoutListener {
+        view?.viewTreeObserver?.addOnGlobalLayoutListener {
             val dialog = dialog as BottomSheetDialog
             val bottomSheet = dialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout?
-            val behavior = BottomSheetBehavior.from(bottomSheet!!)
+            val behavior = BottomSheetBehavior.from(bottomSheet)
 
-            dialog.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+            dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
             behavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
                 override fun onStateChanged(bottomSheet: View, newState: Int) {

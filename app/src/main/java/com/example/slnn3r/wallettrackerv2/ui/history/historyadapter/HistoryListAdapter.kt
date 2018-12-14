@@ -60,7 +60,7 @@ class HistoryListAdapter(private val transactionList: ArrayList<Transaction>) :
             val d = Date.parse(dateOnly)
             val dayOfTheWeek = sdf.format(d)
 
-            if (transactionData.category.categoryType.equals(
+            if (transactionData.category?.categoryType.equals(
                             Constant.ConditionalKeyword.EXPENSE_STATUS, ignoreCase = true)) {
                 holder.view.tv_transList_amount_label.text =
                         viewContext.getString(R.string.tv_transList_amount_labelFormat,
@@ -84,11 +84,11 @@ class HistoryListAdapter(private val transactionList: ArrayList<Transaction>) :
             if (transactionData.transactionRemark!!.isEmpty()) {
                 holder.view.tv_transList_category_label.text =
                         viewContext.getString(R.string.tv_transList_categoryOnly_labelFormat,
-                                transactionData.category.categoryName)
+                                transactionData.category?.categoryName)
             } else {
                 holder.view.tv_transList_category_label.text =
                         viewContext.getString(R.string.tv_transList_categoryRemark_labelFormat,
-                                transactionData.category.categoryName,
+                                transactionData.category?.categoryName,
                                 transactionData.transactionRemark)
             }
 
@@ -104,10 +104,10 @@ class TransactionViewHolder(val view: View, var passData: Transaction? = null) :
             if (passData != null && historyAdapterClickCount < 1) {
                 val gson = Gson()
 
-                val transactionData = Transaction(passData!!.transactionId,
-                        passData!!.transactionDateTime,
-                        passData!!.transactionAmount, passData!!.transactionRemark,
-                        passData!!.category, passData!!.account)
+                val transactionData = Transaction(passData?.transactionId,
+                        passData?.transactionDateTime,
+                        passData?.transactionAmount, passData?.transactionRemark,
+                        passData?.category, passData?.account)
 
                 val json = gson.toJson(transactionData)
 

@@ -36,7 +36,7 @@ class DataBackupJobService : JobService() {
     private val baseModel: BaseModel = BaseModel()
 
     override fun onStartJob(params: JobParameters?): Boolean {
-        doBackgroundWork(params!!)
+        doBackgroundWork(params)
         return true
     }
 
@@ -68,10 +68,10 @@ class DataBackupJobService : JobService() {
     }
 
     //(No Error Handling for Firebase)
-    private fun doBackgroundWork(params: JobParameters) {
-        val userUid = params.extras.getString(Constant.KeyId.JOBSERVICE_USERID_KEY)
+    private fun doBackgroundWork(params: JobParameters?) {
+        val userUid = params?.extras?.getString(Constant.KeyId.JOBSERVICE_USERID_KEY)
 
-        val backupSetting = baseModel.getBackupSettingSharePreference(applicationContext, userUid!!)
+        val backupSetting = baseModel.getBackupSettingSharePreference(applicationContext, userUid)
         val backupType = baseModel.getBackupTypeSharePreference(applicationContext, userUid)
 
         val accountList = dataBackupModel.getAllAccountDataByUserUid(applicationContext, userUid)
@@ -85,7 +85,7 @@ class DataBackupJobService : JobService() {
 
                             val message = dataSnapshot.getValue(CategoryFirebase::class.java)
 
-                            if (message!!.userUid == userUid) {
+                            if (message?.userUid == userUid) {
                                 dataSnapshot.ref.setValue(null)
                             }
                         }
@@ -106,7 +106,7 @@ class DataBackupJobService : JobService() {
 
                             val message = dataSnapshot.getValue(AccountFirebase::class.java)
 
-                            if (message!!.userUid == userUid) {
+                            if (message?.userUid == userUid) {
                                 dataSnapshot.ref.setValue(null)
                             }
                         }
@@ -141,7 +141,7 @@ class DataBackupJobService : JobService() {
 
                             val message = dataSnapshot.getValue(TransactionFirebase::class.java)
 
-                            if (message!!.account.userUid == userUid) {
+                            if (message?.account?.userUid == userUid) {
                                 dataSnapshot.ref.setValue(null)
                             }
                         }
@@ -155,7 +155,7 @@ class DataBackupJobService : JobService() {
                 })
     }
 
-    private fun createPushNotification(backupType: String, backupSetting: Boolean, userUid: String) {
+    private fun createPushNotification(backupType: String?, backupSetting: Boolean, userUid: String?) {
         if (backupType == Constant.ConditionalKeyword.MANUAL_BACKUP) {
             val mBuilder = NotificationCompat.Builder(applicationContext, Constant.KeyId.NOTIFICATION_CHANNEL)
                     .setSmallIcon(R.drawable.ic_backup)

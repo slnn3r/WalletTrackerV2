@@ -6,13 +6,13 @@ import com.example.slnn3r.wallettrackerv2.data.objectclass.Transaction
 interface HistoryPresenterInterface {
 
     interface HistoryViewPresenter {
-        fun getHistoryData(mContext: Context, userUid: String)
+        fun getHistoryData(mContext: Context, userUid: String?)
         fun calculateHistoryData(transactionList: ArrayList<Transaction>)
     }
 
     interface HistoryFilterDialogPresenter {
-        fun getAccountList(mContext: Context, userUid: String)
-        fun getCategoryList(mContext: Context, userUid: String, filterType: String)
+        fun getAccountList(mContext: Context, userUid: String?)
+        fun getCategoryList(mContext: Context, userUid: String?, filterType: String)
         fun getFilterInput(mContext: Context)
         fun saveFilterInput(mContext: Context, filterAccount: String,
                             filterCatType: String,

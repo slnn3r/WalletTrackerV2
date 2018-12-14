@@ -58,7 +58,7 @@ class CalculatorDialog : BottomSheetDialogFragment() {
             val dialog = dialog as BottomSheetDialog
             val bottomSheet = dialog
                     .findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout?
-            val behavior = BottomSheetBehavior.from(bottomSheet!!)
+            val behavior = BottomSheetBehavior.from(bottomSheet)
 
             behavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -75,9 +75,9 @@ class CalculatorDialog : BottomSheetDialogFragment() {
         }
 
         val mArgs = this.arguments
-        val myValue = mArgs!!.getString(Constant.KeyId.CALCULATE_DIALOG_ARG)
+        val myValue = mArgs?.getString(Constant.KeyId.CALCULATE_DIALOG_ARG)
 
-        if (myValue!!.toDoubleOrNull() != null) {
+        if (myValue?.toDoubleOrNull() != null) {
             tv_calCustomDialog_amount.setText(myValue)
         } else {
             tv_calCustomDialog_amount.setText("")
@@ -114,16 +114,16 @@ class CalculatorDialog : BottomSheetDialogFragment() {
                 }
             }
 
-            dialog!!.dismiss()
+            dialog?.dismiss()
         }
 
         btn_cancel_calCustomDialog.setOnClickListener {
-            if (myValue.toDoubleOrNull() != null) {
+            if (myValue?.toDoubleOrNull() != null) {
                 inputSelection.calculatorInput(myValue)
-                dialog!!.dismiss()
+                dialog?.dismiss()
             } else {
                 inputSelection.calculatorNoInput()
-                dialog!!.dismiss()
+                dialog?.dismiss()
             }
         }
 

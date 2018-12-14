@@ -11,19 +11,19 @@ interface TransactionPresenterInterface {
 
     interface CreateTransactionPresenter {
         fun checkSwitchButton(isChecked: Boolean)
-        fun getAccountList(mContext: Context, userUid: String)
-        fun getCategoryList(mContext: Context, userUid: String, filterType: String)
+        fun getAccountList(mContext: Context, userUid: String?)
+        fun getCategoryList(mContext: Context, userUid: String?, filterType: String)
         fun createTransaction(mContext: Context, transactionData: Transaction,
-                              userUid: String, selectedAccount: String, selectedCategory: String,
+                              userUid: String?, selectedAccount: String, selectedCategory: String,
                               accountList: ArrayList<Account>, categoryList: ArrayList<Category>)
     }
 
     interface DetailsTransactionPresenter {
         fun checkSwitchButton(isChecked: Boolean)
-        fun checkSelectedCategoryType(filterType: String)
+        fun checkSelectedCategoryType(filterType: String?)
 
         fun checkCategoryData(categoryList: ArrayList<Category>, transactionArgData: Transaction,
-                              dataAdapter: ArrayAdapter<String>, categoryNameList: ArrayList<String>,
+                              dataAdapter: ArrayAdapter<String?>, categoryNameList: ArrayList<String?>,
                               initialLaunch: Boolean)
 
         fun actionCheck(menuItem: SpeedDialActionItem)
@@ -36,6 +36,6 @@ interface TransactionPresenterInterface {
                             accountList: ArrayList<Account>, categoryList: ArrayList<Category>,
                             initialTransactionData: Transaction)
 
-        fun deleteTransaction(mContext: Context, transactionId: String)
+        fun deleteTransaction(mContext: Context, transactionId: String?)
     }
 }

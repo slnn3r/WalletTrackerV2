@@ -60,9 +60,9 @@ class AccountViewHolder(val view: View, var passData: Account? = null) :
         view.setOnClickListener {
             if (passData != null) {
                 val gson = Gson()
-                val accountData = Account(passData!!.accountId, passData!!.accountName,
-                        passData!!.accountDesc, passData!!.userUid,
-                        passData!!.accountStatus)
+                val accountData = Account(passData?.accountId, passData?.accountName,
+                        passData?.accountDesc, passData?.userUid,
+                        passData?.accountStatus)
 
                 val json = gson.toJson(accountData)
 

@@ -7,7 +7,7 @@ interface ReportModelInterface {
 
     interface ReportViewModel {
         fun getReportDataRealm(mContext: Context, userUid: String,
-                               accountId: String, startDate: Long, endDate: Long,
+                               accountId: String?, startDate: Long, endDate: Long,
                                isAllYear: Boolean): ArrayList<Transaction>
     }
 }

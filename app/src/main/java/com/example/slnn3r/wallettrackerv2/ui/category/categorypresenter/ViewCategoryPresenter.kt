@@ -12,27 +12,27 @@ class ViewCategoryPresenter : CategoryPresenterInterface.ViewCategoryPresenter,
 
     override fun checkToggle(isToggleOn: Boolean) {
         if (!isToggleOn) {
-            getView()!!.switchButtonToggle()
+            getView()?.switchButtonToggle()
         }
     }
 
     override fun checkSwitchButton(isChecked: Boolean) {
         if (isChecked) {
-            getView()!!.switchButtonExpenseMode()
+            getView()?.switchButtonExpenseMode()
         } else {
-            getView()!!.switchButtonIncomeMode()
+            getView()?.switchButtonIncomeMode()
         }
     }
 
-    override fun getCategoryList(mContext: Context, userUid: String,
+    override fun getCategoryList(mContext: Context, userUid: String?,
                                  filterType: String) {
         try {
             val categoryList = baseModel.getCatListByUserUidWithFilterSync(
                     mContext, userUid, filterType)
 
-            getView()!!.populateCategoryRecycleView(categoryList)
+            getView()?.populateCategoryRecycleView(categoryList)
         } catch (e: Exception) {
-            getView()!!.onError(e.message.toString())
+            getView()?.onError(e.message.toString())
         }
     }
 }

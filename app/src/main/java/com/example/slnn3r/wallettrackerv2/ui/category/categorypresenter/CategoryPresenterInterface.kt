@@ -9,13 +9,13 @@ interface CategoryPresenterInterface {
     interface ViewCategoryPresenter {
         fun checkToggle(isToggleOn: Boolean)
         fun checkSwitchButton(isChecked: Boolean)
-        fun getCategoryList(mContext: Context, userUid: String, filterType: String)
+        fun getCategoryList(mContext: Context, userUid: String?, filterType: String)
     }
 
     interface CreateCategoryPresenter {
-        fun checkSelectedCategoryType(filterType: String)
+        fun checkSelectedCategoryType(filterType: String?)
         fun checkSwitchButton(isChecked: Boolean)
-        fun validateCategoryNameInput(mContext: Context, userUid: String,
+        fun validateCategoryNameInput(mContext: Context, userUid: String?,
                                       categoryNameInput: String, updateCategoryId: String?,
                                       filterType: String)
 
@@ -23,18 +23,18 @@ interface CategoryPresenterInterface {
     }
 
     interface DetailsCategoryPresenter {
-        fun checkCategoryStatus(categoryStatus: String)
-        fun checkSelectedCategoryType(filterType: String)
+        fun checkCategoryStatus(categoryStatus: String?)
+        fun checkSelectedCategoryType(filterType: String?)
 
         fun checkSwitchButton(isChecked: Boolean)
 
-        fun validateCategoryNameInput(mContext: Context, userUid: String,
+        fun validateCategoryNameInput(mContext: Context, userUid: String?,
                                       categoryNameInput: String, updateCategoryId: String?,
                                       filterType: String)
 
         fun actionCheck(menuItem: SpeedDialActionItem)
 
         fun editAccount(mContext: Context, categoryData: Category)
-        fun deleteAccount(mContext: Context, categoryId: String)
+        fun deleteAccount(mContext: Context, categoryId: String?)
     }
 }

@@ -13,22 +13,22 @@ class HistoryFilterDialogPresenter : HistoryPresenterInterface.HistoryFilterDial
     private val baseModel: BaseModel = BaseModel()
     private val mHistoryDialogModel: HistoryFilterDialogModel = HistoryFilterDialogModel()
 
-    override fun getAccountList(mContext: Context, userUid: String) {
+    override fun getAccountList(mContext: Context, userUid: String?) {
         try {
             val dataList = baseModel.getAccListByUserUidSync(mContext, userUid)
-            getView()!!.populateAccountSpinner(dataList)
+            getView()?.populateAccountSpinner(dataList)
         } catch (e: Exception) {
-            getView()!!.onError(e.message.toString())
+            getView()?.onError(e.message.toString())
         }
     }
 
-    override fun getCategoryList(mContext: Context, userUid: String, filterType: String) {
+    override fun getCategoryList(mContext: Context, userUid: String?, filterType: String) {
         try {
             val categoryList = baseModel.getCatListByUserUidWithFilterSync(
                     mContext, userUid, filterType)
-            getView()!!.populateCategorySpinner(categoryList)
+            getView()?.populateCategorySpinner(categoryList)
         } catch (e: Exception) {
-            getView()!!.onError(e.message.toString())
+            getView()?.onError(e.message.toString())
         }
     }
 
@@ -36,7 +36,7 @@ class HistoryFilterDialogPresenter : HistoryPresenterInterface.HistoryFilterDial
         val data = mHistoryDialogModel.getFilterInputSharePreference(mContext)
 
         if (data.getString(Constant.KeyId.FILTER_INPUT_ACCOUNT, "") != "") {
-            getView()!!.setupFilterInput(mHistoryDialogModel.getFilterInputSharePreference(mContext))
+            getView()?.setupFilterInput(mHistoryDialogModel.getFilterInputSharePreference(mContext))
         }
     }
 

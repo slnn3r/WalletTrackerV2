@@ -5,6 +5,6 @@ import android.content.Context
 interface LoginModelInterface {
 
     interface LoginViewModel {
-        fun retrieveDataFirebase(mContext: Context, userUid: String)
+        fun retrieveDataFirebase(mContext: Context, userUid: String?)
     }
 }

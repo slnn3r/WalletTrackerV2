@@ -20,13 +20,13 @@ import kotlin.collections.ArrayList
 
 class DashboardViewModel : DashboardModelInterface.DashboardViewModel {
 
-    override fun firstTimeSetupRealm(mContext: Context, userUid: String) {
+    override fun firstTimeSetupRealm(mContext: Context, userUid: String?) {
         val uniqueAccountId = UUID.randomUUID().toString()
         val defaultAccountName = Constant.DefaultValue.DEFAULT_ACCOUNT_NAME
         val defaultAccountBalance = Constant.DefaultValue.DEFAULT_ACCOUNT_DESC
         val defaultAccountStatus = Constant.ConditionalKeyword.DEFAULT_STATUS
 
-        var realm: Realm?
+        var realm: Realm
         Realm.init(mContext)
 
         val accountTableConfig = RealmConfiguration.Builder()
@@ -35,8 +35,8 @@ class DashboardViewModel : DashboardModelInterface.DashboardViewModel {
 
         realm = Realm.getInstance(accountTableConfig)
 
-        realm!!.executeTransaction {
-            val creating = realm!!.createObject(AccountRealm::class.java, uniqueAccountId)
+        realm.executeTransaction {
+            val creating = realm.createObject(AccountRealm::class.java, uniqueAccountId)
 
             creating.accountName = defaultAccountName
             creating.accountDesc = defaultAccountBalance
@@ -51,7 +51,7 @@ class DashboardViewModel : DashboardModelInterface.DashboardViewModel {
 
         realm = Realm.getInstance(categoryTableConfig)
 
-        realm!!.executeTransaction {
+        realm.executeTransaction {
             for (item in CategoryData().getListItem()) {
                 val uniqueCategoryId = UUID.randomUUID().toString()
                 val creating = realm.createObject(CategoryRealm::class.java, uniqueCategoryId)
@@ -65,8 +65,8 @@ class DashboardViewModel : DashboardModelInterface.DashboardViewModel {
         realm.close()
     }
 
-    override fun getTransactionRealm(mContext: Context, userUid: String, accountId: String): ArrayList<Transaction> {
-        val realm: Realm?
+    override fun getTransactionRealm(mContext: Context, userUid: String?, accountId: String?): ArrayList<Transaction> {
+        val realm: Realm
         val transactionList = ArrayList<Transaction>()
 
         Realm.init(mContext)
@@ -77,7 +77,7 @@ class DashboardViewModel : DashboardModelInterface.DashboardViewModel {
 
         realm = Realm.getInstance(config)
 
-        realm!!.executeTransaction {
+        realm.executeTransaction {
             val transactionRealm = realm.where(TransactionRealm::class.java)
                     .sort(Constant.RealmVariableName.TRANSACTION_DATETIME_VARIABLE, Sort.DESCENDING)
                     .findAll()
@@ -97,10 +97,10 @@ class DashboardViewModel : DashboardModelInterface.DashboardViewModel {
                         && count < Constant.ConditionalFigure.MAX_RECENT_TRANSACTION_LIST) {
                     transactionList.add(
                             Transaction(
-                                    transactionRealmData.transactionId!!,
-                                    transactionRealmData.transactionDateTime!!,
+                                    transactionRealmData.transactionId,
+                                    transactionRealmData.transactionDateTime,
                                     transactionRealmData.transactionAmount,
-                                    transactionRealmData.transactionRemark!!,
+                                    transactionRealmData.transactionRemark,
                                     categoryData,
                                     accountData
                             )
@@ -113,9 +113,9 @@ class DashboardViewModel : DashboardModelInterface.DashboardViewModel {
         return transactionList
     }
 
-    override fun getRecentMonthTransactionRealm(mContext: Context, userUid: String, accountId: String):
+    override fun getRecentMonthTransactionRealm(mContext: Context, userUid: String?, accountId: String?):
             Observable<ArrayList<Transaction>> {
-        val realm: Realm?
+        val realm: Realm
         val transactionList = ArrayList<Transaction>()
 
         Realm.init(mContext)
@@ -134,7 +134,7 @@ class DashboardViewModel : DashboardModelInterface.DashboardViewModel {
         tempCalender.add(Calendar.DAY_OF_MONTH, -31)
         val previous30DaysDate = Date.parse(sdf.format(tempCalender.time))
 
-        realm!!.executeTransaction {
+        realm.executeTransaction {
             val transactionRealm = realm.where(TransactionRealm::class.java)
                     .sort(Constant.RealmVariableName.TRANSACTION_DATETIME_VARIABLE, Sort.DESCENDING)
                     .greaterThanOrEqualTo(Constant.RealmVariableName.TRANSACTION_DATETIME_VARIABLE,
@@ -155,10 +155,10 @@ class DashboardViewModel : DashboardModelInterface.DashboardViewModel {
                 if (accountData.accountId == accountId && accountData.userUid == userUid) {
                     transactionList.add(
                             Transaction(
-                                    transactionRealmData.transactionId!!,
-                                    transactionRealmData.transactionDateTime!!,
+                                    transactionRealmData.transactionId,
+                                    transactionRealmData.transactionDateTime,
                                     transactionRealmData.transactionAmount,
-                                    transactionRealmData.transactionRemark!!,
+                                    transactionRealmData.transactionRemark,
                                     categoryData,
                                     accountData
                             )

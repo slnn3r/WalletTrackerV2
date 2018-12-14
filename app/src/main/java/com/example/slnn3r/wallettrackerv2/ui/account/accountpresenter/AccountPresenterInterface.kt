@@ -7,11 +7,11 @@ import com.leinardi.android.speeddial.SpeedDialActionItem
 interface AccountPresenterInterface {
 
     interface ViewAccountPresenter {
-        fun getAccountList(mContext: Context, userUid: String)
+        fun getAccountList(mContext: Context, userUid: String?)
     }
 
     interface CreateAccountPresenter {
-        fun validateAccountNameInput(mContext: Context, userUid: String,
+        fun validateAccountNameInput(mContext: Context, userUid: String?,
                                      accountNameInput: String, updateAccountId: String?)
 
         fun validateAccountDescInput(mContext: Context, accountBalanceInput: String)
@@ -20,8 +20,8 @@ interface AccountPresenterInterface {
     }
 
     interface DetailsAccountPresenter {
-        fun checkAccountStatus(accountStatus: String)
-        fun validateAccountNameInput(mContext: Context, userUid: String,
+        fun checkAccountStatus(accountStatus: String?)
+        fun validateAccountNameInput(mContext: Context, userUid: String?,
                                      accountNameInput: String, updateAccountId: String?)
 
         fun validateAccountDescInput(mContext: Context, accountBalanceInput: String)
@@ -30,6 +30,6 @@ interface AccountPresenterInterface {
         fun checkAllInputError(errorAccountName: CharSequence?, errorAccountBalance: CharSequence?)
 
         fun editAccount(mContext: Context, accountData: Account)
-        fun deleteAccount(mContext: Context, accountId: String)
+        fun deleteAccount(mContext: Context, accountId: String?)
     }
 }

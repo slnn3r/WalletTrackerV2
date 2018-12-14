@@ -25,7 +25,7 @@ class ViewCategoryFragment : Fragment(), CategoryViewInterface.ViewCategoryView 
     private val mViewCategoryViewPresenter: ViewCategoryPresenter = ViewCategoryPresenter()
     private val mCustomErrorDialog: CustomAlertDialog = CustomAlertDialog()
 
-    private lateinit var userData: FirebaseUser
+    private var userData: FirebaseUser? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -45,11 +45,11 @@ class ViewCategoryFragment : Fragment(), CategoryViewInterface.ViewCategoryView 
     override fun onStart() {
         super.onStart()
         mViewCategoryViewPresenter.bindView(this)
-        userData = mViewCategoryViewPresenter.getSignedInUser()!!
+        userData = mViewCategoryViewPresenter.getSignedInUser()
 
         mViewCategoryViewPresenter.checkToggle(sb_viewCat_catType.isChecked)
 
-        mViewCategoryViewPresenter.getCategoryList(context!!, userData.uid,
+        mViewCategoryViewPresenter.getCategoryList(context!!, userData?.uid,
                 tv_viewCat_catType_selection.text.toString())
     }
 
@@ -105,7 +105,7 @@ class ViewCategoryFragment : Fragment(), CategoryViewInterface.ViewCategoryView 
     private fun setupSwitchButton() {
         sb_viewCat_catType.setOnCheckedChangeListener { _: CompoundButton, _: Boolean ->
             mViewCategoryViewPresenter.checkSwitchButton(sb_viewCat_catType.isChecked)
-            mViewCategoryViewPresenter.getCategoryList(context!!, userData.uid,
+            mViewCategoryViewPresenter.getCategoryList(context!!, userData?.uid,
                     tv_viewCat_catType_selection.text.toString())
         }
     }

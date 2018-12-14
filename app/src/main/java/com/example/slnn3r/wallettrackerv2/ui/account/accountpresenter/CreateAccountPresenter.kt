@@ -15,17 +15,17 @@ class CreateAccountPresenter : AccountPresenterInterface.CreateAccountPresenter,
     private val mCreateAccountModel: CreateAccountViewModel = CreateAccountViewModel()
     private val validation = InputValidation()
 
-    override fun validateAccountNameInput(mContext: Context, userUid: String,
+    override fun validateAccountNameInput(mContext: Context, userUid: String?,
                                           accountNameInput: String, updateAccountId: String?) {
         val accountList = baseModel.getAccListByUserUidSync(mContext, userUid)
         val errorMessage = validation.accountNameValidation(mContext, accountNameInput,
                 accountList, updateAccountId)
 
         if (errorMessage != null) {
-            getView()!!.invalidAccountNameInput(errorMessage)
-            getView()!!.hideFloatingButton()
+            getView()?.invalidAccountNameInput(errorMessage)
+            getView()?.hideFloatingButton()
         } else {
-            getView()!!.validAccountNameInput()
+            getView()?.validAccountNameInput()
         }
     }
 
@@ -34,26 +34,26 @@ class CreateAccountPresenter : AccountPresenterInterface.CreateAccountPresenter,
                 validation.accountDescValidation(mContext, accountBalanceInput)
 
         if (errorMessage != null) {
-            getView()!!.invalidAccountBalanceInput(errorMessage)
-            getView()!!.hideFloatingButton()
+            getView()?.invalidAccountBalanceInput(errorMessage)
+            getView()?.hideFloatingButton()
         } else {
-            getView()!!.validAccountBalanceInput()
+            getView()?.validAccountBalanceInput()
         }
     }
 
     override fun checkAllInputError(errorAccountName: CharSequence?,
                                     errorAccountBalance: CharSequence?) {
         if (errorAccountName == null && errorAccountBalance == null) {
-            getView()!!.showFloatingButton()
+            getView()?.showFloatingButton()
         }
     }
 
     override fun createAccount(mContext: Context, accountData: Account) {
         try {
             mCreateAccountModel.createAccountRealm(mContext, accountData)
-            getView()!!.createAccountSuccess()
+            getView()?.createAccountSuccess()
         } catch (e: Exception) {
-            getView()!!.onError(e.message.toString())
+            getView()?.onError(e.message.toString())
         }
     }
 }

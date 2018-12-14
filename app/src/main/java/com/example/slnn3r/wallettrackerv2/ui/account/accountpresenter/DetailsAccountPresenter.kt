@@ -18,25 +18,25 @@ class DetailsAccountPresenter : AccountPresenterInterface.DetailsAccountPresente
     private val mDetailsAccountModel: DetailsAccountViewModel = DetailsAccountViewModel()
     private val validation = InputValidation()
 
-    override fun checkAccountStatus(accountStatus: String) {
+    override fun checkAccountStatus(accountStatus: String?) {
         if (accountStatus == Constant.ConditionalKeyword.DEFAULT_STATUS) {
-            getView()!!.setupFloatingDefaultButton()
+            getView()?.setupFloatingDefaultButton()
         } else {
-            getView()!!.setupFloatingActionButton()
+            getView()?.setupFloatingActionButton()
         }
     }
 
-    override fun validateAccountNameInput(mContext: Context, userUid: String,
+    override fun validateAccountNameInput(mContext: Context, userUid: String?,
                                           accountNameInput: String, updateAccountId: String?) {
         val accountList = baseModel.getAccListByUserUidSync(mContext, userUid)
         val errorMessage = validation.accountNameValidation(mContext, accountNameInput,
                 accountList, updateAccountId)
 
         if (errorMessage != null) {
-            getView()!!.invalidAccountNameInput(errorMessage)
-            getView()!!.hideFloatingButton()
+            getView()?.invalidAccountNameInput(errorMessage)
+            getView()?.hideFloatingButton()
         } else {
-            getView()!!.validAccountNameInput()
+            getView()?.validAccountNameInput()
         }
     }
 
@@ -45,20 +45,20 @@ class DetailsAccountPresenter : AccountPresenterInterface.DetailsAccountPresente
                 validation.accountDescValidation(mContext, accountBalanceInput)
 
         if (errorMessage != null) {
-            getView()!!.invalidAccountBalanceInput(errorMessage)
-            getView()!!.hideFloatingButton()
+            getView()?.invalidAccountBalanceInput(errorMessage)
+            getView()?.hideFloatingButton()
         } else {
-            getView()!!.validAccountBalanceInput()
+            getView()?.validAccountBalanceInput()
         }
     }
 
     override fun actionCheck(menuItem: SpeedDialActionItem) {
         when (menuItem.id) {
             R.id.fb_action_edit -> {
-                getView()!!.editAccountPrompt()
+                getView()?.editAccountPrompt()
             }
             R.id.fb_action_delete -> {
-                getView()!!.deleteAccountPrompt()
+                getView()?.deleteAccountPrompt()
             }
         }
     }
@@ -66,25 +66,25 @@ class DetailsAccountPresenter : AccountPresenterInterface.DetailsAccountPresente
     override fun checkAllInputError(errorAccountName: CharSequence?,
                                     errorAccountBalance: CharSequence?) {
         if (errorAccountName == null && errorAccountBalance == null) {
-            getView()!!.showFloatingButton()
+            getView()?.showFloatingButton()
         }
     }
 
     override fun editAccount(mContext: Context, accountData: Account) {
         try {
             mDetailsAccountModel.editAccountRealm(mContext, accountData)
-            getView()!!.editAccountSuccess()
+            getView()?.editAccountSuccess()
         } catch (e: Exception) {
-            getView()!!.onError(e.message.toString())
+            getView()?.onError(e.message.toString())
         }
     }
 
-    override fun deleteAccount(mContext: Context, accountId: String) {
+    override fun deleteAccount(mContext: Context, accountId: String?) {
         try {
             mDetailsAccountModel.deleteAccountRealm(mContext, accountId)
-            getView()!!.deleteAccountSuccess()
+            getView()?.deleteAccountSuccess()
         } catch (e: Exception) {
-            getView()!!.onError(e.message.toString())
+            getView()?.onError(e.message.toString())
         }
     }
 }

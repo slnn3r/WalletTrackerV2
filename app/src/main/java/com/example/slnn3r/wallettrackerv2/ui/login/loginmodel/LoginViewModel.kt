@@ -19,7 +19,7 @@ import io.realm.RealmConfiguration
 
 class LoginViewModel : LoginModelInterface.LoginViewModel {
 
-    override fun retrieveDataFirebase(mContext: Context, userUid: String) {
+    override fun retrieveDataFirebase(mContext: Context, userUid: String?) {
         val database = FirebaseDatabase.getInstance()
 
         val transactionCategoryList = ArrayList<CategoryFirebase>()
@@ -33,7 +33,7 @@ class LoginViewModel : LoginModelInterface.LoginViewModel {
 
                             val message = dataSnapshot.getValue(CategoryFirebase::class.java)
 
-                            if (message!!.userUid == userUid) {
+                            if (message?.userUid == userUid) {
                                 transactionCategoryList.add(dataSnapshot.getValue(CategoryFirebase::class.java)!!)
                             }
                         }
@@ -54,7 +54,7 @@ class LoginViewModel : LoginModelInterface.LoginViewModel {
 
                             val message = dataSnapshot.getValue(AccountFirebase::class.java)
 
-                            if (message!!.userUid == userUid) {
+                            if (message?.userUid == userUid) {
                                 walletAccountList.add(dataSnapshot.getValue(AccountFirebase::class.java)!!)
                             }
                         }
@@ -76,7 +76,7 @@ class LoginViewModel : LoginModelInterface.LoginViewModel {
 
                             val message = dataSnapshot.getValue(TransactionFirebase::class.java)
 
-                            if (message!!.account.userUid == userUid) {
+                            if (message?.account?.userUid == userUid) {
                                 transactionList.add(dataSnapshot.getValue(TransactionFirebase::class.java)!!)
                             }
                         }
@@ -90,11 +90,11 @@ class LoginViewModel : LoginModelInterface.LoginViewModel {
                 })
     }
 
-    private fun syncWalletAccountRealm(mainContext: Context, userID: String,
+    private fun syncWalletAccountRealm(mainContext: Context, userID: String?,
                                        walletAccountList: ArrayList<AccountFirebase>) {
 
         try {
-            val realm: Realm?
+            val realm: Realm
             Realm.init(mainContext)
 
             val config = RealmConfiguration.Builder()
@@ -103,7 +103,7 @@ class LoginViewModel : LoginModelInterface.LoginViewModel {
 
             realm = Realm.getInstance(config)
 
-            realm!!.executeTransaction {
+            realm.executeTransaction {
 
                 val getWalletAccount = realm.where(AccountRealm::class.java)
                         .equalTo(Constant.RealmVariableName.USER_UID_VARIABLE, userID).findAll()
@@ -131,12 +131,12 @@ class LoginViewModel : LoginModelInterface.LoginViewModel {
     }
 
 
-    private fun syncTransactionCategoryRealm(mainContext: Context, userID: String,
+    private fun syncTransactionCategoryRealm(mainContext: Context, userID: String?,
                                              transactionCategoryList: ArrayList<CategoryFirebase>) {
 
         try {
 
-            val realm: Realm?
+            val realm: Realm
             Realm.init(mainContext)
 
             val config = RealmConfiguration.Builder()
@@ -145,7 +145,7 @@ class LoginViewModel : LoginModelInterface.LoginViewModel {
 
             realm = Realm.getInstance(config)
 
-            realm!!.executeTransaction {
+            realm.executeTransaction {
 
                 val getTransactionCategory = realm.where(CategoryRealm::class.java)
                         .equalTo(Constant.RealmVariableName.USER_UID_VARIABLE, userID).findAll()
@@ -174,11 +174,11 @@ class LoginViewModel : LoginModelInterface.LoginViewModel {
     }
 
 
-    private fun syncTransaction(mainContext: Context, userID: String, transactionList: ArrayList<TransactionFirebase>) {
+    private fun syncTransaction(mainContext: Context, userID: String?, transactionList: ArrayList<TransactionFirebase>) {
 
         try {
 
-            val realm: Realm?
+            val realm: Realm
             Realm.init(mainContext)
 
             val config = RealmConfiguration.Builder()
@@ -187,7 +187,7 @@ class LoginViewModel : LoginModelInterface.LoginViewModel {
 
             realm = Realm.getInstance(config)
 
-            realm!!.executeTransaction {
+            realm.executeTransaction {
 
                 val getTrx = realm.where(TransactionRealm::class.java).findAll()
                 val gson = Gson()

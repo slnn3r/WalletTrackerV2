@@ -70,9 +70,9 @@ class CategoryViewHolder(val view: View, var passData: Category? = null) :
         view.setOnClickListener {
             if (passData != null) {
                 val gson = Gson()
-                val categoryData = Category(passData!!.categoryId,
-                        passData!!.categoryName, passData!!.categoryType,
-                        passData!!.categoryStatus, passData!!.userUid)
+                val categoryData = Category(passData?.categoryId,
+                        passData?.categoryName, passData?.categoryType,
+                        passData?.categoryStatus, passData?.userUid)
 
                 val json = gson.toJson(categoryData)
 

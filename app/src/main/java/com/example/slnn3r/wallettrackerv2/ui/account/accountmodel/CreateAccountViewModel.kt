@@ -10,7 +10,7 @@ import io.realm.RealmConfiguration
 class CreateAccountViewModel : AccountModelInterface.CreateAccountViewModel {
 
     override fun createAccountRealm(mContext: Context, accountData: Account) {
-        val realm: Realm?
+        val realm: Realm
         Realm.init(mContext)
 
         val config = RealmConfiguration.Builder()
@@ -19,7 +19,7 @@ class CreateAccountViewModel : AccountModelInterface.CreateAccountViewModel {
 
         realm = Realm.getInstance(config)
 
-        realm!!.executeTransaction {
+        realm.executeTransaction {
             val accountRealm = realm.createObject(AccountRealm::class.java, accountData.accountId)
 
             accountRealm.accountName = accountData.accountName

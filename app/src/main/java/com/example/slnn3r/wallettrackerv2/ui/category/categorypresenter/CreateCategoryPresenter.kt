@@ -16,24 +16,24 @@ class CreateCategoryPresenter : CategoryPresenterInterface.CreateCategoryPresent
     private val mCreateCategoryModel: CreateCategoryViewModel = CreateCategoryViewModel()
     private val validation = InputValidation()
 
-    override fun checkSelectedCategoryType(filterType: String) {
+    override fun checkSelectedCategoryType(filterType: String?) {
         if (filterType.equals(Constant.ConditionalKeyword.EXPENSE_STATUS, ignoreCase = true)) {
-            getView()!!.switchButtonExpenseMode()
+            getView()?.switchButtonExpenseMode()
         } else {
-            getView()!!.switchButtonToggle()
-            getView()!!.switchButtonIncomeMode()
+            getView()?.switchButtonToggle()
+            getView()?.switchButtonIncomeMode()
         }
     }
 
     override fun checkSwitchButton(isChecked: Boolean) {
         if (isChecked) {
-            getView()!!.switchButtonExpenseMode()
+            getView()?.switchButtonExpenseMode()
         } else {
-            getView()!!.switchButtonIncomeMode()
+            getView()?.switchButtonIncomeMode()
         }
     }
 
-    override fun validateCategoryNameInput(mContext: Context, userUid: String,
+    override fun validateCategoryNameInput(mContext: Context, userUid: String?,
                                            categoryNameInput: String, updateCategoryId: String?,
                                            filterType: String) {
         val categoryList =
@@ -42,20 +42,20 @@ class CreateCategoryPresenter : CategoryPresenterInterface.CreateCategoryPresent
                 categoryList, updateCategoryId)
 
         if (errorMessage != null) {
-            getView()!!.invalidCategoryNameInput(errorMessage)
-            getView()!!.hideFloatingButton()
+            getView()?.invalidCategoryNameInput(errorMessage)
+            getView()?.hideFloatingButton()
         } else {
-            getView()!!.validCategoryNameInput()
-            getView()!!.showFloatingButton()
+            getView()?.validCategoryNameInput()
+            getView()?.showFloatingButton()
         }
     }
 
     override fun createCategory(mContext: Context, categoryData: Category) {
         try {
             mCreateCategoryModel.createCategoryRealm(mContext, categoryData)
-            getView()!!.createCategorySuccess()
+            getView()?.createCategorySuccess()
         } catch (e: Exception) {
-            getView()!!.onError(e.message.toString())
+            getView()?.onError(e.message.toString())
         }
     }
 }

@@ -7,8 +7,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 interface LoginPresenterInterface {
 
     interface LoginViewPresenter {
-        fun executeGoogleSignIn(mContext: Context, requestCode: Int, resultCode: Int, data: Intent)
-        fun retrieveData(mContext: Context, userUid: String)
+        fun executeGoogleSignIn(mContext: Context, requestCode: Int, resultCode: Int, data: Intent?)
+        fun retrieveData(mContext: Context, userUid: String?)
         fun forceSignOut(mGoogleSignInClient: GoogleSignInClient)
     }
 }

@@ -25,21 +25,21 @@ class ReportViewPresenter : ReportPresenterInterface.ReportViewPresenter,
     override fun getAccountList(mContext: Context, userUid: String) {
         try {
             val dataList = baseModel.getAccListByUserUidSync(mContext, userUid)
-            getView()!!.populateAccountSpinner(dataList)
+            getView()?.populateAccountSpinner(dataList)
         } catch (e: Exception) {
-            getView()!!.onError(e.message.toString())
+            getView()?.onError(e.message.toString())
         }
     }
 
     override fun checkDateFilter(yearSelection: String, monthSelection: String) {
         if (yearSelection == Constant.ConditionalKeyword.All_YEAR_STATUS ||
                 monthSelection == Constant.ConditionalKeyword.All_MONTH_STATUS) {
-            getView()!!.disableMonthSelection()
+            getView()?.disableMonthSelection()
         }
 
         if (yearSelection != Constant.ConditionalKeyword.All_YEAR_STATUS &&
                 monthSelection == Constant.ConditionalKeyword.All_MONTH_STATUS) {
-            getView()!!.enableMonthSelection()
+            getView()?.enableMonthSelection()
         }
     }
 
@@ -53,7 +53,7 @@ class ReportViewPresenter : ReportPresenterInterface.ReportViewPresenter,
             var endDate: Long = 0
             var isAllYear = false
 
-            lateinit var accountId: String
+            var accountId: String? = null
             accountList.forEach { data ->
                 if (selectedAccount.equals(data.accountName, ignoreCase = true)) {
                     accountId = data.accountId
@@ -122,12 +122,12 @@ class ReportViewPresenter : ReportPresenterInterface.ReportViewPresenter,
             yAxisLabel.add(mContext.getString(R.string.mp_barChart_expense_title))
             yAxisLabel.add(mContext.getString(R.string.mp_barChart_income_title))
 
-            getView()!!.setTotalTransactionLabel(transactionList.size)
-            getView()!!.populateSummaryGraph(entries, yAxisLabel)
-            getView()!!.populateReportRecycleView(transactionSummaryList, transactionList)
+            getView()?.setTotalTransactionLabel(transactionList.size)
+            getView()?.populateSummaryGraph(entries, yAxisLabel)
+            getView()?.populateReportRecycleView(transactionSummaryList, transactionList)
 
         } catch (e: Exception) {
-            getView()!!.onError(e.message.toString())
+            getView()?.onError(e.message.toString())
         }
     }
 
@@ -138,10 +138,10 @@ class ReportViewPresenter : ReportPresenterInterface.ReportViewPresenter,
         val balanceAmount: Double
 
         transactionList.forEach { data ->
-            if (data.category.categoryType == Constant.ConditionalKeyword.EXPENSE_STATUS) {
-                expenseAmount += data.transactionAmount
+            if (data.category?.categoryType == Constant.ConditionalKeyword.EXPENSE_STATUS) {
+                expenseAmount += data.transactionAmount!!
             } else {
-                incomeAmount += data.transactionAmount
+                incomeAmount += data.transactionAmount!!
             }
         }
 
@@ -170,16 +170,16 @@ class ReportViewPresenter : ReportPresenterInterface.ReportViewPresenter,
             val categoryType = i.categoryType
 
             for (j in transactionList) {
-                if (categoryName.equals(j.category.categoryName, ignoreCase = true) &&
-                        categoryType.equals(j.category.categoryType, ignoreCase = true)) {
-                    category = j.category.categoryName
-                    type = j.category.categoryType
+                if (categoryName.equals(j.category?.categoryName, ignoreCase = true) &&
+                        categoryType.equals(j.category?.categoryType, ignoreCase = true)) {
+                    category = j.category?.categoryName!!
+                    type = j.category.categoryType!!
                     count += 1
 
                     if (type == Constant.ConditionalKeyword.EXPENSE_STATUS) {
-                        amount -= j.transactionAmount
+                        amount -= j.transactionAmount!!
                     } else {
-                        amount += j.transactionAmount
+                        amount += j.transactionAmount!!
                     }
                 }
             }

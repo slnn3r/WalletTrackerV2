@@ -23,7 +23,7 @@ class ViewAccountFragment : Fragment(), AccountViewInterface.ViewAccountView {
     private val mViewAccountViewPresenter: ViewAccountPresenter = ViewAccountPresenter()
     private val mCustomErrorDialog: CustomAlertDialog = CustomAlertDialog()
 
-    private lateinit var userData: FirebaseUser
+    private var userData: FirebaseUser? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -41,9 +41,9 @@ class ViewAccountFragment : Fragment(), AccountViewInterface.ViewAccountView {
     override fun onStart() {
         super.onStart()
         mViewAccountViewPresenter.bindView(this)
-        userData = mViewAccountViewPresenter.getSignedInUser()!!
+        userData = mViewAccountViewPresenter.getSignedInUser()
 
-        mViewAccountViewPresenter.getAccountList(context!!, userData.uid)
+        mViewAccountViewPresenter.getAccountList(context!!, userData?.uid)
     }
 
     override fun onStop() {

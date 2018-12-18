@@ -84,6 +84,21 @@ class ReportViewPresenter : ReportPresenterInterface.ReportViewPresenter,
 
                 endDate = Date.parse(endDateCalendar.time.toString())
 
+                // function to deal with bug that record incorrect day of month
+                val checkStartDate = Calendar.getInstance()
+                checkStartDate.timeInMillis = startDate
+
+                val checkEndDate = Calendar.getInstance()
+                checkEndDate.timeInMillis = endDate
+
+                if (checkStartDate.get(Calendar.DAY_OF_MONTH) !=
+                        checkEndDate.get(Calendar.DAY_OF_MONTH)) {
+                    val date2 = Date(endAllDate)
+                    endDateCalendar.time = date2
+                    endDateCalendar.add(Calendar.DAY_OF_MONTH, 1)
+                    endDate = Date.parse(endDateCalendar.time.toString())
+                }
+
                 isAllYear = false
             } else if (selectedMonth == Constant.ConditionalKeyword.All_MONTH_STATUS &&
                     selectedYear != Constant.ConditionalKeyword.All_YEAR_STATUS) {

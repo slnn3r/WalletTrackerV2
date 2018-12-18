@@ -75,7 +75,8 @@ class HistoryViewPresenter : HistoryPresenterInterface.HistoryViewPresenter,
 
                     endDateCalendar.set(Calendar.MONTH, month.toInt())
 
-                    val maxDay = tempCalender.getActualMaximum(Calendar.DAY_OF_MONTH)
+                    val maxDay = endDateCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+
                     val endAllDate = SimpleDateFormat("yyyy/$month/"
                             + maxDay, Locale.US).format(tempCalender.time)
 
@@ -83,6 +84,21 @@ class HistoryViewPresenter : HistoryPresenterInterface.HistoryViewPresenter,
                     endDateCalendar.time = date
 
                     endDate = Date.parse(endDateCalendar.time.toString())
+
+                    // function to deal with bug that record incorrect day of month
+                    val checkStartDate = Calendar.getInstance()
+                    checkStartDate.timeInMillis = startDate
+
+                    val checkEndDate = Calendar.getInstance()
+                    checkEndDate.timeInMillis = endDate
+
+                    if (checkStartDate.get(Calendar.DAY_OF_MONTH) !=
+                            checkEndDate.get(Calendar.DAY_OF_MONTH)) {
+                        val date2 = Date(endAllDate)
+                        endDateCalendar.time = date2
+                        endDateCalendar.add(Calendar.DAY_OF_MONTH, 1)
+                        endDate = Date.parse(endDateCalendar.time.toString())
+                    }
 
                 } else if (filterDay != Constant.ConditionalKeyword.All_DAY_STATUS &&
                         filterMonth != Constant.ConditionalKeyword.All_MONTH_STATUS) {
@@ -177,7 +193,7 @@ class HistoryViewPresenter : HistoryPresenterInterface.HistoryViewPresenter,
 
             val accountList = baseModel.getAccListByUserUidSync(mContext, userUid)
             val selectedAccount = baseModel.getSelectedAccountSharePreference(mContext, userUid)
-            var selectedAccountId:String? = null
+            var selectedAccountId: String? = null
 
             accountList.forEach { data ->
                 if (selectedAccount.equals(data.accountName, ignoreCase = false)) {

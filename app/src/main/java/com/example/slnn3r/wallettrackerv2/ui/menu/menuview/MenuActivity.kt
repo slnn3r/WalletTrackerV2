@@ -95,6 +95,16 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mMenuPresenter.unbindView() // Unbind the view when it stopped
     }
 
+    override fun onPause() {
+        super.onPause();
+        window.setFlags(WindowManager.LayoutParams.FLAG_SECURE,WindowManager.LayoutParams.FLAG_SECURE);
+    }
+
+    override fun onResume() {
+        super.onResume()
+        window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
+    }
+
     override fun onBackPressed() {
         val currentScreen = findNavController(R.id.navMenu).currentDestination?.id
         mMenuPresenter.checkNavigationStatus(isNavigated, true, currentScreen,

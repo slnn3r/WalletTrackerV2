@@ -61,18 +61,6 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setupNavigation()
     }
 
-    override fun onPause() {
-        super.onPause()
-        // show blank screen when User go to Recent Apps Screen, to avoid sensitive transaction data being reveal
-        window.setFlags(WindowManager.LayoutParams.FLAG_SECURE,WindowManager.LayoutParams.FLAG_SECURE)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        // when resume clear the blank screen setting as it may disable screenshot feature
-        window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
-    }
-
     override fun onStart() {
         super.onStart()
         mMenuPresenter.bindView(this)

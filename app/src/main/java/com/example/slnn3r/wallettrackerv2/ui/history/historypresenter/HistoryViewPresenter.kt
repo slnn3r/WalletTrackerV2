@@ -67,7 +67,7 @@ class HistoryViewPresenter : HistoryPresenterInterface.HistoryViewPresenter,
                     cal.time = simpleMonthFormat.parse(filterMonth)
                     val month = (cal.get(Calendar.MONTH) + 1).toString()
 
-                    val startAllDate = SimpleDateFormat("yyyy/$month/1", Locale.US)
+                    val startAllDate = SimpleDateFormat("$filterYear/$month/1", Locale.US)
                             .format(tempCalender.time)
                     startDate = Date.parse(startAllDate.toString())
 
@@ -77,7 +77,7 @@ class HistoryViewPresenter : HistoryPresenterInterface.HistoryViewPresenter,
 
                     val maxDay = endDateCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)
 
-                    val endAllDate = SimpleDateFormat("yyyy/$month/"
+                    val endAllDate = SimpleDateFormat("$filterYear/$month/"
                             + maxDay, Locale.US).format(tempCalender.time)
 
                     val date = Date(endAllDate)

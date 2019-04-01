@@ -71,34 +71,20 @@ class HistoryViewPresenter : HistoryPresenterInterface.HistoryViewPresenter,
                             .format(tempCalender.time)
                     startDate = Date.parse(startAllDate.toString())
 
+                    // Logic Fix End of Day not accurate
+                    val tempEndOfTheMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH).toString()
+                    val endAllDate = SimpleDateFormat("$filterYear/$month/$tempEndOfTheMonth", Locale.US)
+                            .format(tempCalender.time)
+                    endDate = Date.parse(endAllDate.toString())
+
+                    val endDateFormat = simpleDateFormat.parse(endAllDate.toString())
+
                     val endDateCalendar = Calendar.getInstance()
-
-                    endDateCalendar.set(Calendar.MONTH, month.toInt())
-
-                    val maxDay = endDateCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)
-
-                    val endAllDate = SimpleDateFormat("$filterYear/$month/"
-                            + maxDay, Locale.US).format(tempCalender.time)
-
-                    val date = Date(endAllDate)
+                    val date = Date(endDateFormat.toString())
                     endDateCalendar.time = date
-
+                    endDateCalendar.add(Calendar.DAY_OF_MONTH, 1)
                     endDate = Date.parse(endDateCalendar.time.toString())
-
-                    // function to deal with bug that record incorrect day of month
-                    val checkStartDate = Calendar.getInstance()
-                    checkStartDate.timeInMillis = startDate
-
-                    val checkEndDate = Calendar.getInstance()
-                    checkEndDate.timeInMillis = endDate
-
-                    if (checkStartDate.get(Calendar.DAY_OF_MONTH) !=
-                            checkEndDate.get(Calendar.DAY_OF_MONTH)) {
-                        val date2 = Date(endAllDate)
-                        endDateCalendar.time = date2
-                        endDateCalendar.add(Calendar.DAY_OF_MONTH, 1)
-                        endDate = Date.parse(endDateCalendar.time.toString())
-                    }
+                    // Logic Fix End of Day not accurate
 
                 } else if (filterDay != Constant.ConditionalKeyword.All_DAY_STATUS &&
                         filterMonth != Constant.ConditionalKeyword.All_MONTH_STATUS) {

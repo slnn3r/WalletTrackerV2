@@ -1,6 +1,7 @@
 package com.example.slnn3r.wallettrackerv2.ui.report.reportpresenter
 
 import android.content.Context
+import android.util.Log
 import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.base.BaseModel
 import com.example.slnn3r.wallettrackerv2.base.BasePresenter
@@ -71,33 +72,21 @@ class ReportViewPresenter : ReportPresenterInterface.ReportViewPresenter,
                         .format(tempCalender.time)
                 startDate = Date.parse(startAllDate.toString())
 
+                // Logic Fix End of Day not accurate
+                val tempEndOfTheMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH).toString()
+                val endAllDate = SimpleDateFormat("$selectedYear/$month/$tempEndOfTheMonth", Locale.US)
+                        .format(tempCalender.time)
+                endDate = Date.parse(endAllDate.toString())
+
+                val simpleDateFormat = SimpleDateFormat((Constant.Format.DATE_FORMAT), Locale.US)
+                val endDateFormat = simpleDateFormat.parse(endAllDate.toString())
+
                 val endDateCalendar = Calendar.getInstance()
-
-                endDateCalendar.set(Calendar.MONTH, month.toInt())
-
-                val maxDay = tempCalender.getActualMaximum(Calendar.DAY_OF_MONTH)
-                val endAllDate = SimpleDateFormat("$selectedYear/$month/"
-                        + maxDay, Locale.US).format(tempCalender.time)
-
-                val date = Date(endAllDate)
+                val date = Date(endDateFormat.toString())
                 endDateCalendar.time = date
-
+                endDateCalendar.add(Calendar.DAY_OF_MONTH, 1)
                 endDate = Date.parse(endDateCalendar.time.toString())
-
-                // function to deal with bug that record incorrect day of month
-                val checkStartDate = Calendar.getInstance()
-                checkStartDate.timeInMillis = startDate
-
-                val checkEndDate = Calendar.getInstance()
-                checkEndDate.timeInMillis = endDate
-
-                if (checkStartDate.get(Calendar.DAY_OF_MONTH) !=
-                        checkEndDate.get(Calendar.DAY_OF_MONTH)) {
-                    val date2 = Date(endAllDate)
-                    endDateCalendar.time = date2
-                    endDateCalendar.add(Calendar.DAY_OF_MONTH, 1)
-                    endDate = Date.parse(endDateCalendar.time.toString())
-                }
+                // Logic Fix End of Day not accurate
 
                 isAllYear = false
             } else if (selectedMonth == Constant.ConditionalKeyword.All_MONTH_STATUS &&

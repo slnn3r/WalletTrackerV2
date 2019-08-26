@@ -11,7 +11,7 @@ interface HistoryModelInterface {
 
         fun getTransactionDataRealm(mContext: Context, userUid: String?,
                                     accountId: String?, startDate: Long,
-                                    endDate: Long, remark: String?): ArrayList<Transaction>
+                                    endDate: Long, remark: String?, isAllYear: Boolean): ArrayList<Transaction>
     }
 
     interface HistoryFilterDialogModel {

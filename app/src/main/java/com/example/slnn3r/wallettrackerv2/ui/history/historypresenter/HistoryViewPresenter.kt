@@ -35,7 +35,7 @@ class HistoryViewPresenter : HistoryPresenterInterface.HistoryViewPresenter,
                     filterInput.getString(Constant.KeyId.FILTER_INPUT_CATTYPE, "")
             val filterCategory =
                     filterInput.getString(Constant.KeyId.FILTER_INPUT_CATEGORY, "")
-            var filterRemark =
+            val filterRemark =
                     filterInput.getString(Constant.KeyId.FILTER_INPUT_REMARK, "")
             val filterDateOption =
                     filterInput.getString(Constant.KeyId.FILTER_INPUT_DATEOPTION, "")
@@ -49,6 +49,8 @@ class HistoryViewPresenter : HistoryPresenterInterface.HistoryViewPresenter,
                     filterInput.getString(Constant.KeyId.FILTER_INPUT_STARTDATE, "")
             val filterEndDate =
                     filterInput.getString(Constant.KeyId.FILTER_INPUT_ENDDATE, "")
+
+            var isAllYearSelection = false
 
             var selectedAccountId: String? = null
             val accountList = baseModel.getAccListByUserUidSync(mContext, userUid)
@@ -123,7 +125,7 @@ class HistoryViewPresenter : HistoryPresenterInterface.HistoryViewPresenter,
                     endDate = Date.parse(endDateCalendar.time.toString())
 
                 } else if (filterYear == Constant.ConditionalKeyword.All_YEAR_STATUS) {
-                    filterRemark = Constant.ConditionalKeyword.All_YEAR_STATUS
+                    isAllYearSelection = true
                 }
 
             } else {
@@ -139,7 +141,7 @@ class HistoryViewPresenter : HistoryPresenterInterface.HistoryViewPresenter,
             }
 
             historyDataList = mHistoryViewModel.getTransactionDataRealm(mContext, userUid,
-                    selectedAccountId, startDate, endDate, filterRemark)
+                    selectedAccountId, startDate, endDate, filterRemark, isAllYearSelection)
 
             historyDataList.forEach { data ->
                 if (filterCatType == Constant.ConditionalKeyword.All_TYPE_STATUS) {
@@ -189,7 +191,7 @@ class HistoryViewPresenter : HistoryPresenterInterface.HistoryViewPresenter,
 
             val historyDataList = mHistoryViewModel.getTransactionDataRealm(mContext, userUid,
                     selectedAccountId, Date.parse(startDate),
-                    Date.parse(endDateCalendar.time.toString()), "")
+                    Date.parse(endDateCalendar.time.toString()), "", false)
 
             getView()?.populateHistoryData(historyDataList)
         }

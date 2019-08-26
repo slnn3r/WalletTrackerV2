@@ -14,7 +14,7 @@ import io.realm.*
 class HistoryViewModel : HistoryModelInterface.HistoryViewModel {
     override fun getTransactionDataRealm(mContext: Context, userUid: String?,
                                          accountId: String?, startDate: Long, endDate: Long,
-                                         remark: String?): ArrayList<Transaction> {
+                                         remark: String?, isAllYear: Boolean): ArrayList<Transaction> {
         val realm: Realm
         val transactionList = ArrayList<Transaction>()
 
@@ -29,7 +29,7 @@ class HistoryViewModel : HistoryModelInterface.HistoryViewModel {
         realm.executeTransaction {
             val transactionRealm: RealmResults<TransactionRealm>
 
-            if (remark != "" && remark != Constant.ConditionalKeyword.All_YEAR_STATUS) {
+            if (remark != "" && !isAllYear) {
                 transactionRealm = realm.where(TransactionRealm::class.java)
                         .sort(Constant.RealmVariableName.TRANSACTION_DATETIME_VARIABLE, Sort.DESCENDING)
                         .greaterThanOrEqualTo(Constant.RealmVariableName.TRANSACTION_DATETIME_VARIABLE,
@@ -39,7 +39,13 @@ class HistoryViewModel : HistoryModelInterface.HistoryViewModel {
                         .contains(Constant.RealmVariableName.TRANSACTION_REMARK_VARIABLE,
                                 remark!!, Case.INSENSITIVE)
                         .findAll()
-            } else if (remark == Constant.ConditionalKeyword.All_YEAR_STATUS) {
+            } else if (remark != "" && isAllYear) {
+                transactionRealm = realm.where(TransactionRealm::class.java)
+                        .sort(Constant.RealmVariableName.TRANSACTION_DATETIME_VARIABLE, Sort.DESCENDING)
+                        .contains(Constant.RealmVariableName.TRANSACTION_REMARK_VARIABLE,
+                                remark!!, Case.INSENSITIVE)
+                        .findAll()
+            } else if (isAllYear) {
                 transactionRealm = realm.where(TransactionRealm::class.java)
                         .sort(Constant.RealmVariableName.TRANSACTION_DATETIME_VARIABLE, Sort.DESCENDING)
                         .findAll()

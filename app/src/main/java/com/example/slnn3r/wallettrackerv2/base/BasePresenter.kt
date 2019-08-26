@@ -79,6 +79,14 @@ open class BasePresenter<V : BaseView.Universal> {
         return stringList
     }
 
+    fun removeRemark(mContext: Context, remarkString: String) {
+        try {
+            baseModel.removeRemarkRealm(mContext, remarkString)
+        } catch (e: Exception) {
+            getView()?.onError(e.message.toString())
+        }
+    }
+
     fun saveRemark(mContext: Context, remarkString: String) {
         try {
             val previousRemarkList = baseModel.getRemarkRealm(mContext)

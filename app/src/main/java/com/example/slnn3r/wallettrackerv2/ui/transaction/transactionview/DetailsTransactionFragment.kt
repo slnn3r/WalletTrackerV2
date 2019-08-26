@@ -10,7 +10,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +20,7 @@ import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Category
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Transaction
 import com.example.slnn3r.wallettrackerv2.ui.menu.menuview.MenuActivity
+import com.example.slnn3r.wallettrackerv2.ui.transaction.transactionadapter.RemarkAdapter
 import com.example.slnn3r.wallettrackerv2.ui.transaction.transactiondialog.CalculatorDialog
 import com.example.slnn3r.wallettrackerv2.ui.transaction.transactionpresenter.DetailsTransactionPresenter
 import com.example.slnn3r.wallettrackerv2.util.CustomAlertDialog
@@ -314,15 +314,37 @@ class DetailsTransactionFragment : Fragment(), TransactionViewInterface.DetailsT
 
     private fun setupRemarkAutoComplete() {
         val remarkList = mDetailsTransactionViewPresenter.getRemark(context!!)
-        val adapter = ArrayAdapter(context!!,
-                android.R.layout.simple_list_item_1, remarkList)
-        ac_detailsTrans_remarks.setAdapter<ArrayAdapter<String>>(adapter)
 
-        // on click hint selection, will close keyboard
-        ac_detailsTrans_remarks.onItemClickListener =
-                AdapterView.OnItemClickListener { _: AdapterView<*>, _: View, _: Int, _: Long ->
+        val adapter = RemarkAdapter(context!!,
+                R.layout.list_row_remark, remarkList).also {
+            it.setListener(object : RemarkAdapter.IOnItemListener {
+                override fun onLongClick(remarkTitle: String) {
+                    mCustomConfirmationDialog.confirmationDialog(context!!,
+                            getString(R.string.cd_remarkTrans_deleteSubmit_title),
+                            getString(R.string.cd_remarkTrans_deleteSubmit_desc),
+                            resources.getDrawable(R.drawable.ic_warning),
+                            DialogInterface.OnClickListener { _, _ ->
+                                mDetailsTransactionViewPresenter.removeRemark(context!!, remarkTitle)
+                                ac_detailsTrans_remarks.clearFocus()
+                                ac_detailsTrans_remarks.dismissDropDown()
+                                setupRemarkAutoComplete() // Re-setup values
+                            }
+                    ).show()
+                }
+
+                override fun onSingleClick(remarkTitle: String) {
+                    ac_detailsTrans_remarks.setText(remarkTitle)
+                    ac_detailsTrans_remarks.clearFocus()
+                    ac_detailsTrans_remarks.dismissDropDown()
+                }
+
+                override fun closeKeyboard() {
                     mDetailsTransactionViewPresenter.hideKeyboard(activity!!)
                 }
+            })
+        }
+
+        ac_detailsTrans_remarks.setAdapter(adapter)
     }
 
     private fun setupDatePicker() {

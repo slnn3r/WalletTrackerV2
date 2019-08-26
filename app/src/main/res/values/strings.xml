@@ -85,6 +85,10 @@
     <string name="cd_detailsCat_deleteSubmit_title">Delete Category</string>
     <string name="cd_detailsCat_deleteSubmit_desc">Are you confirm to Delete this Category?</string>
 
+    <!-- Remark in TransactionFragment -->
+    <string name="cd_remarkTrans_deleteSubmit_title">Delete Remark</string>
+    <string name="cd_remarkTrans_deleteSubmit_desc">Are you confirm to Delete this Remark?</string>
+
     <!-- CreateTransactionFragment -->
     <string name="ab_createTrans_title">New Transaction</string>
     <string name="createTrans_created_message">Transaction Created Successfully</string>

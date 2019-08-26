@@ -138,6 +138,29 @@ class BaseModel {
         return previousRemarkList
     }
 
+    fun removeRemarkRealm(mContext: Context, remarkString: String) {
+        val realm: Realm
+        Realm.init(mContext)
+
+        val config = RealmConfiguration.Builder()
+                .name(Constant.RealmTableName.PREVIOUSREMARK_REALM_TABLE)
+                .build()
+
+        realm = Realm.getInstance(config)
+
+        realm.executeTransaction {
+            val previousRemarkRealm = realm.where(PreviousRemarkRealm::class.java)
+                    .findAll()
+
+            previousRemarkRealm.forEach { previousRemarkRealmData ->
+                if (previousRemarkRealmData.remarkString.equals(remarkString, ignoreCase = true)) {
+                    previousRemarkRealmData.deleteFromRealm()
+                }
+            }
+        }
+        realm.close()
+    }
+
     fun saveRemarkRealm(mContext: Context, remarkString: String) {
         val realm: Realm
         Realm.init(mContext)

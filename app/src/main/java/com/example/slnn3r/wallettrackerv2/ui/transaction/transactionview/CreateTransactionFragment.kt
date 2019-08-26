@@ -3,13 +3,13 @@ package com.example.slnn3r.wallettrackerv2.ui.transaction.transactionview
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.DialogInterface
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +20,7 @@ import com.example.slnn3r.wallettrackerv2.data.objectclass.Account
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Category
 import com.example.slnn3r.wallettrackerv2.data.objectclass.Transaction
 import com.example.slnn3r.wallettrackerv2.ui.menu.menuview.MenuActivity
+import com.example.slnn3r.wallettrackerv2.ui.transaction.transactionadapter.RemarkAdapter
 import com.example.slnn3r.wallettrackerv2.ui.transaction.transactiondialog.CalculatorDialog
 import com.example.slnn3r.wallettrackerv2.ui.transaction.transactionpresenter.CreateTransactionPresenter
 import com.example.slnn3r.wallettrackerv2.util.CustomAlertDialog
@@ -44,6 +45,7 @@ class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTra
 
     private val mCreateTransactionViewPresenter: CreateTransactionPresenter =
             CreateTransactionPresenter()
+    private val mCustomConfirmationDialog: CustomAlertDialog = CustomAlertDialog()
     private val mCustomErrorDialog: CustomAlertDialog = CustomAlertDialog()
 
     private var userData: FirebaseUser? = null
@@ -188,7 +190,6 @@ class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTra
     private fun setupInitialUi() {
         fb_createTrans.hide()
         tl_createTrans_amount.error = getString(R.string.amount_error_label)
-
         tv_createTrans_catType_selection.text = Constant.ConditionalKeyword.EXPENSE_STATUS
     }
 
@@ -216,20 +217,41 @@ class CreateTransactionFragment : Fragment(), TransactionViewInterface.CreateTra
             calCustomDialog.setTargetFragment(this, 1)
             calCustomDialog.show(this.fragmentManager!!, "")
         }
-
     }
 
     private fun setupRemarkAutoComplete() {
         val remarkList = mCreateTransactionViewPresenter.getRemark(context!!)
-        val adapter = ArrayAdapter(context!!,
-                android.R.layout.simple_list_item_1, remarkList)
-        ac_createTrans_remarks.setAdapter<ArrayAdapter<String>>(adapter)
 
-        // on click hint selection, will close keyboard
-        ac_createTrans_remarks.onItemClickListener =
-                AdapterView.OnItemClickListener { _: AdapterView<*>, _: View, _: Int, _: Long ->
+        val adapter = RemarkAdapter(context!!,
+                R.layout.list_row_remark, remarkList).also {
+            it.setListener(object : RemarkAdapter.IOnItemListener {
+                override fun onLongClick(remarkTitle: String) {
+                    mCustomConfirmationDialog.confirmationDialog(context!!,
+                            getString(R.string.cd_remarkTrans_deleteSubmit_title),
+                            getString(R.string.cd_remarkTrans_deleteSubmit_desc),
+                            resources.getDrawable(R.drawable.ic_warning),
+                            DialogInterface.OnClickListener { _, _ ->
+                                mCreateTransactionViewPresenter.removeRemark(context!!, remarkTitle)
+                                ac_createTrans_remarks.clearFocus()
+                                ac_createTrans_remarks.dismissDropDown()
+                                setupRemarkAutoComplete() // Re-setup values
+                            }
+                    ).show()
+                }
+
+                override fun onSingleClick(remarkTitle: String) {
+                    ac_createTrans_remarks.setText(remarkTitle)
+                    ac_createTrans_remarks.clearFocus()
+                    ac_createTrans_remarks.dismissDropDown()
+                }
+
+                override fun closeKeyboard() {
                     mCreateTransactionViewPresenter.hideKeyboard(activity!!)
                 }
+            })
+        }
+
+        ac_createTrans_remarks.setAdapter(adapter)
     }
 
     private fun setupDatePicker() {

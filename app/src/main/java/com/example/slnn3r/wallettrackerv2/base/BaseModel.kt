@@ -179,6 +179,24 @@ class BaseModel {
     }
 
     // SharePreference
+    fun getIsFirstInstallationSharePreference(mContext: Context): Int {
+        val editor = mContext.getSharedPreferences(Constant.KeyId.SHARE_PREF,
+                AppCompatActivity.MODE_PRIVATE)
+        return editor.getInt(Constant.KeyId.IS_FIRST_INSTALLATION, 0)
+    }
+
+    fun incrementIsFirstInstallationSharePreference(mContext: Context) {
+        val editor = mContext.getSharedPreferences(Constant.KeyId.SHARE_PREF,
+                AppCompatActivity.MODE_PRIVATE).edit()
+
+        var currentCount = getIsFirstInstallationSharePreference(mContext)
+        currentCount+=1
+
+        editor.putInt(Constant.KeyId.IS_FIRST_INSTALLATION, currentCount)
+        editor.apply()
+        editor.commit()
+    }
+
     fun getSelectedAccountSharePreference(mContext: Context, userUid: String?): String? {
         val editor = mContext.getSharedPreferences(Constant.KeyId.SHARE_PREF + userUid,
                 AppCompatActivity.MODE_PRIVATE)

@@ -64,6 +64,7 @@ class Constant {
         const val CALCULATE_DIALOG_ARG = "calculatorDialogArg"
 
         const val SHARE_PREF = "sharePreference:"
+        const val IS_FIRST_INSTALLATION = "firstInstallation"
         const val SELECTED_ACCOUNT_KEY = "selectedAccount"
         const val BACKUP_SETTING_KEY = "backupSetting"
         const val BACKUP_TYPE_KEY = "backupType"

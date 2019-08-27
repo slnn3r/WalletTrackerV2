@@ -2,8 +2,8 @@ package com.example.slnn3r.wallettrackerv2.ui.splash.splashview
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.example.slnn3r.wallettrackerv2.R
 import com.example.slnn3r.wallettrackerv2.constant.Constant
 import com.example.slnn3r.wallettrackerv2.ui.login.loginview.LoginActivity
@@ -19,6 +19,10 @@ class SplashActivity : AppCompatActivity(), SplashViewInterface.SplashView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+
+        if (mSplashPresenter.getIsFirstInstallation(this) < 2) {
+            mSplashPresenter.incrementIsFirstInstallation(this)
+        }
     }
 
     override fun onStart() {

@@ -109,4 +109,12 @@ open class BasePresenter<V : BaseView.Universal> {
             getView()?.onError(e.message.toString())
         }
     }
+
+    fun getIsFirstInstallation(mContext: Context): Int {
+        return baseModel.getIsFirstInstallationSharePreference(mContext)
+    }
+
+    fun incrementIsFirstInstallation(mContext: Context) {
+        baseModel.incrementIsFirstInstallationSharePreference(mContext)
+    }
 }

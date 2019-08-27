@@ -39,6 +39,7 @@ class DashboardFragment : Fragment(), DashboardViewInterface.DashboardView {
     private val mCustomErrorDialog: CustomAlertDialog = CustomAlertDialog()
 
     private var userData: FirebaseUser? = null
+    private var tempAccountList = ArrayList<Account>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -72,6 +73,7 @@ class DashboardFragment : Fragment(), DashboardViewInterface.DashboardView {
 
     override fun populateAccountSpinner(accountList: ArrayList<Account>) {
         val accountNameList = ArrayList<String?>()
+        tempAccountList = accountList
 
         accountList.forEach { data ->
             accountNameList.add(data.accountName)
@@ -109,6 +111,12 @@ class DashboardFragment : Fragment(), DashboardViewInterface.DashboardView {
                                         .selectedItemPosition].accountName,
                                 userData?.uid) //Save Select Account in SharedPreference for future use
 
+                        var delayMillis: Long = 0
+
+                        if (mDashboardViewPresenter.getIsFirstInstallation(context!!) == 1) {
+                            delayMillis = 1000
+                        }
+
                         Handler().postDelayed({
                             if (getView() != null) {
                                 mDashboardViewPresenter.getTransactionData(context!!, // get RecycleView Data
@@ -116,7 +124,7 @@ class DashboardFragment : Fragment(), DashboardViewInterface.DashboardView {
                                         accountList[sp_dashboard_selectedAcc_selection
                                                 .selectedItemPosition].accountId)
                             }
-                        }, 1000)
+                        }, delayMillis)
 
                         mDashboardViewPresenter.getRecentExpenseTransaction(context!!, // get graph Data
                                 userData?.uid,
@@ -130,6 +138,15 @@ class DashboardFragment : Fragment(), DashboardViewInterface.DashboardView {
         rv_dashboard_transList.layoutManager = LinearLayoutManager(context)
         rv_dashboard_transList.adapter = TransactionListAdapter(transactionList)
         cv_transListLoading.visibility = View.INVISIBLE // remove loading cardview
+
+        // Workaround to fix first time installation launch, graph will not update
+        if (mDashboardViewPresenter.getIsFirstInstallation(context!!) == 1) {
+            mDashboardViewPresenter.incrementIsFirstInstallation(context!!)
+            mDashboardViewPresenter.getRecentExpenseTransaction(context!!, // get graph Data
+                    userData?.uid,
+                    tempAccountList[sp_dashboard_selectedAcc_selection
+                            .selectedItemPosition].accountId)
+        }
     }
 
     override fun populateExpenseGraph(entryList: ArrayList<Entry>, xAxisList: ArrayList<String>) {

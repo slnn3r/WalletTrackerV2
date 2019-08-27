@@ -80,12 +80,11 @@ class RemarkAdapter(context: Context, resource: Int, remarkData: ArrayList<Strin
                     results.count = dataListAllItems!!.size
                 }
             } else {
-                val searchStrLowerCase = prefix.toString().toLowerCase()
-
+                val searchStrLowerCase = prefix.toString()
                 val matchValues = ArrayList<String>()
 
                 for (dataItem in dataListAllItems!!) {
-                    if (dataItem.toLowerCase().startsWith(searchStrLowerCase)) {
+                    if (dataItem.contains(searchStrLowerCase, ignoreCase = true)) {
                         matchValues.add(dataItem)
                     }
                 }
@@ -98,13 +97,15 @@ class RemarkAdapter(context: Context, resource: Int, remarkData: ArrayList<Strin
         }
 
         override fun publishResults(constraint: CharSequence?, results: FilterResults) {
-            val filteredList = results.values as ArrayList<String>
+            if (results.values != null) {
+                dataList = results.values as ArrayList<String>
+            } else {
+                dataList = null
+            }
             if (results.count > 0) {
-                clear()
-                for (listItem in filteredList) {
-                    add(listItem)
-                }
                 notifyDataSetChanged()
+            } else {
+                notifyDataSetInvalidated()
             }
         }
     }

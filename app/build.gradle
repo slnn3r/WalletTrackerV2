@@ -61,8 +61,8 @@ dependencies {
     implementation "com.leinardi.android:speed-dial:2.0.0" // Floating Button
 
     // Android Navigation Library
-    def nav_version = "1.0.0-alpha06"
-    implementation "android.arch.navigation:navigation-fragment-ktx:$nav_version"
-    implementation "android.arch.navigation:navigation-ui-ktx:$nav_version"
-    implementation "android.arch.navigation:navigation-fragment:$nav_version"
+    def nav_version = "2.0.0-rc02"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-fragment:$nav_version"
 }

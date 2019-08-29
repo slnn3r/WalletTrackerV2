@@ -38,6 +38,8 @@ class CalculatorDialog : BottomSheetDialogFragment() {
 
     private var rewriting = false
 
+    private var isOperatorClicked = false
+
     private lateinit var decFormat: DecimalFormat
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -138,6 +140,7 @@ class CalculatorDialog : BottomSheetDialogFragment() {
                 tv_calCustomDialog_amount.setText(Constant.Calculator.ZERO)
                 rewriting = false
             }
+            isOperatorClicked = false
         }
 
         btn_1_calCustomDialog.setOnClickListener {
@@ -150,6 +153,7 @@ class CalculatorDialog : BottomSheetDialogFragment() {
                 tv_calCustomDialog_amount.setText(Constant.Calculator.ONE)
                 rewriting = false
             }
+            isOperatorClicked = false
         }
 
         btn_2_calCustomDialog.setOnClickListener {
@@ -162,6 +166,7 @@ class CalculatorDialog : BottomSheetDialogFragment() {
                 tv_calCustomDialog_amount.setText(Constant.Calculator.TWO)
                 rewriting = false
             }
+            isOperatorClicked = false
         }
 
         btn_3_calCustomDialog.setOnClickListener {
@@ -174,6 +179,7 @@ class CalculatorDialog : BottomSheetDialogFragment() {
                 tv_calCustomDialog_amount.setText(Constant.Calculator.THREE)
                 rewriting = false
             }
+            isOperatorClicked = false
         }
 
         btn_4_calCustomDialog.setOnClickListener {
@@ -186,6 +192,7 @@ class CalculatorDialog : BottomSheetDialogFragment() {
                 tv_calCustomDialog_amount.setText(Constant.Calculator.FOUR)
                 rewriting = false
             }
+            isOperatorClicked = false
         }
 
         btn_5_calCustomDialog.setOnClickListener {
@@ -198,6 +205,7 @@ class CalculatorDialog : BottomSheetDialogFragment() {
                 tv_calCustomDialog_amount.setText(Constant.Calculator.FIVE)
                 rewriting = false
             }
+            isOperatorClicked = false
         }
 
         btn_6_calCustomDialog.setOnClickListener {
@@ -210,6 +218,7 @@ class CalculatorDialog : BottomSheetDialogFragment() {
                 tv_calCustomDialog_amount.setText(Constant.Calculator.SIX)
                 rewriting = false
             }
+            isOperatorClicked = false
         }
 
         btn_7_calCustomDialog.setOnClickListener {
@@ -222,6 +231,7 @@ class CalculatorDialog : BottomSheetDialogFragment() {
                 tv_calCustomDialog_amount.setText(Constant.Calculator.SEVEN)
                 rewriting = false
             }
+            isOperatorClicked = false
         }
 
         btn_8_calCustomDialog.setOnClickListener {
@@ -234,6 +244,7 @@ class CalculatorDialog : BottomSheetDialogFragment() {
                 tv_calCustomDialog_amount.setText(Constant.Calculator.EIGHT)
                 rewriting = false
             }
+            isOperatorClicked = false
         }
 
         btn_9_calCustomDialog.setOnClickListener {
@@ -246,6 +257,7 @@ class CalculatorDialog : BottomSheetDialogFragment() {
                 tv_calCustomDialog_amount.setText(Constant.Calculator.NINE)
                 rewriting = false
             }
+            isOperatorClicked = false
         }
 
         btn_dot_calCustomDialog.setOnClickListener {
@@ -258,6 +270,7 @@ class CalculatorDialog : BottomSheetDialogFragment() {
                 tv_calCustomDialog_amount.setText(btn_dot_calCustomDialog.text.toString())
                 rewriting = false
             }
+            isOperatorClicked = false
         }
 
         btn_delete_calCustomDialog.setOnClickListener {
@@ -275,61 +288,84 @@ class CalculatorDialog : BottomSheetDialogFragment() {
         }
 
         btn_plus_calCustomDialog.setOnClickListener {
-            computeCalculation()
-            currentAction = addition
-
             btn_plus_calCustomDialog.setTextColor(resources.getColor(R.color.colorPrimary))
             btn_minus_calCustomDialog.setTextColor(Color.BLACK)
             btn_multiply_calCustomDialog.setTextColor(Color.BLACK)
             btn_divide_calCustomDialog.setTextColor(Color.BLACK)
 
+            if (isOperatorClicked){
+                currentAction = addition
+                return@setOnClickListener
+            }
+
+            computeCalculation()
+            currentAction = addition
+
             tv_calCustomDialog_amount.setText(decFormat.format(valueOne))
             tv_calCustomDialog_amount.setTextColor(resources.getColor(R.color.colorPrimary))
             rewriting = true
+            isOperatorClicked = true
         }
 
         btn_minus_calCustomDialog.setOnClickListener {
-            computeCalculation()
-            currentAction = subtraction
-
             btn_plus_calCustomDialog.setTextColor(Color.BLACK)
             btn_minus_calCustomDialog.setTextColor(resources.getColor(R.color.colorPrimary))
             btn_multiply_calCustomDialog.setTextColor(Color.BLACK)
             btn_divide_calCustomDialog.setTextColor(Color.BLACK)
 
+            if (isOperatorClicked){
+                currentAction = subtraction
+                return@setOnClickListener
+            }
+
+            computeCalculation()
+            currentAction = subtraction
+
             tv_calCustomDialog_amount.setText(decFormat.format(valueOne))
             tv_calCustomDialog_amount.setTextColor(resources.getColor(R.color.colorPrimary))
             rewriting = true
+            isOperatorClicked = true
         }
 
         btn_multiply_calCustomDialog.setOnClickListener {
-            computeCalculation()
-            currentAction = multiplication
-
             btn_plus_calCustomDialog.setTextColor(Color.BLACK)
             btn_minus_calCustomDialog.setTextColor(Color.BLACK)
             btn_multiply_calCustomDialog.setTextColor(resources.getColor(R.color.colorPrimary))
             btn_divide_calCustomDialog.setTextColor(Color.BLACK)
 
+            if (isOperatorClicked){
+                currentAction = multiplication
+                return@setOnClickListener
+            }
+
+            computeCalculation()
+            currentAction = multiplication
+
             tv_calCustomDialog_amount.setText(decFormat.format(valueOne))
             tv_calCustomDialog_amount.setTextColor(resources.getColor(R.color.colorPrimary))
             rewriting = true
+            isOperatorClicked = true
         }
 
         btn_divide_calCustomDialog.setOnClickListener {
-            computeCalculation()
-            currentAction = division
-
             btn_plus_calCustomDialog.setTextColor(Color.BLACK)
             btn_minus_calCustomDialog.setTextColor(Color.BLACK)
             btn_multiply_calCustomDialog.setTextColor(Color.BLACK)
             btn_divide_calCustomDialog.setTextColor(resources.getColor(R.color.colorPrimary))
 
+            if (isOperatorClicked){
+                currentAction = division
+                return@setOnClickListener
+            }
+
+            computeCalculation()
+            currentAction = division
+
             tv_calCustomDialog_amount.setText(decFormat.format(valueOne))
             tv_calCustomDialog_amount.setTextColor(resources.getColor(R.color.colorPrimary))
             rewriting = true
+            isOperatorClicked = true
         }
-
 
         btn_equal_calCustomDialog.setOnClickListener {
             computeCalculation()
@@ -403,5 +439,6 @@ class CalculatorDialog : BottomSheetDialogFragment() {
         valueOne = Double.NaN
         currentAction = ""
         rewriting = true
+        isOperatorClicked = false
     }
 }
